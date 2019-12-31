@@ -625,14 +625,14 @@ async def create_app():
         web.post('/campaign_add', campaign_add),
         web.post('/campaign_update', campaign_update),
         web.post('/campaign_delete', campaign_delete),
-        web.get('/login', login, name='login'),
-        web.post('/login_post', login_post),
-        web.get('/register', register, name='register'),
-        web.post('/register_post', register_post, name='register_post'),
+
         web.static('/static/', path=THIS_DIR / 'app/static', show_index=True, append_version=True, name='static'),
         web.static('/downloads/', path=THIS_DIR / 'app/downloads', show_index=True, name='downloads'),
         web.static('/uploads/', path=THIS_DIR / 'app/uploads', show_index=True, name='uploads')
     ])
+
+    # Routes
+    setup_auth_routes(app)
 
     load = jinja2.FileSystemLoader(str(THIS_DIR / 'app/templates'))
     aiohttp_jinja2.setup(app, loader=load)

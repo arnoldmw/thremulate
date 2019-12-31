@@ -35,3 +35,12 @@ async def register_post(request):
         # peewee.IntegrityError: UNIQUE constraint failed: user.email
 
     raise web.HTTPFound('/users')
+
+
+def setup_auth_routes(app):
+    app.add_routes([
+        web.get('/login', login, name='login'),
+        web.post('/login_post', login_post),
+        web.get('/register', register, name='register'),
+        web.post('/register_post', register_post, name='register_post'),
+        ])
