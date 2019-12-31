@@ -1,5 +1,6 @@
 # noinspection
 from auth import *
+from campaign import *
 
 import datetime
 import logging
@@ -49,24 +50,7 @@ async def index(request):
     }
 
 
-@aiohttp_jinja2.template('campaign_index.html')
-async def campaign_index(request):
-    campaigns = []
 
-    # Avoids the N + 1 problem through fetching the related table together
-    query = (Campaign
-             .select(Campaign, fn.Count(Agent.id).alias('count'))
-             .join(Agent, JOIN.LEFT_OUTER)
-             .group_by(Campaign)
-             )
-
-    for camp in query:
-        created = camp.created_date.strftime("%d-%b-%Y %H:%M:%S")
-        updated = camp.updated_date.strftime("%d-%b-%Y %H:%M:%S")
-
-        campaigns.append({'id': camp.id, 'name': camp.name, 'created': created, 'updated': updated,
-                          'no_of_agents': camp.count})
-    return {'campaigns': campaigns, 'title': 'Campaigns'}
 
 
 @aiohttp_jinja2.template('agent_index.html')
@@ -317,46 +301,7 @@ async def customize_technique_post(request):
     return web.Response(text='Form received')
 
 
-async def campaign_add(request):
-    data = await request.post()
-    Campaign.create(name=data['addName'])
-    raise web.HTTPFound('/campaigns')
 
-
-@aiohttp_jinja2.template('campaign_details.html')
-async def campaign_details(request):
-    print(request)
-    # camp_details = {}
-    agents = []
-
-    if 'id' in request.match_info:
-        camp_id = request.match_info['id']
-
-        camp = Campaign.get(Campaign.id == camp_id)
-        camp_details = {'name': camp.name, 'created': camp.created_date.strftime("%d-%b-%Y %H:%M:%S"),
-                        'updated': camp.updated_date.strftime("%d-%b-%Y %H:%M:%S")}
-        for ag in camp.agents:
-            agents.append({'id': ag.id, 'name': ag.name, 'platform': ag.platform,
-                           'initial_contact': ag.initial_contact.strftime("%d-%b-%Y %H:%M:%S"),
-                           'last_contact': ag.last_contact.strftime("%d-%b-%Y %H:%M:%S")})
-
-        return {'campaign': camp_details, 'agents': agents, 'title': 'Campaign Details'}
-    else:
-        return web.HTTPFound('/campaigns')
-
-
-async def campaign_update(request):
-    data = await request.post()
-    q = Campaign.update(name=data['name']).where(Campaign.id == data['id'])
-    q.execute()
-    raise web.HTTPFound('/campaigns')
-
-
-async def campaign_delete(request):
-    data = await request.post()
-    q = Campaign.delete().where(Campaign.id == data['id'])
-    q.execute()
-    raise web.HTTPFound('/campaigns')
 
 
 async def register_agent(request):
@@ -491,7 +436,24 @@ async def user_edit_post(request):
 
 
 
+@aiohttp_jinja2.template('reset_password.html')
+async def reset_password(request):
+    user_id = request.match_info['id']
+    return {'user_id': user_id, 'title': 'Reset Password'}
 
+
+async def reset_password_post(request):
+    data = await request.post()
+    # print('register')
+    # for key in data.keys():
+    #     print(key + ': ' + data[key])
+
+    if 'confirm_password' and 'password' and 'user_id' in data:
+        if data['confirm_password'] == data['password']:
+            User.update(passwd=generate_password_hash(data['password'])).where(User.id == data['user_id']).execute()
+            # print('updated')
+
+    raise web.HTTPFound('/users')
 
 
 @aiohttp_jinja2.template('dashboard.html')
@@ -602,11 +564,7 @@ async def create_app():
         web.get('/agent_details/{id}', agent_details, name='agent_details'),
         web.get('/agent_edit/{id}', agent_edit, name='agent_edit'),
         web.post('/agent_edit_post', agent_edit_post, name='agent_edit_post'),
-        web.get('/campaigns', campaign_index, name='campaigns'),
-        web.get('/campaign_details/{id}', campaign_details, name='campaign_details'),
-        web.post('/campaign_add', campaign_add),
-        web.post('/campaign_update', campaign_update),
-        web.post('/campaign_delete', campaign_delete),
+
 
         web.static('/static/', path=THIS_DIR / 'app/static', show_index=True, append_version=True, name='static'),
         web.static('/downloads/', path=THIS_DIR / 'app/downloads', show_index=True, name='downloads'),
@@ -615,6 +573,7 @@ async def create_app():
 
     # Routes
     setup_auth_routes(app)
+    setup_campaign_routes(app)
 
     load = jinja2.FileSystemLoader(str(THIS_DIR / 'app/templates'))
     aiohttp_jinja2.setup(app, loader=load)
