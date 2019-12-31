@@ -1,9 +1,11 @@
+import datetime
+
 import aiohttp_jinja2
 from aiohttp import web
 from database import *
 
 
-@aiohttp_jinja2.template('dashboard.html')
+@aiohttp_jinja2.template('dashboard/dashboard.html')
 async def dashboard(request):
     counts = []
 
