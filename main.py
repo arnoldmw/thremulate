@@ -598,7 +598,7 @@ async def create_app():
         web.get('/agent_details/{id}', agent_details, name='agent_details'),
         web.get('/agent_edit/{id}', agent_edit, name='agent_edit'),
         web.post('/agent_edit_post', agent_edit_post, name='agent_edit_post'),
-        
+
 
         web.static('/static/', path=THIS_DIR / 'app/static', show_index=True, append_version=True, name='static'),
         web.static('/downloads/', path=THIS_DIR / 'app/downloads', show_index=True, name='downloads'),
