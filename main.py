@@ -515,6 +515,7 @@ async def create_app():
 
     # Routes
     setup_auth_routes(app)
+    setup_campaign_routes(app)
     setup_dashboard_routes(app)
 
     load = jinja2.FileSystemLoader(str(THIS_DIR / 'app/templates'))
