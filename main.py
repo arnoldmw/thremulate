@@ -36,68 +36,6 @@ async def index(request):
     }
 
 
-@aiohttp_jinja2.template('campaign_index.html')
-async def campaign_index(request):
-    campaigns = []
-
-    # Avoids the N + 1 problem through fetching the related table together
-    query = (Campaign
-             .select(Campaign, fn.Count(Agent.id).alias('count'))
-             .join(Agent, JOIN.LEFT_OUTER)
-             .group_by(Campaign)
-             )
-
-    for camp in query:
-        created = camp.created_date.strftime("%d-%b-%Y %H:%M:%S")
-        updated = camp.updated_date.strftime("%d-%b-%Y %H:%M:%S")
-
-        campaigns.append({'id': camp.id, 'name': camp.name, 'created': created, 'updated': updated,
-                          'no_of_agents': camp.count})
-    return {'campaigns': campaigns, 'title': 'Campaigns'}
-
-
-async def campaign_add(request):
-    data = await request.post()
-    Campaign.create(name=data['addName'])
-    raise web.HTTPFound('/campaigns')
-
-
-@aiohttp_jinja2.template('campaign_details.html')
-async def campaign_details(request):
-    print(request)
-    # camp_details = {}
-    agents = []
-
-    if 'id' in request.match_info:
-        camp_id = request.match_info['id']
-
-        camp = Campaign.get(Campaign.id == camp_id)
-        camp_details = {'name': camp.name, 'created': camp.created_date.strftime("%d-%b-%Y %H:%M:%S"),
-                        'updated': camp.updated_date.strftime("%d-%b-%Y %H:%M:%S")}
-        for ag in camp.agents:
-            agents.append({'id': ag.id, 'name': ag.name, 'platform': ag.platform,
-                           'initial_contact': ag.initial_contact.strftime("%d-%b-%Y %H:%M:%S"),
-                           'last_contact': ag.last_contact.strftime("%d-%b-%Y %H:%M:%S")})
-
-        return {'campaign': camp_details, 'agents': agents, 'title': 'Campaign Details'}
-    else:
-        return web.HTTPFound('/campaigns')
-
-
-async def campaign_update(request):
-    data = await request.post()
-    q = Campaign.update(name=data['name']).where(Campaign.id == data['id'])
-    q.execute()
-    raise web.HTTPFound('/campaigns')
-
-
-async def campaign_delete(request):
-    data = await request.post()
-    q = Campaign.delete().where(Campaign.id == data['id'])
-    q.execute()
-    raise web.HTTPFound('/campaigns')
-
-
 @aiohttp_jinja2.template('users_index.html')
 async def users_index(request):
     users = User.select()
