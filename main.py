@@ -1,4 +1,6 @@
-import aiohttp_csrf
+# noinspection
+from auth import *
+
 import datetime
 import logging
 import ssl
@@ -486,40 +488,7 @@ async def user_edit_post(request):
         return response
 
 
-@aiohttp_jinja2.template('login.html')
-async def login(request):
-    return {'title': 'Login'}
 
-
-@aiohttp_jinja2.template('login.html')
-async def login_post(request):
-    return {}
-
-
-@aiohttp_jinja2.template('register.html')
-async def register(request):
-    # token = await aiohttp_csrf.generate_token(request)
-    # csrf = {'field_name': FORM_FIELD_NAME, 'token': token}
-    return {'title': 'Register'}
-
-
-async def register_post(request):
-    data = await request.post()
-    # print('register')
-    # for key in data.keys():
-    #     print(key + ': ' + data[key])
-
-    try:
-        user = User.create(fname=data['firstname'], lname=data['lastname'], email=data['email'],
-                           passwd=generate_password_hash(data['password']),
-                           is_superuser=0, disabled=0)
-        UserPermissions.create(user_id=user.id, perm_id=Permissions.get(Permissions.name == 'public'))
-
-    except IntegrityError as error:
-        print(error.__context__)
-        # peewee.IntegrityError: UNIQUE constraint failed: user.email
-
-    raise web.HTTPFound('/users')
 
 
 @aiohttp_jinja2.template('reset_password.html')
@@ -656,14 +625,14 @@ async def create_app():
         web.post('/campaign_add', campaign_add),
         web.post('/campaign_update', campaign_update),
         web.post('/campaign_delete', campaign_delete),
-        web.get('/login', login, name='login'),
-        web.post('/login_post', login_post),
-        web.get('/register', register, name='register'),
-        web.post('/register_post', register_post, name='register_post'),
+
         web.static('/static/', path=THIS_DIR / 'app/static', show_index=True, append_version=True, name='static'),
         web.static('/downloads/', path=THIS_DIR / 'app/downloads', show_index=True, name='downloads'),
         web.static('/uploads/', path=THIS_DIR / 'app/uploads', show_index=True, name='uploads')
     ])
+
+    # Routes
+    setup_auth_routes(app)
 
     load = jinja2.FileSystemLoader(str(THIS_DIR / 'app/templates'))
     aiohttp_jinja2.setup(app, loader=load)
