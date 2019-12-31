@@ -8,16 +8,6 @@ from art.run_atomics import get_all_techniques
 db = SqliteDatabase('db/adversary.db', pragmas={'foreign_keys': 1})
 
 
-# db = SqliteDatabase('../adversary.db', pragmas={'foreign_keys': 1})
-# db = SqliteDatabase('adversary.db')
-# migrator = SqliteMigrator(db)
-
-# migrate(
-#     migrator.add_column('Technique', 'parameters', CharField(max_length=30, null=True))
-#     migrator.drop_column('Agent', 'some_old_field'),
-# )
-
-
 class BaseModel(Model):
     class Meta:
         database = db
@@ -266,6 +256,14 @@ if __name__ == '__main__':
     # disabled=False).where(User.id == 5).execute()
     # UserPermissions.delete().where(UserPermissions.user_id == 5).execute()
     # UserPermissions.create(user_id=6, perm_id=Permissions.get(Permissions.name == 'public'))
+
+    try:
+        User.create(fname='Johnnie', lname='Peterson', email='amwesigwa16@gmail.com', passwd='kkkkkkk', is_superuser=False, disabled=False)
+    except IntegrityError as error:
+        if 'id' in error.__context__.__str__():
+            print('id constraint failed')
+        if 'email' in error.__context__.__str__():
+            print('email constraint failed')
 
 
 

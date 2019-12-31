@@ -3,31 +3,26 @@ from database import *
 import aiohttp_jinja2
 from peewee import IntegrityError
 
+# noinspection PyUnresolvedReferences
 from db_auth import generate_password_hash
 
 
-@aiohttp_jinja2.template('login.html')
+@aiohttp_jinja2.template('auth/login.html')
 async def login(request):
     return {'title': 'Login'}
 
 
-@aiohttp_jinja2.template('login.html')
 async def login_post(request):
     return {}
 
 
-@aiohttp_jinja2.template('register.html')
+@aiohttp_jinja2.template('auth/register.html')
 async def register(request):
-    # token = await aiohttp_csrf.generate_token(request)
-    # csrf = {'field_name': FORM_FIELD_NAME, 'token': token}
     return {'title': 'Register'}
 
 
 async def register_post(request):
     data = await request.post()
-    # print('register')
-    # for key in data.keys():
-    #     print(key + ': ' + data[key])
 
     try:
         user = User.create(fname=data['firstname'], lname=data['lastname'], email=data['email'],
