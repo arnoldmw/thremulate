@@ -1,10 +1,15 @@
-# noinspection
-from auth import *
-from campaign import *
-from dashboard import *
-from agent import *
-from user_mgt import *
-
+# noinspection PyUnresolvedReferences
+from handlers.auth import *
+# noinspection PyUnresolvedReferences
+from handlers.campaign import *
+# noinspection PyUnresolvedReferences
+from handlers.dashboard import *
+# noinspection PyUnresolvedReferences
+from handlers.agent import *
+# noinspection PyUnresolvedReferences
+from handlers.user_mgt import *
+# noinspection PyUnresolvedReferences
+from handlers.middleware import setup_middleware
 
 import logging
 import ssl
@@ -14,8 +19,6 @@ import jinja2
 from pathlib import Path
 import aiohttp_jinja2
 
-# noinspection PyUnresolvedReferences
-from middleware import setup_middleware
 
 from aiohttp_session import setup
 from aiohttp_session.cookie_storage import EncryptedCookieStorage
@@ -24,9 +27,6 @@ from aiohttp_session.cookie_storage import EncryptedCookieStorage
 from database import *
 
 THIS_DIR = Path(__file__).parent
-
-FORM_FIELD_NAME = '_csrf_token'
-SESSION_NAME = 'csrf_token'
 
 
 @aiohttp_jinja2.template('base.html')
