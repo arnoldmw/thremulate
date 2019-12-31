@@ -491,24 +491,7 @@ async def user_edit_post(request):
 
 
 
-@aiohttp_jinja2.template('reset_password.html')
-async def reset_password(request):
-    user_id = request.match_info['id']
-    return {'user_id': user_id, 'title': 'Reset Password'}
 
-
-async def reset_password_post(request):
-    data = await request.post()
-    # print('register')
-    # for key in data.keys():
-    #     print(key + ': ' + data[key])
-
-    if 'confirm_password' and 'password' and 'user_id' in data:
-        if data['confirm_password'] == data['password']:
-            User.update(passwd=generate_password_hash(data['password'])).where(User.id == data['user_id']).execute()
-            # print('updated')
-
-    raise web.HTTPFound('/users')
 
 
 @aiohttp_jinja2.template('dashboard.html')
@@ -606,8 +589,7 @@ async def create_app():
         web.get('/user_delete/{id}', user_delete, name='user_delete'),
         web.get('/user_edit/{id}', user_edit, name='user_edit'),
         web.post('/user_edit_post', user_edit_post, name='user_edit_post'),
-        web.get('/reset_password/{id}', reset_password, name='reset_password'),
-        web.post('/reset_password_post', reset_password_post, name='reset_password_post'),
+
         web.get('/agent_techniques/{id}', agent_techniques),
         web.get('/agent_tasks/{id}', agent_tasks),
         web.post('/customize_technique', customize_technique, name='customize_technique'),
