@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Padding Top -->
+<div style="margin-top: 4%;"></div>
+
+
+<div class="row row-card-no-pd">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-head-row">
+                    <h4 class="card-title">Agent Details</h4>
+                </div>
+                <!--                <p class="card-category">Details</p>-->
+                <p class="card-category">Name: {{ agent.name }}</p>
+                <p class="card-category">Campaign: {{ agent.campaign }}</p>
+                <p class="card-category"><a href="{{ url('agents') }}">Back to Agents</a></p>
+            </div>
+            <form action="{{ url('assign_post') }}" method="post" accept-charset="utf-8"
+                  enctype="application/x-www-form-urlencoded">
+                <div class="card-body">
+
+                    <!-- Table -->
+                    <div class="table-responsive">
+                        <table id="agentDetails" class="table display table-striped table-hover row-border"
+                               cellspacing="0"
+                               width="100%">
+                            <thead class="font-weight-bold">
+                            <tr>
+                                <!--                                <td>Technique</td>-->
+                                <td>Output</td>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for detail in details %}
+                            <tr style="padding-top:1%">
+                                <!--                                <td>{{ detail.name }}</td>-->
+                                <td>
+                                    <div class="accordion accordion-default">
+                                        <div class="card">
+                                            <div class="card-header" id="headingOne" data-toggle="collapse"
+                                                 data-target="#{{ detail.name }}" aria-expanded="true"
+                                                 aria-controls="collapseOne">
+                                                <div class="span-icon">
+                                                    <div class="icon-speech"></div>
+                                                </div>
+                                                <div class="span-title">
+                                                    {{ detail.name }}
+                                                </div>
+                                                <div class="span-mode"></div>
+                                            </div>
+
+                                            <div id="{{ detail.name }}" class="collapse"
+                                                 aria-labelledby="headingOne" data-parent="#accordion">
+                                                <div class="card-body">
+                                                    {{ detail.output }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </td>
+
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="/static/js/core/jquery.3.2.1.min.js?v=hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4%3D"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#agentDetails").DataTable();
+    });
+
+
+
+</script>
+
+{% endblock %}

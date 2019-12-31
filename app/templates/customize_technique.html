@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<!-- Padding Top -->
+<div style="margin-top: 4%;"></div>
+
+
+<div class="row row-card-no-pd">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-head-row">
+                    <h4 class="card-title">Customize Technique</h4>
+
+                </div>
+                <p class="card-category">
+                    View or Modify parameters for technique</p>
+                <p class="card-category">
+                    <!-- <button class="btn btn-primary btn-link"> -->
+                    <a href="{{ 'agents' }}">Back to Agents</a>
+                    <!-- </button> -->
+                </p>
+            </div>
+            <div class="card-body">
+
+
+                <!-- Table -->
+                <div class="table-responsive">
+                    <!-- <table id="agents" class="table display  table-striped table-hover cell-border" cellspacing="0" -->
+                    <table id="" class="table display  table-striped table-hover cell-border" cellspacing="0"
+                        width="100%">
+                        <thead class="font-weight-bold">
+                            <tr>
+                                <td>Key</td>
+                                <td>Value</td>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <input class="value" type="hidden" value="{{ agent_id }}">
+                            <input class="value" type="hidden" value="{{ id }}">
+
+
+                            <tr>
+                                <td>Technique Id</td>
+                                <td>T{{ id }}</td>
+                            </tr>
+                            <tr>
+                                <td>Name</td>
+                                <td>{{ name }}</td>
+                            </tr>
+                            <tr>
+                                <td>Description</td>
+                                <td>{{ description }}</td>
+                            </tr>
+
+                            {% if params %}
+                            <tr>
+                                <td>Parameter names</td>
+                                <td>
+                                    {% for param in params %}
+                                    <div class="key">{{ param}}</div>
+                                    <!-- <br> -->
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Parameters</td>
+                                <td>
+                                    {% for def_param in def_params %}
+                                    <!-- {{ def_param}} <br> -->
+                                    <input type="text" name="" value="{{ def_param}}"
+                                        class="value form-control form-control-sm" style="height: 34px!important;"> <br>
+                                    {% endfor %}
+                                </td>
+                            </tr>
+
+                            {% endif %}
+
+                            <tr>
+                                <td>Commands</td>
+                                <td>
+                                    {% for command in commands %}
+                                    {{ command}} <br>
+                                    {% endfor %}
+                                </td>
+                            </tr>
+
+
+
+
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <input id="submit-custom" type="button" class="btn btn-primary btn-round" value="Assign">
+                <input type="button" id="custom-done" class="btn btn-danger btn-round" value="Cancel">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url('static', filename='js/core/jquery.3.2.1.min.js') }}"></script>
+
+<script>
+    $(document).ready(function () {
+        // Submit customised parameters
+        $("#submit-custom").click(function () {
+
+            // var vals = [];
+            // var keys = [];
+
+            var key_arr = [];
+            var val_arr = [];
+
+            vals = $(".value");
+            keys = $(".key");
+            // console.log("Array vals length: " + vals.length);
+
+            // console.log("Data length:" + vals.length);
+
+            var i;
+            console.log('#########################################');
+
+            for (i = 0; i < vals.length; i++) {
+                if (vals[i] == undefined) {
+                    vals[i].value = "";
+                }
+                // console.log('Value ' + i + ':' + vals[i].value);
+
+                val_arr[i] = vals[i].value;
+            }
+
+            console.log('#########################################');
+
+            if (keys != undefined || keys.length > 0) {
+                var k;
+                //  console.log("Data length:" + keys.length);
+                for (k = 0; k < keys.length; k++) {
+                    if (keys[k] == undefined) {
+                        keys[k].innerHTML = '';
+                    }
+                    // console.log('Key ' + k + ':' + keys[k].innerHTML);
+                    key_arr[k] = keys[k].innerHTML;
+                }
+
+            }
+
+            var kk = key_arr.toString();
+            vv = val_arr.toString();
+            console.log(kk);
+            console.log(vv);
+
+            $.post("http://localhost:8000/customize_technique_post",
+                { 'keys': kk, 'values': vv });
+
+            // console.log(keys.toString());
+            // console.log( vals.toString());
+
+
+            // Goes back to previous webpage to assign more techniques     
+            // window.history.back();
+            window.location.assign("http://localhost:8000/assign_tasks/" + val_arr[0]);
+
+        });
+
+
+    });
+
+
+</script>
+
+
+{% endblock %}

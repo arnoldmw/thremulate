@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Padding Top -->
+<div style="margin-top: 4%;"></div>
+
+
+<div class="row row-card-no-pd">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-head-row">
+                    <h4 class="card-title">Techniques</h4>
+                </div>
+                <p class="card-category">Assign techniques to Agent</p>
+                <p class="card-category"><a href="{{ url('agents') }}">Back to Agents</a></p>
+
+            </div>
+            <div class="card-body">
+
+                {% for tech in techs %}
+                <form action="{{ url('customize_technique') }}" method="post" accept-charset="utf-8"
+                    enctype="application/x-www-form-urlencoded" id="{{ tech.id }}">
+
+                    <input type="hidden" value="{{ agent_id }}" name="agent_id">
+
+                    <div class="form-group">
+                        <div class="selectgroup selectgroup-pills">
+                            <label class="selectgroup-item">
+                                <input type="checkbox" name="{{ tech.id }}" value="{{ tech.id }}"
+                                    class="selectgroup-input">
+                                <span class="selectgroup-button">{{ tech.name }} (T{{ tech.id }})</span>
+                            </label>
+                        </div>
+                    </div>
+
+                </form>
+                {% endfor %}
+            </div>
+
+            <div class="card-action">
+                <input type="submit" value="Assign" name="submit" class="btn btn-primary" />
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- <script src="/static/js/core/jquery.3.2.1.min.js?v=hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4%3D"></script> -->
+
+<script src="{{ url('static', filename='js/core/jquery.3.2.1.min.js') }}"></script>
+
+<script>
+    $(document).ready(function () {
+        // Send to Customize technique webpage
+        $(":checkbox").click(function () {
+
+            // Form id == input id 
+            var form_id = '#' + $(this).attr("name");
+            // console.log("form id " + form_id);
+            $(form_id).submit();
+
+            // var tech_id = $(this).val();
+            // var agent_id = $("#agent_id").val();
+            // console.log(tech_id);
+            // console.log(agent_id);
+
+            // $.post("http://localhost:8000/customize_technique",{ 'agent_id': agent_id , 'tech_id': tech_id });
+
+        });
+    });
+</script>
+
+{% endblock %}

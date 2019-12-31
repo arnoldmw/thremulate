@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>S.T.A.E. | {{ title }}</title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+
+    <link rel="icon" type="image/x-icon" href="{{ url('static', filename='img/icon.ico') }}" />
+
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" type="text/css" href="{{ url('static', filename='css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url('static', filename='css/atlantis.min.css') }}" />
+
+    
+
+</head>
+
+<body data-background-color="dark">
+
+    <!-- <div class="main-panel" style="width: 100%;padding-top: 3%;"> -->
+    <div class="main-panel" style="width: 100%;padding-top: 3%;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1 style="color: #f9fbfd;">S.T.A.E</h1>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-4"></div>
+                <div class="col-4">
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Login</div>
+                        </div>
+
+
+
+                        <form action="" id="loginform">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <input id="email" name="email" type="email" class="form-control input-solid"
+                                        required="" minlength="5" placeholder="Email">
+                                    <!-- <label for="email" class="placeholder">Email</label> -->
+                                </div>
+                                <div class="form-group">
+                                    <input id="password" name="password" type="password"
+                                        class="form-control input-solid" required="" maxlength="12" minlength="5" placeholder="Password">
+                                    <!-- <label for="password" class="placeholder">Password</label> -->
+                                </div>
+
+                            </div>
+                            <div class="card-action">
+                                <input class="btn btn-lg btn-primary btn-block" type="submit" name="submit"
+                                    value="Login">
+                            </div>
+
+                        </form>
+
+                    </div>
+
+
+                </div>
+                <div class="col-4"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--   Core JS Files   -->
+    <script src="{{ url('static', filename='js/core/jquery.3.2.1.min.js') }}"></script>
+    <script src="{{ url('static', filename='js/core/jquery.validate.min.js') }}"></script>
+    <!-- <script src="{{ url('static', filename='js/core/bootstrap.min.js') }}"></script> -->
+
+
+    <!-- Atlantis JS -->
+    <!-- <script src="{{ url('static', filename='js/atlantis.min.js') }}"></script> -->
+
+    <script>
+        $.validator.setDefaults({
+            submitHandler: function () {
+                alert("submitted!");
+            }
+        });
+
+        $().ready(function () {
+            // validate the form when it is submitted
+            var validator = $("#loginform").validate({
+                errorPlacement: function (error, element) {
+                    // Append error within linked label
+                    $(element)
+                        .closest("form")
+                        .find("label[for='" + element.attr("id") + "']")
+                        .append(error);
+                },
+                errorElement: "span",
+                messages: {
+                    email: {
+                        required: " (required)",
+                        minlength: " (must be at least 3 characters)"
+                    },
+                    password: {
+                        required: " (required)",
+                        minlength: " (must be 5 or more characters)",
+                        maxlength: " (must be less than 12 characters)"
+                    }
+                }
+            });
+
+            $(".cancel").click(function () {
+                validator.resetForm();
+            });
+        });
+
+      
+
+    </script>
+
+</body>
+
+</html>

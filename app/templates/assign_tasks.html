@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Padding Top -->
+<div style="margin-top: 4%;"></div>
+
+
+<div class="row row-card-no-pd">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-head-row">
+                    <h4 class="card-title">Techniques</h4>
+                </div>
+                <p class="card-category">Assign techniques to Agent</p>
+            </div>
+            <div class="card-body">
+
+                <input id="agent_id" type="hidden" value="{{ agent_id }}" name="agent_id">
+
+
+                <div class="form-group">
+                    <div class="selectgroup selectgroup-pills">
+                        {% for tech in techs %}
+                        <label class="selectgroup-item">
+z
+
+                            <input type="checkbox" name="{{ tech.id }}" value="{{ tech.id }}"
+                                   class="selectgroup-input">
+                            <span class="selectgroup-button">{{ tech.name }}</span>
+
+
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card-action">
+                <input type="submit" value="Assign" name="submit" class="btn btn-primary"/>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- <script src="/static/js/core/jquery.3.2.1.min.js?v=hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4%3D"></script> -->
+
+
+{% endblock %}
+
+

@@ -1,0 +1,97 @@
+
+                                    {% for perm in user.perms %}
+                                        
+                                        <label class="selectgroup-item">
+                                            {% if perm[1] == 'public' %}
+                                            <input type="checkbox" name="public" value="public" class="selectgroup-input" checked>
+                                            <span class="selectgroup-button">Public</span>
+                                            {% else %}
+                                            <input type="checkbox" name="public" value="public" class="selectgroup-input">
+                                            <span class="selectgroup-button">Public</span>
+                                            {% endif %}
+
+                                            {% if perm[1] == 'protected' %}
+                                            <input type="checkbox" name="public" value="protected" class="selectgroup-input" checked>
+                                            <span class="selectgroup-button">Protected</span>
+                                            {% else %}
+                                            <input type="checkbox" name="public" value="protected" class="selectgroup-input">
+                                            <span class="selectgroup-button">Protected</span>
+                                            {% endif %}
+                                            
+                                        </label>
+                                        
+
+
+                                    {% endfor %}
+
+
+
+                                    // Multiple Line Chart
+        var multipleLineChart = document.getElementById('bbb').getContext('2d');
+        // tech-stats
+
+        var myMultipleLineChart = new Chart(multipleLineChart, {
+            type: 'line',
+            data: {
+                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                datasets: [{
+                    label: "Python",
+                    borderColor: "#1d7af3",
+                    pointBorderColor: "#FFF",
+                    pointBackgroundColor: "#1d7af3",
+                    pointBorderWidth: 2,
+                    pointHoverRadius: 4,
+                    pointHoverBorderWidth: 1,
+                    pointRadius: 4,
+                    backgroundColor: 'transparent',
+                    fill: true,
+                    borderWidth: 2,
+                    data: [30, 45, 45, 68, 69, 90, 100, 158, 177, 200, 245, 256]
+                }, {
+                    label: "PHP",
+                    borderColor: "#59d05d",
+                    pointBorderColor: "#FFF",
+                    pointBackgroundColor: "#59d05d",
+                    pointBorderWidth: 2,
+                    pointHoverRadius: 4,
+                    pointHoverBorderWidth: 1,
+                    pointRadius: 4,
+                    backgroundColor: 'transparent',
+                    fill: true,
+                    borderWidth: 2,
+                    data: [10, 20, 55, 75, 80, 48, 59, 55, 23, 107, 60, 87]
+                }, {
+                    label: "Ruby",
+                    borderColor: "#f3545d",
+                    pointBorderColor: "#FFF",
+                    pointBackgroundColor: "#f3545d",
+                    pointBorderWidth: 2,
+                    pointHoverRadius: 4,
+                    pointHoverBorderWidth: 1,
+                    pointRadius: 4,
+                    backgroundColor: 'transparent',
+                    fill: true,
+                    borderWidth: 2,
+                    data: [10, 30, 58, 79, 90, 105, 117, 160, 185, 210, 185, 194]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: {
+                    position: 'top',
+                },
+                tooltips: {
+                    bodySpacing: 4,
+                    mode: "nearest",
+                    intersect: 0,
+                    position: "nearest",
+                    xPadding: 10,
+                    yPadding: 10,
+                    caretPadding: 10
+                },
+                layout: {
+                    padding: { left: 15, right: 15, top: 15, bottom: 15 }
+                }
+            }
+        });
