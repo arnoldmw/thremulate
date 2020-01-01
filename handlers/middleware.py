@@ -2,12 +2,12 @@ import aiohttp_jinja2
 from aiohttp import web
 
 
-@aiohttp_jinja2.template('404.html')
+@aiohttp_jinja2.template('middleware/404.html')
 async def handle_404(request):
     return {'title': 'Page not found'}
 
 
-@aiohttp_jinja2.template('500.html')
+@aiohttp_jinja2.template('middleware/500.html')
 async def handle_500(request):
     return {'title': 'Error'}
 
