@@ -18,7 +18,7 @@ persistence:
       - Process command-line parameters
       - Process use of network
       modified: '2018-10-31T13:45:13.024Z'
-      x_mitre_detection: While users_list may customize their <code>~/.bashrc</code> and
+      x_mitre_detection: While users may customize their <code>~/.bashrc</code> and
         <code>~/.bash_profile</code> files , there are only certain types of commands
         that typically appear in these files. Monitor for abnormal commands such as
         execution of unknown programs, opening network sockets, or reaching out across
@@ -453,11 +453,11 @@ persistence:
         that are built-into an OS such as Guest or Administrator account on Windows
         systems or default factory/provider set accounts on other types of systems,
         software, or devices. Local accounts are those configured by an organization
-        for use by users_list, remote support, services, or for administration on a single
+        for use by users, remote support, services, or for administration on a single
         system or service. (Citation: Microsoft Local Accounts Feb 2019) Domain accounts
         are those managed by Active Directory Domain Services where access and permissions
         are configured across systems and services that are part of that domain. Domain
-        accounts can cover users_list, administrators, and services.\n\nCompromised credentials
+        accounts can cover users, administrators, and services.\n\nCompromised credentials
         may be used to bypass access controls placed on various resources on systems
         within the network and may even be used for persistent access to remote systems
         and externally available services, such as VPNs, Outlook Web Access and remote
@@ -866,7 +866,7 @@ persistence:
         source_name: Wikipedia Browser Extension
         description: Wikipedia. (2017, October 8). Browser Extension. Retrieved January
           11, 2018.
-      - url: https://www.icebrg.io/blog/malicious-chrome-extensions-enable-criminals-to-impact-over-half-a-million-users_list-and-global-businesses
+      - url: https://www.icebrg.io/blog/malicious-chrome-extensions-enable-criminals-to-impact-over-half-a-million-users-and-global-businesses
         source_name: ICEBRG Chrome Extensions
         description: De Tore, M., Warner, J. (2018, January 15). MALICIOUS CHROME
           EXTENSIONS ENABLE CRIMINALS TO IMPACT OVER HALF A MILLION USERS AND GLOBAL
@@ -2632,7 +2632,7 @@ persistence:
       - File monitoring
       - Process monitoring
       modified: '2018-10-17T00:14:20.652Z'
-      x_mitre_detection: Monitor logon scripts for unusual access by abnormal users_list
+      x_mitre_detection: Monitor logon scripts for unusual access by abnormal users
         or at abnormal times. Look for files added or modified by unusual accounts
         outside of normal administration duties.
       created_by_ref: identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5
@@ -3325,7 +3325,7 @@ persistence:
       created: '2017-12-14T16:46:06.044Z'
       x_mitre_version: '1.0'
       type: attack-pattern
-      description: "Starting in Mac OS X 10.7 (Lion), users_list can specify certain applications
+      description: "Starting in Mac OS X 10.7 (Lion), users can specify certain applications
         to be re-opened when a user reboots their machine. While this is usually done
         via a Graphical User Interface (GUI) on an app-by-app basis, there are property
         list files (plist) that contain this information as well located at <code>~/Library/Preferences/com.apple.loginwindow.plist</code>
@@ -4096,7 +4096,7 @@ persistence:
         acroread package compromised Arch Linux Mail 8JUL2018)\n\nWhile adversaries
         typically require root privileges to create/modify service unit files in the
         <code>/etc/systemd/system</code> and <code>/usr/lib/systemd/system</code>
-        directories, low privilege users_list can create/modify service unit files in directories
+        directories, low privilege users can create/modify service unit files in directories
         such as <code>~/.config/systemd/user/</code> to achieve user-level persistence.(Citation:
         Rapid7 Service Persistence 22JUNE2016)"
       x_mitre_permissions_required:
@@ -5207,13 +5207,13 @@ defense-evasion:
       created: '2017-12-14T16:46:06.044Z'
       x_mitre_version: '1.0'
       type: attack-pattern
-      description: macOS and Linux both keep track of the commands users_list type in their
-        terminal so that users_list can easily remember what they've done. These logs can
+      description: macOS and Linux both keep track of the commands users type in their
+        terminal so that users can easily remember what they've done. These logs can
         be accessed in a few different ways. While logged in, this command history
         is tracked in a file pointed to by the environment variable <code>HISTFILE</code>.
         When a user logs off a system, this information is flushed to a file in the
         user's home directory called <code>~/.bash_history</code>. The benefit of
-        this is that it allows users_list to go back to commands they've used before in
+        this is that it allows users to go back to commands they've used before in
         different sessions. Since everything typed on the command-line is saved, passwords
         passed in on the command line are also saved. Adversaries can abuse this by
         searching these files for cleartext passwords. Additionally, adversaries can
@@ -6938,7 +6938,7 @@ defense-evasion:
       modified: '2018-10-31T13:45:13.024Z'
       x_mitre_detection: Correlating a user session with a distinct lack of new commands
         in their <code>.bash_history</code> can be a clue to suspicious behavior.
-        Additionally, users_list checking or changing their <code>HISTCONTROL</code> environment
+        Additionally, users checking or changing their <code>HISTCONTROL</code> environment
         variable is also suspicious.
       created_by_ref: identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5
       x_mitre_platforms:
@@ -7296,7 +7296,7 @@ defense-evasion:
       description: 'Every user account in macOS has a userID associated with it. When
         creating a user, you can specify the userID for that account. There is a property
         value in <code>/Library/Preferences/com.apple.loginwindow</code> called <code>Hide500Users</code>
-        that prevents users_list with userIDs 500 and lower from appearing at the login
+        that prevents users with userIDs 500 and lower from appearing at the login
         screen. By using the [Create Account](https://attack.mitre.org/techniques/T1136)
         technique with a userID under 500 and enabling this property (setting it to
         Yes), an adversary can hide their user accounts much more easily: <code>sudo
@@ -7523,7 +7523,7 @@ defense-evasion:
         data to determine what occurred.\n\n### Clear Windows Event Logs\n\nWindows
         event logs are a record of a computer's alerts and notifications. Microsoft
         defines an event as \"any significant occurrence in the system or in a program
-        that requires users_list to be notified or an entry added to a log.\" There are
+        that requires users to be notified or an entry added to a log.\" There are
         three system-defined sources of Events: System, Application, and Security.\n
         \nAdversaries performing actions related to account management, account logon
         and directory service access, etc. may choose to clear the events in order
@@ -9651,7 +9651,7 @@ defense-evasion:
         programs used in suspicious ways, like msiexec.exe downloading an MSI file
         from the internet, may be indicative of an intrusion. Correlate activity with
         other suspicious behavior to reduce false positives that may be due to normal
-        benign use by users_list and administrators.
+        benign use by users and administrators.
       created_by_ref: identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5
       x_mitre_platforms:
       - Windows
@@ -9872,7 +9872,7 @@ defense-evasion:
         \"evil.txt \" (note the space at the end), then when double clicked by a user,
         the true file type is determined by the OS and handled appropriately and the
         binary will be executed (Citation: Mac Backdoors are back). \n\nAdversaries
-        can use this feature to trick users_list into double clicking benign-looking files
+        can use this feature to trick users into double clicking benign-looking files
         of any format and ultimately executing something malicious."
       x_mitre_permissions_required:
       - User
@@ -10841,11 +10841,11 @@ privilege-escalation:
         that are built-into an OS such as Guest or Administrator account on Windows
         systems or default factory/provider set accounts on other types of systems,
         software, or devices. Local accounts are those configured by an organization
-        for use by users_list, remote support, services, or for administration on a single
+        for use by users, remote support, services, or for administration on a single
         system or service. (Citation: Microsoft Local Accounts Feb 2019) Domain accounts
         are those managed by Active Directory Domain Services where access and permissions
         are configured across systems and services that are part of that domain. Domain
-        accounts can cover users_list, administrators, and services.\n\nCompromised credentials
+        accounts can cover users, administrators, and services.\n\nCompromised credentials
         may be used to bypass access controls placed on various resources on systems
         within the network and may even be used for persistent access to remote systems
         and externally available services, such as VPNs, Outlook Web Access and remote
@@ -12519,15 +12519,15 @@ privilege-escalation:
       created: '2017-12-14T16:46:06.044Z'
       x_mitre_version: '1.0'
       type: attack-pattern
-      description: "The sudoers file, <code>/etc/sudoers</code>, describes which users_list
+      description: "The sudoers file, <code>/etc/sudoers</code>, describes which users
         can run which commands and from which terminals. This also describes which
-        commands users_list can run as other users_list or groups. This provides the idea of
-        least privilege such that users_list are running in their lowest possible permissions
-        for most of the time and only elevate to other users_list or permissions as needed,
+        commands users can run as other users or groups. This provides the idea of
+        least privilege such that users are running in their lowest possible permissions
+        for most of the time and only elevate to other users or permissions as needed,
         typically by prompting for a password. However, the sudoers file can also
-        specify when to not prompt users_list for passwords with a line like <code>user1
+        specify when to not prompt users for passwords with a line like <code>user1
         ALL=(ALL) NOPASSWD: ALL</code> (Citation: OSX.Dok Malware). \n\nAdversaries
-        can take advantage of these configurations to execute commands as other users_list
+        can take advantage of these configurations to execute commands as other users
         or spawn processes with higher privileges. You must have elevated privileges
         to edit this file though."
       x_mitre_effective_permissions:
@@ -12586,7 +12586,7 @@ privilege-escalation:
       x_mitre_version: '1.0'
       type: attack-pattern
       description: "The <code>sudo</code> command \"allows a system administrator
-        to delegate authority to give certain users_list (or groups of users_list) the ability
+        to delegate authority to give certain users (or groups of users) the ability
         to run some (or all) commands as root or another user while providing an audit
         trail of the commands and their arguments.\" (Citation: sudo man page 2018)
         Since sudo was made for the system administrator, it has some useful configuration
@@ -12761,11 +12761,11 @@ discovery:
         localgroup <groupname></code> using the [Net](https://attack.mitre.org/software/S0039)
         utility or through use of [dsquery](https://attack.mitre.org/software/S0105).
         If adversaries attempt to identify the primary user, currently logged in user,
-        or set of users_list that commonly uses a system, [System Owner/User Discovery](https://attack.mitre.org/techniques/T1033)
+        or set of users that commonly uses a system, [System Owner/User Discovery](https://attack.mitre.org/techniques/T1033)
         may apply.\n\n### Mac\n\nOn Mac, groups can be enumerated through the <code>groups</code>
         and <code>id</code> commands. In mac specifically, <code>dscl . list /Groups</code>
         and <code>dscacheutil -q group</code> can also be used to enumerate groups
-        and users_list.\n\n### Linux\n\nOn Linux, local users_list can be enumerated through
+        and users.\n\n### Linux\n\nOn Linux, local users can be enumerated through
         the use of the <code>/etc/passwd</code> file which is world readable. In mac,
         this same file is only used in single-user mode in addition to the <code>/etc/master.passwd</code>
         file.\n\nAlso, groups can be enumerated through the <code>groups</code> and
@@ -12853,8 +12853,8 @@ discovery:
         command: 'lastlog > #{output_file}
 
 '
-    - name: Enumerate users_list and groups
-      description: 'Utilize groups and id to enumerate users_list and groups
+    - name: Enumerate users and groups
+      description: 'Utilize groups and id to enumerate users and groups
 
 '
       supported_platforms:
@@ -12865,8 +12865,8 @@ discovery:
         command: |
           groups
           id
-    - name: Enumerate users_list and groups
-      description: 'Utilize local utilities to enumerate users_list and groups
+    - name: Enumerate users and groups
+      description: 'Utilize local utilities to enumerate users and groups
 
 '
       supported_platforms:
@@ -12916,8 +12916,8 @@ discovery:
           get-aduser -filter *
           get-localgroup
           net localgroup
-    - name: Enumerate logged on users_list
-      description: 'Enumerate logged on users_list
+    - name: Enumerate logged on users
+      description: 'Enumerate logged on users
 
 '
       supported_platforms:
@@ -12928,8 +12928,8 @@ discovery:
         command: 'query user
 
 '
-    - name: Enumerate logged on users_list via PowerShell
-      description: 'Enumerate logged on users_list via PowerShell
+    - name: Enumerate logged on users via PowerShell
+      description: 'Enumerate logged on users via PowerShell
 
 '
       supported_platforms:
@@ -13141,7 +13141,7 @@ discovery:
         opportunities in Windows multi-domain/forest environments. Domain trusts provide
         a mechanism for a domain to allow access to resources based on the authentication
         procedures of another domain.(Citation: Microsoft Trusts) Domain trusts allow
-        the users_list of the trusted domain to access resources in the trusting domain.
+        the users of the trusted domain to access resources in the trusting domain.
         The information discovered may help the adversary conduct [SID-History Injection](https://attack.mitre.org/techniques/T1178),
         [Pass the Ticket](https://attack.mitre.org/techniques/T1097), and [Kerberoasting](https://attack.mitre.org/techniques/T1208).(Citation:
         AdSecurity Forging Trust Tickets)(Citation: Harmj0y Domain Trusts) Domain
@@ -13416,7 +13416,7 @@ discovery:
       x_mitre_version: '1.0'
       type: attack-pattern
       description: "Networks often contain shared network drives and folders that
-        enable users_list to access file directories on various systems across a network.
+        enable users to access file directories on various systems across a network.
         \n\n### Windows\n\nFile sharing over a Windows network occurs over the SMB
         protocol. (Citation: Wikipedia Shared Resource) (Citation: TechNet Shared
         Folder)\n\n[Net](https://attack.mitre.org/software/S0039) can be used to query
@@ -14547,7 +14547,7 @@ discovery:
         \"net use,\" and \"net session\" with [Net](https://attack.mitre.org/software/S0039).\n\n###
         Mac and Linux \n\nIn Mac and Linux, <code>netstat</code> and <code>lsof</code>
         can be used to list current connections. <code>who -a</code> and <code>w</code>
-        can be used to show which users_list are currently logged in, similar to \"net
+        can be used to show which users are currently logged in, similar to \"net
         session\"."
       x_mitre_permissions_required:
       - User
@@ -14643,7 +14643,7 @@ discovery:
       identifier: T1033
     atomic_tests:
     - name: System Owner/User Discovery
-      description: 'Identify System owner or users_list on an endpoint
+      description: 'Identify System owner or users on an endpoint
 
 '
       supported_platforms:
@@ -14666,7 +14666,7 @@ discovery:
           for /F "tokens=1,2" %i in ('qwinsta /server:#{computer_name} ^| findstr "Active Disc"') do @echo %i | find /v "#" | find /v "console" || echo %j > usernames.txt
           @FOR /F %n in (computers.txt) DO @FOR /F "tokens=1,2" %i in ('qwinsta /server:%n ^| findstr "Active Disc"') do @echo %i | find /v "#" | find /v "console" || echo %j > usernames.txt
     - name: System Owner/User Discovery
-      description: 'Identify System owner or users_list on an endpoint
+      description: 'Identify System owner or users on an endpoint
 
 '
       supported_platforms:
@@ -14939,7 +14939,7 @@ credential-access:
       - Process command-line parameters
       modified: '2018-10-17T00:14:20.652Z'
       x_mitre_detection: Monitoring when the user's <code>.bash_history</code> is
-        read can help alert to suspicious activity. While users_list do typically rely
+        read can help alert to suspicious activity. While users do typically rely
         on their history of commands, they often access this history through other
         utilities like "history" instead of commands like <code>cat ~/.bash_history</code>.
       created_by_ref: identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5
@@ -14954,7 +14954,7 @@ credential-access:
       created: '2017-12-14T16:46:06.044Z'
       x_mitre_version: '1.0'
       type: attack-pattern
-      description: 'Bash keeps track of the commands users_list type on the command-line
+      description: 'Bash keeps track of the commands users type on the command-line
         with the "history" utility. Once a user logs out, the history is flushed to
         the user’s <code>.bash_history</code> file. For each user, this file resides
         at the same location: <code>~/.bash_history</code>. Typically, this file keeps
@@ -15087,7 +15087,7 @@ credential-access:
       - windows
       input_arguments:
         input_file_users:
-          description: Path to a file containing a list of users_list that we will attempt
+          description: Path to a file containing a list of users that we will attempt
             to brute force
           type: Path
           default: DomainUsers.txt
@@ -15289,7 +15289,7 @@ credential-access:
         PBKDF2.\n\n#### Local Security Authority (LSA) Secrets\n\nWith SYSTEM access
         to a host, the LSA secrets often allows trivial access from a local account
         to domain-based account credentials. The Registry is used to store the LSA
-        secrets.\n \nWhen services are run under the context of local or domain users_list,
+        secrets.\n \nWhen services are run under the context of local or domain users,
         their passwords are stored in the Registry. If auto-logon is enabled, this
         information will be stored in the Registry as well.\n \nA number of tools
         can be used to retrieve the SAM file through in-memory techniques.\n\n* pwdumpx.exe
@@ -15299,7 +15299,7 @@ credential-access:
         by his mechanism are UTF-16 encoded, which means that they are returned in plaintext.\nWindows
         10 adds protections for LSA Secrets described in Mitigation.\n\n#### NTDS
         from Domain Controller\n\nActive Directory stores information about members
-        of the domain including devices and users_list to verify credentials and define
+        of the domain including devices and users to verify credentials and define
         access rights. The Active Directory domain database is stored in the NTDS.dit
         file. By default the NTDS file will be located in %SystemRoot%\\NTDS\\Ntds.dit
         of a domain controller. (Citation: Wikipedia Active Directory)\n \nThe following
@@ -16568,7 +16568,7 @@ execution:
         These events can locate open windows, send keystrokes, and interact with almost
         any open application locally or remotely. \n\nAdversaries can use this to
         interact with open SSH connection, move to remote machines, and even present
-        users_list with fake dialog boxes. These events cannot start applications remotely
+        users with fake dialog boxes. These events cannot start applications remotely
         (they can start them locally though), but can interact with applications if
         they're already running remotely. Since this is a scripting language, it can
         be used to launch more common techniques as well such as a reverse shell via
@@ -18543,7 +18543,7 @@ execution:
         programs used in suspicious ways, like msiexec.exe downloading an MSI file
         from the internet, may be indicative of an intrusion. Correlate activity with
         other suspicious behavior to reduce false positives that may be due to normal
-        benign use by users_list and administrators.
+        benign use by users and administrators.
       created_by_ref: identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5
       x_mitre_platforms:
       - Windows
@@ -18835,7 +18835,7 @@ execution:
         \"evil.txt \" (note the space at the end), then when double clicked by a user,
         the true file type is determined by the OS and handled appropriately and the
         binary will be executed (Citation: Mac Backdoors are back). \n\nAdversaries
-        can use this feature to trick users_list into double clicking benign-looking files
+        can use this feature to trick users into double clicking benign-looking files
         of any format and ultimately executing something malicious."
       x_mitre_permissions_required:
       - User
@@ -19551,7 +19551,7 @@ lateral-movement:
         These events can locate open windows, send keystrokes, and interact with almost
         any open application locally or remotely. \n\nAdversaries can use this to
         interact with open SSH connection, move to remote machines, and even present
-        users_list with fake dialog boxes. These events cannot start applications remotely
+        users with fake dialog boxes. These events cannot start applications remotely
         (they can start them locally though), but can interact with applications if
         they're already running remotely. Since this is a scripting language, it can
         be used to launch more common techniques as well such as a reverse shell via
@@ -19660,7 +19660,7 @@ lateral-movement:
       - File monitoring
       - Process monitoring
       modified: '2018-10-17T00:14:20.652Z'
-      x_mitre_detection: Monitor logon scripts for unusual access by abnormal users_list
+      x_mitre_detection: Monitor logon scripts for unusual access by abnormal users
         or at abnormal times. Look for files added or modified by unusual accounts
         outside of normal administration duties.
       created_by_ref: identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5
@@ -20329,7 +20329,7 @@ lateral-movement:
         collected using tools such as Windows Event Forwarding. (Citation: Lateral
         Movement Payne) (Citation: Windows Event Forwarding Payne) Monitor remote
         login events and associated SMB activity for file transfers and remote process
-        execution. Monitor the actions of remote users_list who connect to administrative
+        execution. Monitor the actions of remote users who connect to administrative
         shares. Monitor for use of tools and commands to connect to remote shares,
         such as [Net](https://attack.mitre.org/software/S0039), on the command-line
         interface and Discovery techniques that could be used to find remotely accessible
@@ -20762,7 +20762,7 @@ collection:
       x_mitre_version: '1.0'
       type: attack-pattern
       description: "Adversaries may collect data stored in the Windows clipboard from
-        users_list copying information within or between applications. \n\n### Windows\n\nApplications
+        users copying information within or between applications. \n\n### Windows\n\nApplications
         can access clipboard data by using the Windows API. (Citation: MSDN Clipboard)
         \n\n### Mac\n\nOSX provides a native command, <code>pbpaste</code>, to grab
         clipboard contents  (Citation: Operating with EmPyre)."
@@ -22936,7 +22936,7 @@ impact:
       x_mitre_version: '1.0'
       type: attack-pattern
       description: "Adversaries may stop or disable services on a system to render
-        those services unavailable to legitimate users_list. Stopping critical services
+        those services unavailable to legitimate users. Stopping critical services
         can inhibit or stop response to an incident or aid in the adversary's overall
         objectives to cause damage to the environment.(Citation: Talos Olympic Destroyer
         2018)(Citation: Novetta Blockbuster) \n\nAdversaries may accomplish this by
@@ -23089,11 +23089,11 @@ initial-access:
         that are built-into an OS such as Guest or Administrator account on Windows
         systems or default factory/provider set accounts on other types of systems,
         software, or devices. Local accounts are those configured by an organization
-        for use by users_list, remote support, services, or for administration on a single
+        for use by users, remote support, services, or for administration on a single
         system or service. (Citation: Microsoft Local Accounts Feb 2019) Domain accounts
         are those managed by Active Directory Domain Services where access and permissions
         are configured across systems and services that are part of that domain. Domain
-        accounts can cover users_list, administrators, and services.\n\nCompromised credentials
+        accounts can cover users, administrators, and services.\n\nCompromised credentials
         may be used to bypass access controls placed on various resources on systems
         within the network and may even be used for persistent access to remote systems
         and externally available services, such as VPNs, Outlook Web Access and remote
