@@ -53,7 +53,7 @@ async def create_app():
 
     load = jinja2.FileSystemLoader(str(THIS_DIR / 'app/templates'))
     aiohttp_jinja2.setup(app, loader=load)
-    app['name'] = 'S.T.A.E'
+    app['name'] = 'thremulate'
 
     secret_key = b'\xd0\x04)E\x14\x98\xa1~\xecE\xae>(\x1d6\xec\xbfQ\xa4\x19\x0e\xbcre,\xf8\x8f\x84WV.\x8d'
     setup(app, EncryptedCookieStorage(secret_key))
