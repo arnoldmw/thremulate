@@ -88,7 +88,24 @@ async def dashboard(request):
 
     counts.append(exec_in_week)
 
-    return {'counts': counts, 'graph': graph, 'weekly': weekly}
+    top_active_agents = most_active_agents()
+
+    return {'counts': counts, 'graph': graph, 'weekly': weekly, 'top_active_agents': top_active_agents}
+
+
+def most_active_agents():
+    most_active_agents_in_db = []
+    number_executed = fn.Count(AgentTechnique.executed)
+    query7 = AgentTechnique.select(AgentTechnique.agent_id,
+                                   number_executed.alias('count'), Agent.name, Agent.platform) \
+        .join(Agent) \
+        .group_by(AgentTechnique.agent_id) \
+        .having(AgentTechnique.executed.is_null(False)).order_by(number_executed.desc()).limit(3).dicts()
+
+    for a in query7:
+        most_active_agents_in_db.append(a)
+
+    return most_active_agents_in_db
 
 
 def setup_dashboard_routes(app):

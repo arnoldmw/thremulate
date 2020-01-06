@@ -334,6 +334,149 @@
 
 
 
+                    <div class="row">
+						<div class="col-md-4">
+							<div class="card">
+								<div class="card-header">
+                                    <div class="card-title">Most Active Agents</div>
+                                    <p class="card-category">Based on number of techniques executed</p>
+								</div>
+								<div class="card-body pb-0">
+
+
+                                    {% for top_agent in top_active_agents %}
+									<div class="d-flex">
+										<div class="avatar">
+											<img src="{{ url('static', filename='img/agent.svg') }}" alt="..." class="avatar-img rounded-circle">
+										</div>
+										<div class="flex-1 pt-1 ml-2">
+                                            <h6 class="fw-bold mb-1">{{top_agent.name}}</h6>
+                                            {% if top_agent.platform == 'windows' %}
+                                            <small class="text-muted">Windows</small>
+                                            {% elif top_agent.platform == 'linux' %}
+                                            <small class="text-muted">Linux</small>
+                                            {% elif top_agent.platform == 'macos' %}
+                                            <small class="text-muted">MacOS</small>
+                                            {% endif %}
+										</div>
+										<div class="d-flex ml-auto align-items-center">
+											<h3 class="text-info fw-bold">{{top_agent.count}}</h3>
+										</div>
+									</div>
+									
+                                    
+                                    <div class="separator-dashed"></div>
+                                    
+                                    {% endfor %}
+									<div class="pull-in"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+										<canvas id="topProductsChart" width="408" height="150" class="chartjs-render-monitor" style="display: block; width: 408px; height: 150px;"></canvas>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="card">
+								<div class="card-body">
+									<div class="card-title fw-mediumbold">Suggested People</div>
+									<div class="card-list">
+										<div class="item-list">
+											<div class="avatar">
+												<img src="../assets/img/jm_denis.jpg" alt="..." class="avatar-img rounded-circle">
+											</div>
+											<div class="info-user ml-3">
+												<div class="username">Jimmy Denis</div>
+												<div class="status">Graphic Designer</div>
+											</div>
+											<button class="btn btn-icon btn-primary btn-round btn-xs">
+												<i class="fa fa-plus"></i>
+											</button>
+										</div>
+										<div class="item-list">
+											<div class="avatar">
+												<img src="../assets/img/chadengle.jpg" alt="..." class="avatar-img rounded-circle">
+											</div>
+											<div class="info-user ml-3">
+												<div class="username">Chad</div>
+												<div class="status">CEO Zeleaf</div>
+											</div>
+											<button class="btn btn-icon btn-primary btn-round btn-xs">
+												<i class="fa fa-plus"></i>
+											</button>
+										</div>
+										<div class="item-list">
+											<div class="avatar">
+												<img src="../assets/img/talha.jpg" alt="..." class="avatar-img rounded-circle">
+											</div>
+											<div class="info-user ml-3">
+												<div class="username">Talha</div>
+												<div class="status">Front End Designer</div>
+											</div>
+											<button class="btn btn-icon btn-primary btn-round btn-xs">
+												<i class="fa fa-plus"></i>
+											</button>
+										</div>
+										<div class="item-list">
+											<div class="avatar">
+												<img src="../assets/img/mlane.jpg" alt="..." class="avatar-img rounded-circle">
+											</div>
+											<div class="info-user ml-3">
+												<div class="username">John Doe</div>
+												<div class="status">Back End Developer</div>
+											</div>
+											<button class="btn btn-icon btn-primary btn-round btn-xs">
+												<i class="fa fa-plus"></i>
+											</button>
+										</div>
+										<div class="item-list">
+											<div class="avatar">
+												<img src="../assets/img/talha.jpg" alt="..." class="avatar-img rounded-circle">
+											</div>
+											<div class="info-user ml-3">
+												<div class="username">Talha</div>
+												<div class="status">Front End Designer</div>
+											</div>
+											<button class="btn btn-icon btn-primary btn-round btn-xs">
+												<i class="fa fa-plus"></i>
+											</button>
+										</div>
+										<div class="item-list">
+											<div class="avatar">
+												<img src="../assets/img/jm_denis.jpg" alt="..." class="avatar-img rounded-circle">
+											</div>
+											<div class="info-user ml-3">
+												<div class="username">Jimmy Denis</div>
+												<div class="status">Graphic Designer</div>
+											</div>
+											<button class="btn btn-icon btn-primary btn-round btn-xs">
+												<i class="fa fa-plus"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="card card-primary bg-primary-gradient">
+								<div class="card-body">
+									<h4 class="mt-3 b-b1 pb-2 mb-4 fw-bold">Active user right now</h4>
+									<h1 class="mb-4 fw-bold">17</h1>
+									<h4 class="mt-3 b-b1 pb-2 mb-5 fw-bold">Page view per minutes</h4>
+									<div id="activeUsersChart"><canvas width="294" height="100" style="display: inline-block; width: 294px; height: 100px; vertical-align: top;"></canvas></div>
+									<h4 class="mt-5 pb-3 mb-0 fw-bold">Top active pages</h4>
+									<ul class="list-unstyled">
+										<li class="d-flex justify-content-between pb-1 pt-1">
+											<small>/product/readypro/index.html</small> <span>7</span></li>
+										<li class="d-flex justify-content-between pb-1 pt-1">
+											<small>/product/atlantis/demo.html</small> <span>10</span></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+
+
 
 
 
@@ -522,19 +665,12 @@
 
         $(document).ready(function(){
 
-            // $(".nav-item").mouseenter(function(){
-            //     $(this).children("a.drop").dropdown("toggle");
-            // });
 
             $(".drop").mouseenter(function(){
                 $(this).dropdown("toggle");
 
             });
-
-            // $(".drop").mouseleave(function(){
-            //     $(this).dropdown("toggle");
-
-            // });
+     
 
         });
 
