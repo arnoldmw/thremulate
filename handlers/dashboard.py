@@ -89,8 +89,10 @@ async def dashboard(request):
     counts.append(exec_in_week)
 
     top_active_agents = most_active_agents()
+    timeline = timeline_data()
 
-    return {'counts': counts, 'graph': graph, 'weekly': weekly, 'top_active_agents': top_active_agents}
+    return {'counts': counts, 'graph': graph, 'weekly': weekly, 'top_active_agents': top_active_agents,
+            'timeline': timeline}
 
 
 def most_active_agents():
@@ -100,12 +102,24 @@ def most_active_agents():
                                    number_executed.alias('count'), Agent.name, Agent.platform) \
         .join(Agent) \
         .group_by(AgentTechnique.agent_id) \
-        .having(AgentTechnique.executed.is_null(False)).order_by(number_executed.desc()).limit(3).dicts()
+        .having(AgentTechnique.executed.is_null(False)).order_by(number_executed.desc()).limit(5).dicts()
 
     for a in query7:
         most_active_agents_in_db.append(a)
 
     return most_active_agents_in_db
+
+
+def timeline_data():
+    t_data = []
+    query = AgentTechnique.select(AgentTechnique.executed, fn.Count(AgentTechnique.agent_id).alias('count'))\
+        .group_by(AgentTechnique.executed.day).having(AgentTechnique.executed.is_null(False))\
+        .order_by(AgentTechnique.executed.desc()).limit(6).dicts()
+
+    for n in query:
+        t_data.append(n)
+
+    return t_data
 
 
 def setup_dashboard_routes(app):

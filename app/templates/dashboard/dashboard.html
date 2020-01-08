@@ -30,10 +30,9 @@
     <link rel="stylesheet" type="text/css" href="{{ url('static', filename='css/atlantis.min.css') }}" />
 
     <style>
-        .nav-item .nav-link{
-            font-size: 14px!important;
+        .nav-item .nav-link {
+            font-size: 14px !important;
         }
-
     </style>
 </head>
 
@@ -64,96 +63,97 @@
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link drop" href="" id="campdropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Campaigns</a>
+                            <a class="nav-link drop" href="" id="campdropdown" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">Campaigns</a>
                             <div class="dropdown-menu" aria-labelledby="campdropdown">
-                              <a class="dropdown-item" href="{{ url('campaigns') }}">View Campaigns</a>
-                              <a class="dropdown-item" href="#">Another action</a>
-                              <a class="dropdown-item" href="#">Something else here</a>
+                                <a class="dropdown-item" href="{{ url('campaigns') }}">View Campaigns</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
                             </div>
-                          </li>
+                        </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link drop" href="" id="agentdropdown"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Agents</a>
+                            <a class="nav-link drop" href="" id="agentdropdown" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">Agents</a>
                             <div class="dropdown-menu" aria-labelledby="agentdropdown">
-                              <a class="dropdown-item" href="{{ url('agents') }}">View Agents</a>
-                              <a class="dropdown-item" href="#">Another action</a>
-                              <a class="dropdown-item" href="#">Something else here</a>
+                                <a class="dropdown-item" href="{{ url('agents') }}">View Agents</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
                             </div>
-                          </li>
+                        </li>
 
-                          <li class="nav-item dropdown">
-                            <a class="nav-link drop" href="" id="usersdropdown"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Users</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link drop" href="" id="usersdropdown" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">Users</a>
                             <div class="dropdown-menu" aria-labelledby="usersdropdown">
-                              <a class="dropdown-item" href="{{ url('users') }}">View Users</a>
-                              <a class="dropdown-item" href="{{ url('register') }}">Add User</a>
-                              <!-- <a class="dropdown-item" href="#">Something else here</a> -->
+                                <a class="dropdown-item" href="{{ url('users') }}">View Users</a>
+                                <a class="dropdown-item" href="{{ url('register') }}">Add User</a>
+                                <!-- <a class="dropdown-item" href="#">Something else here</a> -->
                             </div>
-                          </li>
-                        </ul>
+                        </li>
+                    </ul>
 
 
-                        </ul>
-                          <ul class="nav navbar-nav navbar-right align-items-left">
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">Help</a>
-                            </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right align-items-left">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Help</a>
+                        </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link" href="#" aria-expanded="false">
-                                    <i class="fas icon-logout" data-toggle="tooltip" title="Log out"></i>
-                                </a>
-                            </li>
-
-
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" aria-expanded="false">
+                                <i class="fas icon-logout" data-toggle="tooltip" title="Log out"></i>
+                            </a>
+                        </li>
 
 
-                            <li class="nav-item dropdown hidden-caret">
-                                <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
-                                    <i class="fas fa-user" data-toggle="tooltip" title="Account"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-user animated fadeIn">
-                                    <div class="scroll-wrapper dropdown-user-scroll scrollbar-outer"
-                                        style="position: relative;">
-                                        <div class="dropdown-user-scroll scrollbar-outer scroll-content"
-                                            style="height: auto; margin-bottom: 0px; margin-right: 0px; max-height: 0px;">
-                                            <li>
-                                                <div class="user-box">
 
-                                                    <div class="u-text">
-                                                        <h4>Arnold</h4>
-                                                        <p class="text-muted">arnold@thremulate.com</p>
-                                                    </div>
+
+                        <li class="nav-item dropdown hidden-caret">
+                            <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
+                                <i class="fas fa-user" data-toggle="tooltip" title="Account"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user animated fadeIn">
+                                <div class="scroll-wrapper dropdown-user-scroll scrollbar-outer"
+                                    style="position: relative;">
+                                    <div class="dropdown-user-scroll scrollbar-outer scroll-content"
+                                        style="height: auto; margin-bottom: 0px; margin-right: 0px; max-height: 0px;">
+                                        <li>
+                                            <div class="user-box">
+
+                                                <div class="u-text">
+                                                    <h4>Arnold</h4>
+                                                    <p class="text-muted">arnold@thremulate.com</p>
                                                 </div>
-                                            </li>
-                                            <li>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="#">My Profile</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="#">Account Setting</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="#">Logout</a>
-                                            </li>
-                                        </div>
-                                        <div class="scroll-element scroll-x">
-                                            <div class="scroll-element_outer">
-                                                <div class="scroll-element_size"></div>
-                                                <div class="scroll-element_track"></div>
-                                                <div class="scroll-bar ui-draggable ui-draggable-handle"></div>
                                             </div>
-                                        </div>
-                                        <div class="scroll-element scroll-y">
-                                            <div class="scroll-element_outer">
-                                                <div class="scroll-element_size"></div>
-                                                <div class="scroll-element_track"></div>
-                                                <div class="scroll-bar ui-draggable ui-draggable-handle"></div>
-                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">My Profile</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Account Setting</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Logout</a>
+                                        </li>
+                                    </div>
+                                    <div class="scroll-element scroll-x">
+                                        <div class="scroll-element_outer">
+                                            <div class="scroll-element_size"></div>
+                                            <div class="scroll-element_track"></div>
+                                            <div class="scroll-bar ui-draggable ui-draggable-handle"></div>
                                         </div>
                                     </div>
-                                </ul>
-                            </li>
-                          </ul>
+                                    <div class="scroll-element scroll-y">
+                                        <div class="scroll-element_outer">
+                                            <div class="scroll-element_size"></div>
+                                            <div class="scroll-element_track"></div>
+                                            <div class="scroll-bar ui-draggable ui-draggable-handle"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ul>
+                        </li>
+                    </ul>
 
 
 
@@ -301,7 +301,8 @@
                         <div class="col-md-4">
                             <div class="card card-primary">
                                 <div class="card-header">
-                                    <div class="card-title">Weekly Techniques Statistics</div>
+                                    <div class="card-title">Techniques Statistics 
+                                        <span class="text-sm" style="font-size: 0.8em;">(past 7 days)</span>
                                 </div>
                                 <div class="card-body pb-0">
                                     <div class="mb-4 mt-2">
@@ -312,10 +313,13 @@
                                     </div>
                                 </div>
                             </div>
+                            </div>
 
                             <div class="card card-primary bg-primary-gradient">
                                 <div class="card-header">
-                                    <div class="card-title">Techniques Progress</div>
+                                    <div class="card-title">Techniques Progress 
+                                        <span class="text-sm" style="font-size: 0.8em;">(assigned and executed)</span>
+                                    </div>
                                 </div>
                                 <div class="card-body">
                                     <div id="task-complete" class="chart-circle mt-4 mb-3"></div>
@@ -335,21 +339,22 @@
 
 
                     <div class="row">
-						<div class="col-md-4">
-							<div class="card">
-								<div class="card-header">
+                        <div class="col-md-4">
+                            <div class="card" style="min-height: 516px;">
+                                <div class="card-header">
                                     <div class="card-title">Most Active Agents</div>
                                     <p class="card-category">Based on number of techniques executed</p>
-								</div>
-								<div class="card-body pb-0">
+                                </div>
+                                <div class="card-body pb-0">
 
 
                                     {% for top_agent in top_active_agents %}
-									<div class="d-flex">
-										<div class="avatar">
-											<img src="{{ url('static', filename='img/agent.svg') }}" alt="..." class="avatar-img rounded-circle">
-										</div>
-										<div class="flex-1 pt-1 ml-2">
+                                    <div class="d-flex">
+                                        <div class="avatar">
+                                            <img src="{{ url('static', filename='img/agent.svg') }}" alt="..."
+                                                class="avatar-img rounded-circle">
+                                        </div>
+                                        <div class="flex-1 pt-1 ml-2">
                                             <h6 class="fw-bold mb-1">{{top_agent.name}}</h6>
                                             {% if top_agent.platform == 'windows' %}
                                             <small class="text-muted">Windows</small>
@@ -358,121 +363,59 @@
                                             {% elif top_agent.platform == 'macos' %}
                                             <small class="text-muted">MacOS</small>
                                             {% endif %}
-										</div>
-										<div class="d-flex ml-auto align-items-center">
-											<h3 class="text-info fw-bold">{{top_agent.count}}</h3>
-										</div>
-									</div>
-									
-                                    
+                                        </div>
+                                        <div class="d-flex ml-auto align-items-center">
+                                            <h3 class="text-info fw-bold">{{top_agent.count}}</h3>
+                                        </div>
+                                    </div>
+
+
                                     <div class="separator-dashed"></div>
-                                    
+
                                     {% endfor %}
-									<div class="pull-in"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-										<canvas id="topProductsChart" width="408" height="150" class="chartjs-render-monitor" style="display: block; width: 408px; height: 150px;"></canvas>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="card">
-								<div class="card-body">
-									<div class="card-title fw-mediumbold">Suggested People</div>
-									<div class="card-list">
-										<div class="item-list">
-											<div class="avatar">
-												<img src="../assets/img/jm_denis.jpg" alt="..." class="avatar-img rounded-circle">
-											</div>
-											<div class="info-user ml-3">
-												<div class="username">Jimmy Denis</div>
-												<div class="status">Graphic Designer</div>
-											</div>
-											<button class="btn btn-icon btn-primary btn-round btn-xs">
-												<i class="fa fa-plus"></i>
-											</button>
-										</div>
-										<div class="item-list">
-											<div class="avatar">
-												<img src="../assets/img/chadengle.jpg" alt="..." class="avatar-img rounded-circle">
-											</div>
-											<div class="info-user ml-3">
-												<div class="username">Chad</div>
-												<div class="status">CEO Zeleaf</div>
-											</div>
-											<button class="btn btn-icon btn-primary btn-round btn-xs">
-												<i class="fa fa-plus"></i>
-											</button>
-										</div>
-										<div class="item-list">
-											<div class="avatar">
-												<img src="../assets/img/talha.jpg" alt="..." class="avatar-img rounded-circle">
-											</div>
-											<div class="info-user ml-3">
-												<div class="username">Talha</div>
-												<div class="status">Front End Designer</div>
-											</div>
-											<button class="btn btn-icon btn-primary btn-round btn-xs">
-												<i class="fa fa-plus"></i>
-											</button>
-										</div>
-										<div class="item-list">
-											<div class="avatar">
-												<img src="../assets/img/mlane.jpg" alt="..." class="avatar-img rounded-circle">
-											</div>
-											<div class="info-user ml-3">
-												<div class="username">John Doe</div>
-												<div class="status">Back End Developer</div>
-											</div>
-											<button class="btn btn-icon btn-primary btn-round btn-xs">
-												<i class="fa fa-plus"></i>
-											</button>
-										</div>
-										<div class="item-list">
-											<div class="avatar">
-												<img src="../assets/img/talha.jpg" alt="..." class="avatar-img rounded-circle">
-											</div>
-											<div class="info-user ml-3">
-												<div class="username">Talha</div>
-												<div class="status">Front End Designer</div>
-											</div>
-											<button class="btn btn-icon btn-primary btn-round btn-xs">
-												<i class="fa fa-plus"></i>
-											</button>
-										</div>
-										<div class="item-list">
-											<div class="avatar">
-												<img src="../assets/img/jm_denis.jpg" alt="..." class="avatar-img rounded-circle">
-											</div>
-											<div class="info-user ml-3">
-												<div class="username">Jimmy Denis</div>
-												<div class="status">Graphic Designer</div>
-											</div>
-											<button class="btn btn-icon btn-primary btn-round btn-xs">
-												<i class="fa fa-plus"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="card card-primary bg-primary-gradient">
-								<div class="card-body">
-									<h4 class="mt-3 b-b1 pb-2 mb-4 fw-bold">Active user right now</h4>
-									<h1 class="mb-4 fw-bold">17</h1>
-									<h4 class="mt-3 b-b1 pb-2 mb-5 fw-bold">Page view per minutes</h4>
-									<div id="activeUsersChart"><canvas width="294" height="100" style="display: inline-block; width: 294px; height: 100px; vertical-align: top;"></canvas></div>
-									<h4 class="mt-5 pb-3 mb-0 fw-bold">Top active pages</h4>
-									<ul class="list-unstyled">
-										<li class="d-flex justify-content-between pb-1 pt-1">
-											<small>/product/readypro/index.html</small> <span>7</span></li>
-										<li class="d-flex justify-content-between pb-1 pt-1">
-											<small>/product/atlantis/demo.html</small> <span>10</span></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card full-height">
+                                <div class="card-header">
+                                    <div class="card-title">Timeline</div>
+                                </div>
+                                <div class="card-body">
+                                    <ol class="activity-feed">
+
+                                        {% for t in timeline %}
+                                        <li class="feed-item feed-item-success">
+                                            <time class="date" >{{ t.executed.strftime("%d %b") }}</time>
+                                            <span class="text">{{ t.count }} technique(s) executed</span>
+                                        </li>
+                                        {% endfor %}
+                                        
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card card-primary bg-primary-gradient">
+                                <div class="card-body">
+                                    <h4 class="mt-3 b-b1 pb-2 mb-4 fw-bold">Active user right now</h4>
+                                    <h1 class="mb-4 fw-bold">17</h1>
+                                    <h4 class="mt-3 b-b1 pb-2 mb-5 fw-bold">Page view per minutes</h4>
+                                    <div id="activeUsersChart"><canvas width="294" height="100"
+                                            style="display: inline-block; width: 294px; height: 100px; vertical-align: top;"></canvas>
+                                    </div>
+                                    <h4 class="mt-5 pb-3 mb-0 fw-bold">Top active pages</h4>
+                                    <ul class="list-unstyled">
+                                        <li class="d-flex justify-content-between pb-1 pt-1">
+                                            <small>/product/readypro/index.html</small> <span>7</span></li>
+                                        <li class="d-flex justify-content-between pb-1 pt-1">
+                                            <small>/product/atlantis/demo.html</small> <span>10</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
 
@@ -663,14 +606,14 @@
     <script>
 
 
-        $(document).ready(function(){
+        $(document).ready(function () {
 
 
-            $(".drop").mouseenter(function(){
+            $(".drop").mouseenter(function () {
                 $(this).dropdown("toggle");
 
             });
-     
+
 
         });
 
@@ -873,10 +816,10 @@
 
         var techStats = document.getElementById('tech-stats').getContext('2d');
         var myDailySalesChart = new Chart(techStats, {
-	type: 'line',
-	data: {
-		labels:[
-            {% for day in weekly %}
+            type: 'line',
+            data: {
+                labels: [
+                    {% for day in weekly %}
             "{{ day.date }}",
 
             {% endfor %}
@@ -884,43 +827,43 @@
 
 
         ],
-		datasets:[ {
-			label: "Techniques Executed", fill: !0, backgroundColor: "rgba(255,255,255,0.2)", borderColor: "#fff", borderCapStyle: "butt", borderDash: [], borderDashOffset: 0, pointBorderColor: "#fff", pointBackgroundColor: "#fff", pointBorderWidth: 1, pointHoverRadius: 5, pointHoverBackgroundColor: "#fff", pointHoverBorderColor: "#fff", pointHoverBorderWidth: 1, pointRadius: 1, pointHitRadius: 5,
-             data: [
-             {% for data in weekly %}
+        datasets: [{
+            label: "Techniques Executed", fill: !0, backgroundColor: "rgba(255,255,255,0.2)", borderColor: "#fff", borderCapStyle: "butt", borderDash: [], borderDashOffset: 0, pointBorderColor: "#fff", pointBackgroundColor: "#fff", pointBorderWidth: 1, pointHoverRadius: 5, pointHoverBackgroundColor: "#fff", pointHoverBorderColor: "#fff", pointHoverBorderWidth: 1, pointRadius: 1, pointHitRadius: 5,
+            data: [
+                {% for data in weekly %}
             "{{ data.count }}",
 
-            {% endfor %}
-                 ]
+        {% endfor %}
+        ]
 		}]
 	},
-	options : {
-		maintainAspectRatio:!1, legend: {
-			display: !1
-		}
+        options: {
+            maintainAspectRatio: !1, legend: {
+                display: !1
+            }
 		, animation: {
-			easing: "easeInOutBack"
-		}
+                easing: "easeInOutBack"
+            }
 		, scales: {
-			yAxes:[ {
-				display:!1, ticks: {
-					fontColor: "rgba(0,0,0,0.5)", fontStyle: "bold", beginAtZero: !0, maxTicksLimit: 10, padding: 0
-				}
-				, gridLines: {
-					drawTicks: !1, display: !1
-				}
-			}
-			], xAxes:[ {
-				display:!1, gridLines: {
-					zeroLineColor: "transparent"
-				}
-				, ticks: {
-					padding: -20, fontColor: "rgba(255,255,255,0.2)", fontStyle: "bold"
-				}
-			}
-			]
-		}
-	}
+                yAxes: [{
+                    display: !1, ticks: {
+                        fontColor: "rgba(0,0,0,0.5)", fontStyle: "bold", beginAtZero: !0, maxTicksLimit: 10, padding: 0
+                    }
+                    , gridLines: {
+                        drawTicks: !1, display: !1
+                    }
+                }
+                ], xAxes: [{
+                    display: !1, gridLines: {
+                        zeroLineColor: "transparent"
+                    }
+                    , ticks: {
+                        padding: -20, fontColor: "rgba(255,255,255,0.2)", fontStyle: "bold"
+                    }
+                }
+                ]
+            }
+        }
 });
 
 
