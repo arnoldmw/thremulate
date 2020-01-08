@@ -41,23 +41,30 @@
 
 
 
-                        <form action="" id="loginform">
+                        <form action="{{ url('login_post') }}" id="loginform" method="post">
                             <div class="card-body">
+                                {% if error != '' %}
+                                <div class="text-center">
+                                <p class="text-danger">{{ error }}</p>
+                                 </div> 
+                                
+                                {% endif %}
+                                {% set error = '' %}  
                                 <div class="form-group">
-                                    <input id="email" name="email" type="email" class="form-control input-solid"
+                                    <input id="email" name="email" type="email" class="form-control "
                                         required="" minlength="5" placeholder="Email">
-                                    <!-- <label for="email" class="placeholder">Email</label> -->
+                                   
                                 </div>
                                 <div class="form-group">
                                     <input id="password" name="password" type="password"
-                                        class="form-control input-solid" required="" maxlength="12" minlength="5" placeholder="Password">
-                                    <!-- <label for="password" class="placeholder">Password</label> -->
+                                        class="form-control " required="" maxlength="12" minlength="5" placeholder="Password">
+                                
                                 </div>
 
                             </div>
                             <div class="card-action">
-                                <input class="btn btn-lg btn-primary btn-block" type="submit" name="submit"
-                                    value="Login">
+                                <input class="btn btn-lg btn-primary btn-block" type="submit"
+                                    value="Login" id="submit">
                             </div>
 
                         </form>
@@ -81,45 +88,70 @@
     <!-- Atlantis JS -->
     <!-- <script src="{{ url('static', filename='js/atlantis.min.js') }}"></script> -->
 
-    <script>
-        $.validator.setDefaults({
-            submitHandler: function () {
-                alert("submitted!");
-            }
-        });
+    <script type="text/javascript">
+       
+        // $.validator.setDefaults({
+        //      submitHandler: function (form) {
+                //  $(form).submit();
+                 
+                //  $("#reg-card").addClass("is-loading");
+                //  $("#loginform").submit();
+        //      }
+        //  });
+                 
+ 
+         $(document).ready(function () {
 
-        $().ready(function () {
-            // validate the form when it is submitted
-            var validator = $("#loginform").validate({
-                errorPlacement: function (error, element) {
-                    // Append error within linked label
-                    $(element)
-                        .closest("form")
-                        .find("label[for='" + element.attr("id") + "']")
-                        .append(error);
-                },
-                errorElement: "span",
-                messages: {
-                    email: {
-                        required: " (required)",
-                        minlength: " (must be at least 3 characters)"
-                    },
-                    password: {
-                        required: " (required)",
-                        minlength: " (must be 5 or more characters)",
-                        maxlength: " (must be less than 12 characters)"
-                    }
-                }
-            });
+            
+                // $("#submit").click(function(){
 
-            $(".cancel").click(function () {
-                validator.resetForm();
-            });
-        });
+                // });
 
-      
 
-    </script>
+             $("#loginform").validate({
+                 rules: {
+                     
+                     password: {
+                         required: true,
+                         minlength: 5
+                     },
+                     email: {
+                         required: true,
+                         email: true
+                     }
+                 },
+                 messages: {
+                     password: {
+                         required: "Please provide a password",
+                         minlength: "Your password must be at least 5 characters long"
+                     },
+                     email: "Please enter a valid email address"
+                 },
+                 errorElement: "em",
+                 errorPlacement: function (error, element) {
+                     // Add the `invalid-feedback` class to the error element
+                     error.addClass("invalid-feedback");
+ 
+                     if (element.prop("type") === "checkbox") {
+                         error.insertAfter(element.next("label"));
+                     } else {
+                         error.insertAfter(element);
+                     }
+                 },
+                 highlight: function (element, errorClass, validClass) {
+                     $(element).parent().addClass("has-error").removeClass("has-success");
+                 },
+                 unhighlight: function (element, errorClass, validClass) {
+                     $(element).parent().addClass("has-success").removeClass("has-error");
+                 }
+                 
+                //  $("#reg-card").addClass("is-loading");
+                //  $("#loginform").submit();
+        //      }
+             });
+ 
+         });
+     </script>
 
 </body>
 
