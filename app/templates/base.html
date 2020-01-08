@@ -116,8 +116,8 @@
                         
     
                             <li class="nav-item dropdown hidden-caret">
-                                <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
-                                    <i class="fas fa-user" data-toggle="tooltip" title="Account"></i>
+                                <a class="nav-link drop" data-toggle="dropdown" href="#" aria-expanded="false">
+                                    {{ username }}
                                 </a>
                                 <ul class="dropdown-menu dropdown-user animated fadeIn">
                                     <div class="scroll-wrapper dropdown-user-scroll scrollbar-outer"
@@ -139,7 +139,7 @@
                                                 <div class="dropdown-divider"></div>
                                                 <a class="dropdown-item" href="#">Account Setting</a>
                                                 <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="#">Logout</a>
+                                                <a class="dropdown-item" href="{{ url('logout' )}}">Logout</a>
                                             </li>
                                         </div>
                                         <div class="scroll-element scroll-x">

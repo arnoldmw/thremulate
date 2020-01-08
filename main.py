@@ -11,6 +11,13 @@ from handlers.user_mgt import *
 # noinspection PyUnresolvedReferences
 from handlers.middleware import setup_middleware
 
+from aiohttp_security import setup as setup_security
+from aiohttp_security import SessionIdentityPolicy
+from aiohttp_security import (
+    remember, forget, authorized_userid,
+    check_permission, check_authorized,
+)
+
 import logging
 import ssl
 
@@ -24,6 +31,9 @@ from aiohttp_session import setup
 from aiohttp_session.cookie_storage import EncryptedCookieStorage
 
 # noinspection PyUnresolvedReferences
+from db_auth import DBAuthorizationPolicy
+
+# noinspection PyUnresolvedReferences
 from database import *
 
 THIS_DIR = Path(__file__).parent
@@ -31,13 +41,21 @@ THIS_DIR = Path(__file__).parent
 
 @aiohttp_jinja2.template('base.html')
 async def index(request):
-    return {'title': "Home"}
+    return {}
+
+
+@aiohttp_jinja2.template('base.html')
+async def home(request):
+    user_email = await authorized_userid(request)
+    username = User.get(User.email == user_email).fname
+    return {'username': username, 'title': "Home"}
 
 
 async def create_app():
     app = web.Application()
     app.add_routes([
-        web.get('/', index),
+        web.get('/', index, name='index'),
+        web.get('/home', home, name='home'),
         web.static('/static/', path=THIS_DIR / 'app/static', show_index=True, append_version=True, name='static'),
         web.static('/downloads/', path=THIS_DIR / 'app/downloads', show_index=True, name='downloads'),
         web.static('/uploads/', path=THIS_DIR / 'app/uploads', show_index=True, name='uploads')
@@ -57,6 +75,9 @@ async def create_app():
 
     secret_key = b'\xd0\x04)E\x14\x98\xa1~\xecE\xae>(\x1d6\xec\xbfQ\xa4\x19\x0e\xbcre,\xf8\x8f\x84WV.\x8d'
     setup(app, EncryptedCookieStorage(secret_key))
+
+    # Setting authentication and authorization
+    setup_security(app, SessionIdentityPolicy(), DBAuthorizationPolicy())
 
     # HTTPS using Secure Sockets Layer
     ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)

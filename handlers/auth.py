@@ -2,9 +2,11 @@ from aiohttp import web
 from database import *
 import aiohttp_jinja2
 from peewee import IntegrityError
-
-# noinspection PyUnresolvedReferences
-from db_auth import generate_password_hash
+from db_auth import *
+from aiohttp_security import (
+    remember, forget, authorized_userid,
+    check_permission, check_authorized,
+)
 
 
 @aiohttp_jinja2.template('auth/login.html')
@@ -13,7 +15,28 @@ async def login(request):
 
 
 async def login_post(request):
-    return {}
+    data = await request.post()
+    email = data['email']
+    password = data['password']
+
+    result = check_credentials(email, password)
+    if result:
+        response = web.HTTPFound('/home')
+        await remember(request, response, email)
+        raise response
+
+    context = {'error': '*Incorrect login'}
+    response = aiohttp_jinja2.render_template('auth/login.html',
+                                              request,
+                                              context)
+    return response
+
+
+async def logout(request):
+    await check_authorized(request)
+    response = web.HTTPFound('/')
+    await forget(request, response)
+    return response
 
 
 @aiohttp_jinja2.template('auth/register.html')
@@ -64,7 +87,8 @@ async def reset_password_post(request):
 def setup_auth_routes(app):
     app.add_routes([
         web.get('/login', login, name='login'),
-        web.post('/login_post', login_post),
+        web.post('/login_post', login_post, name='login_post'),
+        web.get('/logout', logout, name='logout'),
         web.get('/register', register, name='register'),
         web.post('/register_post', register_post, name='register_post'),
         web.get('/reset_password/{id}', reset_password, name='reset_password'),
