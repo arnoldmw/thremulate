@@ -16,7 +16,6 @@ from art.run_atomics import get_all_techniques_and_params
 
 @aiohttp_jinja2.template('agent/agent_index.html')
 async def agent_index(request):
-    session = await get_session(request)
     # fas fa - broadcast - tower
     agents = []
 
@@ -32,8 +31,9 @@ async def agent_index(request):
         agents.append({'id': ag.id, 'name': ag.name, 'initial_contact': ic,
                        'last_contact': lc, 'campaign': ag.campaign.name})
 
+    session = await get_session(request)
     username = session['username']
-    return {'agents': agents, 'title': 'Agents', 'username': username}
+    return {'username': username, 'agents': agents, 'title': 'Agents'}
 
 
 @aiohttp_jinja2.template('agent/assign_tasks.html')
@@ -45,7 +45,9 @@ async def assign_tasks(request):
 
     tech_list = get_all_techniques(agent_platform)
 
-    return {'techs': tech_list, 'agent_id': agent_id, 'title': 'Techniques'}
+    session = await get_session(request)
+    username = session['username']
+    return {'username': username, 'techs': tech_list, 'agent_id': agent_id, 'title': 'Techniques'}
 
 
 async def assign_tasks_post(request):
@@ -178,7 +180,9 @@ async def agent_details(request):
     # for at in agt:
     #     details.append({'name': at.technique_id.name, 'output': at.output})
 
-    return {'agent': agent, 'details': details, 'title': 'Agent Details'}
+    session = await get_session(request)
+    username = session['username']
+    return {'username': username, 'agent': agent, 'details': details, 'title': 'Agent Details'}
 
 
 @aiohttp_jinja2.template('agent/agent_edit.html')
@@ -193,7 +197,9 @@ async def agent_edit(request):
     for camp in camps:
         campaigns.append({'camp_id': camp.id, 'camp_name': camp.name})
 
-    return {'agent': agent, 'campaigns': campaigns, 'title': 'Update Agent'}
+    session = await get_session(request)
+    username = session['username']
+    return {'username': username, 'agent': agent, 'campaigns': campaigns, 'title': 'Update Agent'}
 
 
 async def agent_edit_post(request):
@@ -226,9 +232,13 @@ async def customize_technique(request):
     agent_id = arr[0]
     tech_id = 'T' + arr[1]
 
+    session = await get_session(request)
+    username = session['username']
+
     tech = get_one_technique_and_params(tech_id)
     tech.__setitem__('agent_id', agent_id)
     tech.__setitem__('title', 'Techniques')
+    tech.__setitem__('username', username)
 
     return tech
 

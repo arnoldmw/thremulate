@@ -47,9 +47,7 @@ async def index(request):
 @aiohttp_jinja2.template('home.html')
 async def home(request):
     session = await get_session(request)
-    user_email = await authorized_userid(request)
-    username = User.get(User.email == user_email).fname
-    session['username'] = username
+    username = session['username']
     return {'username': username, 'title': "Home"}
 
 
@@ -96,5 +94,5 @@ async def create_app():
     return app
 
 # adev runserver --livereload --debug-toolbar
-app = create_app()
-web.run_app(app, host="localhost", port=8000)
+# app = create_app()
+# web.run_app(app, host="localhost", port=8000)

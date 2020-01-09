@@ -2,6 +2,7 @@ import datetime
 
 import aiohttp_jinja2
 from aiohttp import web
+from aiohttp_session import get_session
 from database import *
 
 
@@ -89,8 +90,11 @@ async def dashboard(request):
     counts.append(exec_in_week)
 
     top_active_agents = most_active_agents()
+    timeline = timeline_data()
+    platform_execution = platform_exec_count()
 
-    return {'counts': counts, 'graph': graph, 'weekly': weekly, 'top_active_agents': top_active_agents}
+    return {'counts': counts, 'graph': graph, 'weekly': weekly, 'top_active_agents': top_active_agents,
+            'timeline': timeline, 'plat_exec': platform_execution}
 
 
 def most_active_agents():
@@ -100,12 +104,40 @@ def most_active_agents():
                                    number_executed.alias('count'), Agent.name, Agent.platform) \
         .join(Agent) \
         .group_by(AgentTechnique.agent_id) \
-        .having(AgentTechnique.executed.is_null(False)).order_by(number_executed.desc()).limit(3).dicts()
+        .having(AgentTechnique.executed.is_null(False)).order_by(number_executed.desc()).limit(5).dicts()
 
     for a in query7:
         most_active_agents_in_db.append(a)
 
     return most_active_agents_in_db
+
+
+def timeline_data():
+    t_data = []
+    query = AgentTechnique.select(AgentTechnique.executed, fn.Count(AgentTechnique.agent_id).alias('count'))\
+        .group_by(AgentTechnique.executed.day).having(AgentTechnique.executed.is_null(False))\
+        .order_by(AgentTechnique.executed.desc()).limit(6).dicts()
+
+    for n in query:
+        t_data.append(n)
+
+    return t_data
+
+
+def platform_exec_count():
+    plat_execution = AgentTechnique.select(Agent.platform,AgentTechnique.agent_id, fn.Count(AgentTechnique.technique_id).alias('count')).join(Agent)\
+        .group_by(AgentTechnique.agent_id).having(AgentTechnique.executed.is_null(False)).dicts()
+
+    plat_exec = {'windows': 0, 'linux': 0, 'macos': 0}
+    for p in plat_execution:
+        if p['platform'] == 'windows':
+            plat_exec['windows'] = plat_exec['windows'] + p['count']
+        if p['platform'] == 'macos':
+            plat_exec['macos'] = plat_exec['macos'] + p['count']
+        if p['platform'] == 'linux':
+            plat_exec['linux'] = plat_exec['linux'] + p['count']
+
+    return plat_exec
 
 
 def setup_dashboard_routes(app):

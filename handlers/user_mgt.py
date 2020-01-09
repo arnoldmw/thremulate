@@ -1,6 +1,7 @@
 import aiohttp_jinja2
 from aiohttp import web
 from database import *
+from aiohttp_session import get_session
 
 
 @aiohttp_jinja2.template('user_mgt/users_index.html')
@@ -25,7 +26,9 @@ async def users_index(request):
         users_list.append(user)
         user = {}
         # perms = []
-    return {'users': users_list, 'title': 'Users'}
+    session = await get_session(request)
+    username = session['username']
+    return {'username': username, 'users': users_list, 'title': 'Users'}
 
 
 async def user_delete(request):
@@ -69,7 +72,9 @@ async def user_edit(request):
 
     # print(user_selected)
     # print(perm_list)
-    return {'user': user_selected, 'perm_list': perm_list, 'title': 'User Edit'}
+    session = await get_session(request)
+    username = session['username']
+    return {'username': username, 'user': user_selected, 'perm_list': perm_list, 'title': 'User Edit'}
 
 
 async def user_edit_post(request):

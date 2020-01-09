@@ -1,5 +1,6 @@
 import aiohttp_jinja2
 from aiohttp import web
+from aiohttp_session import get_session
 from database import *
 import datetime
 
@@ -21,7 +22,9 @@ async def campaign_index(request):
 
         campaigns.append({'id': camp.id, 'name': camp.name, 'created': created, 'updated': updated,
                           'no_of_agents': camp.count})
-    return {'campaigns': campaigns, 'title': 'Campaigns'}
+    session = await get_session(request)
+    username = session['username']
+    return {'username': username, 'campaigns': campaigns, 'title': 'Campaigns'}
 
 
 async def campaign_add(request):
@@ -47,9 +50,16 @@ async def campaign_details(request):
                            'initial_contact': ag.initial_contact.strftime("%d-%b-%Y %H:%M:%S"),
                            'last_contact': ag.last_contact.strftime("%d-%b-%Y %H:%M:%S")})
 
-        return {'campaign': camp_details, 'agents': agents, 'title': 'Campaign Details'}
+        session = await get_session(request)
+        username = session['username']
+        return {'username': username, 'campaign': camp_details, 'agents': agents, 'title': 'Campaign Details'}
+
     else:
-        return web.HTTPFound('/campaigns')
+        session = await get_session(request)
+        username = session['username']
+        context = {'username': username}
+        response = aiohttp_jinja2.render_template('campaign/campaign_index.html', request, context)
+        return response
 
 
 async def campaign_update(request):
