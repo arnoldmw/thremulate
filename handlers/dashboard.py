@@ -90,9 +90,10 @@ async def dashboard(request):
 
     top_active_agents = most_active_agents()
     timeline = timeline_data()
+    platform_execution = platform_exec_count()
 
     return {'counts': counts, 'graph': graph, 'weekly': weekly, 'top_active_agents': top_active_agents,
-            'timeline': timeline}
+            'timeline': timeline, 'plat_exec': platform_execution}
 
 
 def most_active_agents():
@@ -120,6 +121,22 @@ def timeline_data():
         t_data.append(n)
 
     return t_data
+
+
+def platform_exec_count():
+    plat_execution = AgentTechnique.select(Agent.platform,AgentTechnique.agent_id, fn.Count(AgentTechnique.technique_id).alias('count')).join(Agent)\
+        .group_by(AgentTechnique.agent_id).having(AgentTechnique.executed.is_null(False)).dicts()
+
+    plat_exec = {'windows': 0, 'linux': 0, 'macos': 0}
+    for p in plat_execution:
+        if p['platform'] == 'windows':
+            plat_exec['windows'] = plat_exec['windows'] + p['count']
+        if p['platform'] == 'macos':
+            plat_exec['macos'] = plat_exec['macos'] + p['count']
+        if p['platform'] == 'linux':
+            plat_exec['linux'] = plat_exec['linux'] + p['count']
+
+    return plat_exec
 
 
 def setup_dashboard_routes(app):
