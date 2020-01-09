@@ -24,11 +24,10 @@ async def login_post(request):
     if result:
         response = web.HTTPFound('/home')
         await remember(request, response, email)
-        session = await new_session(request)
-        # session.new = True
+        # session = await new_session(request)
 
-        username = User.get(User.email == email).fname
-        session['username'] = username
+        # username = User.get(User.email == email).fname
+        # session['username'] = username
         raise response
 
     context = {'error': '*Incorrect login'}
@@ -42,7 +41,9 @@ async def logout(request):
     await check_authorized(request)
     response = web.HTTPFound('/')
     await forget(request, response)
-    return response
+    session = await get_session(request)
+    session.invalidate()
+    raise response
 
 
 @aiohttp_jinja2.template('auth/register.html')
