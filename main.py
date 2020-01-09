@@ -39,15 +39,15 @@ from database import *
 THIS_DIR = Path(__file__).parent
 
 
-@aiohttp_jinja2.template('base.html')
+@aiohttp_jinja2.template('index.html')
 async def index(request):
     return {}
 
 
-@aiohttp_jinja2.template('base.html')
+@aiohttp_jinja2.template('home.html')
 async def home(request):
-    user_email = await authorized_userid(request)
-    username = User.get(User.email == user_email).fname
+    session = await get_session(request)
+    username = session['username']
     return {'username': username, 'title': "Home"}
 
 

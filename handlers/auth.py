@@ -1,4 +1,5 @@
 from aiohttp import web
+from aiohttp_session import new_session, get_session
 from database import *
 import aiohttp_jinja2
 from peewee import IntegrityError
@@ -23,6 +24,11 @@ async def login_post(request):
     if result:
         response = web.HTTPFound('/home')
         await remember(request, response, email)
+        session = await new_session(request)
+        # session.new = True
+
+        username = User.get(User.email == email).fname
+        session['username'] = username
         raise response
 
     context = {'error': '*Incorrect login'}
@@ -66,7 +72,9 @@ async def register_post(request):
 @aiohttp_jinja2.template('auth/reset_password.html')
 async def reset_password(request):
     user_id = request.match_info['id']
-    return {'user_id': user_id, 'title': 'Reset Password'}
+    session = await get_session(request)
+    username = session['username']
+    return {'username': username, 'user_id': user_id, 'title': 'Reset Password'}
 
 
 async def reset_password_post(request):

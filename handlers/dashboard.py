@@ -2,6 +2,7 @@ import datetime
 
 import aiohttp_jinja2
 from aiohttp import web
+from aiohttp_session import get_session
 from database import *
 
 
