@@ -93,8 +93,10 @@ async def dashboard(request):
     timeline = timeline_data()
     platform_execution = platform_exec_count()
 
-    return {'counts': counts, 'graph': graph, 'weekly': weekly, 'top_active_agents': top_active_agents,
-            'timeline': timeline, 'plat_exec': platform_execution}
+    session = await get_session(request)
+    username = session['username']
+    return {'username': username, 'counts': counts, 'graph': graph, 'weekly': weekly,
+            'top_active_agents': top_active_agents, 'timeline': timeline, 'plat_exec': platform_execution}
 
 
 def most_active_agents():

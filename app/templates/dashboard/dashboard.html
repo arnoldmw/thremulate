@@ -62,33 +62,16 @@
                             <a href="{{ url('dashboard') }}" class="nav-link">Dashboard</a>
                         </li>
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link " href="" id="campdropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Campaigns</a>
-                            <div class="dropdown-menu" aria-labelledby="campdropdown">
-                                <a class="dropdown-item" href="{{ url('campaigns') }}">View Campaigns</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
+                        <li class="nav-item">
+                            <a class="nav-link " href="{{ url('campaigns') }}" >Campaigns</a>
                         </li>
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link " href="" id="agentdropdown"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Agents</a>
-                            <div class="dropdown-menu" aria-labelledby="agentdropdown">
-                                <a class="dropdown-item" href="{{ url('agents') }}">View Agents</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
+                        <li class="nav-item">
+                            <a class="nav-link " href="{{ url('agents') }}" >Agents</a>
                         </li>
 
-                          <li class="nav-item dropdown">
-                            <a class="nav-link " href="" id="usersdropdown"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Users</a>
-                            <div class="dropdown-menu" aria-labelledby="usersdropdown">
-                                <a class="dropdown-item" href="{{ url('users') }}">View Users</a>
-                                <a class="dropdown-item" href="{{ url('register') }}">Add User</a>
-                                <!-- <a class="dropdown-item" href="#">Something else here</a> -->
-                            </div>
+                          <li class="nav-item">
+                            <a class="nav-link " href="{{ url('users') }}" >Users</a>
                         </li>
                     </ul>
 
@@ -110,7 +93,7 @@
 
                         <li class="nav-item dropdown hidden-caret">
                             <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
-                                <i class="fas fa-user" data-toggle="tooltip" title="Account"></i>
+                                {{username}}
                             </a>
                             <ul class="dropdown-menu dropdown-user animated fadeIn">
                                 <div class="scroll-wrapper dropdown-user-scroll scrollbar-outer"
