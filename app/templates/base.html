@@ -63,39 +63,22 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="#" class="nav-link">Home</a>
+                            <a href="{{ url('home') }}" class="nav-link">Home</a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ url('dashboard') }}" class="nav-link">Dashboard</a>
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link drop" href="" id="campdropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Campaigns</a>
-                            <div class="dropdown-menu" aria-labelledby="campdropdown">
-                              <a class="dropdown-item" href="{{ url('campaigns') }}">View Campaigns</a>
-                              <a class="dropdown-item" href="#">Another action</a>
-                              <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
+                            <a class="nav-link " href="{{ url('campaigns') }}" >Campaigns</a>
                           </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link drop" href="" id="agentdropdown" 
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Agents</a>
-                            <div class="dropdown-menu" aria-labelledby="agentdropdown">
-                              <a class="dropdown-item" href="{{ url('agents') }}">View Agents</a>
-                              <a class="dropdown-item" href="#">Another action</a>
-                              <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
+                            <a class="nav-link " href="{{ url('agents') }}" >Agents</a>
                           </li>
                         
                           <li class="nav-item dropdown">
-                            <a class="nav-link drop" href="" id="agentdropdown" 
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Users</a>
-                            <div class="dropdown-menu" aria-labelledby="agentdropdown">
-                              <a class="dropdown-item" href="{{ url('users') }}">View Users</a>
-                              <a class="dropdown-item" href="{{ url('register') }}">Add User</a>
-                              <!-- <a class="dropdown-item" href="#">Something else here</a> -->
-                            </div>
+                            <a class="nav-link " href="{{ url('users') }}" >Users</a>
                           </li>
                         </ul>
 
@@ -116,7 +99,7 @@
                         
     
                             <li class="nav-item dropdown hidden-caret">
-                                <a class="nav-link drop" data-toggle="dropdown" href="#" aria-expanded="false">
+                                <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
                                     {{ username }}
                                 </a>
                                 <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -124,17 +107,9 @@
                                         style="position: relative;">
                                         <div class="dropdown-user-scroll scrollbar-outer scroll-content"
                                             style="height: auto; margin-bottom: 0px; margin-right: 0px; max-height: 0px;">
+                                            
                                             <li>
-                                                <div class="user-box">
-    
-                                                    <div class="u-text">
-                                                        <h4>Arnold</h4>
-                                                        <p class="text-muted">arnold@thremulate.com</p>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="dropdown-divider"></div>
+                                                
                                                 <a class="dropdown-item" href="#">My Profile</a>
                                                 <div class="dropdown-divider"></div>
                                                 <a class="dropdown-item" href="#">Account Setting</a>
@@ -283,10 +258,10 @@
             //     $(this).children("a.drop").dropdown("toggle");
             // });
 
-            $(".drop").mouseenter(function(){             
-                $(this).dropdown("toggle");
+            // $(".drop").mouseenter(function(){             
+            //     $(this).dropdown("toggle");
 
-            });
+            // });
 
             // $(".drop").mouseleave(function(){
             //     $(this).dropdown("toggle");

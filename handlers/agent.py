@@ -1,5 +1,6 @@
 import aiohttp_jinja2
 from aiohttp import web
+from aiohttp_session import get_session
 from database import *
 import datetime
 
@@ -15,6 +16,7 @@ from art.run_atomics import get_all_techniques_and_params
 
 @aiohttp_jinja2.template('agent/agent_index.html')
 async def agent_index(request):
+    session = await get_session(request)
     # fas fa - broadcast - tower
     agents = []
 
@@ -30,7 +32,8 @@ async def agent_index(request):
         agents.append({'id': ag.id, 'name': ag.name, 'initial_contact': ic,
                        'last_contact': lc, 'campaign': ag.campaign.name})
 
-    return {'agents': agents, 'title': 'Agents'}
+    username = session['username']
+    return {'agents': agents, 'title': 'Agents', 'username': username}
 
 
 @aiohttp_jinja2.template('agent/assign_tasks.html')
