@@ -59,6 +59,16 @@
                 <!--                <p class="card-category">Details</p>-->
                 <p class="card-category">Name: {{ agent.name }}</p>
                 <p class="card-category">Campaign: {{ agent.campaign }}</p>
+                <p class="card-category">Platform: 
+                    {% if agent.platform == 'windows' %}
+                        Windows
+                    {% elif agent.platform == 'linux' %}
+                        Linux
+                    {% elif agent.platform == 'macos' %}
+                        MacOS
+                    {% endif %}
+                    
+                </p>
                 <p class="card-category"><a href="{{ url('agents') }}">Back to Agents</a></p>
             </div>
             <input type="hidden" id="agent_id" name="agent_id" value="{{ agent.id }}">
