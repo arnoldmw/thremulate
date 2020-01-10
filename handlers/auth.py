@@ -16,18 +16,20 @@ async def login(request):
 
 
 async def login_post(request):
+    # sess = await get_session(request)
     data = await request.post()
     email = data['email']
     password = data['password']
 
     result = check_credentials(email, password)
     if result:
+        session = await new_session(request)
         response = web.HTTPFound('/home')
         await remember(request, response, email)
         # session = await new_session(request)
 
-        # username = User.get(User.email == email).fname
-        # session['username'] = username
+        username = User.get(User.email == email).fname
+        session.__setitem__('username', username)
         raise response
 
     context = {'error': '*Incorrect login'}
