@@ -165,7 +165,8 @@ async def agent_details(request):
     # agt = (AgentTechnique.select(Agent, AgentTechnique).join(Agent).where(AgentTechnique.agent_id == agent_id))
     # agt = AgentTechnique.select().join(Technique).where(AgentTechnique.agent_id == agent_id)
 
-    agt = Agent.select(Agent.name, Agent.platform, Agent.domain, Agent.id, Agent.campaign_id, AgentTechnique, Technique) \
+    agt = Agent.select(Agent.name, Agent.platform, Agent.domain, Agent.id, Agent.campaign_id,
+                       AgentTechnique, Technique) \
         .join(AgentTechnique) \
         .join(Technique) \
         .where(AgentTechnique.agent_id == agent_id)
@@ -174,7 +175,8 @@ async def agent_details(request):
     agent = {}
     # print(agt)
     for at in agt:
-        details.append({'tech_id': at.agenttechnique.technique_id, 'name': at.agenttechnique.technique_id.name, 'output': at.agenttechnique.output})
+        details.append({'tech_id': at.agenttechnique.technique_id, 'name': at.agenttechnique.technique_id.name,
+                        'output': at.agenttechnique.output})
         agent = {'id': at.id, 'name': at.name, 'campaign': at.campaign.name, 'domain': at.domain,
                  'platform': at.platform}
 
