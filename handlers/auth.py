@@ -28,8 +28,8 @@ async def login_post(request):
         await remember(request, response, email)
         # session = await new_session(request)
 
-        # username = User.get(User.email == email).fname
-        # session['username'] = username
+        username = User.get(User.email == email).fname
+        session.__setitem__('username', username)
         raise response
 
     context = {'error': '*Incorrect login'}
