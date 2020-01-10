@@ -46,7 +46,12 @@ async def index(request):
 
 @aiohttp_jinja2.template('home.html')
 async def home(request):
+    await check_authorized(request)
+
     session = await get_session(request)
+    # email = await authorized_userid(request)
+    # username = User.get(User.email == email).fname
+    # session['username'] = username
     username = session['username']
     return {'username': username, 'title': "Home"}
 
