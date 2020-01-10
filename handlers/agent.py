@@ -165,7 +165,8 @@ async def agent_details(request):
     # agt = (AgentTechnique.select(Agent, AgentTechnique).join(Agent).where(AgentTechnique.agent_id == agent_id))
     # agt = AgentTechnique.select().join(Technique).where(AgentTechnique.agent_id == agent_id)
 
-    agt = Agent.select(Agent.name, Agent.id, Agent.campaign_id, AgentTechnique, Technique) \
+    agt = Agent.select(Agent.name, Agent.platform, Agent.domain, Agent.id, Agent.campaign_id,
+                       AgentTechnique, Technique) \
         .join(AgentTechnique) \
         .join(Technique) \
         .where(AgentTechnique.agent_id == agent_id)
@@ -174,12 +175,14 @@ async def agent_details(request):
     agent = {}
     # print(agt)
     for at in agt:
-        details.append({'name': at.agenttechnique.technique_id.name, 'output': at.agenttechnique.output})
-        agent = {'name': at.name, 'campaign': at.campaign.name, 'domain': at.domain}
+        details.append({'tech_id': at.agenttechnique.technique_id, 'name': at.agenttechnique.technique_id.name,
+                        'output': at.agenttechnique.output})
+        agent = {'id': at.id, 'name': at.name, 'campaign': at.campaign.name, 'domain': at.domain,
+                 'platform': at.platform}
 
     # for at in agt:
     #     details.append({'name': at.technique_id.name, 'output': at.output})
-
+    print(agent)
     session = await get_session(request)
     username = session['username']
     return {'username': username, 'agent': agent, 'details': details, 'title': 'Agent Details'}
@@ -285,6 +288,26 @@ async def register_agent(request):
     return web.Response(text=str(agent_id) + ' ' + host_name)
 
 
+async def delete_tech_output(request):
+    data = await request.post()
+
+    AgentTechnique.update(output=None, result=None, executed=None)\
+        .where(AgentTechnique.agent_id == data['agent_id'] and AgentTechnique.technique_id == data['tech_id']).execute()
+
+    # Simply returning a valid response, no effect because javascript reloaded the page
+    raise web.HTTPFound('/agents')
+
+
+async def delete_tech_assignment(request):
+    data = await request.post()
+
+    AgentTechnique.delete()\
+        .where(AgentTechnique.agent_id == data['agent_id'] and AgentTechnique.technique_id == data['tech_id']).execute()
+
+    # Simply returning a valid response, no effect because javascript reloaded the page
+    raise web.HTTPFound('/agents')
+
+
 def setup_agent_routes(app):
     app.add_routes([
         web.get('/agent_techniques/{id}', agent_techniques),
@@ -295,6 +318,8 @@ def setup_agent_routes(app):
         web.get('/assign_tasks/{id}', assign_tasks, name='assign_get'),
         web.post('/assign_tasks_post', assign_tasks_post, name='assign_post'),
         web.post('/register_agent', register_agent),
+        web.post('/delete_tech_output', delete_tech_output),
+        web.post('/delete_tech_assignment', delete_tech_assignment),
         web.get('/agents', agent_index, name='agents'),
         web.get('/agent_details/{id}', agent_details, name='agent_details'),
         web.get('/agent_edit/{id}', agent_edit, name='agent_edit'),
