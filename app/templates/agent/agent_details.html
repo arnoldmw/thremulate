@@ -5,6 +5,49 @@
 <!-- Padding Top -->
 <div style="margin-top: 4%;"></div>
 
+<!-- Modal for deleting Output -->
+<div class="modal fade" id="deleteOutputModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true" style="color: #575962;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Technique Output</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Output from this technique will be deleted.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                <button id="deleteOutput" type="button" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for deleting Assignment-->
+<div class="modal fade" id="deleteAssignmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true" style="color: #575962;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Technique Assignment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                This technique will be removed from the Agent.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                <button id="deleteAssignment" type="button" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="row row-card-no-pd">
     <div class="col-md-12">
@@ -18,52 +61,74 @@
                 <p class="card-category">Campaign: {{ agent.campaign }}</p>
                 <p class="card-category"><a href="{{ url('agents') }}">Back to Agents</a></p>
             </div>
+            <input type="hidden" id="agent_id" name="agent_id" value="{{ agent.id }}">
             <form action="{{ url('assign_post') }}" method="post" accept-charset="utf-8"
-                  enctype="application/x-www-form-urlencoded">
+                enctype="application/x-www-form-urlencoded">
                 <div class="card-body">
 
                     <!-- Table -->
                     <div class="table-responsive">
                         <table id="agentDetails" class="table display " width="100%">
                             <thead class="font-weight-bold">
-                            <tr>
-                                <!--                                <td>Technique</td>-->
-                                <td>Output</td>
+                                <tr>
+                                    <!--                                <td>Technique</td>-->
+                                    <td>Output</td>
+                                    <td>Action</td>
 
-                            </tr>
+                                </tr>
                             </thead>
                             <tbody>
-                            {% for detail in details %}
-                            <tr style="padding-top:1%">
-                                <!--                                <td>{{ detail.name }}</td>-->
-                                <td>
-                                    <div class="accordion accordion-default">
-                                        <div class="card">
-                                            <div class="card-header" id="headingOne" data-toggle="collapse"
-                                                 data-target="#{{ detail.name }}" aria-expanded="true"
-                                                 aria-controls="collapseOne">
-                                                <div class="span-icon">
-                                                    <div class="icon-speech"></div>
+                                {% for detail in details %}
+                                <tr style="padding-top:1%">
+                                    <!--                                <td>{{ detail.name }}</td>-->
+                                    <td style="width: 85%;">
+                                        <div class="accordion accordion-default">
+                                            <div class="card">
+                                                <div class="card-header" id="headingOne" data-toggle="collapse"
+                                                    data-target="#{{ detail.name }}" aria-expanded="true"
+                                                    aria-controls="collapseOne">
+                                                    <div class="span-icon">
+                                                        <div class="icon-speech"></div>
+                                                    </div>
+                                                    <div class="span-title">
+                                                        {{ detail.name }}
+                                                    </div>
+                                                    <div class="span-mode" style="margin-right: .5em;"></div>
                                                 </div>
-                                                <div class="span-title">
-                                                    {{ detail.name }}
+
+                                                <div id="{{ detail.name }}" class="collapse"
+                                                    aria-labelledby="headingOne" data-parent="#accordion">
+                                                    <div class="card-body">
+                                                        {{ detail.output }}
+                                                    </div>
                                                 </div>
-                                                <div class="span-mode" style="margin-right: .5em;"></div>
                                             </div>
 
-                                            <div id="{{ detail.name }}" class="collapse"
-                                                 aria-labelledby="headingOne" data-parent="#accordion">
-                                                <div class="card-body">
-                                                    {{ detail.output }}
-                                                </div>
-                                            </div>
                                         </div>
+                                    </td>
+                                    <td>
+                                        <!-- <div> -->
+                                        <button type="button" class="btn btn-link btn-danger js-delete-output"
+                                            data-toggle="modal" data-target="#deleteOutputModal"
+                                            data-tech-id="{{ detail.tech_id }}">
+                                            <i class="fa fa-times" data-toggle="tooltip" title="Delete Output!"> </i>
+                                        </button>
 
-                                    </div>
-                                </td>
+                                        <button type="button" class="btn btn-link btn-danger js-delete-assignment"
+                                            data-toggle="modal" data-target="#deleteAssignmentModal"
+                                            data-tech-id="{{ detail.tech_id }}">
+                                            <span data-toggle="tooltip" title="Delete Technique Assignment">
+                                                <i class="fa fa-times"> </i>
+                                                <i class="fa fa-times"> </i>
+                                            </span>
 
-                            </tr>
-                            {% endfor %}
+
+                                        </button>
+                                        <!-- </div> -->
+                                    </td>
+
+                                </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -81,9 +146,52 @@
 <script>
     $(document).ready(function () {
         $("#agentDetails").DataTable();
+
+        // Delete Output
+        $("#agentDetails .js-delete-output").on("click", function () {
+            var tech_id = $(this).attr("data-tech-id");
+
+
+            $("#deleteOutput").click(function () {
+
+
+                var agent_id = $('#agent_id').val();
+                $.post("http://localhost:8000/delete_tech_output", { 'tech_id': tech_id, 'agent_id': agent_id });
+
+
+                $('#deleteOutputModal').modal('hide');
+
+
+                // Try to force reload
+                location.reload(true);
+                // window.location.assign("http://localhost:8000/campaigns/");
+
+            });
+        });
+
+        // Delete Assignment
+        $("#agentDetails .js-delete-assignment").on("click", function () {
+            var tech_id = $(this).attr("data-tech-id");
+
+
+            $("#deleteAssignment").click(function () {
+
+
+                var agent_id = $('#agent_id').val();
+                $.post("http://localhost:8000/delete_tech_assignment", { 'tech_id': tech_id, 'agent_id': agent_id });
+
+
+                $('#deleteAssignmentModal').modal('hide');
+
+
+                // Try to force reload
+                location.reload(true);
+                // window.location.assign("http://localhost:8000/campaigns/");
+
+            });
+        });
+
     });
-
-
 
 </script>
 

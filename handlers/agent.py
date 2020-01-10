@@ -174,8 +174,8 @@ async def agent_details(request):
     agent = {}
     # print(agt)
     for at in agt:
-        details.append({'name': at.agenttechnique.technique_id.name, 'output': at.agenttechnique.output})
-        agent = {'name': at.name, 'campaign': at.campaign.name, 'domain': at.domain}
+        details.append({'tech_id': at.agenttechnique.technique_id, 'name': at.agenttechnique.technique_id.name, 'output': at.agenttechnique.output})
+        agent = {'id': at.id, 'name': at.name, 'campaign': at.campaign.name, 'domain': at.domain}
 
     # for at in agt:
     #     details.append({'name': at.technique_id.name, 'output': at.output})
@@ -285,6 +285,26 @@ async def register_agent(request):
     return web.Response(text=str(agent_id) + ' ' + host_name)
 
 
+async def delete_tech_output(request):
+    data = await request.post()
+
+    AgentTechnique.update(output=None, result=None, executed=None)\
+        .where(AgentTechnique.agent_id == data['agent_id'] and AgentTechnique.technique_id == data['tech_id']).execute()
+    
+    # Simply returning a valid response, no effect because javascript reloaded the page
+    raise web.HTTPFound('/agents')
+
+
+async def delete_tech_assignment(request):
+    data = await request.post()
+
+    AgentTechnique.delete()\
+        .where(AgentTechnique.agent_id == data['agent_id'] and AgentTechnique.technique_id == data['tech_id']).execute()
+
+    # Simply returning a valid response, no effect because javascript reloaded the page
+    raise web.HTTPFound('/agents')
+
+
 def setup_agent_routes(app):
     app.add_routes([
         web.get('/agent_techniques/{id}', agent_techniques),
@@ -295,6 +315,8 @@ def setup_agent_routes(app):
         web.get('/assign_tasks/{id}', assign_tasks, name='assign_get'),
         web.post('/assign_tasks_post', assign_tasks_post, name='assign_post'),
         web.post('/register_agent', register_agent),
+        web.post('/delete_tech_output', delete_tech_output),
+        web.post('/delete_tech_assignment', delete_tech_assignment),
         web.get('/agents', agent_index, name='agents'),
         web.get('/agent_details/{id}', agent_details, name='agent_details'),
         web.get('/agent_edit/{id}', agent_edit, name='agent_edit'),
