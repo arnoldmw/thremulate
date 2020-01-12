@@ -84,12 +84,16 @@ async def agent_output(request):
         keys.append(key)
     print(keys)
 
-    output = data[keys[1]]
-    status = output.split(':')[:1]
+    raw_output = data[keys[1]]
+    status = raw_output.split(':')[:1]
     if 'Success' in status:
         result = True
     else:
         result = False
+
+    output = raw_output.split(':')[1:]
+    if output[0] == '' == '':
+        output = 'This command ran successfully but returned no console output'
 
     # ADDING RESULTS AND OUTPUT FROM AN AGENT
     query = AgentTechnique.update(output=output, executed=datetime.datetime.now(), result=result).where(
