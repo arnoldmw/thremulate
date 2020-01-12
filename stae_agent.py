@@ -9,14 +9,21 @@ import urllib3
 http = urllib3.PoolManager()
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
                          ' (KHTML, like Gecko) Chrome/78.0.3904.97 Safa'}
+TIMEOUT = 15
 
 
 def execute_command(command_issued):
-
     cmd = subprocess.Popen(command_issued, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                            stdin=subprocess.PIPE)
-    success = cmd.stdout.read().decode("utf-8")
-    error = cmd.stderr.read().decode("utf-8")
+
+    try:
+        success, error = cmd.communicate(timeout=TIMEOUT)
+    except subprocess.TimeoutExpired:
+        cmd.kill()
+        success, error = cmd.communicate()
+
+    success = success.decode("utf-8")
+    error = error.decode("utf-8")
 
     if error is not '':
         return 'Error: ' + error

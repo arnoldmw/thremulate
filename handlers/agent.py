@@ -85,9 +85,14 @@ async def agent_output(request):
     print(keys)
 
     output = data[keys[1]]
+    status = output.split(':')[:1]
+    if 'Success' in status:
+        result = True
+    else:
+        result = False
 
     # ADDING RESULTS AND OUTPUT FROM AN AGENT
-    query = AgentTechnique.update(output=output, executed=datetime.datetime.now(), result=1).where(
+    query = AgentTechnique.update(output=output, executed=datetime.datetime.now(), result=result).where(
         AgentTechnique.agent_id == keys[0] and
         AgentTechnique.technique_id == int(keys[1][1:]))
     query.execute()
@@ -176,7 +181,7 @@ async def agent_details(request):
     # print(agt)
     for at in agt:
         details.append({'tech_id': at.agenttechnique.technique_id, 'name': at.agenttechnique.technique_id.name,
-                        'output': at.agenttechnique.output})
+                        'output': at.agenttechnique.output, 'result': at.agenttechnique.result})
         agent = {'id': at.id, 'name': at.name, 'campaign': at.campaign.name, 'domain': at.domain,
                  'platform': at.platform}
 

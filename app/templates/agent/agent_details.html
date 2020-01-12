@@ -11,7 +11,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Delete Technique Output</h5>
+                <h5 class="modal-title">Delete Technique Output</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -33,7 +33,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Delete Technique Assignment</h5>
+                <h5 class="modal-title" >Delete Technique Assignment</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -78,11 +78,12 @@
 
                     <!-- Table -->
                     <div class="table-responsive">
-                        <table id="agentDetails" class="table display " width="100%">
+                        <table id="agentDetails" class="table display text-center" width="100%">
                             <thead class="font-weight-bold">
                                 <tr>
                                     <!--                                <td>Technique</td>-->
                                     <td>Output</td>
+                                    <td>Result</td>
                                     <td>Action</td>
 
                                 </tr>
@@ -91,7 +92,7 @@
                                 {% for detail in details %}
                                 <tr style="padding-top:1%">
                                     <!--                                <td>{{ detail.name }}</td>-->
-                                    <td style="width: 85%;">
+                                    <td style="width: 70%;">
                                         <div class="accordion accordion-default">
                                             <div class="card">
                                                 <div class="card-header" id="headingOne" data-toggle="collapse"
@@ -116,7 +117,20 @@
 
                                         </div>
                                     </td>
-                                    <td>
+                                    <td style="vertical-align: top!important;">
+                                        {% if detail.result == True %}
+
+                                        <i class="fas fa-check-circle text-success"
+                                           style="font-size: 1.6em; margin-top: 0.5em;"></i>
+                                        {% elif detail.result == None %}
+                                        <i class="fas fa-question-circle text-primary"
+                                           style="font-size: 1.6em; margin-top: 0.5em;"></i>
+                                        {% else %}
+                                        <i class="fas fa-times-circle text-danger"
+                                           style="font-size: 1.6em; margin-top: 0.5em;"></i>
+                                        {% endif %}
+                                    </td>
+                                    <td style="vertical-align: top!important;">
                                         <!-- <div> -->
                                         <button type="button" class="btn btn-link btn-danger js-delete-output"
                                             data-toggle="modal" data-target="#deleteOutputModal"
@@ -127,7 +141,7 @@
                                         <button type="button" class="btn btn-link btn-danger js-delete-assignment"
                                             data-toggle="modal" data-target="#deleteAssignmentModal"
                                             data-tech-id="{{ detail.tech_id }}">
-                                            <span data-toggle="tooltip" title="Delete Technique Assignment">
+                                            <span data-toggle="tooltip" title="Delete Technique Assignment!">
                                                 <i class="fa fa-times"> </i>
                                                 <i class="fa fa-times"> </i>
                                             </span>
