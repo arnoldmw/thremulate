@@ -20,6 +20,8 @@
             <div class="card-body">
 
                 {% for tech in techs %}
+
+
                 <form action="{{ url('customize_technique') }}" method="post" accept-charset="utf-8"
                     enctype="application/x-www-form-urlencoded" id="{{ tech.id }}">
 
@@ -36,6 +38,9 @@
                     </div>
 
                 </form>
+
+
+
                 {% endfor %}
             </div>
 
