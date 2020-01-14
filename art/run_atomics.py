@@ -80,6 +80,7 @@ def get_one_technique_and_params(key, platform):
 
     # Looping through atomic tests
     for test in tech[key]['atomic_tests']:
+        # Selecting non-manual techniques
         if test['executor']['name'] != 'manual':
             # Checking for applicable tests for agent platform
             if platform in test['supported_platforms']:
@@ -122,26 +123,37 @@ def get_all_techniques(agent_platform):
                       'defense_evasion': []}
 
     for key in tech:
-        if agent_platform in tech[key]['atomic_tests'][0]['supported_platforms']:
-            tech_id = int(tech[key]['attack_technique'][1:])
-            if tech_id in matrix['discovery']:
-                details_matrix['discovery'].append({'id': tech_id, 'name': tech[key]['display_name']})
-            if tech_id in matrix['defense_evasion']:
-                details_matrix['defense_evasion'].append({'id': tech_id, 'name': tech[key]['display_name']})
-            if tech_id in matrix['collection']:
-                details_matrix['collection'].append({'id': tech_id, 'name': tech[key]['display_name']})
-            if tech_id in matrix['exfiltration']:
-                details_matrix['exfiltration'].append({'id': tech_id, 'name': tech[key]['display_name']})
-            if tech_id in matrix['privilege_escalation']:
-                details_matrix['privilege_escalation'].append({'id': tech_id, 'name': tech[key]['display_name']})
-            if tech_id in matrix['command_and_control']:
-                details_matrix['command_and_control'].append({'id': tech_id, 'name': tech[key]['display_name']})
-            if tech_id in matrix['credential_access']:
-                details_matrix['credential_access'].append({'id': tech_id, 'name': tech[key]['display_name']})
-            if tech_id in matrix['execution']:
-                details_matrix['execution'].append({'id': tech_id, 'name': tech[key]['display_name']})
-            if tech_id in matrix['lateral_movement']:
-                details_matrix['lateral_movement'].append({'id': tech_id, 'name': tech[key]['display_name']})
+        for test in tech[key]['atomic_tests']:
+
+            if agent_platform in test['supported_platforms']:
+                tech_id = int(tech[key]['attack_technique'][1:])
+                if tech_id in matrix['discovery']:
+                    details_matrix['discovery'].append({'id': tech_id, 'name': tech[key]['display_name']})
+                    break
+                if tech_id in matrix['defense_evasion']:
+                    details_matrix['defense_evasion'].append({'id': tech_id, 'name': tech[key]['display_name']})
+                    break
+                if tech_id in matrix['collection']:
+                    details_matrix['collection'].append({'id': tech_id, 'name': tech[key]['display_name']})
+                    break
+                if tech_id in matrix['exfiltration']:
+                    details_matrix['exfiltration'].append({'id': tech_id, 'name': tech[key]['display_name']})
+                    break
+                if tech_id in matrix['privilege_escalation']:
+                    details_matrix['privilege_escalation'].append({'id': tech_id, 'name': tech[key]['display_name']})
+                    break
+                if tech_id in matrix['command_and_control']:
+                    details_matrix['command_and_control'].append({'id': tech_id, 'name': tech[key]['display_name']})
+                    break
+                if tech_id in matrix['credential_access']:
+                    details_matrix['credential_access'].append({'id': tech_id, 'name': tech[key]['display_name']})
+                    break
+                if tech_id in matrix['execution']:
+                    details_matrix['execution'].append({'id': tech_id, 'name': tech[key]['display_name']})
+                    break
+                if tech_id in matrix['lateral_movement']:
+                    details_matrix['lateral_movement'].append({'id': tech_id, 'name': tech[key]['display_name']})
+                    break
 
     return details_matrix
 
