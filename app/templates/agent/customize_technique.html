@@ -12,94 +12,53 @@
         <div class="card">
             <div class="card-header">
                 <div class="card-head-row">
-                    <h4 class="card-title">Customize Technique</h4>
+                    <h4 class="card-title">{{ name }} (T{{ id }})</h4>
 
                 </div>
                 <p class="card-category">
-                    View or Modify parameters for technique</p>
+                    Description: {{ description }}</p>
                 <p class="card-category">
-                    <!-- <button class="btn btn-primary btn-link"> -->
-                    <a href="{{ 'agents' }}">Back to Agents</a>
-                    <!-- </button> -->
-                </p>
+                    <p class="card-category">
+                        View or Modify values for this technique</p>
+                    <p class="card-category">
+                        <!-- <button class="btn btn-primary btn-link"> -->
+                        <a href="{{ url('agents') }}">Back to Agents</a>
+                        <!-- </button> -->
+                    </p>
             </div>
             <div class="card-body">
 
+               
 
-                <!-- Table -->
-                <div class="table-responsive">
-                    <!-- <table id="agents" class="table display  table-striped table-hover cell-border" cellspacing="0" -->
-                    <table id="" class="table display  table-striped table-hover cell-border" cellspacing="0"
-                        width="100%">
-                        <thead class="font-weight-bold">
-                            <tr>
-                                <td>Key</td>
-                                <td>Value</td>
+                {% for test in tests %}
+                <h4> {{ loop.index }}. {% filter upper %} {{ test.at_test.name}} {% endfilter %}</h4>
+                <p>Elevation required: {{ test.at_test.elevation_required}}</p>
+                <p>Command: {{ test.at_test.command}}</p>
 
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            <input class="value" type="hidden" value="{{ agent_id }}">
-                            <input class="value" type="hidden" value="{{ id }}">
-
-
-                            <tr>
-                                <td>Technique Id</td>
-                                <td>T{{ id }}</td>
-                            </tr>
-                            <tr>
-                                <td>Name</td>
-                                <td>{{ name }}</td>
-                            </tr>
-                            <tr>
-                                <td>Description</td>
-                                <td>{{ description }}</td>
-                            </tr>
-
-                            {% if params %}
-                            <tr>
-                                <td>Parameter names</td>
-                                <td>
-                                    {% for param in params %}
-                                    <div class="key">{{ param}}</div>
-                                    <!-- <br> -->
-                                    {% endfor %}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Parameters</td>
-                                <td>
-                                    {% for def_param in def_params %}
-                                    <!-- {{ def_param}} <br> -->
-                                    <input type="text" name="" value="{{ def_param}}"
-                                        class="value form-control form-control-sm" style="height: 34px!important;"> <br>
-                                    {% endfor %}
-                                </td>
-                            </tr>
-
-                            {% endif %}
-
-                            <tr>
-                                <td>Commands</td>
-                                <td>
-                                    {% for command in commands %}
-                                    {{ command}} <br>
-                                    {% endfor %}
-                                </td>
-                            </tr>
-
-
-
-
-
-
-                        </tbody>
-                    </table>
+                <div class="row">
+                    <div class="col-md-8">
+                        <form action="" method="post">
+                            {% for param in test.params %}
+                            <div class="form-group">
+                                <label for="email2">{{ param.pname }}</label>
+                                <input type="text" class="form-control form-control-sm" id=""
+                                    value="{{ param.pvalue }}">
+                            </div>
+                            {% endfor %}
+                            <hr>
+                            <input id="submit-custom" type="button" class="btn btn-primary btn-round" value="Assign">
+                            <input type="button" id="custom-done" class="btn btn-danger btn-round" value="Cancel">
+                        </form>
+                    </div>
                 </div>
 
-                <input id="submit-custom" type="button" class="btn btn-primary btn-round" value="Assign">
-                <input type="button" id="custom-done" class="btn btn-danger btn-round" value="Cancel">
+
+                <hr><hr>
+                {% endfor %}
+
+
+
+
 
             </div>
         </div>
@@ -165,7 +124,7 @@
 
 
             // Goes back to previous webpage to assign more techniques     
-             window.history.back();
+            window.history.back();
             //window.location.assign("http://localhost:8000/assign_tasks/" + val_arr[0]);
 
         });

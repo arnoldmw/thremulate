@@ -70,32 +70,38 @@ def get_all_techniques_and_params():
     return tech_list
 
 
-def get_one_technique_and_params(key):
+def get_one_technique_and_params(key, platform):
     executor = AtomicRunner()
     tech = executor.techniques
 
     parameters = []
-    default_params = []
-    commands = []
+    all_technique_tests = []
+    description = ''
 
-    if 'input_arguments' in tech[key]['atomic_tests'][0]:
-        for p in tech[key]['atomic_tests'][0]['input_arguments'].keys():
-            if p is not '':
-                parameters.append(p)
+    # Looping through atomic tests
+    for test in tech[key]['atomic_tests']:
+        if test['executor']['name'] != 'manual':
+            # Checking for applicable tests for agent platform
+            if platform in test['supported_platforms']:
 
-        for ig in tech[key]['atomic_tests'][0]['input_arguments'].keys():
-            dp = tech[key]['atomic_tests'][0]['input_arguments'][ig]['default']
-            default_params.append(dp)
-            # print(tech[key]['atomic_tests'][0]['input_arguments'][ig]['default'])
+                # Checking if we need arguments for test and
+                if 'input_arguments' in test.keys():
+                    # Obtaining parameter names and default values
+                    for p in test['input_arguments'].keys():
+                        parameters.append({
+                            'pname': p,
+                            'pvalue': test['input_arguments'][p]['default']})
 
-    for comm in tech[key]['atomic_tests'][0]['executor']['command'].split('\n'):
-        if comm is not '':
-            commands.append(comm)
+                # Adding executor and parameter names with default values dictionary
+                all_technique_tests.append({'params': parameters, 'at_test': test['executor']})
 
-    description = tech[key]['atomic_tests'][0]['description']
+                description = tech[key]['atomic_tests'][0]['description']
+                parameters = []
+            else:
+                continue
 
     return {'id': tech[key]['attack_technique'][1:], 'name': tech[key]['display_name'], 'description': description,
-            'params': parameters, 'def_params': default_params, 'commands': commands}
+            'tests': all_technique_tests}
 
 
 def get_all_techniques(agent_platform):

@@ -237,21 +237,12 @@ async def customize_technique(request):
 
     tech_id = 'T' + request.query['tech_id']
     agent_id = request.query['agent_id']
-
-    # for key in data.keys():
-    #     # print(key)
-    #     arr.append(data[key])
-
-    # print('Dataaaaa')
-    # print(arr)
-
-    # agent_id = arr[0]
-    # tech_id = 'T' + arr[1]
+    agent_platform = Agent.get(Agent.id == agent_id).platform
 
     session = await get_session(request)
     username = session['username']
 
-    tech = get_one_technique_and_params(tech_id)
+    tech = get_one_technique_and_params(tech_id, agent_platform)
     tech.__setitem__('agent_id', agent_id)
     tech.__setitem__('title', 'Techniques')
     tech.__setitem__('username', username)
