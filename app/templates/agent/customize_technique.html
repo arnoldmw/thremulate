@@ -22,7 +22,7 @@
                         View or Modify values for this technique</p>
                     <p class="card-category">
                         <!-- <button class="btn btn-primary btn-link"> -->
-                        <a href="{{ url('agents') }}">Back to Agents</a>
+                        <a href="{{ url('assign_get', id=agent_id) }}">Back to Assigning Techniques</a>
                         <!-- </button> -->
                     </p>
             </div>
@@ -46,8 +46,8 @@
                             </div>
                             {% endfor %}
                             <hr>
-                            <input id="submit-custom" type="button" class="btn btn-primary btn-round" value="Assign">
-                            <input type="button" id="custom-done" class="btn btn-danger btn-round" value="Cancel">
+                            <input id="submit-custom" type="button" class="btn btn-primary btn-round" value="Assign" style="padding:.5rem 1.2rem;">
+                            <input type="button" id="custom-done" class="btn btn-danger btn-round" value="Cancel" style="padding:.5rem 1.2rem;">
                         </form>
                     </div>
                 </div>
