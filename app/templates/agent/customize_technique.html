@@ -43,7 +43,7 @@
                 {% endif %}
 
                 {% if test.at_test.steps %}
-                <p>Steps: {{ test.at_test.steps}}</p>
+                <p>Steps: <br> {{ test.at_test.steps.replace('\n', '<br>') | safe}}</p>
                 {% endif %}
 
 
