@@ -195,6 +195,7 @@ async def agent_details(request):
     print(agent)
     session = await get_session(request)
     username = session['username']
+    print(details)
     return {'username': username, 'agent': agent, 'details': details, 'title': 'Agent Details'}
 
 

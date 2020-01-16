@@ -109,8 +109,18 @@
 
                                             <div id="{{ detail.name }}" class="collapse"
                                                  aria-labelledby="headingOne" data-parent="#accordion">
-                                                <div class="card-body">
-                                                    {{ detail.output }}
+                                                
+                                                
+                                                 
+                                                    {% if detail.output %}
+                                                    <div class="card-body text-left">
+                                                    {{ detail.output.replace('\r\n', '<br>') | safe }}
+                                                    </div>
+                                                    {% else %}
+                                                    <div class="card-body text-center">
+                                                    Awaiting Execution
+                                                    </div>
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                         </div>
