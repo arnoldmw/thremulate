@@ -31,48 +31,46 @@
 
                 {% for test in tests %}
 
-                <h4> {{ loop.index }}. {% filter upper %} {{ test.at_test.name}} {% endfilter %}</h4>
-                <p>Description: {{ test.description}}</p>
-                <p>Elevation required: {{ test.at_test.elevation_required}}</p>
+                    <h4> {{ loop.index }}. {% filter upper %} {{ test.at_test.name}} {% endfilter %}</h4>
+                    <p>Description: {{ test.description}}</p>
+                    <p>Elevation required: {{ test.at_test.elevation_required}}</p>
 
-                {% if test.at_test.command %}
-                <p>Command(s): <br> {{ test.at_test.command.replace('\n', '<br>') | safe }}</p>
-                
+                    {% if test.at_test.command %}
+                        <p>Command(s): <br> {{ test.at_test.command.replace('\n', '<br>') | safe }}</p>
+                    {% endif %}
 
-              
-                {% endif %}
-
-                {% if test.at_test.steps %}
-                <p>Steps: <br> {{ test.at_test.steps.replace('\n', '<br>') | safe}}</p>
-                {% endif %}
+                    {% if test.at_test.steps %}
+                        <p>Steps: <br> {{ test.at_test.steps.replace('\n', '<br>') | safe}}</p>
+                    {% endif %}
 
 
-                <div class="row">
-                    <div class="col-md-8">
-                        <form action="" method="post">
-                            {% for param in test.params %}
-                            <div class="form-group">
-                                <label for="email2">{{ param.pname }}</label>
-                                <input type="text" class="form-control form-control-sm" id="" name="{{ param.pname }}"
-                                    value="{{ param.pvalue }}">
-                            </div>
-                            {% endfor %}
-                            <div style="height: 1em;"></div>
-                            {% if test.at_test.command %}
-                            <input id="submit-custom" type="button" class="btn btn-primary btn-round" value="Assign"
-                                style="padding:.5rem 1.2rem;">
-                            <input type="button" id="custom-done" class="btn btn-danger btn-round" value="Cancel"
-                                style="padding:.5rem 1.2rem;">
-                            {% endif %}
-                            
-                            
-                        </form>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <form action="" method="post">
+                                <input type="hidden" name="agent_id" value="{{ agent_id }}">
+                                <input type="hidden" name="tech_id" value="{{ id }}">
+                                <input type="hidden" name="test_id" value="{{ test.test_id }}">
+                                {% for param in test.params %}
+                                    <div class="form-group">
+                                        <label for="email2">{{ param.pname }}</label>
+                                        <input type="text" class="form-control form-control-sm" id="" name="{{ param.pname }}"
+                                            value="{{ param.pvalue }}">
+                                    </div>
+                                {% endfor %}
+
+                                <div style="height: 1em;"></div>
+
+                                {% if test.at_test.command %}
+                                    <input id="submit-custom" type="button" class="btn btn-primary btn-round" value="Assign"
+                                        style="padding:.5rem 1.2rem;">
+                                    <input type="button" id="custom-done" class="btn btn-danger btn-round" value="Cancel"
+                                        style="padding:.5rem 1.2rem;">
+                                {% endif %}
+                            </form>
+                        </div>
                     </div>
-                </div>
-
-
-                <hr>
-                <div style="height: 2em;"></div>
+                    <hr>
+                    <div style="height: 2em;"></div>
                 {% endfor %}
 
 
