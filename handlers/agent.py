@@ -254,26 +254,29 @@ async def customize_technique_post(request):
     data = await request.post()
     # TODO: Show message to user that details were submitted
 
+    for key in data.keys():
+        print(key + ': ' + data[key])
+
     # print('Custom param data')
-    keys = data['keys'].split(',')
-    values = data['values'].split(',')
-    i = 2
+    # keys = data['keys'].split(',')
+    # values = data['values'].split(',')
+    # i = 2
 
     # print(keys)
     # print(values)
 
-    agent_id = values[0]
-    tech_id = values[1]
+    # agent_id = values[0]
+    # tech_id = values[1]
 
     # Add to AgentTechnique table
-    AgentTechnique.create(technique_id=tech_id, agent_id=agent_id)
+    # AgentTechnique.create(technique_id=tech_id, agent_id=agent_id)
 
     # Add to Parameters table
-    for key in keys:
-        # print(key)
-        # print(values[i])
-        Parameter.create(agent_id=agent_id, technique_id=tech_id, param_name=str(key), param_value=str(values[i]))
-        i = i + 1
+    # for key in keys:
+    #     # print(key)
+    #     # print(values[i])
+    #     Parameter.create(agent_id=agent_id, technique_id=tech_id, param_name=str(key), param_value=str(values[i]))
+    #     i = i + 1
 
     # send = '/assign_tasks/' + agent_id
     # raise web.HTTPFound(send)
