@@ -77,29 +77,29 @@ def get_one_technique_and_params(key, platform):
     parameters = []
     all_technique_tests = []
     description = ''
+    steps = ''
 
     # Looping through atomic tests
     for test in tech[key]['atomic_tests']:
-        # Selecting non-manual techniques
-        if test['executor']['name'] != 'manual':
-            # Checking for applicable tests for agent platform
-            if platform in test['supported_platforms']:
 
-                # Checking if we need arguments for test and
-                if 'input_arguments' in test.keys():
-                    # Obtaining parameter names and default values
-                    for p in test['input_arguments'].keys():
-                        parameters.append({
-                            'pname': p,
-                            'pvalue': test['input_arguments'][p]['default']})
+        # Checking for applicable tests for agent platform
+        if platform in test['supported_platforms']:
 
-                # Adding executor and parameter names with default values dictionary
-                all_technique_tests.append({'params': parameters, 'at_test': test['executor']})
+            if 'input_arguments' in test.keys():
+                # Obtaining parameter names and default values
+                for p in test['input_arguments'].keys():
+                    parameters.append({
+                        'pname': p,
+                        'pvalue': test['input_arguments'][p]['default']})
 
-                description = tech[key]['atomic_tests'][0]['description']
-                parameters = []
-            else:
-                continue
+            # Adding executor and parameter names with default values dictionary
+            all_technique_tests.append({'description': test['description'], 'params': parameters,
+                                        'at_test': test['executor']
+                                        })
+
+            parameters = []
+        else:
+            continue
 
     return {'id': tech[key]['attack_technique'][1:], 'name': tech[key]['display_name'], 'description': description,
             'tests': all_technique_tests}
