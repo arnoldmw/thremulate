@@ -70,32 +70,39 @@ def get_all_techniques_and_params():
     return tech_list
 
 
-def get_one_technique_and_params(key):
+def get_one_technique_and_params(key, platform):
     executor = AtomicRunner()
     tech = executor.techniques
 
     parameters = []
-    default_params = []
-    commands = []
+    all_technique_tests = []
+    description = ''
 
-    if 'input_arguments' in tech[key]['atomic_tests'][0]:
-        for p in tech[key]['atomic_tests'][0]['input_arguments'].keys():
-            if p is not '':
-                parameters.append(p)
+    # Looping through atomic tests
+    for test in tech[key]['atomic_tests']:
+        # Selecting non-manual techniques
+        if test['executor']['name'] != 'manual':
+            # Checking for applicable tests for agent platform
+            if platform in test['supported_platforms']:
 
-        for ig in tech[key]['atomic_tests'][0]['input_arguments'].keys():
-            dp = tech[key]['atomic_tests'][0]['input_arguments'][ig]['default']
-            default_params.append(dp)
-            # print(tech[key]['atomic_tests'][0]['input_arguments'][ig]['default'])
+                # Checking if we need arguments for test and
+                if 'input_arguments' in test.keys():
+                    # Obtaining parameter names and default values
+                    for p in test['input_arguments'].keys():
+                        parameters.append({
+                            'pname': p,
+                            'pvalue': test['input_arguments'][p]['default']})
 
-    for comm in tech[key]['atomic_tests'][0]['executor']['command'].split('\n'):
-        if comm is not '':
-            commands.append(comm)
+                # Adding executor and parameter names with default values dictionary
+                all_technique_tests.append({'params': parameters, 'at_test': test['executor']})
 
-    description = tech[key]['atomic_tests'][0]['description']
+                description = tech[key]['atomic_tests'][0]['description']
+                parameters = []
+            else:
+                continue
 
     return {'id': tech[key]['attack_technique'][1:], 'name': tech[key]['display_name'], 'description': description,
-            'params': parameters, 'def_params': default_params, 'commands': commands}
+            'tests': all_technique_tests}
 
 
 def get_all_techniques(agent_platform):
@@ -116,26 +123,37 @@ def get_all_techniques(agent_platform):
                       'defense_evasion': []}
 
     for key in tech:
-        if agent_platform in tech[key]['atomic_tests'][0]['supported_platforms']:
-            tech_id = int(tech[key]['attack_technique'][1:])
-            if tech_id in matrix['discovery']:
-                details_matrix['discovery'].append({'id': tech_id, 'name': tech[key]['display_name']})
-            if tech_id in matrix['defense_evasion']:
-                details_matrix['defense_evasion'].append({'id': tech_id, 'name': tech[key]['display_name']})
-            if tech_id in matrix['collection']:
-                details_matrix['collection'].append({'id': tech_id, 'name': tech[key]['display_name']})
-            if tech_id in matrix['exfiltration']:
-                details_matrix['exfiltration'].append({'id': tech_id, 'name': tech[key]['display_name']})
-            if tech_id in matrix['privilege_escalation']:
-                details_matrix['privilege_escalation'].append({'id': tech_id, 'name': tech[key]['display_name']})
-            if tech_id in matrix['command_and_control']:
-                details_matrix['command_and_control'].append({'id': tech_id, 'name': tech[key]['display_name']})
-            if tech_id in matrix['credential_access']:
-                details_matrix['credential_access'].append({'id': tech_id, 'name': tech[key]['display_name']})
-            if tech_id in matrix['execution']:
-                details_matrix['execution'].append({'id': tech_id, 'name': tech[key]['display_name']})
-            if tech_id in matrix['lateral_movement']:
-                details_matrix['lateral_movement'].append({'id': tech_id, 'name': tech[key]['display_name']})
+        for test in tech[key]['atomic_tests']:
+
+            if agent_platform in test['supported_platforms']:
+                tech_id = int(tech[key]['attack_technique'][1:])
+                if tech_id in matrix['discovery']:
+                    details_matrix['discovery'].append({'id': tech_id, 'name': tech[key]['display_name']})
+                    break
+                if tech_id in matrix['defense_evasion']:
+                    details_matrix['defense_evasion'].append({'id': tech_id, 'name': tech[key]['display_name']})
+                    break
+                if tech_id in matrix['collection']:
+                    details_matrix['collection'].append({'id': tech_id, 'name': tech[key]['display_name']})
+                    break
+                if tech_id in matrix['exfiltration']:
+                    details_matrix['exfiltration'].append({'id': tech_id, 'name': tech[key]['display_name']})
+                    break
+                if tech_id in matrix['privilege_escalation']:
+                    details_matrix['privilege_escalation'].append({'id': tech_id, 'name': tech[key]['display_name']})
+                    break
+                if tech_id in matrix['command_and_control']:
+                    details_matrix['command_and_control'].append({'id': tech_id, 'name': tech[key]['display_name']})
+                    break
+                if tech_id in matrix['credential_access']:
+                    details_matrix['credential_access'].append({'id': tech_id, 'name': tech[key]['display_name']})
+                    break
+                if tech_id in matrix['execution']:
+                    details_matrix['execution'].append({'id': tech_id, 'name': tech[key]['display_name']})
+                    break
+                if tech_id in matrix['lateral_movement']:
+                    details_matrix['lateral_movement'].append({'id': tech_id, 'name': tech[key]['display_name']})
+                    break
 
     return details_matrix
 
