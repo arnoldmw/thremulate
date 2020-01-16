@@ -53,7 +53,7 @@
                             {% for param in test.params %}
                             <div class="form-group">
                                 <label for="email2">{{ param.pname }}</label>
-                                <input type="text" class="form-control form-control-sm" id=""
+                                <input type="text" class="form-control form-control-sm" id="" name="{{ param.pname }}"
                                     value="{{ param.pvalue }}">
                             </div>
                             {% endfor %}

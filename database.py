@@ -39,13 +39,14 @@ class Technique(BaseModel):
 
 class AgentTechnique(BaseModel):
     technique_id = ForeignKeyField(Technique)
-    agent_id = ForeignKeyField(Agent)
+    agent_id = ForeignKeyField(Agent, backref='techniques')
+    test_num = IntegerField()
     output = TextField(null=True)
     result = BooleanField(null=True)
     executed = DateTimeField(null=True)
 
     class Meta:
-        primary_key = CompositeKey('technique_id', 'agent_id')
+        primary_key = CompositeKey('technique_id', 'agent_id', 'test_num')
 
 
 class Tactic(BaseModel):
@@ -61,8 +62,8 @@ class TacticTechnique(BaseModel):
 
 
 class Parameter(BaseModel):
-    technique_id = ForeignKeyField(Technique)
-    agent_id = ForeignKeyField(Agent)
+    technique_id = ForeignKeyField(Technique, on_delete='CASCADE')
+    agent_id = ForeignKeyField(Agent, on_delete='CASCADE')
     param_name = CharField(max_length=30)
     param_value = CharField(max_length=50)
 
@@ -256,14 +257,17 @@ if __name__ == '__main__':
     # disabled=False).where(User.id == 5).execute()
     # UserPermissions.delete().where(UserPermissions.user_id == 5).execute()
     # UserPermissions.create(user_id=6, perm_id=Permissions.get(Permissions.name == 'public'))
-
-    try:
-        User.create(fname='Johnnie', lname='Peterson', email='amwesigwa16@gmail.com', passwd='kkkkkkk', is_superuser=False, disabled=False)
-    except IntegrityError as error:
-        if 'id' in error.__context__.__str__():
-            print('id constraint failed')
-        if 'email' in error.__context__.__str__():
-            print('email constraint failed')
+    #
+    # try:
+    #     User.create(fname='Johnnie', lname='Peterson', email='amwesigwa16@gmail.com', passwd='kkkkkkk',
+    #     is_superuser=False, disabled=False)
+    # except IntegrityError as error:
+    #     if 'id' in error.__context__.__str__():
+    #         print('id constraint failed')
+    #     if 'email' in error.__context__.__str__():
+    #         print('email constraint failed')
+    db.drop_tables([AgentTechnique])
+    db.create_tables([AgentTechnique])
 
 
 
