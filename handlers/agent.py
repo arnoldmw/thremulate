@@ -14,6 +14,7 @@ from art.run_atomics import get_all_techniques, get_one_technique_and_params
 from art.run_atomics import get_all_techniques_and_params
 
 
+
 @aiohttp_jinja2.template('agent/agent_index.html')
 async def agent_index(request):
     # fas fa - broadcast - tower
@@ -43,11 +44,11 @@ async def assign_tasks(request):
     ag = Agent.get(Agent.id == agent_id)
     agent_platform = ag.platform
 
-    tech_list = get_all_techniques(agent_platform)
+    tech_matrix = get_all_techniques(agent_platform)
 
     session = await get_session(request)
     username = session['username']
-    return {'username': username, 'techs': tech_list, 'agent_id': agent_id, 'title': 'Techniques'}
+    return {'username': username, 'matrix': tech_matrix, 'agent_id': agent_id, 'title': 'Techniques'}
 
 
 async def assign_tasks_post(request):
@@ -84,10 +85,19 @@ async def agent_output(request):
         keys.append(key)
     print(keys)
 
-    output = data[keys[1]]
+    raw_output = data[keys[1]]
+    status = raw_output.split(':')[:1]
+    if 'Success' in status:
+        result = True
+    else:
+        result = False
+
+    output = raw_output.split(':')[1:]
+    if output[0] == '' == '':
+        output = 'This command ran successfully but returned no console output'
 
     # ADDING RESULTS AND OUTPUT FROM AN AGENT
-    query = AgentTechnique.update(output=output, executed=datetime.datetime.now(), result=1).where(
+    query = AgentTechnique.update(output=output, executed=datetime.datetime.now(), result=result).where(
         AgentTechnique.agent_id == keys[0] and
         AgentTechnique.technique_id == int(keys[1][1:]))
     query.execute()
@@ -176,7 +186,7 @@ async def agent_details(request):
     # print(agt)
     for at in agt:
         details.append({'tech_id': at.agenttechnique.technique_id, 'name': at.agenttechnique.technique_id.name,
-                        'output': at.agenttechnique.output})
+                        'output': at.agenttechnique.output, 'result': at.agenttechnique.result})
         agent = {'id': at.id, 'name': at.name, 'campaign': at.campaign.name, 'domain': at.domain,
                  'platform': at.platform}
 
@@ -222,23 +232,17 @@ async def agent_edit_post(request):
 
 @aiohttp_jinja2.template('agent/customize_technique.html')
 async def customize_technique(request):
-    arr = []
-    data = await request.post()
+    # arr = []
+    # data = await request.post()
 
-    for key in data.keys():
-        # print(key)
-        arr.append(data[key])
-
-    # print('Dataaaaa')
-    # print(arr)
-    # TODO: Tends to throw IndexError
-    agent_id = arr[0]
-    tech_id = 'T' + arr[1]
+    tech_id = 'T' + request.query['tech_id']
+    agent_id = request.query['agent_id']
+    agent_platform = Agent.get(Agent.id == agent_id).platform
 
     session = await get_session(request)
     username = session['username']
 
-    tech = get_one_technique_and_params(tech_id)
+    tech = get_one_technique_and_params(tech_id, agent_platform)
     tech.__setitem__('agent_id', agent_id)
     tech.__setitem__('title', 'Techniques')
     tech.__setitem__('username', username)
@@ -291,7 +295,7 @@ async def register_agent(request):
 async def delete_tech_output(request):
     data = await request.post()
 
-    AgentTechnique.update(output=None, result=None, executed=None)\
+    AgentTechnique.update(output=None, result=None, executed=None) \
         .where(AgentTechnique.agent_id == data['agent_id'] and AgentTechnique.technique_id == data['tech_id']).execute()
 
     # Simply returning a valid response, no effect because javascript reloaded the page
@@ -301,7 +305,7 @@ async def delete_tech_output(request):
 async def delete_tech_assignment(request):
     data = await request.post()
 
-    AgentTechnique.delete()\
+    AgentTechnique.delete() \
         .where(AgentTechnique.agent_id == data['agent_id'] and AgentTechnique.technique_id == data['tech_id']).execute()
 
     # Simply returning a valid response, no effect because javascript reloaded the page
@@ -312,7 +316,7 @@ def setup_agent_routes(app):
     app.add_routes([
         web.get('/agent_techniques/{id}', agent_techniques),
         web.get('/agent_tasks/{id}', agent_tasks),
-        web.post('/customize_technique', customize_technique, name='customize_technique'),
+        web.get('/customize_technique/', customize_technique, name='customize_technique'),
         web.post('/customize_technique_post', customize_technique_post, name='customize_technique_post'),
         web.post('/agent_output', agent_output),
         web.get('/assign_tasks/{id}', assign_tasks, name='assign_get'),
