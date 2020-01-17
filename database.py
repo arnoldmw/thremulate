@@ -64,6 +64,7 @@ class TacticTechnique(BaseModel):
 class Parameter(BaseModel):
     technique_id = ForeignKeyField(Technique, on_delete='CASCADE')
     agent_id = ForeignKeyField(Agent, on_delete='CASCADE')
+    test_num = IntegerField()
     param_name = CharField(max_length=30)
     param_value = CharField(max_length=50)
 
@@ -266,8 +267,8 @@ if __name__ == '__main__':
     #         print('id constraint failed')
     #     if 'email' in error.__context__.__str__():
     #         print('email constraint failed')
-    db.drop_tables([AgentTechnique])
-    db.create_tables([AgentTechnique])
+    # db.drop_tables([Parameter])
+    # db.create_tables([Parameter])
 
 
 

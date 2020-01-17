@@ -252,35 +252,31 @@ async def customize_technique(request):
 
 async def customize_technique_post(request):
     data = await request.post()
-    # TODO: Show message to user that details were submitted
 
-    for key in data.keys():
-        print(key + ': ' + data[key])
+    try:
 
-    # print('Custom param data')
-    # keys = data['keys'].split(',')
-    # values = data['values'].split(',')
-    # i = 2
+        agent_id = data['agent_id']
+        tech_id = data['tech_id']
+        test_id = data['test_id']
 
-    # print(keys)
-    # print(values)
+        # Add to AgentTechnique table
+        try:
+            AgentTechnique.create(technique_id=tech_id, agent_id=agent_id)
+        except IntegrityError:
+            return web.Response(text='Error', status=500)
 
-    # agent_id = values[0]
-    # tech_id = values[1]
+        # Add to Parameters table, if any
+        # Anything other than agent_id, tech_id, test_id is a parameter, else no parameters
+        if len(data) > 3:
+            for key in data.keys():
+                if key != 'agent_id' or key != 'tech_id' or key != 'test_id':
+                    print(key + ': ' + data[key])
+            # Parameter.create(agent_id=agent_id, technique_id=tech_id, param_name=str(key), param_value=str(values[i]))
 
-    # Add to AgentTechnique table
-    # AgentTechnique.create(technique_id=tech_id, agent_id=agent_id)
+        return web.Response(text='Assigned')
 
-    # Add to Parameters table
-    # for key in keys:
-    #     # print(key)
-    #     # print(values[i])
-    #     Parameter.create(agent_id=agent_id, technique_id=tech_id, param_name=str(key), param_value=str(values[i]))
-    #     i = i + 1
-
-    # send = '/assign_tasks/' + agent_id
-    # raise web.HTTPFound(send)
-    return web.Response(text='Form received')
+    except KeyError:
+        return web.Response(text='Error', status=500)
 
 
 async def register_agent(request):
