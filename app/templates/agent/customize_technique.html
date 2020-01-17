@@ -93,10 +93,19 @@
             
             $.post("{{ url('customize_technique_post') }}", assignment_form, function (data, status) {
                 if(status == 'success'){
-                    btn.parent().replaceWith('<p class="text-success" style="font-size: 1.5em;"><i class="fas fa-check-circle"></i>  Assigned</p>');
+                    if(data != 'Assigned'){
+                        btn.parent().replaceWith('<p class="text-danger" style="font-size: 1.5em;"><i class="fas fa-times-circle"></i>  '  + data + '</p>');
+                    }
+                    else{
+                        btn.parent().replaceWith('<p class="text-success" style="font-size: 1.5em;"><i class="fas fa-check-circle"></i>  Assigned</p>');
+                    }
+                    // console.log(status);
+                    // console.log(data);
                 } 
                 else{
-                    btn.parent().replaceWith('<p class="text-danger" style="font-size: 1.5em;"><i class="fas fa-times-circle"></i>  Failed to Assign</p>');
+                    btn.parent().replaceWith('<p class="text-danger" style="font-size: 1.5em;"><i class="fas fa-times-circle"></i>  Bad Request</p>');
+                    // console.log(status);
+                    // console.log(data);
                 }
                 
             });

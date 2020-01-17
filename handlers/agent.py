@@ -261,22 +261,29 @@ async def customize_technique_post(request):
 
         # Add to AgentTechnique table
         try:
-            AgentTechnique.create(technique_id=tech_id, agent_id=agent_id)
+            AgentTechnique.create(technique_id=tech_id, agent_id=agent_id, test_num=test_id)
         except IntegrityError:
-            return web.Response(text='Error', status=500)
+            return web.Response(text='Already assigned')
 
         # Add to Parameters table, if any
         # Anything other than agent_id, tech_id, test_id is a parameter, else no parameters
         if len(data) > 3:
+            params = []
             for key in data.keys():
-                if key != 'agent_id' or key != 'tech_id' or key != 'test_id':
-                    print(key + ': ' + data[key])
-            # Parameter.create(agent_id=agent_id, technique_id=tech_id, param_name=str(key), param_value=str(values[i]))
+                if key != 'agent_id' and key != 'tech_id' and key != 'test_id':
+                    params.append(
+                        {'technique_id': tech_id, 'agent_id': agent_id, 'test_num': test_id,
+                         'param_name': key, 'param_value': data[key]})
+
+            try:
+                Parameter.insert_many(params).execute()
+            except IntegrityError:
+                return web.Response(text='Invalid parameters')
 
         return web.Response(text='Assigned')
 
     except KeyError:
-        return web.Response(text='Error', status=500)
+        return web.Response(text='Invalid data')
 
 
 async def register_agent(request):
