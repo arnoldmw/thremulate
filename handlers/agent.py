@@ -177,12 +177,12 @@ async def agent_details(request):
 
     agt = Agent.select(Agent, AgentTechnique).join(AgentTechnique).join(Campaign, on=Agent.campaign == Campaign.id)\
         .where(AgentTechnique.agent_id == agent_id)
-    
+
     for ag in agt:
         agent = {'id': ag.id, 'name': ag.name, 'campaign': ag.campaign.name, 'domain': ag.domain,
                  'platform': ag.platform}
         for tech in ag.techniques:
-            details.append({'tech_id': tech.technique_id, 'name': tech.technique_id.name,
+            details.append({'tech_id': tech.technique_id, 'test_num': tech.test_num, 'name': tech.technique_id.name,
                             'output': tech.output, 'result': tech.result})
         break
 
