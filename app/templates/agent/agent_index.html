@@ -23,7 +23,7 @@
 
                 <!-- Table -->
                 <div class="table-responsive">
-                    <table id="agents" class="table display  table-striped table-hover cell-border" cellspacing="0"
+                    <table id="agents" class="table display  table-striped table-hover cell-border text-center" cellspacing="0"
                            width="100%">
                         <thead class="font-weight-bold">
                         <tr>
@@ -50,20 +50,20 @@
                                 <button type="button" class="btn btn-link btn-danger"
                                         data-toggle="modal" data-original-title="Remove">
                                     <a href="{{ url('assign_get', id=agent_tasks.id) }}">
-                                        <i class="fa fa-play" data-toggle="tooltip" title="Assign techniques"> </i>
+                                        <i class="fa fa-play" data-toggle="tooltip" title="Assign techniques" style="font-size: 18px;"> </i>
                                     </a>
 
                                 </button>
 
                                 <button type="button" class="btn btn-link btn-danger">
                                     <a href="{{ url('agent_details', id=agent_tasks.id) }}">
-                                        <i class="fa fa-info" data-toggle="tooltip" title="More information"> </i>
+                                        <i class="fas fa-info-circle" data-toggle="tooltip" title="More information" style="font-size: 20px;"> </i>
                                     </a>
 
                                 </button>
                                 <button type="button" class="btn btn-link btn-danger">
                                     <a href="{{ url('agent_edit', id=agent_tasks.id) }}">
-                                        <i class="fa fa-edit" data-toggle="tooltip" title="Update Agent"> </i>
+                                        <i class="fa fa-edit" data-toggle="tooltip" title="Update Agent" style="font-size: 18px;"> </i>
                                     </a>
 
                                 </button>

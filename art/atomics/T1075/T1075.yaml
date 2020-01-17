@@ -5,8 +5,8 @@ display_name: Pass the Hash
 atomic_tests:
 - name: Mimikatz Pass the Hash
   description: |
-    Note: must dump hashes first
-    [Reference](https://github.com/gentilkiwi/mimikatz/wiki/module-~-sekurlsa#pth)
+    Authenticate as a user without the clear text password
+    (Reference: https://github.com/gentilkiwi/mimikatz/wiki/module-~-sekurlsa#pth)
 
   supported_platforms:
     - windows

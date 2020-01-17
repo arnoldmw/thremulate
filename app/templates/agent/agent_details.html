@@ -11,7 +11,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Delete Technique Output</h5>
+                <h5 class="modal-title">Delete Technique Output</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -33,7 +33,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Delete Technique Assignment</h5>
+                <h5 class="modal-title">Delete Technique Assignment</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -59,15 +59,15 @@
                 <!--                <p class="card-category">Details</p>-->
                 <p class="card-category">Name: {{ agent.name }}</p>
                 <p class="card-category">Campaign: {{ agent.campaign }}</p>
-                <p class="card-category">Platform: 
+                <p class="card-category">Platform:
                     {% if agent.platform == 'windows' %}
-                        Windows
+                    Windows
                     {% elif agent.platform == 'linux' %}
-                        Linux
+                    Linux
                     {% elif agent.platform == 'macos' %}
-                        MacOS
+                    MacOS
                     {% endif %}
-                    
+
                 </p>
                 <p class="card-category"><a href="{{ url('agents') }}">Back to Agents</a></p>
             </div>
@@ -78,11 +78,12 @@
 
                     <!-- Table -->
                     <div class="table-responsive">
-                        <table id="agentDetails" class="table display " width="100%">
+                        <table id="agentDetails" class="table display text-center" width="100%">
                             <thead class="font-weight-bold">
                                 <tr>
                                     <!--                                <td>Technique</td>-->
                                     <td>Output</td>
+                                    <td>Result</td>
                                     <td>Action</td>
 
                                 </tr>
@@ -91,7 +92,7 @@
                                 {% for detail in details %}
                                 <tr style="padding-top:1%">
                                     <!--                                <td>{{ detail.name }}</td>-->
-                                    <td style="width: 85%;">
+                                    <td style="width: 70%;">
                                         <div class="accordion accordion-default">
                                             <div class="card">
                                                 <div class="card-header" id="headingOne" data-toggle="collapse"
@@ -101,54 +102,79 @@
                                                         <div class="icon-speech"></div>
                                                     </div>
                                                     <div class="span-title">
-                                                        {{ detail.name }} (T{{ detail.tech_id}})
+                                                        {{ detail.name }} (T{{ detail.tech_id}}) Test
+                                                        {{ detail.test_num }}
                                                     </div>
                                                     <div class="span-mode" style="margin-right: .5em;"></div>
                                                 </div>
 
                                                 <div id="{{ detail.name }}" class="collapse"
                                                     aria-labelledby="headingOne" data-parent="#accordion">
-                                                    <div class="card-body">
-                                                        {{ detail.output }}
+
+
+
+                                                    {% if detail.output %}
+                                                    <div class="card-body text-left">
+                                                        {{ detail.output.replace('\r\n', '<br>') | safe }}
                                                     </div>
+                                                    {% else %}
+                                                    <div class="card-body text-center">
+                                                        Awaiting Execution
+                                                    </div>
+                                                    {% endif %}
                                                 </div>
                                             </div>
-
                                         </div>
-                                    </td>
-                                    <td>
-                                        <!-- <div> -->
-                                        <button type="button" class="btn btn-link btn-danger js-delete-output"
-                                            data-toggle="modal" data-target="#deleteOutputModal"
-                                            data-tech-id="{{ detail.tech_id }}">
-                                            <i class="fa fa-times" data-toggle="tooltip" title="Delete Output!"> </i>
-                                        </button>
 
-                                        <button type="button" class="btn btn-link btn-danger js-delete-assignment"
-                                            data-toggle="modal" data-target="#deleteAssignmentModal"
-                                            data-tech-id="{{ detail.tech_id }}">
-                                            <span data-toggle="tooltip" title="Delete Technique Assignment">
-                                                <i class="fa fa-times"> </i>
-                                                <i class="fa fa-times"> </i>
-                                            </span>
-
-
-                                        </button>
-                                        <!-- </div> -->
-                                    </td>
-
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
                     </div>
+                    </td>
+                    <td style="vertical-align: top!important;">
+                        {% if detail.result == True %}
+
+                        <i class="fas fa-check-circle text-success" style="font-size: 1.6em; margin-top: 0.5em;"></i>
+                        {% elif detail.result == None %}
+                        <i class="fas fa-question-circle text-primary" style="font-size: 1.6em; margin-top: 0.5em;"></i>
+                        {% else %}
+                        <i class="fas fa-times-circle text-danger" style="font-size: 1.6em; margin-top: 0.5em;"></i>
+                        {% endif %}
+                    </td>
+                    <td style="vertical-align: top!important;" class="text-right">
+                        <!-- <div> -->
+                        {% if detail.output %}
+                        <button type="button" class="btn btn-link btn-danger js-delete-output" data-toggle="modal"
+                            data-target="#deleteOutputModal" data-tech-id="{{ detail.tech_id }}"
+                            data-test-num="{{ detail.test_num }}">
+                            <i class="fa fa-times" data-toggle="tooltip" title="Delete Output!"
+                                style="font-size: 1.5em;"> </i>
+                        </button>
+                        {% endif %}
 
 
+                        <button type="button" class="btn btn-link btn-danger js-delete-assignment" data-toggle="modal"
+                            data-target="#deleteAssignmentModal" data-tech-id="{{ detail.tech_id }}"
+                            data-test-num="{{ detail.test_num }}">
+
+                            <i class="fas fa-times-circle" data-toggle="tooltip" title="Delete Assignment!"
+                                style="font-size: 1.5em;"> </i>
+
+
+
+                        </button>
+                        <!-- </div> -->
+                    </td>
+
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                    </table>
                 </div>
 
-            </form>
+
         </div>
+
+        </form>
     </div>
+</div>
 </div>
 
 <script src="/static/js/core/jquery.3.2.1.min.js?v=hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4%3D"></script>
@@ -159,21 +185,34 @@
 
         // Delete Output
         $("#agentDetails .js-delete-output").on("click", function () {
-            var tech_id = $(this).attr("data-tech-id");
+            var btn = $(this);
+            var tech_id = btn.attr("data-tech-id");
+            var test_num = btn.attr("data-test-num");
 
 
             $("#deleteOutput").click(function () {
 
-
                 var agent_id = $('#agent_id').val();
-                $.post("http://localhost:8000/delete_tech_output", { 'tech_id': tech_id, 'agent_id': agent_id });
+                $.post("http://localhost:8000/delete_tech_output", { 'tech_id': tech_id, 'agent_id': agent_id, 'test_num': test_num },
+                    function (data, status) {
+                        
+                        if(status == 'success'){
+                            if(data == 'deleted'){
+
+                            var output = btn.parents('tr').find('.card-body');
+                            output[0].innerHTML = 'Awaiting execution';
+                            output.removeClass("text-left");
+                            output.addClass("text-center");
+                            }
+                        }
+                    });
 
 
                 $('#deleteOutputModal').modal('hide');
 
 
                 // Try to force reload
-                location.reload(true);
+                // location.reload(true);
                 // window.location.assign("http://localhost:8000/campaigns/");
 
             });
@@ -181,27 +220,38 @@
 
         // Delete Assignment
         $("#agentDetails .js-delete-assignment").on("click", function () {
-            var tech_id = $(this).attr("data-tech-id");
+            var btn = $(this);
+            var tech_id = btn.attr("data-tech-id");
+            var test_num = btn.attr("data-test-num");
 
 
             $("#deleteAssignment").click(function () {
 
 
                 var agent_id = $('#agent_id').val();
-                $.post("http://localhost:8000/delete_tech_assignment", { 'tech_id': tech_id, 'agent_id': agent_id });
+                $.post("http://localhost:8000/delete_tech_assignment", { 'tech_id': tech_id, 'agent_id': agent_id, 'test_num': test_num },
+                function (data, status) {
+                        
+                        if(status == 'success'){
+                            if(data == 'deleted'){
+                                btn.parents('tr').remove();
+                            }
+                        }
+                    });
 
 
                 $('#deleteAssignmentModal').modal('hide');
 
 
                 // Try to force reload
-                location.reload(true);
+                // location.reload(true);
                 // window.location.assign("http://localhost:8000/campaigns/");
 
             });
         });
 
     });
+
 
 </script>
 

@@ -13,14 +13,10 @@
             <div class="card-header">
                 <div class="card-head-row">
                     <h4 class="card-title">Campaigns</h4>
-                    <div class="card-tools">
-                        <button
-                                class="btn btn-icon btn-link btn-primary btn-xs btn-refresh-card"><span
-                                class="fa fa-sync-alt"></span></button>
-                    </div>
+                    
                 </div>
-<!--                <p class="card-category">-->
-<!--                    All Campaigns</p>-->
+               <p class="card-category">
+                   All Campaigns</p>
             </div>
             <div class="card-body">
 
@@ -149,7 +145,7 @@
 
                 <!-- Table -->
                 <div class="table-responsive">
-                    <table id="campaigns" class="table display  table-striped table-hover cell-border" cellspacing="0"
+                    <table id="campaigns" class="table display  table-striped table-hover cell-border text-center" cellspacing="0"
                            width="100%">
                         <thead class="font-weight-bold">
                         <tr>
@@ -178,19 +174,20 @@
                                             class="btn btn-link btn-primary btn-lg js-edit"
                                             data-original-title="Edit Task" data-campaign-id="{{ camp.id }}"
                                             data-target="#EditRowModal">
-                                        <i class="fa fa-edit" data-toggle="tooltip" title="Edit"></i>
+                                        <i class="fa fa-edit" data-toggle="tooltip" title="Edit" style="font-size: 18px;"></i>
                                     </button>
 
                                     <button type="button" class="btn btn-link btn-primary js-details"
                                               data-original-title=""
                                             data-campaign-id="{{ camp.id }}">
-                                        <i class="fa fa-info" data-toggle="tooltip" title="More Infomation"> </i>
+                                        <i class="fas fa-info-circle" data-toggle="tooltip" title="More Infomation" style="font-size: 20px;"> 
+                                        </i>
                                     </button>
 
                                     <button type="button" class="btn btn-link btn-danger js-delete"
                                             data-toggle="modal" data-target="#exampleModal" data-original-title="Assign"
                                             data-campaign-id="{{ camp.id }}">
-                                        <i class="fa fa-times" data-toggle="tooltip" title="Remove!"> </i>
+                                        <i class="fa fa-times" data-toggle="tooltip" title="Remove!" style="font-size: 20px;"> </i>
                                     </button>
                                     
                                     
