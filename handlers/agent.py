@@ -7,12 +7,11 @@ import datetime
 # noinspection PyUnresolvedReferences
 from art.run_atomics import get_commands
 # noinspection PyUnresolvedReferences
-from art.run_atomics import better_get_commands
+from art.run_atomics import agent_commands
 # noinspection PyUnresolvedReferences
 from art.run_atomics import get_all_techniques, get_one_technique_and_params
 # noinspection PyUnresolvedReferences
 from art.run_atomics import get_all_techniques_and_params
-
 
 
 @aiohttp_jinja2.template('agent/agent_index.html')
@@ -112,12 +111,12 @@ async def agent_techniques(request):
 
     for agent_techs in AgentTechnique.select().where(AgentTechnique.agent_id == agent_id):
         # return agent_techs.technique_id
-        tech_id = tech_id + 'T' + str(agent_techs.technique_id) + ','
+        tech_id = tech_id + 'T' + str(agent_techs.technique_id) + ':' + str(agent_techs.test_num) + ','
 
     return web.Response(text=tech_id)
 
 
-# SENDS AGENT COMMANDS 5TO RUN, MAKE IT A POST METHOD
+# SENDS AGENT COMMANDS TO RUN, MAKE IT A POST METHOD
 async def agent_tasks(request):
     agent_id = request.match_info['id']
 
@@ -157,7 +156,7 @@ async def agent_tasks(request):
 
 
 def assignments(tech_list, plat, parameters):
-    command_list = better_get_commands(tech_list, plat, parameters)
+    command_list = agent_commands(tech_list, plat, parameters)
 
     string_commands = ''
 

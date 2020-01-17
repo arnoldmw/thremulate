@@ -166,6 +166,6 @@ if __name__ == '__main__':
     results = download_and_run_commands()
     print(results)
 
-    send_output()
+    # send_output()
 
 

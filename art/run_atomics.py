@@ -271,7 +271,7 @@ def get_commands(list_of_techs):
     return commands_list
 
 
-def better_get_commands(technique_list, plat, params):
+def agent_commands(technique_list, plat, params):
     executor = AtomicRunner()
     executor.platform = plat
     # def execute(self, technique_name, position=0, parameters=None):
