@@ -183,7 +183,7 @@
         // Delete Output
         $("#agentDetails .js-delete-output").on("click", function () {
             var tech_id = $(this).attr("data-tech-id");
-            var tech_num = $(this).attr("data-test-num");
+            var test_num = $(this).attr("data-test-num");
 
 
             $("#deleteOutput").click(function () {
@@ -206,13 +206,14 @@
         // Delete Assignment
         $("#agentDetails .js-delete-assignment").on("click", function () {
             var tech_id = $(this).attr("data-tech-id");
+            var test_num = $(this).attr("data-test-num");
 
 
             $("#deleteAssignment").click(function () {
 
 
                 var agent_id = $('#agent_id').val();
-                $.post("http://localhost:8000/delete_tech_assignment", { 'tech_id': tech_id, 'agent_id': agent_id });
+                $.post("http://localhost:8000/delete_tech_assignment", { 'tech_id': tech_id, 'agent_id': agent_id, 'test_num': test_num });
 
 
                 $('#deleteAssignmentModal').modal('hide');
