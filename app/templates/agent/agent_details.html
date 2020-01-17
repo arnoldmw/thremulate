@@ -102,7 +102,8 @@
                                                         <div class="icon-speech"></div>
                                                     </div>
                                                     <div class="span-title">
-                                                        {{ detail.name }} (T{{ detail.tech_id}}) Test {{ detail.test_num }}
+                                                        {{ detail.name }} (T{{ detail.tech_id}}) Test
+                                                        {{ detail.test_num }}
                                                     </div>
                                                     <div class="span-mode" style="margin-right: .5em;"></div>
                                                 </div>
@@ -141,7 +142,8 @@
                         <!-- <div> -->
                         {% if detail.output %}
                         <button type="button" class="btn btn-link btn-danger js-delete-output" data-toggle="modal"
-                            data-target="#deleteOutputModal" data-tech-id="{{ detail.tech_id }}" data-test-num="{{ detail.test_num }}">
+                            data-target="#deleteOutputModal" data-tech-id="{{ detail.tech_id }}"
+                            data-test-num="{{ detail.test_num }}">
                             <i class="fa fa-times" data-toggle="tooltip" title="Delete Output!"
                                 style="font-size: 1.5em;"> </i>
                         </button>
@@ -149,7 +151,8 @@
 
 
                         <button type="button" class="btn btn-link btn-danger js-delete-assignment" data-toggle="modal"
-                            data-target="#deleteAssignmentModal" data-tech-id="{{ detail.tech_id }}" data-test-num="{{ detail.test_num }}">
+                            data-target="#deleteAssignmentModal" data-tech-id="{{ detail.tech_id }}"
+                            data-test-num="{{ detail.test_num }}">
 
                             <i class="fas fa-times-circle" data-toggle="tooltip" title="Delete Assignment!"
                                 style="font-size: 1.5em;"> </i>
@@ -182,22 +185,34 @@
 
         // Delete Output
         $("#agentDetails .js-delete-output").on("click", function () {
-            var tech_id = $(this).attr("data-tech-id");
-            var test_num = $(this).attr("data-test-num");
+            var btn = $(this);
+            var tech_id = btn.attr("data-tech-id");
+            var test_num = btn.attr("data-test-num");
 
 
             $("#deleteOutput").click(function () {
 
-
                 var agent_id = $('#agent_id').val();
-                $.post("http://localhost:8000/delete_tech_output", { 'tech_id': tech_id, 'agent_id': agent_id , 'test_num': test_num});
+                $.post("http://localhost:8000/delete_tech_output", { 'tech_id': tech_id, 'agent_id': agent_id, 'test_num': test_num },
+                    function (data, status) {
+                        
+                        if(status == 'success'){
+                            if(data == 'deleted'){
+
+                            var output = btn.parents('tr').find('.card-body');
+                            output[0].innerHTML = 'Awaiting execution';
+                            output.removeClass("text-left");
+                            output.addClass("text-center");
+                            }
+                        }
+                    });
 
 
                 $('#deleteOutputModal').modal('hide');
 
 
                 // Try to force reload
-                location.reload(true);
+                // location.reload(true);
                 // window.location.assign("http://localhost:8000/campaigns/");
 
             });

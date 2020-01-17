@@ -298,8 +298,7 @@ async def delete_tech_output(request):
         .where(AgentTechnique.agent_id == data['agent_id'] and AgentTechnique.technique_id == data['tech_id']
                and AgentTechnique.test_num == data['test_num']).execute()
 
-    # Simply returning a valid response, no effect because javascript reloaded the page
-    raise web.HTTPFound('/agents')
+    return web.Response(text='deleted')
 
 
 async def delete_tech_assignment(request):
@@ -310,7 +309,7 @@ async def delete_tech_assignment(request):
                and AgentTechnique.test_num == data['test_num']).execute()
 
     # Simply returning a valid response, no effect because javascript reloaded the page
-    raise web.HTTPFound('/agents')
+    return web.Response(text='deleted')
 
 
 def setup_agent_routes(app):
