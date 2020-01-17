@@ -172,27 +172,20 @@ def assignments(tech_list, plat, parameters):
 async def agent_details(request):
     agent_id = request.match_info['id']
 
-    # agt = (AgentTechnique.select(Agent, AgentTechnique).join(Agent).where(AgentTechnique.agent_id == agent_id))
-    # agt = AgentTechnique.select().join(Technique).where(AgentTechnique.agent_id == agent_id)
-
-    agt = Agent.select(Agent.name, Agent.platform, Agent.domain, Agent.id, Agent.campaign_id,
-                       AgentTechnique, Technique) \
-        .join(AgentTechnique) \
-        .join(Technique) \
-        .where(AgentTechnique.agent_id == agent_id)
-
     details = []
     agent = {}
-    # print(agt)
-    for at in agt:
-        details.append({'tech_id': at.agenttechnique.technique_id, 'name': at.agenttechnique.technique_id.name,
-                        'output': at.agenttechnique.output, 'result': at.agenttechnique.result})
-        agent = {'id': at.id, 'name': at.name, 'campaign': at.campaign.name, 'domain': at.domain,
-                 'platform': at.platform}
 
-    # for at in agt:
-    #     details.append({'name': at.technique_id.name, 'output': at.output})
-    print(agent)
+    agt = Agent.select(Agent, AgentTechnique).join(AgentTechnique).join(Campaign, on=Agent.campaign == Campaign.id)\
+        .where(AgentTechnique.agent_id == agent_id)
+
+    for ag in agt:
+        agent = {'id': ag.id, 'name': ag.name, 'campaign': ag.campaign.name, 'domain': ag.domain,
+                 'platform': ag.platform}
+        for tech in ag.techniques:
+            details.append({'tech_id': tech.technique_id, 'test_num': tech.test_num, 'name': tech.technique_id.name,
+                            'output': tech.output, 'result': tech.result})
+        break
+
     session = await get_session(request)
     username = session['username']
     return {'username': username, 'agent': agent, 'details': details, 'title': 'Agent Details'}
@@ -302,20 +295,21 @@ async def delete_tech_output(request):
     data = await request.post()
 
     AgentTechnique.update(output=None, result=None, executed=None) \
-        .where(AgentTechnique.agent_id == data['agent_id'] and AgentTechnique.technique_id == data['tech_id']).execute()
+        .where(AgentTechnique.agent_id == data['agent_id'] and AgentTechnique.technique_id == data['tech_id']
+               and AgentTechnique.test_num == data['test_num']).execute()
 
-    # Simply returning a valid response, no effect because javascript reloaded the page
-    raise web.HTTPFound('/agents')
+    return web.Response(text='deleted')
 
 
 async def delete_tech_assignment(request):
     data = await request.post()
 
     AgentTechnique.delete() \
-        .where(AgentTechnique.agent_id == data['agent_id'] and AgentTechnique.technique_id == data['tech_id']).execute()
+        .where(AgentTechnique.agent_id == data['agent_id'] and AgentTechnique.technique_id == data['tech_id']
+               and AgentTechnique.test_num == data['test_num']).execute()
 
     # Simply returning a valid response, no effect because javascript reloaded the page
-    raise web.HTTPFound('/agents')
+    return web.Response(text='deleted')
 
 
 def setup_agent_routes(app):
