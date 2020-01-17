@@ -89,17 +89,9 @@
         // Submit customised parameters
         $(".submit-tech").click(function () {
             btn = $(this)
-            var parameters = btn.parent().find('input');
-            var assignment = {}
-
-            var k;
-            console.log("Data length:" + parameters.length);
-            for (k = 0; k < parameters.length; k++) {
-                // console.log('Key ' + k + ':' + parameters[k].value + ' ' + parameters[k].getAttribute('name'));
-                assignment[parameters[k].getAttribute('name')] = parameters[k].value;
-            }
-            console.log(JSON.stringify(assignment));
-            $.post("{{ url('customize_technique_post') }}", assignment, function (data, status) {
+            var assignment_form = btn.parent().serialize();
+            
+            $.post("{{ url('customize_technique_post') }}", assignment_form, function (data, status) {
                 if(status == 'success'){
                     btn.parent().replaceWith('<p class="text-success" style="font-size: 1.5em;"><i class="fas fa-check-circle"></i>  Assigned</p>');
                 } 
@@ -108,8 +100,6 @@
                 }
                 
             });
-            
-
 
         });
     });
