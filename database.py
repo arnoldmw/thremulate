@@ -78,6 +78,7 @@ class User(BaseModel):
     passwd = CharField(max_length=255)
     is_superuser = BooleanField(default=False)
     disabled = BooleanField(default=False)
+    reset_pass = BooleanField(default=False)
 
 
 class Permissions(BaseModel):
@@ -215,6 +216,6 @@ if __name__ == '__main__':
     # ]
     # User.insert_many(data_source).execute()
 
-
-
+    user = User.get(User.fname == 'Admin')
+    print(user.reset_pass)
 

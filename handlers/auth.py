@@ -24,11 +24,12 @@ async def login_post(request):
     result = check_credentials(email, password)
     if result:
         session = await new_session(request)
+        user = User.get(User.email == email)
         response = web.HTTPFound('/home')
         await remember(request, response, email)
         # session = await new_session(request)
 
-        username = User.get(User.email == email).fname
+        username = user.fname
         session.__setitem__('username', username)
         raise response
 
