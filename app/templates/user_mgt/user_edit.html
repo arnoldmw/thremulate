@@ -149,7 +149,7 @@
                                 <label for="">Password</label><br>
                                 <button class="btn btn-primary btn-link"><span class="btn-label"><i
                                             class="fas fa-key"></i></span>
-                                    <a href="{{ url('reset_password', id=user.id) }}">Reset Password</a>
+                                    <a href="{{ url('reset_password', id=user.id | string) }}">Reset Password</a>
                                 </button>
 
                             </div>
