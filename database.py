@@ -1,4 +1,5 @@
 import datetime
+import uuid
 
 import bcrypt
 from playhouse.migrate import *
@@ -70,6 +71,7 @@ class Parameter(BaseModel):
 
 
 class User(BaseModel):
+    id = UUIDField(primary_key=True)
     fname = CharField(max_length=25)
     lname = CharField(max_length=255)
     email = CharField(unique=True, index=True)
@@ -199,76 +201,19 @@ def migrate():
 
 if __name__ == '__main__':
     print('Main running')
-    # migrate()
-    # users_list = User.select().join(UserPermissions, on=(UserPermissions.user_id == User.id))\
-    # users_list = User.select().join(UserPermissions).where(User.id == 2)
-    # users_list = User.get(User.id == 2)
-    # perms = []
-    # user = {}
-    # user.__setitem__('fname', users_list.fname)
-    # for p in users_list.userpermissions:
-    #
-    #     perms.append({'perm_id': p.perm_id.id, 'perm_name': p.perm_id.name})
-    #
-    # user.__setitem__('perms', perms)
-    #
-    # print(user)
-    # user = User.select().where(User.id == 5)
-    # user = User.get(User.id == 5)
-    # perms = []
-    # users_selected = {}
-    #
-    # users_selected.__setitem__('fname', user.fname)
-    # users_selected.__setitem__('lname', user.lname)
-    # users_selected.__setitem__('email', user.email)
-    # users_selected.__setitem__('disabled', user.disabled)
-    # users_selected.__setitem__('superuser', user.is_superuser)
-    # for n in user.permissions:
-    #     perms.append(n.perm_name)
-    # users_selected.__setitem__('perms', perms)
+    
+    # db.drop_tables([User])
+    # db.create_tables([User])
 
-    # perms = Permissions.select()
-    # UPDATE USER DETAILS
-    # User.update(fname='John', lname='John', email='john@john.con', disabled=False, is_superuser=False)\
-    #     .where(User.id == 5).execute()
-    # fn.Count(AgentTechnique.technique_id).alias('count')
-    # truncate_date('day', AgentTechnique.executed)
-    # res = AgentTechnique.select(AgentTechnique.technique_id, )\
-    #     .where(('2019-12-22' <= AgentTechnique.executed) & (AgentTechnique.executed <= '2019-12-28'))
-
-    # permissions = Permissions.select()
-    # perm_list = []
-    # for pm in permissions:
-    #     perm_list.append({'id': pm.id, 'name': pm.name})
-    #
-    # print(perm_list)
-
-    # User.update(passwd=generate_password_hash('arn')).where(User.id == 12).execute()
-
-    # user = User.get(User.id == 2)
-    # print(user.userpermissions.count())
-    # for p in user.userpermissions:
-    #     # perms.append()
-    #     print(p.perm_id.name)
-    # perms.append({'perm_id': p.perm_id.id, 'perm_name': p.perm_id.name})
-
-    # Permissions.create(id=4, name=None)
-    # UserPermissions.create(user_id=5, perm_id=2)
-    # User.update(fname='Doe', lname='Doe', email='john', is_superuser=False,
-    # disabled=False).where(User.id == 5).execute()
-    # UserPermissions.delete().where(UserPermissions.user_id == 5).execute()
-    # UserPermissions.create(user_id=6, perm_id=Permissions.get(Permissions.name == 'public'))
-    #
-    # try:
-    #     User.create(fname='Johnnie', lname='Peterson', email='amwesigwa16@gmail.com', passwd='kkkkkkk',
-    #     is_superuser=False, disabled=False)
-    # except IntegrityError as error:
-    #     if 'id' in error.__context__.__str__():
-    #         print('id constraint failed')
-    #     if 'email' in error.__context__.__str__():
-    #         print('email constraint failed')
-    # db.drop_tables([Parameter])
-    # db.create_tables([Parameter])
+    # data_source = [
+    #     {'id': uuid.uuid4(), 'fname': 'Admin', 'lname': 'Ad', 'email': 'admin@thremulate.com',
+    #      'passwd': generate_password_hash('admin'), 'is_superuser': '1', 'disabled': '0'},
+    #     {'id': uuid.uuid4(), 'fname': 'Moderator', 'lname': 'Mo', 'email': 'moderator@thremulate.com',
+    #      'passwd': generate_password_hash('moderator'), 'is_superuser': '0', 'disabled': '0'},
+    #     {'id': uuid.uuid4(), 'fname': 'User', 'lname': 'Us', 'email': 'user@thremulate.com',
+    #      'passwd': generate_password_hash('user'), 'is_superuser': '0', 'disabled': '0'}
+    # ]
+    # User.insert_many(data_source).execute()
 
 
 
