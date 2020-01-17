@@ -80,7 +80,7 @@ def get_one_technique_and_params(key, platform):
     steps = ''
 
     # Looping through atomic tests
-    for test in tech[key]['atomic_tests']:
+    for index, test in enumerate(tech[key]['atomic_tests']):
 
         # Checking for applicable tests for agent platform
         if platform in test['supported_platforms']:
@@ -93,7 +93,7 @@ def get_one_technique_and_params(key, platform):
                         'pvalue': test['input_arguments'][p]['default']})
 
             # Adding executor and parameter names with default values dictionary
-            all_technique_tests.append({'description': test['description'], 'params': parameters,
+            all_technique_tests.append({'test_id': index, 'description': test['description'], 'params': parameters,
                                         'at_test': test['executor']
                                         })
 

@@ -252,32 +252,38 @@ async def customize_technique(request):
 
 async def customize_technique_post(request):
     data = await request.post()
-    # TODO: Show message to user that details were submitted
 
-    # print('Custom param data')
-    keys = data['keys'].split(',')
-    values = data['values'].split(',')
-    i = 2
+    try:
 
-    # print(keys)
-    # print(values)
+        agent_id = data['agent_id']
+        tech_id = data['tech_id']
+        test_id = data['test_id']
 
-    agent_id = values[0]
-    tech_id = values[1]
+        # Add to AgentTechnique table
+        try:
+            AgentTechnique.create(technique_id=tech_id, agent_id=agent_id, test_num=test_id)
+        except IntegrityError:
+            return web.Response(text='Already assigned')
 
-    # Add to AgentTechnique table
-    AgentTechnique.create(technique_id=tech_id, agent_id=agent_id)
+        # Add to Parameters table, if any
+        # Anything other than agent_id, tech_id, test_id is a parameter, else no parameters
+        if len(data) > 3:
+            params = []
+            for key in data.keys():
+                if key != 'agent_id' and key != 'tech_id' and key != 'test_id':
+                    params.append(
+                        {'technique_id': tech_id, 'agent_id': agent_id, 'test_num': test_id,
+                         'param_name': key, 'param_value': data[key]})
 
-    # Add to Parameters table
-    for key in keys:
-        # print(key)
-        # print(values[i])
-        Parameter.create(agent_id=agent_id, technique_id=tech_id, param_name=str(key), param_value=str(values[i]))
-        i = i + 1
+            try:
+                Parameter.insert_many(params).execute()
+            except IntegrityError:
+                return web.Response(text='Invalid parameters')
 
-    # send = '/assign_tasks/' + agent_id
-    # raise web.HTTPFound(send)
-    return web.Response(text='Form received')
+        return web.Response(text='Assigned')
+
+    except KeyError:
+        return web.Response(text='Invalid data')
 
 
 async def register_agent(request):
