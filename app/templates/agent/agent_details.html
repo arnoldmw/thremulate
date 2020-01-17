@@ -220,22 +220,31 @@
 
         // Delete Assignment
         $("#agentDetails .js-delete-assignment").on("click", function () {
-            var tech_id = $(this).attr("data-tech-id");
-            var test_num = $(this).attr("data-test-num");
+            var btn = $(this);
+            var tech_id = btn.attr("data-tech-id");
+            var test_num = btn.attr("data-test-num");
 
 
             $("#deleteAssignment").click(function () {
 
 
                 var agent_id = $('#agent_id').val();
-                $.post("http://localhost:8000/delete_tech_assignment", { 'tech_id': tech_id, 'agent_id': agent_id, 'test_num': test_num });
+                $.post("http://localhost:8000/delete_tech_assignment", { 'tech_id': tech_id, 'agent_id': agent_id, 'test_num': test_num },
+                function (data, status) {
+                        
+                        if(status == 'success'){
+                            if(data == 'deleted'){
+                                btn.parents('tr').remove();
+                            }
+                        }
+                    });
 
 
                 $('#deleteAssignmentModal').modal('hide');
 
 
                 // Try to force reload
-                location.reload(true);
+                // location.reload(true);
                 // window.location.assign("http://localhost:8000/campaigns/");
 
             });
