@@ -82,14 +82,14 @@ async def agent_output(request):
     executed = data['executed']
 
     raw_output = data['output']
-    status = raw_output.split(':')[:1]
-    if 'Success' in status:
+    status = ''.join(raw_output.split(':')[:1])
+    if 'Success' == status:
         result = True
     else:
         result = False
 
-    output = raw_output.split(':')[1:]
-    if output[0] == '' == '':
+    output = ''.join(raw_output.split(':')[1:])
+    if output == '':
         output = 'This command ran successfully but returned no console output'
 
     # ADDING RESULTS AND OUTPUT FROM AN AGENT

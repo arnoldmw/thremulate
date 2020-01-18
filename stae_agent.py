@@ -74,7 +74,7 @@ def get_techniques():
 def download_and_run_commands():
     results = []
     result = []
-    single_tech_command = []
+
     url = 'http://localhost:8000/agent_tasks/5'
 
     req = http.request('GET', url, headers=headers)

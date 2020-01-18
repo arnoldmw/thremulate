@@ -278,17 +278,14 @@ def agent_commands(technique_list, plat, params):
     # {'input_file'}
     # {'input_file'}
 
-    i = 0
     all_commands = []
     for index, tech in enumerate(technique_list):
-        executor.execute(tech['tech_id'], tech['test_num'], params[i])
-        i = i + 1
-
+        executor.execute(tech['tech_id'], tech['test_num'], params[index])
+        comm = ''
         for command in executor.command.split('\n'):
             if command is not '':
-                comm = executor.launcher + ' ' + command
-                all_commands.append(comm)
-        all_commands.append('++')
+                comm = comm + executor.launcher + ' ' + command + ' & '
+        all_commands.append(comm + '++')
 
     return all_commands
 
