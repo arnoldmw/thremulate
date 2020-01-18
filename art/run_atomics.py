@@ -285,7 +285,7 @@ def agent_commands(technique_list, plat, params):
         for command in executor.command.split('\n'):
             if command is not '':
                 comm = comm + executor.launcher + ' ' + command + ' & '
-        all_commands.append(comm + '++')
+        all_commands.append(comm + ';')
 
     return all_commands
 

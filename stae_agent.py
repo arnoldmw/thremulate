@@ -27,10 +27,10 @@ def execute_command(command_issued):
     error = error.decode("utf-8")
 
     if error is not '':
-        return 'Error: ' + error
+        return 'Error--' + error
 
     if success == '' or success != '':
-        return 'Success:' + success
+        return 'Success--' + success
 
 
 def get_platform():
@@ -73,7 +73,6 @@ def get_techniques():
 
 def download_and_run_commands():
     results = []
-    result = []
 
     url = 'http://localhost:8000/agent_tasks/5'
 
@@ -85,23 +84,13 @@ def download_and_run_commands():
 
     if response_code == 200:
         # Separates technique's commands into a list separated by ++
-        technique_commands_lists = response.split('++')
+        agent_commands = response.split(';')
 
-        for technique_command_list in technique_commands_lists:
-            if technique_command_list is ',' or technique_command_list is '':
+        for command in agent_commands:
+            if command is '':
                 continue
 
-            # single_tech_command: [net time, get date] [ run once ]
-            single_tech_command = technique_command_list.split(',')
-
-            # run: [net time, get date]
-            for run in single_tech_command:
-                if run == '':
-                    continue
-
-                result.append(execute_command(run))
-            results.append(''.join(result))
-            result.clear()
+            results.append(execute_command(command))
 
     return results
 
@@ -117,6 +106,7 @@ def send_output():
     # executing that technique
     for i, res in enumerate(agent_tech):
         # try:
+        # time.sleep(1)
         req = http.request('POST', url, fields={'id': 5, 'tech': agent_tech[i], 'output': std_out[i],
                                                 'executed': ('%s' % executed[i])}, headers=headers)
         print('Response code: ' + str(req.status))

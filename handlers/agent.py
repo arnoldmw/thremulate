@@ -82,21 +82,21 @@ async def agent_output(request):
     executed = data['executed']
 
     raw_output = data['output']
-    status = ''.join(raw_output.split(':')[:1])
+
+    status = ''.join(raw_output.split('--')[:1])
     if 'Success' == status:
         result = True
     else:
         result = False
 
-    output = ''.join(raw_output.split(':')[1:])
+    output = ''.join(raw_output.split('--')[1:])
     if output == '':
         output = 'This command ran successfully but returned no console output'
 
     # ADDING RESULTS AND OUTPUT FROM AN AGENT
-    query = AgentTechnique.update(output=output, executed=executed, result=result).where(
-        AgentTechnique.agent_id == agent_id and
-        AgentTechnique.technique_id == tech_id and AgentTechnique.test_num == test_num)
-    query.execute()
+    AgentTechnique.update(output=output, executed=executed, result=result).where(
+        (AgentTechnique.agent_id == agent_id) & (AgentTechnique.technique_id == tech_id) & (
+                    AgentTechnique.test_num == test_num)).execute()
 
     return web.Response(text='success')
 
@@ -160,7 +160,6 @@ def assignments(tech_list, plat, parameters):
     string_commands = ''
 
     for com in command_list:
-        com = com + ','
         string_commands = string_commands + com
 
     return string_commands

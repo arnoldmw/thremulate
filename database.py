@@ -216,6 +216,13 @@ if __name__ == '__main__':
     # ]
     # User.insert_many(data_source).execute()
 
-    user = User.get(User.fname == 'Admin')
-    print(user.reset_pass)
+    # user = User.get(User.fname == 'Admin')
+    # print(user.reset_pass)
 
+    query = AgentTechnique.get((AgentTechnique.agent_id == 5) & (AgentTechnique.technique_id == 1082) & (AgentTechnique.test_num == 0))
+    # print(query)
+    # up = query.update(output='hello', executed=datetime.datetime.now(), result=True)
+    # print(up)
+    q = AgentTechnique.update(output='hello', executed=datetime.datetime.now(), result=True).where(
+       (AgentTechnique.agent_id == agent_id) & (AgentTechnique.technique_id == tech_id) & (AgentTechnique.test_num == test_num)).execute()
+    print(q)
