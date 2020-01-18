@@ -292,8 +292,8 @@ async def delete_tech_output(request):
     data = await request.post()
 
     AgentTechnique.update(output=None, result=None, executed=None) \
-        .where(AgentTechnique.agent_id == data['agent_id'] and AgentTechnique.technique_id == data['tech_id']
-               and AgentTechnique.test_num == data['test_num']).execute()
+        .where((AgentTechnique.agent_id == data['agent_id']) and (AgentTechnique.technique_id == data['tech_id'])
+               and (AgentTechnique.test_num == data['test_num'])).execute()
 
     return web.Response(text='deleted')
 
@@ -302,8 +302,8 @@ async def delete_tech_assignment(request):
     data = await request.post()
 
     AgentTechnique.delete() \
-        .where(AgentTechnique.agent_id == data['agent_id'] and AgentTechnique.technique_id == data['tech_id']
-               and AgentTechnique.test_num == data['test_num']).execute()
+        .where((AgentTechnique.agent_id == data['agent_id']) and (AgentTechnique.technique_id == data['tech_id'])
+               and (AgentTechnique.test_num == data['test_num'])).execute()
 
     # Simply returning a valid response, no effect because javascript reloaded the page
     return web.Response(text='deleted')

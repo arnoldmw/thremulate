@@ -139,11 +139,16 @@
                         <i class="fas fa-times-circle text-danger result" style="font-size: 1.6em; margin-top: 0.5em;"></i>
                         {% endif %}
                     </td>
-                    <td class="executed-date">
+                    <td >
                         {% if detail.executed %}
-                        {{ detail.executed.strftime("%d-%b-%Y %H:%M:%S") }}
+                        <div class="executed-date">
+                            {{ detail.executed.strftime("%d-%b-%Y %H:%M:%S") }}
+                        </div>
+                        
                         {% else %}
-                        None
+                        <div class="executed-date">
+                            None
+                        </div>
                         {% endif %}
                     </td>
                     <td style="vertical-align: top!important;" class="text-right">
@@ -207,6 +212,7 @@
                         if(status == 'success'){
                             if(data == 'deleted'){
 
+                                
                             var output = btn.parents('tr').find('.card-body');
                             output[0].innerHTML = 'Awaiting execution';
                             output.removeClass("text-left");
@@ -215,7 +221,8 @@
                             var res = btn.parents('tr').find('.result');
                             res.replaceWith('<i class="fas fa-question-circle text-primary result" style="font-size: 1.6em; margin-top: 0.5em;"></i>')
 
-                            var executed = btn.parents('tr').find('.executed').innerHTML == 'Nonne';
+                            var executed = btn.parents('tr').find('.executed-date').replaceWith('None')
+                            
 
 
                             }
