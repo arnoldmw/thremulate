@@ -99,5 +99,5 @@ async def create_app():
     return app
 
 # adev runserver --livereload --debug-toolbar
-app = create_app()
-web.run_app(app, host="localhost", port=8000)
+# app = create_app()
+# web.run_app(app, host="localhost", port=8000)

@@ -180,7 +180,7 @@ async def agent_details(request):
                  'platform': ag.platform}
         for tech in ag.techniques:
             details.append({'tech_id': tech.technique_id, 'test_num': tech.test_num, 'name': tech.technique_id.name,
-                            'output': tech.output, 'result': tech.result})
+                            'output': tech.output, 'executed': tech.executed, 'result': tech.result})
         break
 
     session = await get_session(request)
