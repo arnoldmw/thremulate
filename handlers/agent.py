@@ -75,31 +75,27 @@ async def assign_tasks_post(request):
 # AGENT SENDS RESULTS BACK TO C2
 async def agent_output(request):
     data = await request.post()
-    # agent_id = data['id']
+    agent_id = data['id']
     # print(data[2])
-    # tech_id = data['']
-    # print(type(data))
-    keys = []
-    for key in data.keys():
-        # keys.append(key)
-        print(key + ': ' + data[key])
+    tech_id = data['tech'].split(':')[0]
+    test_num = data['tech'].split(':')[1]
 
-    # raw_output = data[keys[1]]
-    # status = raw_output.split(':')[:1]
-    # if 'Success' in status:
-    #     result = True
-    # else:
-    #     result = False
-    #
-    # output = raw_output.split(':')[1:]
-    # if output[0] == '' == '':
-    #     output = 'This command ran successfully but returned no console output'
+    raw_output = data['output']
+    status = raw_output.split(':')[:1]
+    if 'Success' in status:
+        result = True
+    else:
+        result = False
+
+    output = raw_output.split(':')[1:]
+    if output[0] == '' == '':
+        output = 'This command ran successfully but returned no console output'
 
     # ADDING RESULTS AND OUTPUT FROM AN AGENT
-    # query = AgentTechnique.update(output=output, executed=datetime.datetime.now(), result=result).where(
-    #     AgentTechnique.agent_id == keys[0] and
-    #     AgentTechnique.technique_id == int(keys[1][1:]))
-    # query.execute()
+    query = AgentTechnique.update(output=output, executed=datetime.datetime.now(), result=result).where(
+        AgentTechnique.agent_id == agent_id and
+        AgentTechnique.technique_id == tech_id and AgentTechnique.test_num == test_num)
+    query.execute()
 
     return web.Response(text='success')
 
@@ -111,7 +107,7 @@ async def agent_techniques(request):
 
     for agent_techs in AgentTechnique.select().where(AgentTechnique.agent_id == agent_id):
         # return agent_techs.technique_id
-        tech_id = tech_id + 'T' + str(agent_techs.technique_id) + ':' + str(agent_techs.test_num) + ','
+        tech_id = tech_id + str(agent_techs.technique_id) + ':' + str(agent_techs.test_num) + ','
 
     return web.Response(text=tech_id)
 
@@ -176,7 +172,7 @@ async def agent_details(request):
     details = []
     agent = {}
 
-    agt = Agent.select(Agent, AgentTechnique).join(AgentTechnique).join(Campaign, on=Agent.campaign == Campaign.id)\
+    agt = Agent.select(Agent, AgentTechnique).join(AgentTechnique).join(Campaign, on=Agent.campaign == Campaign.id) \
         .where(AgentTechnique.agent_id == agent_id)
 
     for ag in agt:

