@@ -96,7 +96,7 @@
                                         <div class="accordion accordion-default">
                                             <div class="card">
                                                 <div class="card-header" id="headingOne" data-toggle="collapse"
-                                                    data-target="#{{ detail.name }}" aria-expanded="true"
+                                                    data-target="#{{ detail.name }}{{ detail.test_num }}" aria-expanded="true"
                                                     aria-controls="collapseOne">
                                                     <div class="span-icon">
                                                         <div class="icon-speech"></div>
@@ -108,7 +108,7 @@
                                                     <div class="span-mode" style="margin-right: .5em;"></div>
                                                 </div>
 
-                                                <div id="{{ detail.name }}" class="collapse"
+                                                <div id="{{ detail.name }}{{ detail.test_num }}" class="collapse"
                                                     aria-labelledby="headingOne" data-parent="#accordion">
 
 
@@ -131,11 +131,11 @@
                     <td style="vertical-align: top!important;">
                         {% if detail.result == True %}
 
-                        <i class="fas fa-check-circle text-success" style="font-size: 1.6em; margin-top: 0.5em;"></i>
+                        <i class="fas fa-check-circle text-success result" style="font-size: 1.6em; margin-top: 0.5em;"></i>
                         {% elif detail.result == None %}
-                        <i class="fas fa-question-circle text-primary" style="font-size: 1.6em; margin-top: 0.5em;"></i>
+                        <i class="fas fa-question-circle text-primary result" style="font-size: 1.6em; margin-top: 0.5em;"></i>
                         {% else %}
-                        <i class="fas fa-times-circle text-danger" style="font-size: 1.6em; margin-top: 0.5em;"></i>
+                        <i class="fas fa-times-circle text-danger result" style="font-size: 1.6em; margin-top: 0.5em;"></i>
                         {% endif %}
                     </td>
                     <td style="vertical-align: top!important;" class="text-right">
@@ -203,6 +203,10 @@
                             output[0].innerHTML = 'Awaiting execution';
                             output.removeClass("text-left");
                             output.addClass("text-center");
+
+                            var res = btn.parents('tr').find('.result');
+                            res.replaceWith('<i class="fas fa-question-circle text-primary result" style="font-size: 1.6em; margin-top: 0.5em;"></i>')
+
                             }
                         }
                     });

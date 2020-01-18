@@ -117,7 +117,8 @@ def send_output():
     # executing that technique
     for i, res in enumerate(agent_tech):
         # try:
-        req = http.request('POST', url, fields={'id': 5, 'tech': agent_tech[i], 'output': std_out[i]}, headers=headers)
+        req = http.request('POST', url, fields={'id': 5, 'tech': agent_tech[i], 'output': std_out[i],
+                                                'executed': ('%s' % executed[i])}, headers=headers)
         print('Response code: ' + str(req.status))
         # time.sleep(4)
         # except IndexError:

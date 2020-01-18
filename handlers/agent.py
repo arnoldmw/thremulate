@@ -79,6 +79,7 @@ async def agent_output(request):
     # print(data[2])
     tech_id = data['tech'].split(':')[0]
     test_num = data['tech'].split(':')[1]
+    executed = data['executed']
 
     raw_output = data['output']
     status = raw_output.split(':')[:1]
@@ -92,7 +93,7 @@ async def agent_output(request):
         output = 'This command ran successfully but returned no console output'
 
     # ADDING RESULTS AND OUTPUT FROM AN AGENT
-    query = AgentTechnique.update(output=output, executed=datetime.datetime.now(), result=result).where(
+    query = AgentTechnique.update(output=output, executed=executed, result=result).where(
         AgentTechnique.agent_id == agent_id and
         AgentTechnique.technique_id == tech_id and AgentTechnique.test_num == test_num)
     query.execute()
