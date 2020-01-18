@@ -212,16 +212,17 @@
                         if(status == 'success'){
                             if(data == 'deleted'){
 
-                                
-                            var output = btn.parents('tr').find('.card-body');
+                            var table_row = btn.parents('tr');
+                            var output = table_row.find('.card-body');
                             output[0].innerHTML = 'Awaiting execution';
                             output.removeClass("text-left");
                             output.addClass("text-center");
 
-                            var res = btn.parents('tr').find('.result');
-                            res.replaceWith('<i class="fas fa-question-circle text-primary result" style="font-size: 1.6em; margin-top: 0.5em;"></i>')
+                            // Changing replace icon
+                            table_row.find('.result').replaceWith('<i class="fas fa-question-circle text-primary result" style="font-size: 1.6em; margin-top: 0.5em;"></i>')
 
-                            var executed = btn.parents('tr').find('.executed-date').replaceWith('None')
+                            // Changing executed date
+                            table_row.find('.executed-date').replaceWith('None')
                             
 
 
