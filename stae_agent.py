@@ -106,17 +106,17 @@ def download_and_run_commands():
 
 
 def send_output():
-    results = download_and_run_commands()
+    std_out = download_and_run_commands()
     # url = 'http://localhost:8000/agent_tasks/5'
-    techs = get_techniques()
+    agent_tech = get_techniques()
     # http://localhost:8000/agent_techniques/5
     url = 'http://localhost:8000/agent_output'
 
     # Iterates over list of techniques assigned to an agent_tasks while selecting the respective result or output after
     # executing that technique
-    for i in range(0, techs.__len__()):
+    for i, res in enumerate(agent_tech):
         # try:
-        req = http.request('POST', url, fields={'id': 5, techs[i]: results[i]}, headers=headers)
+        req = http.request('POST', url, fields={'id': 5, agent_tech[i]: std_out[i]}, headers=headers)
         print('Response code: ' + str(req.status))
         # time.sleep(4)
         # except IndexError:

@@ -81,27 +81,27 @@ async def agent_output(request):
     # print(type(data))
     keys = []
     for key in data.keys():
-        keys.append(key)
-    print(keys)
+        # keys.append(key)
+        print(key + ': ' + data[key])
 
-    raw_output = data[keys[1]]
-    status = raw_output.split(':')[:1]
-    if 'Success' in status:
-        result = True
-    else:
-        result = False
-
-    output = raw_output.split(':')[1:]
-    if output[0] == '' == '':
-        output = 'This command ran successfully but returned no console output'
+    # raw_output = data[keys[1]]
+    # status = raw_output.split(':')[:1]
+    # if 'Success' in status:
+    #     result = True
+    # else:
+    #     result = False
+    #
+    # output = raw_output.split(':')[1:]
+    # if output[0] == '' == '':
+    #     output = 'This command ran successfully but returned no console output'
 
     # ADDING RESULTS AND OUTPUT FROM AN AGENT
-    query = AgentTechnique.update(output=output, executed=datetime.datetime.now(), result=result).where(
-        AgentTechnique.agent_id == keys[0] and
-        AgentTechnique.technique_id == int(keys[1][1:]))
-    query.execute()
+    # query = AgentTechnique.update(output=output, executed=datetime.datetime.now(), result=result).where(
+    #     AgentTechnique.agent_id == keys[0] and
+    #     AgentTechnique.technique_id == int(keys[1][1:]))
+    # query.execute()
 
-    return web.Response(text='Hello')
+    return web.Response(text='success')
 
 
 # TECHNIQUES ASSIGNED TO AN AGENT
@@ -121,12 +121,14 @@ async def agent_tasks(request):
     agent_id = request.match_info['id']
 
     techniques = []
+    tests = []
+    # t = {'tech_id': '', 'test_num': ''}
 
     for agent_techs in AgentTechnique.select().where(AgentTechnique.agent_id == agent_id):
-        # return agent_techs.technique_id
-        tech_id = 'T' + str(agent_techs.technique_id)
+        tech_id = ('T%s' % agent_techs.technique_id)
+        test_num = agent_techs.test_num
 
-        techniques.append(tech_id)
+        techniques.append({'tech_id': tech_id, 'test_num': test_num})
 
     ag = Agent.get(Agent.id == agent_id)
     agent_platform = ag.platform
@@ -134,7 +136,7 @@ async def agent_tasks(request):
     # Formulating parameters
     list_of_param_dict = []
     for t in techniques:
-        params = Parameter.select().where(Parameter.agent_id == agent_id and Parameter.technique_id == t[1:])
+        params = Parameter.select().where(Parameter.agent_id == agent_id and Parameter.technique_id == t['tech_id'][1:])
         param_number = params.count()
 
         if param_number != 0:
