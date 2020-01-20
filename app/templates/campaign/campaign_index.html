@@ -12,11 +12,11 @@
         <div class="card">
             <div class="card-header">
                 <div class="card-head-row">
-                    <h4 class="card-title">Campaigns</h4>
+                    <h4 class="card-title">Adversaries</h4>
                     
                 </div>
                <p class="card-category">
-                   All Campaigns</p>
+                   All Adversaries</p>
             </div>
             <div class="card-body">
 
@@ -25,11 +25,11 @@
                     <button class="btn btn-primary btn-round ml-auto mb-3" data-toggle="modal"
                             data-target="#addRowModal">
                         <i class="fa fa-plus"></i>
-                        Add Campaign
+                        Add Adversary
                     </button>
                 </div>
 
-                <!-- Modal for Adding Campaign -->
+                <!-- Modal for Adding Adversary -->
                 <div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                      aria-hidden="true" style="color: #575962;">
                     <div class="modal-dialog" role="document">
@@ -39,7 +39,7 @@
                     <span class="fw-mediumbold">
                         New</span>
                                     <span class="fw-light">
-                        Campaign
+                        Adversary
                     </span>
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -47,7 +47,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <p class="small">Create a new Campaign</p>
+                                <p class="small">Create a new Adversary</p>
 
 
                                 <form role="form" id="addCampaign" action="/campaign_add" method="POST">
@@ -74,7 +74,7 @@
                 </div>
 
 
-                <!-- Modal for Updating Campaign -->
+                <!-- Modal for Updating Adversary -->
                 <div class="modal fade" id="EditRowModal" tabindex="-1" role="dialog"
                      aria-labelledby="exampleModalLabel"
                      aria-hidden="true" style="color: #575962;">
@@ -85,7 +85,7 @@
                     <span class="fw-mediumbold">
                         Update</span>
                                     <span class="fw-light">
-                        Campaign
+                        Adversary
                     </span>
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -93,7 +93,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <p class="small">Update the name of a Campaign</p>
+                                <p class="small">Update the name of a Adversary</p>
 
 
                                 <form role="form" id="" action="/campaign_add" method="POST">
@@ -126,13 +126,13 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Delete Campaign</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Delete Adversary</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                This Campaign will be deleted.
+                                This Adversary will be deleted.
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -234,14 +234,14 @@
 
         });
 
-        // Campaign details
+        // Adversary details
         $("#campaigns .js-details").on("click", function () {
             var cid = $(this).attr("data-campaign-id");
             // $.get("http://localhost:8000/campaign_details/" + cid);
             window.location.assign("http://localhost:8000/campaign_details/" + cid);
         });
 
-        // Delete Campaign
+        // Delete Adversary
         $("#campaigns .js-delete").on("click", function () {
             // confirm("Are you sure");
             var cid = $(this).attr("data-campaign-id");
@@ -267,7 +267,7 @@
         });
 
 
-        // Update Campaign
+        // Update Adversary
         $("#campaigns .js-edit").on("click", function () {
 
             var cid = $(this).attr("data-campaign-id");

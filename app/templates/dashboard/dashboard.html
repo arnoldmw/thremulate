@@ -63,7 +63,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link " href="{{ url('campaigns') }}" >Campaigns</a>
+                            <a class="nav-link " href="{{ url('campaigns') }}" >Adversaries</a>
                         </li>
 
                         <li class="nav-item">
@@ -161,7 +161,7 @@
                             <div class="ml-md-auto py-2 py-md-0">
                                 <a href="{{ url('users') }}" class="btn btn-white btn-border btn-round mr-2">Manage
                                     Users</a>
-                                <a href="#" class="btn btn-secondary btn-round">Add Campaign</a>
+                                <a href="#" class="btn btn-secondary btn-round">Add Adversary</a>
                             </div>
                         </div>
                     </div>
@@ -181,7 +181,7 @@
                                         </div>
                                         <div class="col-7 col-stats">
                                             <div class="numbers">
-                                                <p class="card-category">Campaigns</p>
+                                                <p class="card-category">Adversaries</p>
                                                 <h4 class="card-title">{{ counts[0] }}</h4>
                                             </div>
                                         </div>
@@ -680,7 +680,7 @@
                 data: {
                     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                     datasets: [{
-                        label: "Campaigns",
+                        label: "Adversaries",
                         borderColor: gradientStroke2,
                         pointBackgroundColor: gradientStroke2,
                         pointRadius: 0,
