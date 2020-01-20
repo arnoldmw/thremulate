@@ -195,11 +195,11 @@ async def agent_edit(request):
     adversaries = []
 
     agt = Agent.get(Agent.id == agent_id)
-    agent = {'agt_id': agt.id, 'agt_name': agt.name, 'camp_id': agt.campaign_id}
+    agent = {'agt_id': agt.id, 'agt_name': agt.name, 'adv_id': agt.adversary_id}
 
-    camps = Adversary.select()
-    for camp in camps:
-        adversaries.append({'camp_id': camp.id, 'camp_name': camp.name})
+    advs = Adversary.select()
+    for adv in advs:
+        adversaries.append({'adv_id': adv.id, 'adv_name': adv.name})
 
     session = await get_session(request)
     username = session['username']
