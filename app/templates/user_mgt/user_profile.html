@@ -111,17 +111,10 @@
 
                                         {% if p.id == user.user_perms[0].perm_id or p.id == user.user_perms[1].perm_id %}
                                         <label class="selectgroup-item">
-                                            <input type="checkbox" name="{{p.name}}" value="{{ p.id }}"
-                                                class="selectgroup-input" checked readonly>
-                                            <span class="selectgroup-button">{{p.name}}</span>
+                                         {{ loop.index }}   {{p.name}}
                                         </label>
 
-                                        {% else %}
-                                        <label class="selectgroup-item">
-                                            <input type="checkbox" name="{{p.name}}" value="{{ p.id }}"
-                                                class="selectgroup-input" >
-                                            <span class="selectgroup-button">{{p.name}}</span>
-                                        </label>
+                                        
 
                                         {% endif %}
 
