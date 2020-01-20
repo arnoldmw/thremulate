@@ -1,5 +1,6 @@
 import configparser
 import datetime
+from getpass import getuser
 import os
 import platform
 import subprocess
@@ -64,8 +65,8 @@ def get_platform():
 
 def register():
     url = 'http://localhost:8000/register_agent'
-    req = http.request('POST', url, fields={'id': agent_id, 'host_name': platform.node(), 'platform': get_platform()
-                                            }, headers=headers)
+    req = http.request('POST', url, fields={'id': agent_id, 'hostname': platform.node(), 'platform': get_platform(),
+                                            'plat_version': platform.version(), 'username': getuser()}, headers=headers)
     response = str(req.data.decode('utf-8'))
     print('Response code: ' + str(req.status))
     print('Response: ' + response)
@@ -175,7 +176,7 @@ if __name__ == '__main__':
     # print(techs)
     # results = download_and_run_commands()
     # print(results)
-
+    register()
     # send_output()
 
 

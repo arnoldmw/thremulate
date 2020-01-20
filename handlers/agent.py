@@ -283,8 +283,8 @@ async def register_agent(request):
     agent_id = data['id']
     host_name = data['host_name']
 
-    Agent.create(id=agent_id, name=host_name, os_name='Windows 7', os_version='7.3.4', product_id='6KKL',
-                 domain='work.com', campaign=Campaign.get(Campaign.name == 'Cobalt'))
+    # Agent.create(id=agent_id, name=host_name, os_name='Windows 7', os_version='7.3.4', product_id='6KKL',
+    #              domain='work.com', campaign=Campaign.get(Campaign.name == 'Cobalt'))
     return web.Response(text=str(agent_id) + ' ' + host_name)
 
 
