@@ -8,11 +8,10 @@ async def response_headers(request, handler):
     # response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains; preload'
     response.headers['X-XSS-Protection'] = '1; mode=block'
     response.headers['X-Frame-Options'] = 'DENY'
-    # response.headers['Content-Security-Policy'] = 'script-src'
     response.headers['X-Content-Type-Options'] = 'nosniff'
+    # Content-Security-Policy blocks inline styles and inline javascript
     # response.headers['Content-Security-Policy'] = "default-src 'self'"
-    response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' ;"
-    # response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self'; img-src 'self'"
+
     return response
 
 
