@@ -61,7 +61,7 @@ async def create_app():
     app.add_routes([
         web.get('/', index, name='index'),
         web.get('/home', home, name='home'),
-        web.static('/static/', path=THIS_DIR / 'app/static', show_index=True, append_version=True, name='static'),
+        web.static('/static/', path=THIS_DIR / 'app/static', append_version=True, name='static'),
         web.static('/downloads/', path=THIS_DIR / 'app/downloads', show_index=True, name='downloads'),
         web.static('/uploads/', path=THIS_DIR / 'app/uploads', show_index=True, name='uploads')
     ])
@@ -99,5 +99,5 @@ async def create_app():
     return app
 
 # adev runserver --livereload --debug-toolbar
-# app = create_app()
-# web.run_app(app, host="localhost", port=8000)
+app = create_app()
+web.run_app(app, host="localhost", port=8000)

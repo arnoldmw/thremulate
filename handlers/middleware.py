@@ -2,6 +2,20 @@ import aiohttp_jinja2
 from aiohttp import web
 
 
+@web.middleware
+async def response_headers(request, handler):
+    response = await handler(request)
+    # response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains; preload'
+    response.headers['X-XSS-Protection'] = '1; mode=block'
+    response.headers['X-Frame-Options'] = 'DENY'
+    # response.headers['Content-Security-Policy'] = 'script-src'
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    # response.headers['Content-Security-Policy'] = "default-src 'self'"
+    response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' ;"
+    # response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self'; img-src 'self'"
+    return response
+
+
 @aiohttp_jinja2.template('middleware/404.html')
 async def handle_404(request):
     return {'title': 'Page not found'}
@@ -41,3 +55,4 @@ def setup_middleware(app):
         500: handle_500
     })
     app.middlewares.append(error_middleware)
+    app.middlewares.append(response_headers)
