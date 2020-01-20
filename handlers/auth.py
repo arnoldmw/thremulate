@@ -26,7 +26,7 @@ async def login_post(request):
         session = await new_session(request)
         user = User.get(User.email == email)
         response = web.HTTPFound('/home')
-        await remember(request, response, email)
+        await remember(request, response, str(user.id))
         # session = await new_session(request)
 
         username = user.fname

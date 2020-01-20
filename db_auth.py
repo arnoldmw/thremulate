@@ -6,7 +6,7 @@ from aiohttp_security.abc import AbstractAuthorizationPolicy
 class DBAuthorizationPolicy(AbstractAuthorizationPolicy):
     async def authorized_userid(self, identity):
         try:
-            user = User.get(User.email == identity)
+            user = User.get(User.id == identity)
 
             if user.disabled:
                 return None

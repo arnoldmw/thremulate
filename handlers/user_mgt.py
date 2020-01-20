@@ -2,6 +2,10 @@ import aiohttp_jinja2
 from aiohttp import web
 from database import *
 from aiohttp_session import get_session
+from aiohttp_security import (
+    remember, forget, authorized_userid,
+    check_permission, check_authorized,
+)
 
 
 @aiohttp_jinja2.template('user_mgt/users_index.html')
@@ -125,9 +129,19 @@ async def user_edit_post(request):
         return response
 
 
+@aiohttp_jinja2.template('user_mgt/user_profile.html')
+async def user_profile(request):
+    # user_id = request.match_info['id']
+    # user = User.get(User.id == user_id)
+    user_id = await authorized_userid(request)
+    print(user_id)
+    return {}
+
+
 def setup_user_mgt_routes(app):
     app.add_routes([
         web.get('/users', users_index, name='users'),
+        web.get('/user_profile', user_profile, name='user_profile'),
         web.get('/user_delete/{id}', user_delete, name='user_delete'),
         web.get('/user_edit/{id}', user_edit, name='user_edit'),
         web.post('/user_edit_post', user_edit_post, name='user_edit_post'),
