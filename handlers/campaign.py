@@ -1,9 +1,7 @@
 import aiohttp_jinja2
 from aiohttp import web
 from aiohttp_session import get_session
-# from database import *
-import datetime
-
+# noinspection PyUnresolvedReferences
 from database import Adversary, Agent
 
 
@@ -11,22 +9,15 @@ from database import Adversary, Agent
 async def campaign_index(request):
     adversaries = []
 
-    # Avoids the N + 1 problem through fetching the related table together
     query = Adversary.select()
-
-    for adv in query:
-        print(adv.id, adv.name, adv.created_date, adv.updated_date, adv.agents.count())
-    # query = (Adversary
-    #          .select(Adversary, fn.Count(Agent.id).alias('count'))
-    #          .join(Agent, JOIN.LEFT_OUTER)
-    #          .group_by(Adversary)
-    #          )
 
     for adv in query:
         adversaries.append({'id': adv.id, 'name': adv.name, 'created': adv.created_date, 'updated': adv.updated_date,
                             'no_of_agents': adv.agents.count()})
+
     session = await get_session(request)
     username = session['username']
+
     return {'username': username, 'adversaries': adversaries, 'title': 'Adversaries'}
 
 
@@ -38,8 +29,7 @@ async def campaign_add(request):
 
 @aiohttp_jinja2.template('adversary/campaign_details.html')
 async def campaign_details(request):
-    print(request)
-    # camp_details = {}
+
     agents = []
 
     if 'id' in request.match_info:
