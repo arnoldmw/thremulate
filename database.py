@@ -23,9 +23,10 @@ class Campaign(BaseModel):
 class Agent(BaseModel):
     id = IntegerField(primary_key=True)
     name = CharField(unique=True, null=True)
+    hostname = CharField(max_length=30, null=True)
+    username = CharField(max_length=30, null=True)
     platform = CharField(max_length=20, null=True)
-    # os_version = CharField(max_length=20, null=True)
-    # product_id = CharField(max_length=30, null=True)
+    plat_version = CharField(max_length=20, null=True)
     domain = CharField(max_length=20, null=True)
     initial_contact = DateTimeField(default=datetime.datetime.now, null=True)
     last_contact = DateTimeField(default=datetime.datetime.now, null=True)

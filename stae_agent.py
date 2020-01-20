@@ -69,7 +69,7 @@ def register():
                                             'plat_version': platform.version(), 'username': getuser()}, headers=headers)
     response = str(req.data.decode('utf-8'))
     print('Response code: ' + str(req.status))
-    print('Response: ' + response)
+    print('[+] ' + response)
 
 
 def get_techniques():

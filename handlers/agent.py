@@ -4,6 +4,9 @@ from aiohttp_session import get_session
 from database import *
 import datetime
 
+import string
+import random
+
 # noinspection PyUnresolvedReferences
 from art.run_atomics import get_commands
 # noinspection PyUnresolvedReferences
@@ -278,14 +281,16 @@ async def customize_technique_post(request):
 
 async def register_agent(request):
     data = await request.post()
-    # print(type(data))
-    # print(data.keys())
-    agent_id = data['id']
-    host_name = data['host_name']
 
-    # Agent.create(id=agent_id, name=host_name, os_name='Windows 7', os_version='7.3.4', product_id='6KKL',
-    #              domain='work.com', campaign=Campaign.get(Campaign.name == 'Cobalt'))
-    return web.Response(text=str(agent_id) + ' ' + host_name)
+    agent_name = ''.join(random.choice(string.ascii_lowercase) for _ in range(7))
+
+    try:
+        Agent.create(id=data['id'], name=agent_name, hostname=data['hostname'], platform=data['platform'],
+                     plat_version=data['plat_version'], username=data['username'])
+    except IntegrityError:
+        return web.Response(text='Agent already registered')
+
+    return web.Response(text='Agent has registered')
 
 
 async def delete_tech_output(request):
