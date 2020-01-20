@@ -21,7 +21,7 @@ class DBAuthorizationPolicy(AbstractAuthorizationPolicy):
             return False
 
         try:
-            user = User.get(User.email == identity)
+            user = User.get(User.id == identity)
 
             if user.disabled is False:
                 is_superuser = user.is_superuser

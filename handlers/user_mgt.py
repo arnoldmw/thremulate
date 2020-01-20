@@ -134,8 +134,40 @@ async def user_profile(request):
     # user_id = request.match_info['id']
     # user = User.get(User.id == user_id)
     user_id = await authorized_userid(request)
-    print(user_id)
-    return {}
+    user = User.get(User.id == user_id)
+
+    perms = [{'perm_id': '', 'perm_name': ''}, {'perm_id': '', 'perm_name': ''}]
+    user_selected = {}
+
+    user_selected.__setitem__('id', user.id)
+    user_selected.__setitem__('fname', user.fname)
+    user_selected.__setitem__('lname', user.lname)
+    user_selected.__setitem__('email', user.email)
+    user_selected.__setitem__('disabled', user.disabled)
+    user_selected.__setitem__('superuser', user.is_superuser)
+
+    i = 0
+    if user.userpermissions.count() > 0:
+        for p in user.userpermissions:
+            # perms.append()
+            if i == 3:
+                break
+            perms.__setitem__(i, {'perm_id': p.perm_id.id, 'perm_name': p.perm_id.name})
+            # perms.append({'perm_id': p.perm_id.id, 'perm_name': p.perm_id.name})
+            i = i + 1
+
+    user_selected.__setitem__('user_perms', perms)
+
+    permissions = Permissions.select()
+    perm_list = []
+    for pm in permissions:
+        perm_list.append({'id': pm.id, 'name': pm.name})
+
+    # print(user_selected)
+    # print(perm_list)
+    session = await get_session(request)
+    username = session['username']
+    return {'username': username, 'user': user_selected, 'perm_list': perm_list, 'title': 'User Edit'}
 
 
 def setup_user_mgt_routes(app):
