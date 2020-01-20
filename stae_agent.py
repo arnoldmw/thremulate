@@ -62,13 +62,9 @@ def get_platform():
     return plat
 
 
-def get_hostname():
-    return platform.node()
-
-
 def register():
     url = 'http://localhost:8000/register_agent'
-    req = http.request('POST', url, fields={'id': agent_id, 'host_name': get_hostname(), 'platform': get_platform()
+    req = http.request('POST', url, fields={'id': agent_id, 'host_name': platform.node(), 'platform': get_platform()
                                             }, headers=headers)
     response = str(req.data.decode('utf-8'))
     print('Response code: ' + str(req.status))
