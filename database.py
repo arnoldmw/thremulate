@@ -14,7 +14,7 @@ class BaseModel(Model):
         database = db
 
 
-class Campaign(BaseModel):
+class Adversary(BaseModel):
     name = CharField(unique=True)
     created_date = DateTimeField(default=datetime.datetime.now)
     updated_date = DateTimeField(default=datetime.datetime.now)
@@ -30,7 +30,7 @@ class Agent(BaseModel):
     domain = CharField(max_length=20, null=True)
     initial_contact = DateTimeField(default=datetime.datetime.now, null=True)
     last_contact = DateTimeField(default=datetime.datetime.now, null=True)
-    campaign = ForeignKeyField(Campaign, backref='agents', null=True)
+    adversary = ForeignKeyField(Adversary, backref='agents', null=True)
 
 
 class Technique(BaseModel):
@@ -102,22 +102,22 @@ def migrate():
     # db.create_tables([Parameter])
     # db.create_tables([TacticTechnique])
 
-    # db.drop_tables([Campaign, Agent, Technique, AgentTechnique, Tactic, TacticTechnique])
-    # db.create_tables([Campaign, Agent, Technique, AgentTechnique, Tactic, TacticTechnique])
+    # db.drop_tables([Adversary, Agent, Technique, AgentTechnique, Tactic, TacticTechnique])
+    # db.create_tables([Adversary, Agent, Technique, AgentTechnique, Tactic, TacticTechnique])
 
-    # camp = Campaign(name='Fin7', created_date=datetime.datetime.now, updated_date=datetime.datetime.now)
+    # camp = Adversary(name='Fin7', created_date=datetime.datetime.now, updated_date=datetime.datetime.now)
     # camp.save()
 
-    # Campaign.create(name='Fin7')
-    # Campaign.create(name='Cobalt')
+    # Adversary.create(name='Fin7')
+    # Adversary.create(name='Cobalt')
 
     # Agent.create(id=5, name='Hunter', os_name='Windows 10', os_version='10.4.5', product_id='5FF',
-    #              domain='home.local', campaign=Campaign.get_by_id(1))
+    #              domain='home.local', adversary=Adversary.get_by_id(1))
 
     # Agent.create(id=5, name='Hunter', os_name='Windows 10', os_version='10.4.5', product_id='5FF',
-    #              domain='home.local', campaign=Campaign.get(Campaign.name == 'Fin7'))
+    #              domain='home.local', adversary=Adversary.get(Adversary.name == 'Fin7'))
     # Agent.create(id=4, name='Sniffer', os_name='Windows 7', os_version='7.3.4', product_id='6KKL', domain='work.com',
-    #              campaign=Campaign.get(Campaign.name == 'Cobalt'))
+    #              adversary=Adversary.get(Adversary.name == 'Cobalt'))
     #
     # Technique.create(id=1057, name='Process Discovery')
     # Technique.create(id=1124, name='System Time Discovery')
