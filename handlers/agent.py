@@ -23,16 +23,14 @@ async def agent_index(request):
     agents = []
 
     # Avoids the N + 1 problem through fetching the related table together
-    query = (Agent
-             .select(Agent, Adversary)
-             .join(Adversary))
+    query = Agent.select().join(Adversary)
 
     for ag in query:
-        ic = ag.initial_contact.strftime("%d-%b-%Y %H:%M:%S")
-        lc = ag.last_contact.strftime("%d-%b-%Y %H:%M:%S")
+        # ic = ag.initial_contact.strftime("%d-%b-%Y %H:%M:%S")
+        # lc = ag.last_contact.strftime("%d-%b-%Y %H:%M:%S")
 
-        agents.append({'id': ag.id, 'name': ag.name, 'initial_contact': ic,
-                       'last_contact': lc, 'adversary': ag.adversary.name})
+        agents.append({'id': ag.id, 'name': ag.name, 'initial_contact': ag.initial_contact,
+                       'last_contact': ag.last_contact, 'adversary': ag.adversary.name})
 
     session = await get_session(request)
     username = session['username']

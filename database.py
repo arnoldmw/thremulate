@@ -225,10 +225,8 @@ if __name__ == '__main__':
     #            & (AgentTechnique.test_num == 0))
     # print(q)
 
-    query = Adversary.select()
-    adversaries = []
-    for adv in query:
-        adversaries.append({'id': adv.id, 'name': adv.name, 'created': adv.created_date, 'updated': adv.updated_date,
-                            'no_of_agents': adv.agents.count()})
-        # print(adv.id, adv.name, adv.created_date, adv.updated_date, adv.agents.count())
-    print(adversaries)
+
+    query = Agent.select().join(Adversary)
+
+    for ag in query:
+        print(ag.id)
