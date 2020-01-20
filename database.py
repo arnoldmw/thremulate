@@ -219,8 +219,16 @@ if __name__ == '__main__':
 
     # user = User.get(User.fname == 'Admin')
     # print(user.reset_pass)
+    #
+    # q = AgentTechnique.delete() \
+    #     .where((AgentTechnique.agent_id == 5) & (AgentTechnique.technique_id == 1082)
+    #            & (AgentTechnique.test_num == 0))
+    # print(q)
 
-    q = AgentTechnique.delete() \
-        .where((AgentTechnique.agent_id == 5) & (AgentTechnique.technique_id == 1082)
-               & (AgentTechnique.test_num == 0))
-    print(q)
+    query = Adversary.select()
+    adversaries = []
+    for adv in query:
+        adversaries.append({'id': adv.id, 'name': adv.name, 'created': adv.created_date, 'updated': adv.updated_date,
+                            'no_of_agents': adv.agents.count()})
+        # print(adv.id, adv.name, adv.created_date, adv.updated_date, adv.agents.count())
+    print(adversaries)

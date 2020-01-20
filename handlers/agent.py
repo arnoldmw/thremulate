@@ -24,15 +24,15 @@ async def agent_index(request):
 
     # Avoids the N + 1 problem through fetching the related table together
     query = (Agent
-             .select(Agent, Campaign)
-             .join(Campaign))
+             .select(Agent, Adversary)
+             .join(Adversary))
 
     for ag in query:
         ic = ag.initial_contact.strftime("%d-%b-%Y %H:%M:%S")
         lc = ag.last_contact.strftime("%d-%b-%Y %H:%M:%S")
 
         agents.append({'id': ag.id, 'name': ag.name, 'initial_contact': ic,
-                       'last_contact': lc, 'campaign': ag.campaign.name})
+                       'last_contact': lc, 'adversary': ag.adversary.name})
 
     session = await get_session(request)
     username = session['username']
@@ -175,11 +175,11 @@ async def agent_details(request):
     details = []
     agent = {}
 
-    agt = Agent.select(Agent, AgentTechnique).join(AgentTechnique).join(Campaign, on=Agent.campaign == Campaign.id) \
+    agt = Agent.select(Agent, AgentTechnique).join(AgentTechnique).join(Adversary, on=Agent.adversary == Adversary.id) \
         .where(AgentTechnique.agent_id == agent_id)
 
     for ag in agt:
-        agent = {'id': ag.id, 'name': ag.name, 'campaign': ag.campaign.name, 'domain': ag.domain,
+        agent = {'id': ag.id, 'name': ag.name, 'adversary': ag.adversary.name, 'domain': ag.domain,
                  'platform': ag.platform}
         for tech in ag.techniques:
             details.append({'tech_id': tech.technique_id, 'test_num': tech.test_num, 'name': tech.technique_id.name,
@@ -194,18 +194,18 @@ async def agent_details(request):
 @aiohttp_jinja2.template('agent/agent_edit.html')
 async def agent_edit(request):
     agent_id = request.match_info['id']
-    campaigns = []
+    adversaries = []
 
     agt = Agent.get(Agent.id == agent_id)
     agent = {'agt_id': agt.id, 'agt_name': agt.name, 'camp_id': agt.campaign_id}
 
-    camps = Campaign.select()
+    camps = Adversary.select()
     for camp in camps:
-        campaigns.append({'camp_id': camp.id, 'camp_name': camp.name})
+        adversaries.append({'camp_id': camp.id, 'camp_name': camp.name})
 
     session = await get_session(request)
     username = session['username']
-    return {'username': username, 'agent': agent, 'campaigns': campaigns, 'title': 'Update Agent'}
+    return {'username': username, 'agent': agent, 'adversaries': adversaries, 'title': 'Update Agent'}
 
 
 async def agent_edit_post(request):
@@ -213,7 +213,7 @@ async def agent_edit_post(request):
 
     agent_id = data['agent_id']
     agent_name = data['name']
-    campaign_id = data['campaign']
+    campaign_id = data['adversary']
 
     query = Agent.update(name=agent_name, campaign_id=campaign_id).where(Agent.id == agent_id)
     query.execute()
