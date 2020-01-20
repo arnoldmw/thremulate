@@ -211,9 +211,9 @@ async def agent_edit_post(request):
 
     agent_id = data['agent_id']
     agent_name = data['name']
-    campaign_id = data['adversary']
+    adversary_id = data['adversary']
 
-    query = Agent.update(name=agent_name, campaign_id=campaign_id).where(Agent.id == agent_id)
+    query = Agent.update(name=agent_name, adversary_id=adversary_id).where(Agent.id == agent_id)
     query.execute()
 
     # TODO: Show message to user that details were submitted
