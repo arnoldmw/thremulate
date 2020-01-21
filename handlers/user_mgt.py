@@ -163,12 +163,21 @@ async def user_profile(request):
     return {'username': username, 'user': user_selected, 'title': 'My Account'}
 
 
+@aiohttp_jinja2.template('user_mgt/change_password.html')
+async def change_password(request):
+    user_id = request.match_info['id']
+    session = await get_session(request)
+    username = session['username']
+    return {'username': username, 'user_id': user_id, 'title': 'Reset Password'}
+
+
 def setup_user_mgt_routes(app):
     app.add_routes([
         web.get('/users', users_index, name='users'),
         web.get('/user_profile', user_profile, name='user_profile'),
         web.get('/user_delete/{id}', user_delete, name='user_delete'),
         web.get('/user_edit/{id}', user_edit, name='user_edit'),
+        web.get('/change_password/{id}', change_password, name='change_password'),
         web.post('/user_edit_post', user_edit_post, name='user_edit_post'),
     ])
 
