@@ -44,8 +44,8 @@ async def user_delete(request):
     raise web.HTTPFound('/users')
 
 
-@aiohttp_jinja2.template('user_mgt/user_edit.html')
-async def user_edit(request):
+@aiohttp_jinja2.template('user_mgt/admin_user_edit.html')
+async def admin_user_edit(request):
     user_id = request.match_info['id']
     user = User.get(User.id == user_id)
     perms = [{'perm_id': '', 'perm_name': ''}, {'perm_id': '', 'perm_name': ''}]
@@ -58,15 +58,11 @@ async def user_edit(request):
     user_selected.__setitem__('disabled', user.disabled)
     user_selected.__setitem__('superuser', user.is_superuser)
 
-    i = 0
     if user.userpermissions.count() > 0:
-        for p in user.userpermissions:
-            # perms.append()
+        for i, p in enumerate(user.userpermissions):
             if i == 3:
                 break
             perms.__setitem__(i, {'perm_id': p.perm_id.id, 'perm_name': p.perm_id.name})
-            # perms.append({'perm_id': p.perm_id.id, 'perm_name': p.perm_id.name})
-            i = i + 1
 
     user_selected.__setitem__('user_perms', perms)
 
@@ -75,14 +71,12 @@ async def user_edit(request):
     for pm in permissions:
         perm_list.append({'id': pm.id, 'name': pm.name})
 
-    # print(user_selected)
-    # print(perm_list)
     session = await get_session(request)
     username = session['username']
     return {'username': username, 'user': user_selected, 'perm_list': perm_list, 'title': 'User Edit'}
 
 
-async def user_edit_post(request):
+async def admin_user_edit_post(request):
     data = await request.post()
     # print('register')
     # for key in data.keys():
@@ -125,15 +119,14 @@ async def user_edit_post(request):
         for pm in permissions:
             perm_list.append({'id': pm.id, 'name': pm.name})
 
-        response = aiohttp_jinja2.render_template('user_edit.html', request, {'user': data, 'perm_list': perm_list})
+        response = aiohttp_jinja2.render_template('admin_user_edit.html', request, {'user': data, 'perm_list': perm_list})
         # response.headers['Content-Language'] = 'en'
         return response
 
 
 @aiohttp_jinja2.template('user_mgt/user_profile.html')
 async def user_profile(request):
-    # user_id = request.match_info['id']
-    # user = User.get(User.id == user_id)
+
     user_id = await authorized_userid(request)
     user = User.get(User.id == user_id)
 
@@ -147,15 +140,11 @@ async def user_profile(request):
     user_selected.__setitem__('disabled', user.disabled)
     user_selected.__setitem__('superuser', user.is_superuser)
 
-    i = 0
     if user.userpermissions.count() > 0:
-        for p in user.userpermissions:
-            # perms.append()
+        for i, p in enumerate(user.userpermissions):
             if i == 3:
                 break
             perms.__setitem__(i, {'perm_id': p.perm_id.id, 'perm_name': p.perm_id.name})
-            # perms.append({'perm_id': p.perm_id.id, 'perm_name': p.perm_id.name})
-            i = i + 1
 
     user_selected.__setitem__('user_perms', perms)
 
@@ -195,14 +184,39 @@ async def change_password_post(request):
         return web.Response(status=404)
 
 
+@aiohttp_jinja2.template('user_mgt/user_edit.html')
+async def user_edit(request):
+    user_id = await authorized_userid(request)
+
+    try:
+        user = User.get(User.id == user_id)
+        user_selected = {}
+
+        user_selected.__setitem__('fname', user.fname)
+        user_selected.__setitem__('lname', user.lname)
+        user_selected.__setitem__('email', user.email)
+
+        session = await get_session(request)
+        username = session['username']
+        return {'username': username, 'user': user_selected, 'title': 'Edit Details'}
+    except User.DoesNotExist:
+        return web.Response(status=404)
+
+
+async def user_edit_post(request):
+    return {}
+
+
 def setup_user_mgt_routes(app):
     app.add_routes([
         web.get('/users', users_index, name='users'),
         web.get('/user_profile', user_profile, name='user_profile'),
         web.get('/user_delete/{id}', user_delete, name='user_delete'),
-        web.get('/user_edit/{id}', user_edit, name='user_edit'),
+        web.get('/admin_user_edit/{id}', admin_user_edit, name='admin_user_edit'),
+        web.post('/admin_user_edit_post', admin_user_edit_post, name='admin_user_edit_post'),
+        web.get('/user_edit', user_edit, name='user_edit'),
+        web.post('/user_edit_post', user_edit_post, name='user_edit_post'),
         web.get('/change_password/{id}', change_password, name='change_password'),
         web.post('/change_password_post', change_password_post, name='change_password_post'),
-        web.post('/user_edit_post', user_edit_post, name='user_edit_post'),
     ])
 
