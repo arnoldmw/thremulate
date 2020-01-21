@@ -2,6 +2,7 @@ import aiohttp_jinja2
 from aiohttp import web
 from database import *
 from aiohttp_session import get_session
+from db_auth import check_password_hash, generate_password_hash
 from aiohttp_security import (
     remember, forget, authorized_userid,
     check_permission, check_authorized,
@@ -171,6 +172,29 @@ async def change_password(request):
     return {'username': username, 'user_id': user_id, 'title': 'Reset Password'}
 
 
+async def change_password_post(request):
+    data = await request.post()
+    if 'password' and 'confirm_password' and 'old_password' in data:
+
+        if data['password'] == data['confirm_password']:
+            user_id = await authorized_userid(request)
+            try:
+                user = User.get(User.id == user_id)
+                if check_password_hash(data['old_password'], user.passwd):
+                    user.passwd = generate_password_hash(data['password'])
+                    user.save()
+                    raise web.HTTPFound('/user_profile')
+                else:
+                    return web.Response(status=404)
+
+            except User.DoesNotExist:
+                return web.Response(status=404)
+        else:
+            return web.Response(status=400, text='Bad request')
+    else:
+        return web.Response(status=404)
+
+
 def setup_user_mgt_routes(app):
     app.add_routes([
         web.get('/users', users_index, name='users'),
@@ -178,6 +202,7 @@ def setup_user_mgt_routes(app):
         web.get('/user_delete/{id}', user_delete, name='user_delete'),
         web.get('/user_edit/{id}', user_edit, name='user_edit'),
         web.get('/change_password/{id}', change_password, name='change_password'),
+        web.post('/change_password_post', change_password_post, name='change_password_post'),
         web.post('/user_edit_post', user_edit_post, name='user_edit_post'),
     ])
 

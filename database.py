@@ -225,9 +225,9 @@ if __name__ == '__main__':
     #            & (AgentTechnique.test_num == 0))
     # print(q)
 
-    adversaries = []
-    camps = Adversary.select()
-    for camp in camps:
-        adversaries.append({'camp_id': camp.id, 'camp_name': camp.name})
-
-    print(adversaries)
+    # adversaries = []
+    # camps = Adversary.select()
+    # for camp in camps:
+    #     adversaries.append({'camp_id': camp.id, 'camp_name': camp.name})
+    #
+    # print(adversaries)
