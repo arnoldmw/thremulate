@@ -158,16 +158,9 @@ async def user_profile(request):
 
     user_selected.__setitem__('user_perms', perms)
 
-    permissions = Permissions.select()
-    perm_list = []
-    for pm in permissions:
-        perm_list.append({'id': pm.id, 'name': pm.name})
-
-    # print(user_selected)
-    # print(perm_list)
     session = await get_session(request)
     username = session['username']
-    return {'username': username, 'user': user_selected, 'perm_list': perm_list, 'title': 'User Edit'}
+    return {'username': username, 'user': user_selected, 'title': 'My Account'}
 
 
 def setup_user_mgt_routes(app):
