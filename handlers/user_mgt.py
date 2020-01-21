@@ -204,7 +204,25 @@ async def user_edit(request):
 
 
 async def user_edit_post(request):
-    return {}
+    data = await request.post()
+
+    if 'fname' and 'lname' and 'email' in data:
+        try:
+            user_id = await authorized_userid(request)
+            user = User.get(User.id == user_id)
+            user.fname = data['fname']
+            user.lname = data['lname']
+            user.email = data['email']
+            user.save()
+
+            # Cannot update email with code below.
+            # user.update(fname=data['fname'], lname=data['lname'], email=data['email']).execute()
+            
+            raise web.HTTPFound('/user_profile')
+        except User.DoesNotExist:
+            return web.Response(status=404)
+    else:
+        return web.Response(text='Bad request', status=400)
 
 
 def setup_user_mgt_routes(app):
