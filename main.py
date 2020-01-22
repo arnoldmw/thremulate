@@ -1,6 +1,8 @@
 # noinspection PyUnresolvedReferences
 from handlers.auth import *
 # noinspection PyUnresolvedReferences
+from handlers.logger import *
+# noinspection PyUnresolvedReferences
 from handlers.campaign import *
 # noinspection PyUnresolvedReferences
 from handlers.dashboard import *
@@ -19,6 +21,7 @@ from aiohttp_security import (
 )
 
 import logging
+
 import ssl
 
 from aiohttp import web
@@ -37,6 +40,7 @@ from db_auth import DBAuthorizationPolicy
 from database import *
 
 THIS_DIR = Path(__file__).parent
+secret_key = b'\xd0\x04)E\x14\x98\xa1~\xecE\xae>(\x1d6\xec\xbfQ\xa4\x19\x0e\xbcre,\xf8\x8f\x84WV.\x8d'
 
 
 @aiohttp_jinja2.template('index.html')
@@ -78,7 +82,6 @@ async def create_app():
     aiohttp_jinja2.setup(app, loader=load)
     app['name'] = 'thremulate'
 
-    secret_key = b'\xd0\x04)E\x14\x98\xa1~\xecE\xae>(\x1d6\xec\xbfQ\xa4\x19\x0e\xbcre,\xf8\x8f\x84WV.\x8d'
     setup(app, EncryptedCookieStorage(secret_key))
 
     # Setting authentication and authorization
@@ -90,14 +93,20 @@ async def create_app():
 
     # Stops asyncio warnings because asycio implements its own exception handling. This throws many exceptions
     # that cannot be handled due to this being a development environment.
-    logging.getLogger('asyncio').setLevel(logging.CRITICAL)
+    # logging.getLogger('asyncio').setLevel(logging.CRITICAL)
 
     # logging.basicConfig(level=logging.INFO)
-
+    # logging.basicConfig(level=logging.DEBUG)
+    # logging.getLogger('aiohttp.access').setLevel(logging.DEBUG)
     # web.run_app(app, host="localhost", port=8080, ssl_context=ssl_context)
-
+    # access_logger = await AccessLogger()
     return app
 
 # adev runserver --livereload --debug-toolbar
-app = create_app()
-web.run_app(app, host="localhost", port=8000)
+if __name__ == '__main__':
+    app = create_app()
+    logging.getLogger('aiohttp.access').setLevel(logging.INFO)
+    logging.basicConfig(level=logging.INFO)
+    # access_logger = await AccessLogger()
+    # web.run_app(app, host="localhost", port=8000, access_log_format='%a %t "%r" %s %b "%{Referer}i" "%{User-Agent}i"')
+    web.run_app(app, host="localhost", port=8000, access_log_class=AccessLogger)
