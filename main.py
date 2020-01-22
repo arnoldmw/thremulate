@@ -13,6 +13,8 @@ from handlers.user_mgt import *
 # noinspection PyUnresolvedReferences
 from handlers.middleware import setup_middleware
 
+import aiohttp_debugtoolbar
+
 from aiohttp_security import setup as setup_security
 from aiohttp_security import SessionIdentityPolicy
 from aiohttp_security import (
@@ -91,6 +93,7 @@ async def create_app():
     ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
     ssl_context.load_cert_chain(certfile='certificates/stae.crt', keyfile='certificates/stae.key')
 
+    aiohttp_debugtoolbar.setup(app)
     # web.run_app(app, host="localhost", port=8080, ssl_context=ssl_context)
 
     return app
