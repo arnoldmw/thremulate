@@ -5,3 +5,4 @@ __pycache__/
 *.db
 logs/thremulate.log
 *.log
+db/adversary.db
