@@ -36,7 +36,7 @@
                                 {% for adv in adversaries %}
 
                                 {% if adv.adv_id == agent.adv_id %}
-                                <option value="{{ adv.advid }}" selected>{{ adv.adv_name }}</option>
+                                <option value="{{ adv.adv_id }}" selected>{{ adv.adv_name }}</option>
                                 {% else %}
                                 <option value="{{ adv.adv_id }}">{{ adv.adv_name }}</option>
                                 {% endif %}

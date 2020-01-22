@@ -208,21 +208,15 @@ async def agent_edit(request):
 
 async def agent_edit_post(request):
     data = await request.post()
-    print(data['agent_id'])
-    print(data['name'])
-    print(data['adversary'])
-    print(data['kill_date'])
-    print(data['kill_time'])
+
     agent_id = data['agent_id']
     agent_name = data['name']
     adversary_id = data['adversary']
+    kill_date = data['kill_date'].replace('T', ' ')
 
-    # query = Agent.update(name=agent_name, adversary_id=adversary_id).where(Agent.id == agent_id)
-    # query.execute()
+    Agent.update(name=agent_name, adversary_id=adversary_id, kill_date=kill_date).where(Agent.id == agent_id).execute()
 
-    # TODO: Show message to user that details were submitted
-
-    raise web.HTTPFound('/agents')
+    raise web.HTTPFound('/agent_details/%s' % agent_id)
 
 
 @aiohttp_jinja2.template('agent/customize_technique.html')

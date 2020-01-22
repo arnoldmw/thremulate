@@ -93,7 +93,7 @@ async def create_app():
     ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
     ssl_context.load_cert_chain(certfile='certificates/stae.crt', keyfile='certificates/stae.key')
 
-    aiohttp_debugtoolbar.setup(app)
+    aiohttp_debugtoolbar.setup(app, intercept_redirects=False)
     # web.run_app(app, host="localhost", port=8080, ssl_context=ssl_context)
 
     return app
