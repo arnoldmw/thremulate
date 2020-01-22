@@ -195,7 +195,7 @@ async def agent_edit(request):
     adversaries = []
 
     agt = Agent.get(Agent.id == agent_id)
-    agent = {'agt_id': agt.id, 'agt_name': agt.name, 'adv_id': agt.adversary_id}
+    agent = {'agt_id': agt.id, 'agt_name': agt.name, 'adv_id': agt.adversary_id, 'kill_date': agt.kill_date}
 
     advs = Adversary.select()
     for adv in advs:
@@ -208,13 +208,17 @@ async def agent_edit(request):
 
 async def agent_edit_post(request):
     data = await request.post()
-
+    print(data['agent_id'])
+    print(data['name'])
+    print(data['adversary'])
+    print(data['kill_date'])
+    print(data['kill_time'])
     agent_id = data['agent_id']
     agent_name = data['name']
     adversary_id = data['adversary']
 
-    query = Agent.update(name=agent_name, adversary_id=adversary_id).where(Agent.id == agent_id)
-    query.execute()
+    # query = Agent.update(name=agent_name, adversary_id=adversary_id).where(Agent.id == agent_id)
+    # query.execute()
 
     # TODO: Show message to user that details were submitted
 

@@ -46,6 +46,13 @@
                             </select>
                         </div>
 
+                        <div class="form-group">
+                            <label for="name">Kill Date</label>
+                            {% set kd = agent.kill_date | string %}
+                            <input type="datetime-local" class="form-control" id="kill_date" name="kill_date" 
+                            value="{{ kd.replace(' ', 'T') }}">
+                        </div>
+
                     </div>
                     <div class="card-action">
                         <input class="btn btn-primary" type="submit" name="submit" value="Update">
