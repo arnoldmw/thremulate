@@ -6,3 +6,4 @@ __pycache__/
 logs/thremulate.log
 *.log
 db/adversary.db
+config.ini
