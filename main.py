@@ -91,23 +91,12 @@ async def create_app():
     ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
     ssl_context.load_cert_chain(certfile='certificates/stae.crt', keyfile='certificates/stae.key')
 
-    # Stops asyncio warnings because asycio implements its own exception handling. This throws many exceptions
-    # that cannot be handled due to this being a development environment.
-    # logging.getLogger('asyncio').setLevel(logging.CRITICAL)
-
-    # logging.basicConfig(level=logging.INFO)
-    # logging.basicConfig(level=logging.DEBUG)
-    # logging.getLogger('aiohttp.access').setLevel(logging.DEBUG)
     # web.run_app(app, host="localhost", port=8080, ssl_context=ssl_context)
-    # access_logger = await AccessLogger()
+
     return app
 
 # adev runserver --livereload --debug-toolbar
 if __name__ == '__main__':
-    app = create_app()
-    # logging.getLogger('aiohttp.access').setLevel(logging.INFO)
-    # logging.getLogger('peewee').setLevel(logging.INFO)
+    application = create_app()
     logging.basicConfig(level=logging.INFO, filename=THIS_DIR / 'logs/thremulate.log')
-    # access_logger = await AccessLogger()
-    # web.run_app(app, host="localhost", port=8000, access_log_format='%a %t "%r" %s %b "%{Referer}i" "%{User-Agent}i"')
-    web.run_app(app, host="localhost", port=8000, access_log_class=AccessLogger)
+    web.run_app(application, host="localhost", port=8000, access_log_class=AccessLogger)
