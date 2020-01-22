@@ -147,11 +147,9 @@ async def agent_tasks(request):
         else:
             list_of_param_dict.append(None)
 
-    # print('parameters submitted')
-    # print(param_dict)
+    agent_assignments = assignments(techniques, agent_platform, list_of_param_dict)
 
-    # commands = assignments(techniques, agent_platform, param_dict)
-    commands = assignments(techniques, agent_platform, list_of_param_dict)
+    commands = '{0};{1}'.format(str(ag.kill_date), agent_assignments)
     return web.Response(text=commands)
 
 
