@@ -105,8 +105,9 @@ async def create_app():
 # adev runserver --livereload --debug-toolbar
 if __name__ == '__main__':
     app = create_app()
-    logging.getLogger('aiohttp.access').setLevel(logging.INFO)
-    logging.basicConfig(level=logging.INFO)
+    # logging.getLogger('aiohttp.access').setLevel(logging.INFO)
+    # logging.getLogger('peewee').setLevel(logging.INFO)
+    logging.basicConfig(level=logging.INFO, filename=THIS_DIR / 'logs/thremulate.log')
     # access_logger = await AccessLogger()
     # web.run_app(app, host="localhost", port=8000, access_log_format='%a %t "%r" %s %b "%{Referer}i" "%{User-Agent}i"')
     web.run_app(app, host="localhost", port=8000, access_log_class=AccessLogger)
