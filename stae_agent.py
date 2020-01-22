@@ -169,16 +169,6 @@ def send_output():
     # print('Response: ' + response)
 
 
-def store_kill_date():
-    config = configparser.ConfigParser()
-
-    if os.path.exists(path=THIS_DIR / 'config.ini'):
-        config.read('config.ini')
-        config['AGENT']['kill_date'] = datetime.datetime.strptime(kill_date_string, '%Y-%m-%d %H:%M')
-        with open('config.ini', 'a') as configfile:
-            config.write(configfile)
-
-
 def confirm_kill():
     check = configparser.ConfigParser()
     check.read('config.ini')
