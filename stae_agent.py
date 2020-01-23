@@ -9,6 +9,8 @@ import urllib3
 from random import randrange
 from pathlib import Path
 
+from urllib3.exceptions import MaxRetryError
+
 http = urllib3.PoolManager()
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
                          ' (KHTML, like Gecko) Chrome/78.0.3904.97 Safa'}
@@ -99,63 +101,69 @@ def register():
 
 
 def get_techniques():
-    url = ('http://localhost:8000/agent_techniques/%s' % agent_id)
-    req = http.request('GET', url, headers=headers)
-    response = str(req.data.decode('utf-8'))
-    if ':' not in response or ',' not in response:
-        return
-    # print('Response code: ' + str(req.status))
-    # print('Response: ' + response)
-    if req.status == 200:
-        response = response.split(',')
-        result = []
+    try:
 
-        for res in response:
-            if res is not '':
-                result.append(res)
-        # print(response)
-        # print(result)
-        return result
-    return
+        url = ('http://localhost:8000/agent_techniques/%s' % agent_id)
+        req = http.request('GET', url, headers=headers)
+        response = str(req.data.decode('utf-8'))
+
+        if req.status == 200:
+            response = response.split(',')
+            result = []
+
+            for res in response:
+                if res is not '':
+                    result.append(res)
+
+            return result
+        return
+
+    except MaxRetryError:
+        print('[+] Agent failed to contact server for techniques assigned after 3 retries')
+        pass
 
 
 def download_and_run_commands():
-    results = []
 
-    url = ('http://localhost:8000/agent_tasks/%s' % agent_id)
+    try:
+        url = ('http://localhost:8000/agent_tasks/%s' % agent_id)
+        req = http.request('GET', url, headers=headers)
+        response = str(req.data.decode('utf-8'))
 
-    req = http.request('GET', url, headers=headers)
-    response = str(req.data.decode('utf-8'))
+        if req.status == 200:
+            results = []
+            agent_commands = response.split(';')
 
-    # print('Response code: ' + str(req.status))
-    # print('Response: ' + response)
+            for i, command in enumerate(agent_commands):
+                if command is '':
+                    continue
+                if i == 0:
+                    global kill_date_string
+                    kill_date_string = command
+                    continue
 
-    if req.status == 200:
-        # Separates technique's commands into a list separated by ++
-        agent_commands = response.split(';')
+                results.append(execute_command(command))
 
-        for i, command in enumerate(agent_commands):
-            if command is '':
-                continue
-            if i == 0:
-                global kill_date_string
-                kill_date_string = command
-                continue
-
-            results.append(execute_command(command))
-
-        return results
-    return
+            return results
+        return
+    except MaxRetryError:
+        print('[+] Agent failed to contact server for tasks to execute after 3 retries')
+        pass
 
 
 def send_output():
-    std_out = download_and_run_commands()
-    # url = 'http://localhost:8000/agent_tasks/5'
     agent_tech = get_techniques()
     # http://localhost:8000/agent_techniques/5
 
-    if agent_tech is None or std_out is None:
-        print('[+] Agent received an error from the server')
+    if agent_tech is None:
+        print('[+] Agent sent nothing to the server')
+        return
+
+    std_out = download_and_run_commands()
+    # url = 'http://localhost:8000/agent_tasks/5'
+
+    if std_out is None:
+        print('[+] Agent sent nothing to the server')
         return
 
     url = 'http://localhost:8000/agent_output'
@@ -167,7 +175,9 @@ def send_output():
         # time.sleep(1)
         req = http.request('POST', url, fields={'id': agent_id, 'tech': agent_tech[i], 'output': std_out[i],
                                                 'executed': ('%s' % executed[i])}, headers=headers)
-        print('Response code: ' + str(req.status))
+
+        if req.status == 200:
+            print('[+] Agent executed T%s' % agent_tech[i])
         # time.sleep(4)
         # except IndexError:
         #     print('Index error')
