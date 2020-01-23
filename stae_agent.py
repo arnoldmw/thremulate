@@ -93,11 +93,19 @@ def get_platform():
 
 def register():
     url = 'http://localhost:8000/register_agent'
-    req = http.request('POST', url, fields={'id': agent_id, 'hostname': platform.node(), 'platform': get_platform(),
-                                            'plat_version': platform.version(), 'username': getuser()}, headers=headers)
-    response = str(req.data.decode('utf-8'))
-    print('Response code: ' + str(req.status))
-    print('[+] ' + response)
+
+    try:
+        req = http.request('POST', url, fields={'id': agent_id, 'hostname': platform.node(), 'platform': get_platform(),
+                                                'plat_version': platform.version(),
+                                                'username': getuser()}, headers=headers)
+        response = str(req.data.decode('utf-8'))
+
+        if req.status == 200:
+            print('[+] ' + response)
+
+    except MaxRetryError:
+        print('[+] Agent failed to register with server after 3 retries')
+        pass
 
 
 def get_techniques():
