@@ -7,3 +7,4 @@ logs/thremulate.log
 *.log
 db/adversary.db
 config.ini
+techniques_hash.db
