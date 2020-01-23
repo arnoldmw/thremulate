@@ -4,7 +4,7 @@ import uuid
 import bcrypt
 from playhouse.migrate import *
 # noinspection PyUnresolvedReferences
-from art.run_atomics import get_all_techniques
+from art.run_atomics import techniques_for_db
 
 db = SqliteDatabase('db/adversary.db', pragmas={'foreign_keys': 1})
 
@@ -37,7 +37,6 @@ class Agent(BaseModel):
 class Technique(BaseModel):
     id = IntegerField(primary_key=True)
     name = CharField(max_length=30)
-    parameters = CharField(max_length=30, null=True)
 
 
 class AgentTechnique(BaseModel):
@@ -218,17 +217,12 @@ if __name__ == '__main__':
     # ]
     # User.insert_many(data_source).execute()
 
-    # user = User.get(User.fname == 'Admin')
-    # print(user.reset_pass)
-    #
-    # q = AgentTechnique.delete() \
-    #     .where((AgentTechnique.agent_id == 5) & (AgentTechnique.technique_id == 1082)
-    #            & (AgentTechnique.test_num == 0))
-    # print(q)
+    # tech_table = techniques_for_db()
+    # for t in tech_table:
+    #     try:
+    #         tech = Technique.get(Technique.id == t['id'])
+    #         # print(tech.name)
+    #     except Technique.DoesNotExist:
+    #         Technique.create(id=t['id'], name=t['name'])
+    #         pass
 
-    # adversaries = []
-    # camps = Adversary.select()
-    # for camp in camps:
-    #     adversaries.append({'camp_id': camp.id, 'camp_name': camp.name})
-    #
-    # print(adversaries)
