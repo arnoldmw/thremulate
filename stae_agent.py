@@ -124,7 +124,6 @@ def get_techniques():
 
 
 def download_and_run_commands():
-
     try:
         url = ('http://localhost:8000/agent_tasks/%s' % agent_id)
         req = http.request('GET', url, headers=headers)
@@ -168,25 +167,25 @@ def send_output():
 
     url = 'http://localhost:8000/agent_output'
 
-    # Iterates over list of techniques assigned to an agent_tasks while selecting the respective result or output after
-    # executing that technique
+    # Iterates over list of techniques assigned to an agent_tasks while selecting the respective
+    # result or output after executing that technique
     for i, res in enumerate(agent_tech):
-        # try:
-        # time.sleep(1)
-        req = http.request('POST', url, fields={'id': agent_id, 'tech': agent_tech[i], 'output': std_out[i],
-                                                'executed': ('%s' % executed[i])}, headers=headers)
+        try:
 
-        if req.status == 200:
-            print('[+] Agent executed T%s' % agent_tech[i])
-        # time.sleep(4)
-        # except IndexError:
-        #     print('Index error')
+            req = http.request('POST', url, fields={'id': agent_id, 'tech': agent_tech[i], 'output': std_out[i],
+                                                    'executed': ('%s' % executed[i])}, headers=headers)
 
-    # print(results)
-    # print(techs)
-    # response = str(req.data.decode('utf-8'))
-    # print('Response code: ' + str(req.status))
-    # print('Response: ' + response)
+            if req.status == 200:
+                print('[+] Agent executed T%s' % agent_tech[i])
+
+            # time.sleep(4)
+
+        except IndexError:
+            print('Index error for %d' % i)
+            pass
+        except MaxRetryError:
+            print('[+] Agent failed to send T%s execution results to server after 3 retries' % str(agent_tech[i]))
+            pass
 
 
 def confirm_kill():
