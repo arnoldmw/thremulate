@@ -15,14 +15,25 @@ async def response_headers(request, handler):
     return response
 
 
-@aiohttp_jinja2.template('middleware/404.html')
+# @aiohttp_jinja2.template('middleware/404.html')
 async def handle_404(request):
-    return {'title': 'Page not found'}
+    context = {'title': 'Page not found'}
+    response = aiohttp_jinja2.render_template('middleware/404.html',
+                                              request,
+                                              context, status=404)
+    response.headers['Content-Language'] = 'ru'
+    return response
+    # return {'title': 'Page not found'}
 
 
-@aiohttp_jinja2.template('middleware/500.html')
+# @aiohttp_jinja2.template('middleware/500.html')
 async def handle_500(request):
-    return {'title': 'Error'}
+    context = {'title': 'Error'}
+    response = aiohttp_jinja2.render_template('middleware/500.html',
+                                              request,
+                                              context, status=500)
+    response.headers['Content-Language'] = 'ru'
+    return response
 
 
 def create_error_middleware(overrides):

