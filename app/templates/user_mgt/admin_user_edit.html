@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<!-- Padding Top -->
+<div style="margin-top: 4%;"></div>
+
+
+<div class="row row-card-no-pd">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-head-row">
+                    <h4 class="card-title">Update User</h4>
+
+                </div>
+
+                <p class="card-category">
+                    <!-- <button class="btn btn-primary btn-link"> -->
+                    <a href="{{ url('users') }}">Back to Users</a>
+                    <!-- </button> -->
+                </p>
+            </div>
+            <form action="{{ url('admin_user_edit_post') }}" method="post">
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+
+                                <input type="hidden" name="user_id" value="{{ user.id }}">
+
+                                <label for="">First Name</label>
+                                <input type="text" class="form-control" id="fname" name="fname"
+                                    value="{{ user.fname }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Last Name</label>
+                                <input type="text" class="form-control" id="lname" name="lname"
+                                    value="{{ user.lname }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email"
+                                    value="{{ user.email }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label d-block">Account Status</label>
+                                <div class="selectgroup selectgroup-primary selectgroup-pills">
+
+                                    <label class="selectgroup-item">
+                                        {% if user.disabled == True %}
+                                        <input type="radio" name="disabled" value="True" class="selectgroup-input"
+                                            checked>
+                                        <span class="selectgroup-button selectgroup-button-icon"><i class="fas fa-lock"
+                                                data-toggle="tooltip" title="Locked"></i></span>
+                                        {% else %}
+                                        <input type="radio" name="disabled" value="True" class="selectgroup-input">
+                                        <span class="selectgroup-button selectgroup-button-icon"><i class="fas fa-lock"
+                                                data-toggle="tooltip" title="Locked"></i></span>
+                                        {% endif %}
+                                    </label>
+
+                                    <label class="selectgroup-item">
+                                        {% if user.disabled == False %}
+                                        <input type="radio" name="disabled" value="False" class="selectgroup-input"
+                                            checked>
+                                        <span class="selectgroup-button selectgroup-button-icon"><i
+                                                class="fas fa-lock-open" data-toggle="tooltip"
+                                                title="Unlocked"></i></span>
+                                        {% else %}
+                                        <input type="radio" name="disabled" value="False" class="selectgroup-input">
+                                        <span class="selectgroup-button selectgroup-button-icon"><i
+                                                class="fas fa-lock-open" data-toggle="tooltip"
+                                                title="Unlocked"></i></span>
+                                        {% endif %}
+                                    </label>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="form-label d-block">Super User</label>
+                                <div class="selectgroup selectgroup-primary selectgroup-pills" na>
+
+                                    <label class="selectgroup-item">
+                                        {% if user.superuser == True %}
+                                        <input type="radio" name="superuser" value="True" class="selectgroup-input"
+                                            checked>
+                                        <span class="selectgroup-button selectgroup-button-icon"><i
+                                                class="fas fa-user-ninja" data-toggle="tooltip"
+                                                title="Superuser"></i></span>
+                                        {% else %}
+                                        <input type="radio" name="superuser" value="True" class="selectgroup-input">
+                                        <span class="selectgroup-button selectgroup-button-icon"><i
+                                                class="fas fa-user-ninja" data-toggle="tooltip"
+                                                title="Superuser"></i></span>
+                                        {% endif %}
+                                    </label>
+
+                                    <label class="selectgroup-item">
+                                        {% if user.superuser == False %}
+                                        <input type="radio" name="superuser" value="False" class="selectgroup-input"
+                                            checked>
+                                        <span class="selectgroup-button selectgroup-button-icon"><i class="fas fa-user"
+                                                data-toggle="tooltip" title="Non-Superuser"></i></span>
+                                        {% else %}
+                                        <input type="radio" name="superuser" value="False" class="selectgroup-input">
+                                        <span class="selectgroup-button selectgroup-button-icon"><i class="fas fa-user"
+                                                data-toggle="tooltip" title="Non-Superuser"></i></span>
+                                        {% endif %}
+                                    </label>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="form-label">Permissions</label><br>
+                                <div class="selectgroup selectgroup-pills">
+                                  
+
+                                    {% for p in perm_list %}
+
+                                        {% if p.id == user.user_perms[0].perm_id or p.id == user.user_perms[1].perm_id %}
+                                        <label class="selectgroup-item">
+                                            <input type="checkbox" name="{{p.name}}" value="{{ p.id }}"
+                                                class="selectgroup-input" checked>
+                                            <span class="selectgroup-button">{{p.name}}</span>
+                                        </label>
+
+                                        {% else %}
+                                        <label class="selectgroup-item">
+                                            <input type="checkbox" name="{{p.name}}" value="{{ p.id }}"
+                                                class="selectgroup-input" >
+                                            <span class="selectgroup-button">{{p.name}}</span>
+                                        </label>
+
+                                        {% endif %}
+
+                                       
+                                    {% endfor %}
+
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="">Password</label><br>
+                                <button class="btn btn-primary btn-link"><span class="btn-label"><i
+                                            class="fas fa-key"></i></span>
+                                    <a href="{{ url('reset_password', id=user.id | string) }}">Reset Password</a>
+                                </button>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <div class="card-action">
+                    <input type="button" id="cancel" name="cancel" class="btn btn-danger btn-round" value="Cancel">
+                    <input class="btn btn-primary btn-round" type="submit" name="submit" value="Update">
+                </div>
+            </form>
+
+
+
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="{{ url('static', filename='js/core/jquery.3.2.1.min.js') }}"></script>
+
+<script>
+    $(document).ready(function () {
+
+        $("#cancel").click(function () {
+
+            window.location.assign("http://localhost:8000/users");
+
+        });
+
+
+    });
+
+
+</script>
+
+
+{% endblock %}

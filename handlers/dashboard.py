@@ -10,8 +10,8 @@ from database import *
 async def dashboard(request):
     counts = []
 
-    # Campaign count
-    camp_count = Campaign.select().count()
+    # Adversary count
+    camp_count = Adversary.select().count()
     # Agent count
     agent_count = Agent.select().count()
     # Technique count
@@ -38,9 +38,9 @@ async def dashboard(request):
     graph = []
 
     camp_month_count = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    # Number of campaigns per month
-    query6 = Campaign.select(Campaign.id, Campaign.created_date.month.alias('month'),
-                             fn.Count(Campaign.id).alias('count')).group_by(Campaign.created_date.month)
+    # Number of adversaries per month
+    query6 = Adversary.select(Adversary.id, Adversary.created_date.month.alias('month'),
+                             fn.Count(Adversary.id).alias('count')).group_by(Adversary.created_date.month)
 
     for q in query6:
         # Array index begin from 0

@@ -33,11 +33,20 @@
 
     <!-- CSS Files -->
     <link rel="stylesheet" type="text/css" href="{{ url('static', filename='css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url('static', filename='css/matrix.min.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ url('static', filename='css/atlantis.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url('static', filename='css/custom.css') }}" />
 
     <style>
         .nav-item .nav-link{
             font-size: 14px!important;
+        }
+
+        .border a {
+            color: #ffffff;
+            }
+        .no-border{
+        border: none !important;
         }
     
     </style>
@@ -70,7 +79,7 @@
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link " href="{{ url('campaigns') }}" >Campaigns</a>
+                            <a class="nav-link " href="{{ url('adversaries') }}" >Adversaries</a>
                           </li>
 
                         <li class="nav-item dropdown">
@@ -110,9 +119,8 @@
                                             
                                             <li>
                                                 
-                                                <a class="dropdown-item" href="#">My Profile</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="#">Account Setting</a>
+                                                
+                                                <a class="dropdown-item" href="{{ url('user_profile') }}">My Account</a>
                                                 <div class="dropdown-divider"></div>
                                                 <a class="dropdown-item" href="{{ url('logout' )}}">Logout</a>
                                             </li>

@@ -1,48 +1,41 @@
 import aiohttp_jinja2
 from aiohttp import web
 from aiohttp_session import get_session
-from database import *
-import datetime
+# noinspection PyUnresolvedReferences
+from database import Adversary, Agent
 
 
-@aiohttp_jinja2.template('campaign/campaign_index.html')
+@aiohttp_jinja2.template('adversary/campaign_index.html')
 async def campaign_index(request):
-    campaigns = []
+    adversaries = []
 
-    # Avoids the N + 1 problem through fetching the related table together
-    query = (Campaign
-             .select(Campaign, fn.Count(Agent.id).alias('count'))
-             .join(Agent, JOIN.LEFT_OUTER)
-             .group_by(Campaign)
-             )
+    query = Adversary.select()
 
-    for camp in query:
-        created = camp.created_date.strftime("%d-%b-%Y %H:%M:%S")
-        updated = camp.updated_date.strftime("%d-%b-%Y %H:%M:%S")
+    for adv in query:
+        adversaries.append({'id': adv.id, 'name': adv.name, 'created': adv.created_date, 'updated': adv.updated_date,
+                            'no_of_agents': adv.agents.count()})
 
-        campaigns.append({'id': camp.id, 'name': camp.name, 'created': created, 'updated': updated,
-                          'no_of_agents': camp.count})
     session = await get_session(request)
     username = session['username']
-    return {'username': username, 'campaigns': campaigns, 'title': 'Campaigns'}
+
+    return {'username': username, 'adversaries': adversaries, 'title': 'Adversaries'}
 
 
 async def campaign_add(request):
     data = await request.post()
-    Campaign.create(name=data['addName'])
-    raise web.HTTPFound('/campaigns')
+    Adversary.create(name=data['addName'])
+    raise web.HTTPFound('/adversaries')
 
 
-@aiohttp_jinja2.template('campaign/campaign_details.html')
+@aiohttp_jinja2.template('adversary/campaign_details.html')
 async def campaign_details(request):
-    print(request)
-    # camp_details = {}
+
     agents = []
 
     if 'id' in request.match_info:
         camp_id = request.match_info['id']
 
-        camp = Campaign.get(Campaign.id == camp_id)
+        camp = Adversary.get(Adversary.id == camp_id)
         camp_details = {'name': camp.name, 'created': camp.created_date.strftime("%d-%b-%Y %H:%M:%S"),
                         'updated': camp.updated_date.strftime("%d-%b-%Y %H:%M:%S")}
         for ag in camp.agents:
@@ -52,34 +45,34 @@ async def campaign_details(request):
 
         session = await get_session(request)
         username = session['username']
-        return {'username': username, 'campaign': camp_details, 'agents': agents, 'title': 'Campaign Details'}
+        return {'username': username, 'adversary': camp_details, 'agents': agents, 'title': 'Adversary Details'}
 
     else:
         session = await get_session(request)
         username = session['username']
         context = {'username': username}
-        response = aiohttp_jinja2.render_template('campaign/campaign_index.html', request, context)
+        response = aiohttp_jinja2.render_template('adversary/campaign_index.html', request, context)
         return response
 
 
 async def campaign_update(request):
     data = await request.post()
     # TODO: Check for UNIQUE constraint
-    q = Campaign.update(name=data['name']).where(Campaign.id == data['id'])
+    q = Adversary.update(name=data['name']).where(Adversary.id == data['id'])
     q.execute()
-    raise web.HTTPFound('/campaigns')
+    raise web.HTTPFound('/adversaries')
 
 
 async def campaign_delete(request):
     data = await request.post()
-    q = Campaign.delete().where(Campaign.id == data['id'])
+    q = Adversary.delete().where(Adversary.id == data['id'])
     q.execute()
-    raise web.HTTPFound('/campaigns')
+    raise web.HTTPFound('/adversaries')
 
 
 def setup_campaign_routes(app):
     app.add_routes([
-        web.get('/campaigns', campaign_index, name='campaigns'),
+        web.get('/adversaries', campaign_index, name='adversaries'),
         web.get('/campaign_details/{id}', campaign_details, name='campaign_details'),
         web.post('/campaign_add', campaign_add),
         web.post('/campaign_update', campaign_update),
