@@ -52,7 +52,7 @@ async def index(request):
 
 @aiohttp_jinja2.template('home.html')
 async def home(request):
-    await check_permission(request, 'public')
+    await check_authorized(request)
 
     session = await get_session(request)
     # email = await authorized_userid(request)

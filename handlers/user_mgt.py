@@ -132,7 +132,7 @@ async def admin_user_edit_post(request):
 
 @aiohttp_jinja2.template('user_mgt/user_profile.html')
 async def user_profile(request):
-
+    await check_authorized(request)
     user_id = await authorized_userid(request)
     user = User.get(User.id == user_id)
 
@@ -161,6 +161,7 @@ async def user_profile(request):
 
 @aiohttp_jinja2.template('user_mgt/change_password.html')
 async def change_password(request):
+    await check_authorized(request)
     user_id = request.match_info['id']
     session = await get_session(request)
     username = session['username']
@@ -168,6 +169,7 @@ async def change_password(request):
 
 
 async def change_password_post(request):
+    await check_authorized(request)
     data = await request.post()
     if 'password' and 'confirm_password' and 'old_password' in data:
 
@@ -192,6 +194,7 @@ async def change_password_post(request):
 
 @aiohttp_jinja2.template('user_mgt/user_edit.html')
 async def user_edit(request):
+    await check_authorized(request)
     user_id = await authorized_userid(request)
 
     try:
@@ -210,6 +213,7 @@ async def user_edit(request):
 
 
 async def user_edit_post(request):
+    await check_authorized(request)
     data = await request.post()
 
     if 'fname' and 'lname' and 'email' in data:
