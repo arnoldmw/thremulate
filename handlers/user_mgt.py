@@ -1,13 +1,12 @@
 import aiohttp_jinja2
 from aiohttp import web
-from database import *
-from aiohttp_session import get_session
-# noinspection PyUnresolvedReferences
-from db_auth import check_password_hash, generate_password_hash
 from aiohttp_security import (
-    remember, forget, authorized_userid,
     check_permission, check_authorized,
 )
+from aiohttp_session import get_session
+from database import *
+# noinspection PyUnresolvedReferences
+from db_auth import check_password_hash, generate_password_hash
 
 
 @aiohttp_jinja2.template('user_mgt/users_index.html')
@@ -125,38 +124,41 @@ async def admin_user_edit_post(request):
         for pm in permissions:
             perm_list.append({'id': pm.id, 'name': pm.name})
 
-        response = aiohttp_jinja2.render_template('admin_user_edit.html', request, {'user': data, 'perm_list': perm_list})
-        # response.headers['Content-Language'] = 'en'
+        response = aiohttp_jinja2.render_template('admin_user_edit.html',
+                                                  request, {'user': data, 'perm_list': perm_list})
         return response
 
 
 @aiohttp_jinja2.template('user_mgt/user_profile.html')
 async def user_profile(request):
-    await check_authorized(request)
-    user_id = await authorized_userid(request)
-    user = User.get(User.id == user_id)
+    user_id = await check_authorized(request)
 
-    perms = [{'perm_id': '', 'perm_name': ''}, {'perm_id': '', 'perm_name': ''}]
-    user_selected = {}
+    try:
+        user = User.get(User.id == user_id)
 
-    user_selected.__setitem__('id', user.id)
-    user_selected.__setitem__('fname', user.fname)
-    user_selected.__setitem__('lname', user.lname)
-    user_selected.__setitem__('email', user.email)
-    user_selected.__setitem__('disabled', user.disabled)
-    user_selected.__setitem__('superuser', user.is_superuser)
+        perms = [{'perm_id': '', 'perm_name': ''}, {'perm_id': '', 'perm_name': ''}]
+        user_selected = {}
 
-    if user.userpermissions.count() > 0:
-        for i, p in enumerate(user.userpermissions):
-            if i == 3:
-                break
-            perms.__setitem__(i, {'perm_id': p.perm_id.id, 'perm_name': p.perm_id.name})
+        user_selected.__setitem__('id', user.id)
+        user_selected.__setitem__('fname', user.fname)
+        user_selected.__setitem__('lname', user.lname)
+        user_selected.__setitem__('email', user.email)
+        user_selected.__setitem__('disabled', user.disabled)
+        user_selected.__setitem__('superuser', user.is_superuser)
 
-    user_selected.__setitem__('user_perms', perms)
+        if user.userpermissions.count() > 0:
+            for i, p in enumerate(user.userpermissions):
+                if i == 3:
+                    break
+                perms.__setitem__(i, {'perm_id': p.perm_id.id, 'perm_name': p.perm_id.name})
 
-    session = await get_session(request)
-    username = session['username']
-    return {'username': username, 'user': user_selected, 'title': 'My Account'}
+        user_selected.__setitem__('user_perms', perms)
+
+        session = await get_session(request)
+        username = session['username']
+        return {'username': username, 'user': user_selected, 'title': 'My Account'}
+    except User.DoesNotExist:
+        web.Response(status=404)
 
 
 @aiohttp_jinja2.template('user_mgt/change_password.html')
