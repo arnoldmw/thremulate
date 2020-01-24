@@ -16,28 +16,33 @@ async def login(request):
 
 
 async def login_post(request):
-    # sess = await get_session(request)
     data = await request.post()
-    email = data['email']
-    password = data['password']
+    if 'email' in data and 'password' in data:
+        email = data['email']
+        password = data['password']
 
-    result = check_credentials(email, password)
-    if result:
-        session = await new_session(request)
-        user = User.get(User.email == email)
-        response = web.HTTPFound('/home')
-        await remember(request, response, str(user.id))
-        # session = await new_session(request)
+        result = check_credentials(email, password)
+        if result:
+            session = await new_session(request)
+            user = User.get(User.email == email)
+            response = web.HTTPFound('/home')
+            await remember(request, response, str(user.id))
 
-        username = user.fname
-        session.__setitem__('username', username)
-        raise response
+            session.__setitem__('username', user.fname)
 
-    context = {'error': '*Incorrect login'}
-    response = aiohttp_jinja2.render_template('auth/login.html',
-                                              request,
-                                              context)
-    return response
+            if user.reset_pass:
+                session.__setitem__('reset_pass', user.reset_pass)
+                raise web.HTTPFound('/change_password')
+
+            raise web.HTTPFound('/home')
+
+        context = {'error': '*Incorrect login'}
+        response = aiohttp_jinja2.render_template('auth/login.html',
+                                                  request,
+                                                  context)
+        return response
+
+    return web.Response(status=400)
 
 
 async def logout(request):
