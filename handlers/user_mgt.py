@@ -162,19 +162,17 @@ async def user_profile(request):
 @aiohttp_jinja2.template('user_mgt/change_password.html')
 async def change_password(request):
     await check_authorized(request)
-    user_id = request.match_info['id']
     session = await get_session(request)
     username = session['username']
-    return {'username': username, 'user_id': user_id, 'title': 'Reset Password'}
+    return {'username': username, 'title': 'Reset Password'}
 
 
 async def change_password_post(request):
-    await check_authorized(request)
+    user_id = await check_authorized(request)
     data = await request.post()
     if 'password' and 'confirm_password' and 'old_password' in data:
 
         if data['password'] == data['confirm_password']:
-            user_id = await authorized_userid(request)
             try:
                 user = User.get(User.id == user_id)
                 if check_password_hash(data['old_password'], user.passwd):
@@ -244,7 +242,7 @@ def setup_user_mgt_routes(app):
         web.post('/admin_user_edit_post', admin_user_edit_post, name='admin_user_edit_post'),
         web.get('/user_edit', user_edit, name='user_edit'),
         web.post('/user_edit_post', user_edit_post, name='user_edit_post'),
-        web.get('/change_password/{id}', change_password, name='change_password'),
+        web.get('/change_password', change_password, name='change_password'),
         web.post('/change_password_post', change_password_post, name='change_password_post'),
     ])
 
