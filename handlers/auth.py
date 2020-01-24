@@ -54,6 +54,41 @@ async def force_reset_password(request):
     return {'user_id': user_id}
 
 
+async def force_reset_password_post(request):
+    data = await request.post()
+    if 'user_id' in data and 'current_password' in data and 'new_password' in data and 'confirm_new_password' in data:
+        user_id = data['user_id']
+        if data['new_password'] == data['confirm_new_password']:
+
+            try:
+
+                user = User.get(User.id == user_id)
+
+                check_password_hash(data['current_password'], user.passwd)
+
+                user.passwd = generate_password_hash(data['new_password'])
+                user.reset_pass = False
+                user.save()
+
+                session = await new_session(request)
+                session.__setitem__('username', user.fname)
+
+                response = web.HTTPFound('/home')
+                await remember(request, response, user_id)
+                raise response
+
+            except User.DoesNotExist:
+                return web.Response(status=400)
+        else:
+            context = {'user_id': '*Incorrect credentials'}
+            response = aiohttp_jinja2.render_template('auth/force_reset_password.html',
+                                                      request,
+                                                      context)
+            return response
+
+    return web.Response(status=400)
+
+
 async def logout(request):
     await check_authorized(request)
     response = web.HTTPFound('/')
@@ -124,5 +159,6 @@ def setup_auth_routes(app):
         web.post('/register_post', register_post, name='register_post'),
         web.get('/reset_password/{id}', reset_password, name='reset_password'),
         web.post('/reset_password_post', reset_password_post, name='reset_password_post'),
-        web.get('/force_reset_password', force_reset_password, name='force_reset_password')
+        web.get('/force_reset_password', force_reset_password, name='force_reset_password'),
+        web.post('/force_reset_password_post', force_reset_password_post, name='force_reset_password_post')
     ])
