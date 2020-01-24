@@ -2,6 +2,7 @@ import aiohttp_jinja2
 from aiohttp import web
 from database import *
 from aiohttp_session import get_session
+# noinspection PyUnresolvedReferences
 from db_auth import check_password_hash, generate_password_hash
 from aiohttp_security import (
     remember, forget, authorized_userid,
@@ -11,6 +12,8 @@ from aiohttp_security import (
 
 @aiohttp_jinja2.template('user_mgt/users_index.html')
 async def users_index(request):
+    await check_permission(request, 'protected')
+
     users = User.select()
     perms = []
     users_list = []
@@ -37,6 +40,7 @@ async def users_index(request):
 
 
 async def user_delete(request):
+    await check_permission(request, 'protected')
     user_id = request.match_info['id']
 
     q = User.delete().where(User.id == user_id)
@@ -46,6 +50,7 @@ async def user_delete(request):
 
 @aiohttp_jinja2.template('user_mgt/admin_user_edit.html')
 async def admin_user_edit(request):
+    await check_permission(request, 'protected')
     user_id = request.match_info['id']
     user = User.get(User.id == user_id)
     perms = [{'perm_id': '', 'perm_name': ''}, {'perm_id': '', 'perm_name': ''}]
@@ -77,6 +82,7 @@ async def admin_user_edit(request):
 
 
 async def admin_user_edit_post(request):
+    await check_permission(request, 'protected')
     data = await request.post()
     # print('register')
     # for key in data.keys():

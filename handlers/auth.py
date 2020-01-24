@@ -51,10 +51,12 @@ async def logout(request):
 
 @aiohttp_jinja2.template('auth/register.html')
 async def register(request):
+    await check_permission(request, 'protected')
     return {'title': 'Register'}
 
 
 async def register_post(request):
+    await check_permission(request, 'protected')
     data = await request.post()
 
     try:
@@ -75,6 +77,7 @@ async def register_post(request):
 
 @aiohttp_jinja2.template('auth/reset_password.html')
 async def reset_password(request):
+    await check_permission(request, 'protected')
     user_id = request.match_info['id']
     session = await get_session(request)
     username = session['username']
@@ -82,6 +85,7 @@ async def reset_password(request):
 
 
 async def reset_password_post(request):
+    await check_permission(request, 'protected')
     data = await request.post()
     # print('register')
     # for key in data.keys():
