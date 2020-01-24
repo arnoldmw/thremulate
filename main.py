@@ -102,4 +102,5 @@ async def create_app():
 if __name__ == '__main__':
     application = create_app()
     logging.basicConfig(level=logging.INFO, filename=THIS_DIR / 'logs/thremulate.log')
-    web.run_app(application, host="localhost", port=8000, access_log_class=AccessLogger)
+    # web.run_app(application, host="localhost", port=8000, access_log_class=AccessLogger)
+    web.run_app(application, host="0.0.0.0", port=8000, access_log_class=AccessLogger)
