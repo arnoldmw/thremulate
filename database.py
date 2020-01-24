@@ -80,6 +80,7 @@ class User(BaseModel):
     is_superuser = BooleanField(default=False)
     disabled = BooleanField(default=False)
     reset_pass = BooleanField(default=False)
+    lockout_count = IntegerField()
 
 
 class Permissions(BaseModel):

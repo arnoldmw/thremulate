@@ -21,16 +21,29 @@ async def login_post(request):
         email = data['email']
         password = data['password']
 
+        try:
+            user = User.get(User.email == email)
+            if user.lockout_count >= 10:
+                context = {'error': '*Account locked. Contact Administrator.'}
+                response = aiohttp_jinja2.render_template('auth/login.html',
+                                                          request,
+                                                          context)
+                return response
+        except User.DoesNotExist:
+            context = {'error': '*Incorrect login'}
+            response = aiohttp_jinja2.render_template('auth/login.html',
+                                                      request,
+                                                      context)
+            return response
+
         result = check_credentials(email, password)
         if result:
             session = await new_session(request)
 
-            user = User.get(User.email == email)
             response = web.HTTPFound('/home')
             await remember(request, response, str(user.id))
 
             if user.reset_pass:
-                session.__setitem__('reset_pass', user.reset_pass)
                 raise web.HTTPFound('/force_reset_password')
 
             session.__setitem__('username', user.fname)
