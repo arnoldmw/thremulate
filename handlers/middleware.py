@@ -15,14 +15,6 @@ async def response_headers(request, handler):
     return response
 
 
-async def handle_403(request):
-    context = {'title': 'Page not found'}
-    response = aiohttp_jinja2.render_template('middleware/404.html',
-                                              request,
-                                              context, status=404)
-    return response
-
-
 async def handle_404(request):
     context = {'title': 'Page not found'}
     response = aiohttp_jinja2.render_template('middleware/404.html',
@@ -65,7 +57,8 @@ def create_error_middleware(overrides):
 
 def setup_middleware(app):
     error_middleware = create_error_middleware({
-        403: handle_403,
+        401: handle_404,
+        403: handle_404,
         404: handle_404,
         500: handle_500
     })
