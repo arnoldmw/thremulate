@@ -1,7 +1,5 @@
 import datetime
-# noinspection PyUnresolvedReferences
 import json
-# noinspection PyUnresolvedReferences
 import logging
 
 from main import secret_key
@@ -16,10 +14,14 @@ class AccessLogger(AbstractAccessLogger):
 
     def log(self, request, response, time):
         fern = fernet.Fernet(secret_key)
-        session_val = fern.decrypt(request.cookies['AIOHTTP_SESSION'].encode('utf-8'))
-        session_dict = json.loads(session_val.decode('utf-8'))
+        session_dict = {'session': {'AIOHTTP_SECURITY': '', 'username': ''}}
+        if 'AIOHTTP_SESSION' in request.cookies:
+            session_val = fern.decrypt(request.cookies['AIOHTTP_SESSION'].encode('utf-8'))
+            session_dict.clear()
+            session_dict = json.loads(session_val.decode('utf-8'))
 
         self.logger.info(f' {request.remote} '
+
                          f'{session_dict["session"]["AIOHTTP_SECURITY"]} '
                          f'{session_dict["session"]["username"]} '
                          f'[{datetime.datetime.now()} +{time.__round__(4)}] '
