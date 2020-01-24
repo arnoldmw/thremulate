@@ -3,7 +3,7 @@ ART Attack Runner
 Version: 1.0
 Author: Olivier Lemelin
 
-Modified by: Arnold Mwesigwa, arnoldm@live.com
+Modified by: Arnold Mwesigwa, amwesigwa16@gmail.com
 Changes made:
 1. Returns commands to execute when the AtomicRunner class is instantiated.
 2. Removed the code for running interactively.
@@ -93,8 +93,6 @@ def load_techniques():
     atomics_path = os.path.join(get_self_path(),
                                 ATOMICS_DIR_RELATIVE_PATH)
     normalized_atomics_path = os.path.normpath(atomics_path)
-
-    print("Loading techniques from {}...".format(normalized_atomics_path))
 
     # Create a dict to accept the techniques that will be loaded.
     techniques = {}
@@ -302,8 +300,6 @@ def convert_to_right_type(value, t):
 def execute_command(launcher, command, cwd):
     """Executes a command with the given launcher."""
 
-    print("\n------------------------------------------------")
-
     # We execute one line at a time.
     for comm in command.split("\n"):
 
@@ -386,7 +382,7 @@ def check_hash_db(hash_db_path, executor_data, technique_name, executor_position
 
     # Tries to load the technique section.
     if technique_name not in hash_db:
-        print("Technique section '{}' did not exist.  Creating.".format(technique_name))
+        # print("Technique section '{}' did not exist.  Creating.".format(technique_name))
         # Create section
         hash_db[technique_name] = {}
 
@@ -394,7 +390,7 @@ def check_hash_db(hash_db_path, executor_data, technique_name, executor_position
 
     # Tries to load the executor hash.
     if executor_position not in hash_db[technique_name]:
-        print("Hash was not in DB.  Adding.")
+        # print("Hash was not in DB.  Adding.")
         # Create the hash, since it does not exist.  Return OK.
         hash_db[technique_name][executor_position] = new_hash
 
@@ -419,7 +415,7 @@ def clear_hash(hash_db_path, technique_to_clear, position_to_clear=-1):
         # We clear the position.
         del hash_db[technique_to_clear][str(position_to_clear)]
 
-    print("Hash cleared.")
+    # print("Hash cleared.")
 
     write_hash_db(hash_db_path, hash_db)
 
@@ -445,8 +441,8 @@ class AtomicRunner:
 
         parameters = parameters or {}
 
-        print("================================================")
-        print("Executing {}/{}\n".format(technique_name, position))
+        # print("================================================")
+        # print("Executing {}/{}\n".format(technique_name, position))
 
         # Gets the tech.
         tech = self.techniques[technique_name]
@@ -479,7 +475,7 @@ class AtomicRunner:
         try:
             apply_executor(executor, tech["path"], parameters)
         except ManualExecutorException:
-            print("Cannot launch a technique with a manual executor. Aborting.")
+            # print("Cannot launch a technique with a manual executor. Aborting.")
             return False
 
         self.launcher = agent_launcher
@@ -490,25 +486,5 @@ class AtomicRunner:
 def clear(args):
     """Clears a stale hash from the Hash DB."""
     clear_hash(HASH_DB_RELATIVE_PATH, args.technique, args.position)
-
-
-if __name__ == '__main__':
-    executor = AtomicRunner()
-    executor.platform = 'windows'
-    # def execute(self, technique_name, position=0, parameters=None):
-    executor.execute("T1002")
-    # print(agent_launcher)
-    # print(agent_command)
-
-    for command in agent_command.split('\n'):
-        if command is not '':
-            print(agent_launcher + ' ' + command)
-
-    # executor.execute("T1007")
-    # # print(agent_launcher)
-    # # print(agent_command)
-    # for command in agent_command.split('\n'):
-    #     if command is not '':
-    #         print(agent_launcher + ' ' + command)
 
 

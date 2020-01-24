@@ -1,11 +1,18 @@
 import aiohttp_jinja2
 from aiohttp import web
-from database import *
+from aiohttp_security import (
+    check_permission, check_authorized,
+)
 from aiohttp_session import get_session
+from database import *
+# noinspection PyUnresolvedReferences
+from db_auth import check_password_hash, generate_password_hash
 
 
 @aiohttp_jinja2.template('user_mgt/users_index.html')
 async def users_index(request):
+    await check_permission(request, 'protected')
+
     users = User.select()
     perms = []
     users_list = []
@@ -32,6 +39,7 @@ async def users_index(request):
 
 
 async def user_delete(request):
+    await check_permission(request, 'protected')
     user_id = request.match_info['id']
 
     q = User.delete().where(User.id == user_id)
@@ -39,8 +47,9 @@ async def user_delete(request):
     raise web.HTTPFound('/users')
 
 
-@aiohttp_jinja2.template('user_mgt/user_edit.html')
-async def user_edit(request):
+@aiohttp_jinja2.template('user_mgt/admin_user_edit.html')
+async def admin_user_edit(request):
+    await check_permission(request, 'protected')
     user_id = request.match_info['id']
     user = User.get(User.id == user_id)
     perms = [{'perm_id': '', 'perm_name': ''}, {'perm_id': '', 'perm_name': ''}]
@@ -53,15 +62,11 @@ async def user_edit(request):
     user_selected.__setitem__('disabled', user.disabled)
     user_selected.__setitem__('superuser', user.is_superuser)
 
-    i = 0
     if user.userpermissions.count() > 0:
-        for p in user.userpermissions:
-            # perms.append()
+        for i, p in enumerate(user.userpermissions):
             if i == 3:
                 break
             perms.__setitem__(i, {'perm_id': p.perm_id.id, 'perm_name': p.perm_id.name})
-            # perms.append({'perm_id': p.perm_id.id, 'perm_name': p.perm_id.name})
-            i = i + 1
 
     user_selected.__setitem__('user_perms', perms)
 
@@ -70,14 +75,13 @@ async def user_edit(request):
     for pm in permissions:
         perm_list.append({'id': pm.id, 'name': pm.name})
 
-    # print(user_selected)
-    # print(perm_list)
     session = await get_session(request)
     username = session['username']
     return {'username': username, 'user': user_selected, 'perm_list': perm_list, 'title': 'User Edit'}
 
 
-async def user_edit_post(request):
+async def admin_user_edit_post(request):
+    await check_permission(request, 'protected')
     data = await request.post()
     # print('register')
     # for key in data.keys():
@@ -120,16 +124,125 @@ async def user_edit_post(request):
         for pm in permissions:
             perm_list.append({'id': pm.id, 'name': pm.name})
 
-        response = aiohttp_jinja2.render_template('user_edit.html', request, {'user': data, 'perm_list': perm_list})
-        # response.headers['Content-Language'] = 'en'
+        response = aiohttp_jinja2.render_template('admin_user_edit.html',
+                                                  request, {'user': data, 'perm_list': perm_list})
         return response
+
+
+@aiohttp_jinja2.template('user_mgt/user_profile.html')
+async def user_profile(request):
+    user_id = await check_authorized(request)
+
+    try:
+        user = User.get(User.id == user_id)
+
+        perms = [{'perm_id': '', 'perm_name': ''}, {'perm_id': '', 'perm_name': ''}]
+        user_selected = {}
+
+        user_selected.__setitem__('id', user.id)
+        user_selected.__setitem__('fname', user.fname)
+        user_selected.__setitem__('lname', user.lname)
+        user_selected.__setitem__('email', user.email)
+        user_selected.__setitem__('disabled', user.disabled)
+        user_selected.__setitem__('superuser', user.is_superuser)
+
+        if user.userpermissions.count() > 0:
+            for i, p in enumerate(user.userpermissions):
+                if i == 3:
+                    break
+                perms.__setitem__(i, {'perm_id': p.perm_id.id, 'perm_name': p.perm_id.name})
+
+        user_selected.__setitem__('user_perms', perms)
+
+        session = await get_session(request)
+        username = session['username']
+        return {'username': username, 'user': user_selected, 'title': 'My Account'}
+    except User.DoesNotExist:
+        web.Response(status=404)
+
+
+@aiohttp_jinja2.template('user_mgt/change_password.html')
+async def change_password(request):
+    await check_authorized(request)
+    session = await get_session(request)
+    username = session['username']
+    return {'username': username, 'title': 'Reset Password'}
+
+
+async def change_password_post(request):
+    user_id = await check_authorized(request)
+    data = await request.post()
+    if 'password' and 'confirm_password' and 'old_password' in data:
+
+        if data['password'] == data['confirm_password']:
+            try:
+                user = User.get(User.id == user_id)
+                if check_password_hash(data['old_password'], user.passwd):
+                    user.passwd = generate_password_hash(data['password'])
+                    user.save()
+                    raise web.HTTPFound('/user_profile')
+                else:
+                    return web.Response(status=404)
+
+            except User.DoesNotExist:
+                return web.Response(status=404)
+        else:
+            return web.Response(status=400)
+    else:
+        return web.Response(status=404)
+
+
+@aiohttp_jinja2.template('user_mgt/user_edit.html')
+async def user_edit(request):
+    user_id = await check_authorized(request)
+
+    try:
+        user = User.get(User.id == user_id)
+        user_selected = {}
+
+        user_selected.__setitem__('fname', user.fname)
+        user_selected.__setitem__('lname', user.lname)
+        user_selected.__setitem__('email', user.email)
+
+        session = await get_session(request)
+        username = session['username']
+        return {'username': username, 'user': user_selected, 'title': 'Edit Details'}
+    except User.DoesNotExist:
+        return web.Response(status=404)
+
+
+async def user_edit_post(request):
+    user_id = await check_authorized(request)
+    data = await request.post()
+
+    if 'fname' and 'lname' and 'email' in data:
+        try:
+            user = User.get(User.id == user_id)
+            user.fname = data['fname']
+            user.lname = data['lname']
+            user.email = data['email']
+            user.save()
+
+            # Cannot update email with code below.
+            # user.update(fname=data['fname'], lname=data['lname'], email=data['email']).execute()
+            
+            raise web.HTTPFound('/user_profile')
+        except User.DoesNotExist:
+            return web.Response(status=404)
+    else:
+        return web.Response(status=400)
 
 
 def setup_user_mgt_routes(app):
     app.add_routes([
         web.get('/users', users_index, name='users'),
+        web.get('/user_profile', user_profile, name='user_profile'),
         web.get('/user_delete/{id}', user_delete, name='user_delete'),
-        web.get('/user_edit/{id}', user_edit, name='user_edit'),
+        web.get('/admin_user_edit/{id}', admin_user_edit, name='admin_user_edit'),
+        web.post('/admin_user_edit_post', admin_user_edit_post, name='admin_user_edit_post'),
+        web.get('/user_edit', user_edit, name='user_edit'),
         web.post('/user_edit_post', user_edit_post, name='user_edit_post'),
+        web.get('/change_password', change_password, name='change_password'),
+        web.post('/change_password_post', change_password_post, name='change_password_post'),
     ])
 

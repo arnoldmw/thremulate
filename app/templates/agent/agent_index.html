@@ -31,7 +31,7 @@
                             <td>Name</td>
                             <td>Initial Contact</td>
                             <td>Last Contact</td>
-                            <td>Campaign</td>
+                            <td>Adversary</td>
                             <td>Action</td>
                         </tr>
                         </thead>
@@ -40,9 +40,9 @@
                         <tr>
                             <td>{{ agent_tasks.id }}</td>
                             <td>{{ agent_tasks.name }}</td>
-                            <td>{{ agent_tasks.initial_contact }}</td>
-                            <td>{{ agent_tasks.last_contact }}</td>
-                            <td>{{ agent_tasks.campaign }}</td>
+                            <td>{{ agent_tasks.initial_contact.strftime("%d-%b-%Y %H:%M:%S") }}</td>
+                            <td>{{ agent_tasks.last_contact.strftime("%d-%b-%Y %H:%M:%S") }}</td>
+                            <td>{{ agent_tasks.adversary }}</td>
                             <!--            <td><a href="http://localhost:8000/assign_tasks/{{ agent_tasks.id }}">Assign</a></td>-->
                             <td>
 

@@ -16,27 +16,92 @@ async def login(request):
 
 
 async def login_post(request):
-    # sess = await get_session(request)
     data = await request.post()
-    email = data['email']
-    password = data['password']
+    if 'email' in data and 'password' in data:
+        email = data['email']
+        password = data['password']
 
-    result = check_credentials(email, password)
-    if result:
-        session = await new_session(request)
-        response = web.HTTPFound('/home')
-        await remember(request, response, email)
-        # session = await new_session(request)
+        try:
+            user = User.get(User.email == email)
+            if user.lockout_count >= 10:
+                context = {'error': '*Account locked. Contact Administrator.'}
+                response = aiohttp_jinja2.render_template('auth/login.html',
+                                                          request,
+                                                          context)
+                return response
+        except User.DoesNotExist:
+            context = {'error': '*Incorrect login'}
+            response = aiohttp_jinja2.render_template('auth/login.html',
+                                                      request,
+                                                      context)
+            return response
 
-        username = User.get(User.email == email).fname
-        session.__setitem__('username', username)
-        raise response
+        result = check_credentials(email, password)
+        if result:
+            session = await new_session(request)
 
-    context = {'error': '*Incorrect login'}
-    response = aiohttp_jinja2.render_template('auth/login.html',
-                                              request,
-                                              context)
-    return response
+            response = web.HTTPFound('/home')
+            await remember(request, response, str(user.id))
+
+            if user.reset_pass:
+                raise web.HTTPFound('/force_reset_password')
+
+            session.__setitem__('username', user.fname)
+
+            raise web.HTTPFound('/home')
+
+        user.lockout_count = user.lockout_count + 1
+        user.save()
+        context = {'error': '*Incorrect login'}
+        response = aiohttp_jinja2.render_template('auth/login.html',
+                                                  request,
+                                                  context)
+        return response
+
+    return web.Response(status=400)
+
+
+@aiohttp_jinja2.template('auth/force_reset_password.html')
+async def force_reset_password(request):
+    user_id = await check_authorized(request)
+    session = await get_session(request)
+    session.invalidate()
+    return {'user_id': user_id}
+
+
+async def force_reset_password_post(request):
+    data = await request.post()
+    if 'user_id' in data and 'current_password' in data and 'new_password' in data and 'confirm_new_password' in data:
+        user_id = data['user_id']
+        if data['new_password'] == data['confirm_new_password']:
+
+            try:
+
+                user = User.get(User.id == user_id)
+
+                check_password_hash(data['current_password'], user.passwd)
+
+                user.passwd = generate_password_hash(data['new_password'])
+                user.reset_pass = False
+                user.save()
+
+                session = await new_session(request)
+                session.__setitem__('username', user.fname)
+
+                response = web.HTTPFound('/home')
+                await remember(request, response, user_id)
+                raise response
+
+            except User.DoesNotExist:
+                return web.Response(status=400)
+        else:
+            context = {'user_id': '*Incorrect credentials'}
+            response = aiohttp_jinja2.render_template('auth/force_reset_password.html',
+                                                      request,
+                                                      context)
+            return response
+
+    return web.Response(status=400)
 
 
 async def logout(request):
@@ -50,10 +115,12 @@ async def logout(request):
 
 @aiohttp_jinja2.template('auth/register.html')
 async def register(request):
+    await check_permission(request, 'protected')
     return {'title': 'Register'}
 
 
 async def register_post(request):
+    await check_permission(request, 'protected')
     data = await request.post()
 
     try:
@@ -74,6 +141,7 @@ async def register_post(request):
 
 @aiohttp_jinja2.template('auth/reset_password.html')
 async def reset_password(request):
+    await check_permission(request, 'protected')
     user_id = request.match_info['id']
     session = await get_session(request)
     username = session['username']
@@ -81,18 +149,34 @@ async def reset_password(request):
 
 
 async def reset_password_post(request):
+    await check_permission(request, 'protected')
     data = await request.post()
-    # print('register')
-    # for key in data.keys():
-    #     print(key + ': ' + data[key])
 
-    if 'confirm_password' and 'password' and 'user_id' in data:
+    if 'confirm_password' in data and 'password' in data and 'user_id' in data and 'admin_password' in data:
         if data['confirm_password'] == data['password']:
-            User.update(passwd=generate_password_hash(data['password'])).where(User.id == data['user_id']).execute()
-            # print('updated')
+            admin_id = await authorized_userid(request)
+            try:
+                admin_pass = User.get(User.id == admin_id).passwd
 
-    # TODO: Not all are to be redirected to user index
-    raise web.HTTPFound('/users')
+                if check_password_hash(data['admin_password'], admin_pass):
+                    User.update(passwd=generate_password_hash(data['password']), reset_pass=True).\
+                        where(User.id == data['user_id']).execute()
+
+                    raise web.HTTPFound('/users')
+            except User.DoesNotExist:
+                return web.Response(status=400)
+
+    return web.Response(status=400)
+
+
+async def reset_lockout_post(request):
+    await check_permission(request, 'protected')
+    data = await request.post()
+
+    if 'user_id' in data:
+        User.update(lockout_count=0).where(User.id == data['user_id']).execute()
+        return web.Response(text='success')
+    return web.Response(status=400)
 
 
 def setup_auth_routes(app):
@@ -104,4 +188,7 @@ def setup_auth_routes(app):
         web.post('/register_post', register_post, name='register_post'),
         web.get('/reset_password/{id}', reset_password, name='reset_password'),
         web.post('/reset_password_post', reset_password_post, name='reset_password_post'),
+        web.get('/force_reset_password', force_reset_password, name='force_reset_password'),
+        web.post('/force_reset_password_post', force_reset_password_post, name='force_reset_password_post'),
+        web.post('/reset_lockout_post', reset_lockout_post, name='reset_lockout_post')
     ])

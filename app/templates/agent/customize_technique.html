@@ -37,9 +37,6 @@
 
                 {% if test.at_test.command %}
                 <p>Command(s): <br> {{ test.at_test.command.replace('\n', '<br>') | safe }}</p>
-                
-
-              
                 {% endif %}
 
                 {% if test.at_test.steps %}
@@ -49,28 +46,29 @@
 
                 <div class="row">
                     <div class="col-md-8">
-                        <form action="" method="post">
+                        <form action="" method="post" class="assign">
+                            <input type="hidden" name="agent_id" value="{{ agent_id }}">
+                            <input type="hidden" name="tech_id" value="{{ id }}">
+                            <input type="hidden" name="test_id" value="{{ test.test_id }}">
                             {% for param in test.params %}
                             <div class="form-group">
                                 <label for="email2">{{ param.pname }}</label>
-                                <input type="text" class="form-control form-control-sm" id=""
+                                <input type="text" class="form-control form-control-sm" id="" name="{{ param.pname }}"
                                     value="{{ param.pvalue }}">
                             </div>
                             {% endfor %}
+
                             <div style="height: 1em;"></div>
+
                             {% if test.at_test.command %}
-                            <input id="submit-custom" type="button" class="btn btn-primary btn-round" value="Assign"
-                                style="padding:.5rem 1.2rem;">
+                            <input type="button" class="btn btn-primary btn-round submit-tech" value="Assign"
+                                style="padding:.5rem 1.2rem;" name="submit">
                             <input type="button" id="custom-done" class="btn btn-danger btn-round" value="Cancel"
-                                style="padding:.5rem 1.2rem;">
+                                style="padding:.5rem 1.2rem;" name="cancel">
                             {% endif %}
-                            
-                            
                         </form>
                     </div>
                 </div>
-
-
                 <hr>
                 <div style="height: 2em;"></div>
                 {% endfor %}
@@ -89,66 +87,30 @@
 <script>
     $(document).ready(function () {
         // Submit customised parameters
-        $("#submit-custom").click(function () {
-
-            // var vals = [];
-            // var keys = [];
-
-            var key_arr = [];
-            var val_arr = [];
-
-            vals = $(".value");
-            keys = $(".key");
-            // console.log("Array vals length: " + vals.length);
-
-            // console.log("Data length:" + vals.length);
-
-            var i;
-            console.log('#########################################');
-
-            for (i = 0; i < vals.length; i++) {
-                if (vals[i] == undefined) {
-                    vals[i].value = "";
-                }
-                // console.log('Value ' + i + ':' + vals[i].value);
-
-                val_arr[i] = vals[i].value;
-            }
-
-            console.log('#########################################');
-
-            if (keys != undefined || keys.length > 0) {
-                var k;
-                //  console.log("Data length:" + keys.length);
-                for (k = 0; k < keys.length; k++) {
-                    if (keys[k] == undefined) {
-                        keys[k].innerHTML = '';
+        $(".submit-tech").click(function () {
+            btn = $(this)
+            var assignment_form = btn.parent().serialize();
+            
+            $.post("{{ url('customize_technique_post') }}", assignment_form, function (data, status) {
+                if(status == 'success'){
+                    if(data != 'Assigned'){
+                        btn.parent().replaceWith('<p class="text-danger" style="font-size: 1.5em;"><i class="fas fa-times-circle"></i>  '  + data + '</p>');
                     }
-                    // console.log('Key ' + k + ':' + keys[k].innerHTML);
-                    key_arr[k] = keys[k].innerHTML;
+                    else{
+                        btn.parent().replaceWith('<p class="text-success" style="font-size: 1.5em;"><i class="fas fa-check-circle"></i>  Assigned</p>');
+                    }
+                    // console.log(status);
+                    // console.log(data);
+                } 
+                else{
+                    btn.parent().replaceWith('<p class="text-danger" style="font-size: 1.5em;"><i class="fas fa-times-circle"></i>  Bad Request</p>');
+                    // console.log(status);
+                    // console.log(data);
                 }
-
-            }
-
-            var kk = key_arr.toString();
-            vv = val_arr.toString();
-            console.log(kk);
-            console.log(vv);
-
-            $.post("http://localhost:8000/customize_technique_post",
-                { 'keys': kk, 'values': vv });
-
-            // console.log(keys.toString());
-            // console.log( vals.toString());
-
-
-            // Goes back to previous webpage to assign more techniques     
-            window.history.back();
-            //window.location.assign("http://localhost:8000/assign_tasks/" + val_arr[0]);
+                
+            });
 
         });
-
-
     });
 
 
