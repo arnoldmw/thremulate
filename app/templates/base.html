@@ -99,49 +99,16 @@
                             </li>
                                                 
                             <li class="nav-item">
-                                <a class="nav-link" href="#" aria-expanded="false">
+                                <a class="nav-link" href="{{ url('logout') }}" aria-expanded="false">
                                     <i class="fas icon-logout" data-toggle="tooltip" title="Log out"></i>
                                 </a>
                             </li>
-    
+                            <li class="nav-item">
+                                <a href="{{ url('user_profile') }}" class="nav-link">{{ username }}</a>
+                            </li>
                             
                         
     
-                            <li class="nav-item dropdown hidden-caret">
-                                <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
-                                    {{ username }}
-                                </a>
-                                <ul class="dropdown-menu dropdown-user animated fadeIn">
-                                    <div class="scroll-wrapper dropdown-user-scroll scrollbar-outer"
-                                        style="position: relative;">
-                                        <div class="dropdown-user-scroll scrollbar-outer scroll-content"
-                                            style="height: auto; margin-bottom: 0px; margin-right: 0px; max-height: 0px;">
-                                            
-                                            <li>
-                                                
-                                                
-                                                <a class="dropdown-item" href="{{ url('user_profile') }}">My Account</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="{{ url('logout' )}}">Logout</a>
-                                            </li>
-                                        </div>
-                                        <div class="scroll-element scroll-x">
-                                            <div class="scroll-element_outer">
-                                                <div class="scroll-element_size"></div>
-                                                <div class="scroll-element_track"></div>
-                                                <div class="scroll-bar ui-draggable ui-draggable-handle"></div>
-                                            </div>
-                                        </div>
-                                        <div class="scroll-element scroll-y">
-                                            <div class="scroll-element_outer">
-                                                <div class="scroll-element_size"></div>
-                                                <div class="scroll-element_track"></div>
-                                                <div class="scroll-bar ui-draggable ui-draggable-handle"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </ul>
-                            </li>
                           </ul>    
 
                         
