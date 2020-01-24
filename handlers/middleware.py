@@ -23,7 +23,6 @@ async def handle_404(request):
     return response
 
 
-# @aiohttp_jinja2.template('middleware/500.html')
 async def handle_500(request):
     context = {'title': 'Error'}
     response = aiohttp_jinja2.render_template('middleware/500.html',

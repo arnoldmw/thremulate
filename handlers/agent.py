@@ -16,9 +16,15 @@ from art.run_atomics import get_all_techniques, get_one_technique_and_params
 # noinspection PyUnresolvedReferences
 from art.run_atomics import get_all_techniques_and_params
 
+from aiohttp_security import (
+    remember, forget, authorized_userid,
+    check_permission, check_authorized,
+)
+
 
 @aiohttp_jinja2.template('agent/agent_index.html')
 async def agent_index(request):
+    await check_authorized(request)
     # fas fa - broadcast - tower
     agents = []
 
@@ -39,6 +45,7 @@ async def agent_index(request):
 
 @aiohttp_jinja2.template('agent/assign_tasks.html')
 async def assign_tasks(request):
+    await check_authorized(request)
     agent_id = request.match_info['id']
 
     ag = Agent.get(Agent.id == agent_id)
@@ -52,6 +59,7 @@ async def assign_tasks(request):
 
 
 async def assign_tasks_post(request):
+    await check_authorized(request)
     data = await request.post()
 
     agent_id = data['agent_id']
@@ -166,6 +174,7 @@ def assignments(tech_list, plat, parameters):
 
 @aiohttp_jinja2.template('agent/agent_details.html')
 async def agent_details(request):
+    await check_authorized(request)
     agent_id = request.match_info['id']
 
     details = []
@@ -189,6 +198,7 @@ async def agent_details(request):
 
 @aiohttp_jinja2.template('agent/agent_edit.html')
 async def agent_edit(request):
+    await check_authorized(request)
     agent_id = request.match_info['id']
     adversaries = []
 
@@ -205,6 +215,7 @@ async def agent_edit(request):
 
 
 async def agent_edit_post(request):
+    await check_authorized(request)
     data = await request.post()
 
     agent_id = data['agent_id']
@@ -222,6 +233,7 @@ async def customize_technique(request):
     # arr = []
     # data = await request.post()
 
+    await check_authorized(request)
     tech_id = 'T' + request.query['tech_id']
     agent_id = request.query['agent_id']
     agent_platform = Agent.get(Agent.id == agent_id).platform
@@ -238,6 +250,7 @@ async def customize_technique(request):
 
 
 async def customize_technique_post(request):
+    await check_authorized(request)
     data = await request.post()
 
     try:
@@ -288,6 +301,7 @@ async def register_agent(request):
 
 
 async def delete_tech_output(request):
+    await check_authorized(request)
     data = await request.post()
 
     AgentTechnique.update(output=None, result=None, executed=None) \
@@ -298,6 +312,7 @@ async def delete_tech_output(request):
 
 
 async def delete_tech_assignment(request):
+    await check_authorized(request)
     data = await request.post()
 
     AgentTechnique.delete() \
