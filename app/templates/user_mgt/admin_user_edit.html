@@ -119,40 +119,33 @@
                             <div class="form-group">
                                 <label class="form-label">Permissions</label><br>
                                 <div class="selectgroup selectgroup-pills">
-                                  
+
 
                                     {% for p in perm_list %}
 
-                                        {% if p.id == user.user_perms[0].perm_id or p.id == user.user_perms[1].perm_id %}
-                                        <label class="selectgroup-item">
-                                            <input type="checkbox" name="{{p.name}}" value="{{ p.id }}"
-                                                class="selectgroup-input" checked>
-                                            <span class="selectgroup-button">{{p.name}}</span>
-                                        </label>
+                                    {% if p.id == user.user_perms[0].perm_id or p.id == user.user_perms[1].perm_id %}
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" name="{{p.name}}" value="{{ p.id }}"
+                                            class="selectgroup-input" checked>
+                                        <span class="selectgroup-button">{{p.name}}</span>
+                                    </label>
 
-                                        {% else %}
-                                        <label class="selectgroup-item">
-                                            <input type="checkbox" name="{{p.name}}" value="{{ p.id }}"
-                                                class="selectgroup-input" >
-                                            <span class="selectgroup-button">{{p.name}}</span>
-                                        </label>
+                                    {% else %}
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" name="{{p.name}}" value="{{ p.id }}"
+                                            class="selectgroup-input">
+                                        <span class="selectgroup-button">{{p.name}}</span>
+                                    </label>
 
-                                        {% endif %}
+                                    {% endif %}
 
-                                       
+
                                     {% endfor %}
 
                                 </div>
 
                             </div>
-                            <div class="form-group">
-                                <label for="">Password</label><br>
-                                <button class="btn btn-primary btn-link"><span class="btn-label"><i
-                                            class="fas fa-key"></i></span>
-                                    <a href="{{ url('reset_password', id=user.id | string) }}">Reset Password</a>
-                                </button>
 
-                            </div>
 
 
                         </div>
@@ -162,11 +155,27 @@
 
                 </div>
 
-                <div class="card-action">
-                    <input type="button" id="cancel" name="cancel" class="btn btn-danger btn-round" value="Cancel">
-                    <input class="btn btn-primary btn-round" type="submit" name="submit" value="Update">
-                </div>
+                <!-- <div class="card-action"> -->
+                <input type="button" id="cancel" name="cancel" class="btn btn-danger btn-round" value="Cancel">
+                <input class="btn btn-primary btn-round" type="submit" name="submit" value="Update">
+                <!-- </div> -->
             </form>
+            <hr>
+            <div class="form-group">
+                <label for="">Lockout Count</label><br>
+                <button class="btn btn-primary btn-link" id="reset-lockout" data-user-id="{{ user.id }}"><span class="btn-label"><i
+                            class="fas fa-lock-open"></i></span>
+                    Reset Lockout Count
+                </button>
+
+            </div>
+            <div class="form-group">
+                <label for="">Password</label><br>
+                <button class="btn btn-primary btn-link"><span class="btn-label"><i class="fas fa-key"></i></span>
+                    <a href="{{ url('reset_password', id=user.id | string) }}">Reset Password</a>
+                </button>
+
+            </div>
 
 
 
@@ -186,7 +195,25 @@
 
         });
 
+         // Reset lockout
+         $("#reset-lockout").click(function () {
+            var user_id = $(this).attr("data-user-id");
 
+            
+            $.post("{{ url('reset_lockout_post') }}",{ 'user_id': user_id }, function (data, status) {
+                if(status == 'success' && data == 'success'){
+                    console.log("reset lockout")
+                    
+                } 
+                else{
+                    console.log("failed to reset");
+                    
+                    
+                }
+                
+            });
+
+        });
     });
 
 

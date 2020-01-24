@@ -161,8 +161,17 @@ async def reset_password_post(request):
                 where(User.id == data['user_id']).execute()
             # print('updated')
 
-    # TODO: Not all are to be redirected to user index
     raise web.HTTPFound('/users')
+
+
+async def reset_lockout_post(request):
+    await check_permission(request, 'protected')
+    data = await request.post()
+
+    if 'user_id' in data:
+        User.update(lockout_count=0).where(User.id == data['user_id']).execute()
+        return web.Response(text='success')
+    return web.Response(status=400)
 
 
 def setup_auth_routes(app):
@@ -175,5 +184,6 @@ def setup_auth_routes(app):
         web.get('/reset_password/{id}', reset_password, name='reset_password'),
         web.post('/reset_password_post', reset_password_post, name='reset_password_post'),
         web.get('/force_reset_password', force_reset_password, name='force_reset_password'),
-        web.post('/force_reset_password_post', force_reset_password_post, name='force_reset_password_post')
+        web.post('/force_reset_password_post', force_reset_password_post, name='force_reset_password_post'),
+        web.post('/reset_lockout_post', reset_lockout_post, name='reset_lockout_post')
     ])
