@@ -93,7 +93,8 @@ async def reset_password_post(request):
 
     if 'confirm_password' and 'password' and 'user_id' in data:
         if data['confirm_password'] == data['password']:
-            User.update(passwd=generate_password_hash(data['password'])).where(User.id == data['user_id']).execute()
+            User.update(passwd=generate_password_hash(data['password']), reset_pass=True).\
+                where(User.id == data['user_id']).execute()
             # print('updated')
 
     # TODO: Not all are to be redirected to user index
