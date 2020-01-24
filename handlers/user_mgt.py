@@ -185,7 +185,7 @@ async def change_password_post(request):
             except User.DoesNotExist:
                 return web.Response(status=404)
         else:
-            return web.Response(status=400, text='Bad request')
+            return web.Response(status=400)
     else:
         return web.Response(status=404)
 
@@ -230,7 +230,7 @@ async def user_edit_post(request):
         except User.DoesNotExist:
             return web.Response(status=404)
     else:
-        return web.Response(text='Bad request', status=400)
+        return web.Response(status=400)
 
 
 def setup_user_mgt_routes(app):
