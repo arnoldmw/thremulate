@@ -42,7 +42,7 @@ async def dashboard(request):
     camp_month_count = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     # Number of adversaries per month
     query6 = Adversary.select(Adversary.id, Adversary.created_date.month.alias('month'),
-                             fn.Count(Adversary.id).alias('count')).group_by(Adversary.created_date.month)
+                              fn.Count(Adversary.id).alias('count')).group_by(Adversary.created_date.month)
 
     for q in query6:
         # Array index begin from 0
@@ -118,8 +118,8 @@ def most_active_agents():
 
 def timeline_data():
     t_data = []
-    query = AgentTechnique.select(AgentTechnique.executed, fn.Count(AgentTechnique.agent_id).alias('count'))\
-        .group_by(AgentTechnique.executed.day).having(AgentTechnique.executed.is_null(False))\
+    query = AgentTechnique.select(AgentTechnique.executed, fn.Count(AgentTechnique.agent_id).alias('count')) \
+        .group_by(AgentTechnique.executed.day).having(AgentTechnique.executed.is_null(False)) \
         .order_by(AgentTechnique.executed.desc()).limit(6).dicts()
 
     for n in query:
@@ -129,7 +129,8 @@ def timeline_data():
 
 
 def platform_exec_count():
-    plat_execution = AgentTechnique.select(Agent.platform,AgentTechnique.agent_id, fn.Count(AgentTechnique.technique_id).alias('count')).join(Agent)\
+    plat_execution = AgentTechnique.select(Agent.platform, AgentTechnique.agent_id,
+                                           fn.Count(AgentTechnique.technique_id).alias('count')).join(Agent) \
         .group_by(AgentTechnique.agent_id).having(AgentTechnique.executed.is_null(False)).dicts()
 
     plat_exec = {'windows': 0, 'linux': 0, 'macos': 0}

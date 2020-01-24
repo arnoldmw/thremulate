@@ -1,5 +1,6 @@
 import aiohttp_jinja2
 from aiohttp import web
+from aiohttp_security import check_authorized
 from aiohttp_session import get_session
 # noinspection PyUnresolvedReferences
 from database import Adversary, Agent
@@ -7,6 +8,7 @@ from database import Adversary, Agent
 
 @aiohttp_jinja2.template('adversary/campaign_index.html')
 async def campaign_index(request):
+    await check_authorized(request)
     adversaries = []
 
     query = Adversary.select()
@@ -22,6 +24,7 @@ async def campaign_index(request):
 
 
 async def campaign_add(request):
+    await check_authorized(request)
     data = await request.post()
     Adversary.create(name=data['addName'])
     raise web.HTTPFound('/adversaries')
@@ -29,7 +32,7 @@ async def campaign_add(request):
 
 @aiohttp_jinja2.template('adversary/campaign_details.html')
 async def campaign_details(request):
-
+    await check_authorized(request)
     agents = []
 
     if 'id' in request.match_info:
@@ -56,6 +59,7 @@ async def campaign_details(request):
 
 
 async def campaign_update(request):
+    await check_authorized(request)
     data = await request.post()
     # TODO: Check for UNIQUE constraint
     q = Adversary.update(name=data['name']).where(Adversary.id == data['id'])
@@ -64,6 +68,7 @@ async def campaign_update(request):
 
 
 async def campaign_delete(request):
+    await check_authorized(request)
     data = await request.post()
     q = Adversary.delete().where(Adversary.id == data['id'])
     q.execute()
