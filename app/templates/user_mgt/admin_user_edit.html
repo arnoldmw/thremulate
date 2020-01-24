@@ -163,8 +163,8 @@
             <hr>
             <div class="form-group">
                 <label for="">Lockout Count</label><br>
-                <button class="btn btn-primary btn-link" id="reset-lockout" data-user-id="{{ user.id }}"><span class="btn-label"><i
-                            class="fas fa-lock-open"></i></span>
+                <button class="btn btn-primary btn-link" id="reset-lockout" data-user-id="{{ user.id }}"><span
+                        class="btn-label"><i class="fas fa-lock-open"></i></span>
                     Reset Lockout Count
                 </button>
 
@@ -177,7 +177,10 @@
 
             </div>
 
-
+            <button class="btn btn-primary btn-link" id="lockout"><span class="btn-label"><i
+                        class="fas fa-lock-open"></i></span>
+                Reset Lockout Count
+            </button>
 
         </div>
     </div>
@@ -195,22 +198,38 @@
 
         });
 
-         // Reset lockout
-         $("#reset-lockout").click(function () {
+        // Reset lockout
+        $("#reset-lockout").click(function () {
             var user_id = $(this).attr("data-user-id");
 
-            
-            $.post("{{ url('reset_lockout_post') }}",{ 'user_id': user_id }, function (data, status) {
-                if(status == 'success' && data == 'success'){
-                    console.log("reset lockout")
-                    
-                } 
-                else{
-                    console.log("failed to reset");
-                    
-                    
+
+            $.post("{{ url('reset_lockout_post') }}", { 'user_id': user_id }, function (data, status) {
+                if (status == 'success' && data == 'success') {
+                    $.notify({
+                        // options
+                        icon: 'fas fa-check',
+                        title: 'Success',
+                        message: 'Reset lockout count'
+                    }, {
+                        // settings
+                        type: 'success'
+                    });
+
                 }
-                
+                else {
+                    $.notify({
+                        // options
+                        icon: 'fas fa-times',
+                        title: 'Error',
+                        message: 'Failed to reset lockout count'
+                    }, {
+                        // settings
+                        type: 'danger'
+                    });
+
+
+                }
+
             });
 
         });
