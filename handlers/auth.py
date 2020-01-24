@@ -24,15 +24,16 @@ async def login_post(request):
         result = check_credentials(email, password)
         if result:
             session = await new_session(request)
+
             user = User.get(User.email == email)
             response = web.HTTPFound('/home')
             await remember(request, response, str(user.id))
 
-            session.__setitem__('username', user.fname)
-
             if user.reset_pass:
                 session.__setitem__('reset_pass', user.reset_pass)
-                raise web.HTTPFound('/change_password')
+                raise web.HTTPFound('/force_reset_password')
+
+            session.__setitem__('username', user.fname)
 
             raise web.HTTPFound('/home')
 
@@ -43,6 +44,14 @@ async def login_post(request):
         return response
 
     return web.Response(status=400)
+
+
+@aiohttp_jinja2.template('auth/force_reset_password.html')
+async def force_reset_password(request):
+    user_id = await check_authorized(request)
+    session = await get_session(request)
+    session.invalidate()
+    return {'user_id': user_id}
 
 
 async def logout(request):
@@ -115,4 +124,5 @@ def setup_auth_routes(app):
         web.post('/register_post', register_post, name='register_post'),
         web.get('/reset_password/{id}', reset_password, name='reset_password'),
         web.post('/reset_password_post', reset_password_post, name='reset_password_post'),
+        web.get('/force_reset_password', force_reset_password, name='force_reset_password')
     ])
