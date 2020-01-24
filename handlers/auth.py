@@ -151,17 +151,22 @@ async def reset_password(request):
 async def reset_password_post(request):
     await check_permission(request, 'protected')
     data = await request.post()
-    # print('register')
-    # for key in data.keys():
-    #     print(key + ': ' + data[key])
 
-    if 'confirm_password' and 'password' and 'user_id' in data:
+    if 'confirm_password' in data and 'password' in data and 'user_id' in data and 'admin_password' in data:
         if data['confirm_password'] == data['password']:
-            User.update(passwd=generate_password_hash(data['password']), reset_pass=True).\
-                where(User.id == data['user_id']).execute()
-            # print('updated')
+            admin_id = await authorized_userid(request)
+            try:
+                admin_pass = User.get(User.id == admin_id).passwd
 
-    raise web.HTTPFound('/users')
+                if check_password_hash(data['admin_password'], admin_pass):
+                    User.update(passwd=generate_password_hash(data['password']), reset_pass=True).\
+                        where(User.id == data['user_id']).execute()
+
+                    raise web.HTTPFound('/users')
+            except User.DoesNotExist:
+                return web.Response(status=400)
+
+    return web.Response(status=400)
 
 
 async def reset_lockout_post(request):
