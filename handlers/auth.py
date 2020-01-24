@@ -50,6 +50,8 @@ async def login_post(request):
 
             raise web.HTTPFound('/home')
 
+        user.lockout_count = user.lockout_count + 1
+        user.save()
         context = {'error': '*Incorrect login'}
         response = aiohttp_jinja2.render_template('auth/login.html',
                                                   request,
