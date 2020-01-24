@@ -180,8 +180,7 @@ async def agent_details(request):
     details = []
     agent = {}
 
-    agt = Agent.select(Agent, AgentTechnique).join(AgentTechnique).join(Adversary, on=Agent.adversary == Adversary.id) \
-        .where(AgentTechnique.agent_id == agent_id)
+    agt = Agent.select(Agent, Adversary.name).join(Adversary).where(Agent.id == agent_id)
 
     for ag in agt:
         agent = {'id': ag.id, 'name': ag.name, 'adversary': ag.adversary.name, 'domain': ag.domain,
