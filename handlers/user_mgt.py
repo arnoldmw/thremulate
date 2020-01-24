@@ -211,12 +211,11 @@ async def user_edit(request):
 
 
 async def user_edit_post(request):
-    await check_authorized(request)
+    user_id = await check_authorized(request)
     data = await request.post()
 
     if 'fname' and 'lname' and 'email' in data:
         try:
-            user_id = await authorized_userid(request)
             user = User.get(User.id == user_id)
             user.fname = data['fname']
             user.lname = data['lname']
