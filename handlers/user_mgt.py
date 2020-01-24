@@ -192,8 +192,7 @@ async def change_password_post(request):
 
 @aiohttp_jinja2.template('user_mgt/user_edit.html')
 async def user_edit(request):
-    await check_authorized(request)
-    user_id = await authorized_userid(request)
+    user_id = await check_authorized(request)
 
     try:
         user = User.get(User.id == user_id)
