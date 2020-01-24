@@ -2,12 +2,14 @@ import datetime
 
 import aiohttp_jinja2
 from aiohttp import web
+from aiohttp_security import check_authorized
 from aiohttp_session import get_session
 from database import *
 
 
 @aiohttp_jinja2.template('dashboard/dashboard.html')
 async def dashboard(request):
+    await check_authorized(request)
     counts = []
 
     # Adversary count
