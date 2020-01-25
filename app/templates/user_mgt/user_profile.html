@@ -1,31 +1,19 @@
 {% extends 'base.html' %}
-
 {% block content %}
-
-
 <!-- Padding Top -->
 <div style="margin-top: 4%;"></div>
-
-
 <div class="row row-card-no-pd">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
                 <div class="card-head-row">
                     <h4 class="card-title">My Account</h4>
-
                 </div>
-
                 <p class="card-category">
-                    <!-- <button class="btn btn-primary btn-link"> -->
                     Account Details
-                    <!-- </button> -->
                 </p>
             </div>
-
             <div class="card-body">
-
-
                 <div class="row">
                     <div class="col-md-1">First Name:</div>
                     <div class="col-md-5">{{ user.fname }}</div>
@@ -71,18 +59,14 @@
                 <div class="row">
                     <div class="col-md-1">Actions:</div>
                 </div>
-                
-
                 <div class="row">
-                    
-                    <div class="col-md-5 account-actions" >
+                    <div class="col-md-5 account-actions">
                         <button class="btn btn-primary btn-link"><span class="btn-label"><i
                                     class="fas fa-user-edit"></i></span>
                             <a href="{{ url('user_edit') }}">Edit Details</a>
                         </button>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-md-5 account-actions">
                         <button class="btn btn-primary btn-link"><span class="btn-label"><i
@@ -91,19 +75,11 @@
                         </button>
                     </div>
                 </div>
-
             </div>
-
             <div class="card-action"></div>
-
-
         </div>
     </div>
 </div>
 </div>
-
 <script src="{{ url('static', filename='js/core/jquery.3.2.1.min.js') }}"></script>
-
-
-
 {% endblock %}

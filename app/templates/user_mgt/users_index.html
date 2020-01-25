@@ -1,9 +1,7 @@
 {% extends 'base.html' %}
-
 {% block content %}
 <!-- Padding Top -->
 <div style="margin-top: 4%;"></div>
-
 <div class="row row-card-no-pd">
     <div class="col-md-12">
         <div class="card">
@@ -11,11 +9,10 @@
                 <div class="card-head-row">
                     <h4 class="card-title">Users</h4>
                 </div>
-				<p class="card-category">
-                   All Users</p>
+                <p class="card-category">
+                    All Users</p>
             </div>
             <div class="card-body">
-
                 <!-- Button -->
                 <div class="d-flex">
                     <button id="add-user" class="btn btn-primary btn-round ml-auto mb-3">
@@ -23,7 +20,6 @@
                         Add User
                     </button>
                 </div>
-
                 <!-- Modal for deleting-->
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalLabel" aria-hidden="true" style="color: #575962;">
@@ -48,8 +44,8 @@
 
                 <!-- Table -->
                 <div class="table-responsive">
-                    <table id="users" class="table display  table-striped table-hover cell-border text-center" cellspacing="0"
-                        width="100%">
+                    <table id="users" class="table display  table-striped table-hover cell-border text-center"
+                           cellspacing="0" width="100%">
                         <thead class="font-weight-bold">
                             <tr>
                                 <td>#</td>
@@ -85,7 +81,8 @@
                                         <button type="button" class="btn btn-link btn-danger js-delete"
                                             data-toggle="modal" data-target="#exampleModal" data-original-title="Assign"
                                             data-user-id="{{ user.id }}">
-                                            <i class="fas fa-user-times" data-toggle="tooltip" title="Remove User!"> </i>
+                                            <i class="fas fa-user-times" data-toggle="tooltip" title="Remove User!">
+                                            </i>
                                         </button>
                                     </div>
                                 </td>
@@ -111,7 +108,7 @@
         $("#users .js-delete").on("click", function () {
             var cid = $(this).attr("data-user-id");
             $("#deleteUser").click(function () {
-                $.get("http://localhost:8000/user_delete/"+ cid );
+                $.get("http://localhost:8000/user_delete/" + cid);
                 $('#exampleModal').modal('hide');
                 // Reload page
                 location.reload(true);
@@ -123,13 +120,13 @@
             var cid = $(this).attr("data-user-id");
             window.location.assign("http://localhost:8000/admin_user_edit/" + cid);
         });
-       
+
         // Change user password
         $("#users .js-password").on("click", function () {
             var cid = $(this).attr("data-user-id");
             window.location.assign("http://localhost:8000/reset_password/" + cid);
         });
-        
+
         // Add new user
         $("#add-user").on("click", function () {
             window.location.assign("http://localhost:8000/register");

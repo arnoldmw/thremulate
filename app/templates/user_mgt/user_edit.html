@@ -1,37 +1,18 @@
 {% extends 'base.html' %}
-
 {% block content %}
-
-
 <!-- Padding Top -->
 <div style="margin-top: 4%;"></div>
-
-
 <div class="row row-card-no-pd">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
                 <div class="card-head-row">
                     <h4 class="card-title">My Account</h4>
-
                 </div>
-
                 <p class="card-category">
-                    <!-- <button class="btn btn-primary btn-link"> -->
                     View or Modify your Account
-                    <!-- </button> -->
                 </p>
             </div>
-
-            <!-- <table>
-                <tr cl>
-                    <td class="col-2">First Name</td>
-                    <td class="col-4">{{ user.fname }}</td>
-                </tr>
-            </table> -->
-
-            
-
             <form action="{{ url('user_edit_post') }}" method="post">
                 <div class="card-body">
                     <div class="row">
@@ -51,43 +32,25 @@
                                 <input type="email" class="form-control" id="email" name="email"
                                     value="{{ user.email }}">
                             </div>
-
                         </div>
                     </div>
-
-
-
                 </div>
-
                 <div class="card-action">
                     <input type="button" id="cancel" name="cancel" class="btn btn-danger btn-round" value="Cancel">
                     <input class="btn btn-primary btn-round" type="submit" name="submit" value="Update">
                 </div>
             </form>
-
-
-
         </div>
     </div>
 </div>
 </div>
 
 <script src="{{ url('static', filename='js/core/jquery.3.2.1.min.js') }}"></script>
-
 <script>
     $(document).ready(function () {
-
         $("#cancel").click(function () {
-
-            javascript:history.back()
-
+            javascript: history.back()
         });
-
-
     });
-
-
 </script>
-
-
 {% endblock %}
