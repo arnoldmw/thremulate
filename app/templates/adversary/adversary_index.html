@@ -40,7 +40,7 @@
                             </div>
                             <div class="modal-body">
                                 <p class="small">Create a new Adversary</p>
-                                <form role="form" id="addCampaign" action="/adversary_add" method="POST">
+                                <form role="form" id="addAdversary" action="/adversary_add" method="POST">
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="form-group form-group-default">
@@ -116,7 +116,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                                <button id="deleteCampaign" type="button" class="btn btn-danger">Delete</button>
+                                <button id="deleteAdversary" type="button" class="btn btn-danger">Delete</button>
                             </div>
                         </div>
                     </div>
@@ -184,7 +184,7 @@
     $(document).ready(function () {
         $("#adversaries").DataTable();
         $("#addAdversaryButton").click(function () {
-            document.getElementById('addCampaign').submit();
+            document.getElementById('addAdversary').submit();
             $('#addAdversaryModal').modal('hide');
         });
 
@@ -197,7 +197,7 @@
         // Delete Adversary
         $("#adversaries .js-delete").on("click", function () {
             var cid = $(this).attr("data-adv-id");
-            $("#deleteCampaign").click(function () {
+            $("#deleteAdversary").click(function () {
                 $.post("http://localhost:8000/adversary_delete", { 'id': cid });
                 $('#exampleModal').modal('hide');
                 // Try to force reload
