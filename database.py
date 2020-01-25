@@ -1,4 +1,5 @@
 import datetime
+import uuid
 
 import bcrypt
 # noinspection PyUnresolvedReferences
@@ -71,7 +72,7 @@ class Parameter(BaseModel):
 
 
 class User(BaseModel):
-    id = UUIDField(primary_key=True)
+    id = UUIDField(primary_key=True, default=uuid.uuid4())
     fname = CharField(max_length=25)
     lname = CharField(max_length=255)
     email = CharField(unique=True, index=True)
@@ -79,7 +80,7 @@ class User(BaseModel):
     is_superuser = BooleanField(default=False)
     disabled = BooleanField(default=False)
     reset_pass = BooleanField(default=False)
-    lockout_count = IntegerField()
+    lockout_count = IntegerField(default=0)
 
 
 class Permissions(BaseModel):

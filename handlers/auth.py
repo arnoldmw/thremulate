@@ -1,3 +1,5 @@
+import uuid
+
 from aiohttp import web
 from aiohttp_session import new_session, get_session
 from database import *
@@ -28,7 +30,7 @@ async def login_post(request):
     :return: home of the user if successful otherwise an exception is raised or error message on the login page.
     """
     data = await request.post()
-    if 'email' in data and 'password' in data:
+    try:
         email = data['email']
         password = data['password']
 
@@ -69,8 +71,8 @@ async def login_post(request):
                                                   request,
                                                   context)
         return response
-
-    return web.Response(status=400)
+    except KeyError:
+        return web.Response(status=400)
 
 
 @aiohttp_jinja2.template('auth/force_reset_password.html')
@@ -94,7 +96,7 @@ async def force_reset_password_post(request):
     force_reset_password template.
     """
     data = await request.post()
-    if 'user_id' in data and 'current_password' in data and 'new_password' in data and 'confirm_new_password' in data:
+    try:
         user_id = data['user_id']
         if data['new_password'] == data['confirm_new_password']:
 
@@ -124,7 +126,8 @@ async def force_reset_password_post(request):
                                                       context)
             return response
 
-    return web.Response(status=400)
+    except KeyError:
+        return web.Response(status=400)
 
 
 async def logout(request):
@@ -162,19 +165,32 @@ async def register_post(request):
     data = await request.post()
 
     try:
-        user = User.create(fname=data['firstname'], lname=data['lastname'], email=data['email'],
-                           passwd=generate_password_hash(data['password']),
-                           is_superuser=0, disabled=0)
-        UserPermissions.create(user_id=user.id, perm_id=Permissions.get(Permissions.name == 'public'))
+        fname = data['firstname']
+        lname = data['lastname']
+        email = data['email']
+        passwd = data['password']
+        conf_passwd = data['confirm_password']
 
-    except IntegrityError as error:
-        if 'id' in error.__context__.__str__():
-            print('id constraint failed')
-        if 'email' in error.__context__.__str__():
-            print('email constraint failed')
+        if passwd == conf_passwd:
+            try:
+                user = User.create(fname=fname, lname=lname, email=email,
+                                   passwd=generate_password_hash(passwd),
+                                   is_superuser=False, disabled=False)
+                UserPermissions.create(user_id=user.id, perm_id=Permissions.get(Permissions.name == 'public'))
 
-    # TODO: Return error message to user
-    raise web.HTTPFound('/users')
+            except IntegrityError as error:
+                if 'id' in error.__context__.__str__():
+                    print('id constraint failed')
+                if 'email' in error.__context__.__str__():
+                    print('email constraint failed')
+
+            # TODO: Return error message to user
+            raise web.HTTPFound('/users')
+        else:
+            # TODO:  Return error message to user
+            print('passwords do not match')
+    except KeyError:
+        return web.Response(status=400)
 
 
 @aiohttp_jinja2.template('auth/reset_password.html')
