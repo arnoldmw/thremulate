@@ -55,34 +55,36 @@
                     <h4 class="card-title">Agent Details</h4>
                 </div>
                 <div class="row">
+                    <div class="col-md-1">Name:</div>
+                    <div class="col-md-2"> {{ agent.name }}</div>
+                    <div class="col-md-1">Username:</div>
+                    <div class="col-md-2">{{ agent.username }}</div>
+                    <div class="col-md-2">Kill Date:</div>
+                    <div class="col-md-2">{{ agent.kill_date }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-1">Hostname:</div>
+                    <div class="col-md-2">{{ agent.hostname }}</div>
+                    <div class="col-md-1">Platform:</div>
                     <div class="col-md-2">
-                        <p class="card-category">Name: {{ agent.name }}</p>
-                        <p class="card-category">Adversary: {{ agent.adversary }}</p>
-                        <p class="card-category">Hostname: {{ agent.hostname }}</p>
+                        {% if agent.platform == 'windows' %}
+                        Windows
+                        {% elif agent.platform == 'linux' %}
+                        Linux
+                        {% elif agent.platform == 'macos' %}
+                        MacOS
+                        {% endif %}
                     </div>
-                    <div class="col-md-3">
-                        <p class="card-category">Username: {{ agent.username }}</p>
-
-                        <p class="card-category">Platform:
-                            {% if agent.platform == 'windows' %}
-                            Windows
-                            {% elif agent.platform == 'linux' %}
-                            Linux
-                            {% elif agent.platform == 'macos' %}
-                            MacOS
-                            {% endif %}
-
-                        </p>
-
-                        <p class="card-category">Platform version: {{ agent.plat_version }}</p>
-
-
-                    </div>
-                    <div class="col-md-3">
-                        <p class="card-category">Kill Date: {{ agent.kill_date }}</p>
-                        <p class="card-category">Initial Contact: {{ agent.initial_contact }}</p>
-                        <p class="card-category">Last Contact: {{ agent.last_contact }}</p>
-                    </div>
+                    <div class="col-md-2">Last Contact:</div>
+                    <div class="col-md-2">{{ agent.last_contact }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-1">Adversary:</div>
+                    <div class="col-md-2">{{ agent.adversary }}</div>
+                    <div class="col-md-1">OS version:</div>
+                    <div class="col-md-2">{{ agent.plat_version }}</div>
+                    <div class="col-md-2">Initial Contact:</div>
+                    <div class="col-md-2">{{ agent.initial_contact }}</div>
                 </div>
                 <p class="card-category"><a href="{{ url('agents') }}">Back to Agents</a></p>
             </div>
