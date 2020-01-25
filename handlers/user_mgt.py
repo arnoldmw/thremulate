@@ -44,11 +44,13 @@ async def user_delete(request):
     :return: '/users' if successful otherwise an exception is raised
     """
     await check_permission(request, 'protected')
-    user_id = request.match_info['id']
 
-    q = User.delete().where(User.id == user_id)
-    q.execute()
-    raise web.HTTPFound('/users')
+    try:
+        user_id = request.match_info['id']
+        User.delete().where(User.id == user_id).execute()
+        raise web.HTTPFound('/users')
+    except KeyError:
+        return web.Response(status=400)
 
 
 @aiohttp_jinja2.template('user_mgt/admin_user_edit.html')
@@ -59,34 +61,40 @@ async def admin_user_edit(request):
     :return: Template with user edit form otherwise an is raised.
     """
     await check_permission(request, 'protected')
-    user_id = request.match_info['id']
-    user = User.get(User.id == user_id)
-    perms = [{'perm_id': '', 'perm_name': ''}, {'perm_id': '', 'perm_name': ''}]
-    user_selected = {}
 
-    user_selected.__setitem__('id', user.id)
-    user_selected.__setitem__('fname', user.fname)
-    user_selected.__setitem__('lname', user.lname)
-    user_selected.__setitem__('email', user.email)
-    user_selected.__setitem__('disabled', user.disabled)
-    user_selected.__setitem__('superuser', user.is_superuser)
+    try:
+        user_id = request.match_info['id']
+        user = User.get(User.id == user_id)
+        perms = [{'perm_id': '', 'perm_name': ''}, {'perm_id': '', 'perm_name': ''}]
+        user_selected = {}
 
-    if user.userpermissions.count() > 0:
-        for i, p in enumerate(user.userpermissions):
-            if i == 3:
-                break
-            perms.__setitem__(i, {'perm_id': p.perm_id.id, 'perm_name': p.perm_id.name})
+        user_selected.__setitem__('id', user.id)
+        user_selected.__setitem__('fname', user.fname)
+        user_selected.__setitem__('lname', user.lname)
+        user_selected.__setitem__('email', user.email)
+        user_selected.__setitem__('disabled', user.disabled)
+        user_selected.__setitem__('superuser', user.is_superuser)
 
-    user_selected.__setitem__('user_perms', perms)
+        if user.userpermissions.count() > 0:
+            for i, p in enumerate(user.userpermissions):
+                if i == 3:
+                    break
+                perms.__setitem__(i, {'perm_id': p.perm_id.id, 'perm_name': p.perm_id.name})
 
-    permissions = Permissions.select()
-    perm_list = []
-    for pm in permissions:
-        perm_list.append({'id': pm.id, 'name': pm.name})
+        user_selected.__setitem__('user_perms', perms)
 
-    session = await get_session(request)
-    username = session['username']
-    return {'username': username, 'user': user_selected, 'perm_list': perm_list, 'title': 'User Edit'}
+        permissions = Permissions.select()
+        perm_list = []
+        for pm in permissions:
+            perm_list.append({'id': pm.id, 'name': pm.name})
+
+        session = await get_session(request)
+        username = session['username']
+        return {'username': username, 'user': user_selected, 'perm_list': perm_list, 'title': 'User Edit'}
+    except KeyError:
+        return web.Response(status=400)
+    except User.DoesNotExist:
+        return web.Response(status=400)
 
 
 async def admin_user_edit_post(request):
@@ -100,8 +108,7 @@ async def admin_user_edit_post(request):
 
     permissions = []
 
-    if 'user_id' and 'fname' and 'lname' and 'email' and 'disabled' and 'superuser' in data:
-
+    try:
         user_id = data['user_id']
 
         if 'public' in data:
@@ -122,22 +129,18 @@ async def admin_user_edit_post(request):
         else:
             superuser = True
 
-        UserPermissions.insert_many(permissions).execute()
+        if len(permissions) == 0:
+            UserPermissions.delete().where(UserPermissions.user_id == user_id).execute()
+        else:
+            UserPermissions.insert_many(permissions).execute()
+
         User.update(fname=data['fname'], lname=data['lname'], email=data['email'], is_superuser=superuser,
                     disabled=disabled).where(User.id == user_id).execute()
 
         raise web.HTTPFound('/users')
 
-    else:
-
-        permissions = Permissions.select()
-        perm_list = []
-        for pm in permissions:
-            perm_list.append({'id': pm.id, 'name': pm.name})
-
-        response = aiohttp_jinja2.render_template('admin_user_edit.html',
-                                                  request, {'user': data, 'perm_list': perm_list})
-        return response
+    except KeyError:
+        return web.Response(status=400)
 
 
 @aiohttp_jinja2.template('user_mgt/user_profile.html')
@@ -198,7 +201,7 @@ async def change_password_post(request):
     """
     user_id = await check_authorized(request)
     data = await request.post()
-    if 'password' and 'confirm_password' and 'old_password' in data:
+    try:
 
         if data['password'] == data['confirm_password']:
             try:
@@ -211,10 +214,11 @@ async def change_password_post(request):
                     return web.Response(status=404)
 
             except User.DoesNotExist:
-                return web.Response(status=404)
+                return web.Response(status=400)
         else:
+            # TODO: Return passwords do not match
             return web.Response(status=400)
-    else:
+    except KeyError:
         return web.Response(status=404)
 
 
@@ -251,22 +255,21 @@ async def user_edit_post(request):
     user_id = await check_authorized(request)
     data = await request.post()
 
-    if 'fname' and 'lname' and 'email' in data:
-        try:
-            user = User.get(User.id == user_id)
-            user.fname = data['fname']
-            user.lname = data['lname']
-            user.email = data['email']
-            user.save()
+    try:
+        user = User.get(User.id == user_id)
+        user.fname = data['fname']
+        user.lname = data['lname']
+        user.email = data['email']
+        user.save()
 
-            # Failed to update email with code below.
-            # user.update(fname=data['fname'], lname=data['lname'], email=data['email']).execute()
-            
-            raise web.HTTPFound('/user_profile')
-        except User.DoesNotExist:
-            return web.Response(status=404)
-    else:
+        # Failed to update email with code below.
+        # user.update(fname=data['fname'], lname=data['lname'], email=data['email']).execute()
+
+        raise web.HTTPFound('/user_profile')
+    except KeyError:
         return web.Response(status=400)
+    except User.DoesNotExist:
+        return web.Response(status=404)
 
 
 def setup_user_mgt_routes(app):

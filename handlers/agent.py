@@ -73,78 +73,90 @@ async def assign_tasks_post(request):
 # AGENT SENDS RESULTS BACK TO C2
 async def agent_output(request):
     data = await request.post()
-    agent_id = data['id']
+    try:
+        agent_id = data['id']
 
-    tech_id = data['tech'].split(':')[0]
-    test_num = data['tech'].split(':')[1]
-    executed = data['executed']
+        tech_id = data['tech'].split(':')[0]
+        test_num = data['tech'].split(':')[1]
+        executed = data['executed']
 
-    raw_output = data['output']
+        raw_output = data['output']
 
-    status = ''.join(raw_output.split('--')[:1])
-    if 'Success' == status:
-        result = True
-    else:
-        result = False
+        status = ''.join(raw_output.split('--')[:1])
+        if 'Success' == status:
+            result = True
+        else:
+            result = False
 
-    output = ''.join(raw_output.split('--')[1:])
-    if output == '':
-        output = 'This command ran successfully but returned no console output'
+        output = ''.join(raw_output.split('--')[1:])
+        if output == '':
+            output = 'This command ran successfully but returned no console output'
 
-    # ADDING RESULTS AND OUTPUT FROM AN AGENT
-    AgentTechnique.update(output=output, executed=executed, result=result).where(
-        (AgentTechnique.agent_id == agent_id) & (AgentTechnique.technique_id == tech_id) & (
+        # ADDING RESULTS AND OUTPUT FROM AN AGENT
+        AgentTechnique.update(output=output, executed=executed, result=result).where(
+            (AgentTechnique.agent_id == agent_id) & (AgentTechnique.technique_id == tech_id) & (
                     AgentTechnique.test_num == test_num)).execute()
 
-    return web.Response(text='success')
+        return web.Response(text='success')
+    except KeyError:
+        web.Response(text='failed')  # Wrong parameters
 
 
 # TECHNIQUES ASSIGNED TO AN AGENT
 async def agent_techniques(request):
-    agent_id = request.match_info['id']
-    tech_id = ''
+    try:
+        agent_id = request.match_info['id']
+        tech_id = ''
 
-    for agent_techs in AgentTechnique.select().where(AgentTechnique.agent_id == agent_id):
-        # return agent_techs.technique_id
-        tech_id = tech_id + str(agent_techs.technique_id) + ':' + str(agent_techs.test_num) + ','
+        for agent_techs in AgentTechnique.select().where(AgentTechnique.agent_id == agent_id):
+            # return agent_techs.technique_id
+            tech_id = tech_id + str(agent_techs.technique_id) + ':' + str(agent_techs.test_num) + ','
 
-    return web.Response(text=tech_id)
+        return web.Response(text=tech_id)
+    except KeyError:
+        web.Response(text='failed')  # Wrong parameters
+    except AgentTechnique.DoesNotExist:
+        web.Response(text='Agent not assigned')
 
 
 # SENDS AGENT COMMANDS TO RUN, MAKE IT A POST METHOD
 async def agent_tasks(request):
-    agent_id = request.match_info['id']
+    try:
+        agent_id = request.match_info['id']
 
-    techniques = []
+        techniques = []
 
-    for agent_techs in AgentTechnique.select().where(AgentTechnique.agent_id == agent_id):
-        tech_id = ('T%s' % agent_techs.technique_id)
-        test_num = agent_techs.test_num
+        for agent_techs in AgentTechnique.select().where(AgentTechnique.agent_id == agent_id):
+            tech_id = ('T%s' % agent_techs.technique_id)
+            test_num = agent_techs.test_num
 
-        techniques.append({'tech_id': tech_id, 'test_num': test_num})
+            techniques.append({'tech_id': tech_id, 'test_num': test_num})
 
-    ag = Agent.get(Agent.id == agent_id)
-    agent_platform = ag.platform
+        ag = Agent.get(Agent.id == agent_id)
+        agent_platform = ag.platform
 
-    # Formulating parameters
-    list_of_param_dict = []
-    for t in techniques:
-        params = Parameter.select().where(Parameter.agent_id == agent_id and Parameter.technique_id == t['tech_id'][1:])
-        param_number = params.count()
+        # Formulating parameters
+        list_of_param_dict = []
+        for t in techniques:
+            params = Parameter.select().where(
+                Parameter.agent_id == agent_id and Parameter.technique_id == t['tech_id'][1:])
+            param_number = params.count()
 
-        if param_number != 0:
-            param_dict = {}
-            for p in params:
-                param_dict.__setitem__(p.param_name, p.param_value)
+            if param_number != 0:
+                param_dict = {}
+                for p in params:
+                    param_dict.__setitem__(p.param_name, p.param_value)
 
-            list_of_param_dict.append(param_dict)
-        else:
-            list_of_param_dict.append(None)
+                list_of_param_dict.append(param_dict)
+            else:
+                list_of_param_dict.append(None)
 
-    agent_assignments = assignments(techniques, agent_platform, list_of_param_dict)
+        agent_assignments = assignments(techniques, agent_platform, list_of_param_dict)
 
-    commands = '{0};{1}'.format(str(ag.kill_date), agent_assignments)
-    return web.Response(text=commands)
+        commands = '{0};{1}'.format(str(ag.kill_date), agent_assignments)
+        return web.Response(text=commands)
+    except KeyError:
+        web.Response(text='failed')  # Wrong parameters
 
 
 def assignments(tech_list, plat, parameters):
@@ -161,56 +173,68 @@ def assignments(tech_list, plat, parameters):
 @aiohttp_jinja2.template('agent/agent_details.html')
 async def agent_details(request):
     await check_authorized(request)
-    agent_id = request.match_info['id']
+    try:
+        agent_id = request.match_info['id']
 
-    details = []
-    agent = {}
+        details = []
+        agent = {}
 
-    agt = Agent.select(Agent, Adversary.name).join(Adversary).where(Agent.id == agent_id)
+        agt = Agent.select(Agent, Adversary.name).join(Adversary).where(Agent.id == agent_id)
 
-    for ag in agt:
-        agent = {'id': ag.id, 'name': ag.name, 'adversary': ag.adversary.name, 'domain': ag.domain,
-                 'platform': ag.platform}
-        for tech in ag.techniques:
-            details.append({'tech_id': tech.technique_id, 'test_num': tech.test_num, 'name': tech.technique_id.name,
-                            'output': tech.output, 'executed': tech.executed, 'result': tech.result})
-        break
+        for ag in agt:
+            agent = {'id': ag.id, 'name': ag.name, 'adversary': ag.adversary.name, 'domain': ag.domain,
+                     'platform': ag.platform}
+            for tech in ag.techniques:
+                details.append({'tech_id': tech.technique_id, 'test_num': tech.test_num, 'name': tech.technique_id.name,
+                                'output': tech.output, 'executed': tech.executed, 'result': tech.result})
+            break
 
-    session = await get_session(request)
-    username = session['username']
-    return {'username': username, 'agent': agent, 'details': details, 'title': 'Agent Details'}
+        session = await get_session(request)
+        username = session['username']
+        return {'username': username, 'agent': agent, 'details': details, 'title': 'Agent Details'}
+    except KeyError:
+        return web.Response(status=400)
+    except Agent.DoesNotExist:
+        return web.Response(status=400)
 
 
 @aiohttp_jinja2.template('agent/agent_edit.html')
 async def agent_edit(request):
     await check_authorized(request)
-    agent_id = request.match_info['id']
-    adversaries = []
+    try:
+        agent_id = request.match_info['id']
+        adversaries = []
 
-    agt = Agent.get(Agent.id == agent_id)
-    agent = {'agt_id': agt.id, 'agt_name': agt.name, 'adv_id': agt.adversary_id, 'kill_date': agt.kill_date}
+        agt = Agent.get(Agent.id == agent_id)
+        agent = {'agt_id': agt.id, 'agt_name': agt.name, 'adv_id': agt.adversary_id, 'kill_date': agt.kill_date}
 
-    advs = Adversary.select()
-    for adv in advs:
-        adversaries.append({'adv_id': adv.id, 'adv_name': adv.name})
+        advs = Adversary.select()
+        for adv in advs:
+            adversaries.append({'adv_id': adv.id, 'adv_name': adv.name})
 
-    session = await get_session(request)
-    username = session['username']
-    return {'username': username, 'agent': agent, 'adversaries': adversaries, 'title': 'Update Agent'}
+        session = await get_session(request)
+        username = session['username']
+        return {'username': username, 'agent': agent, 'adversaries': adversaries, 'title': 'Update Agent'}
+    except KeyError:
+        return web.Response(status=400)
+    except Agent.DoesNotExist:
+        return web.Response(status=400)
 
 
 async def agent_edit_post(request):
     await check_authorized(request)
     data = await request.post()
+    try:
+        agent_id = data['agent_id']
+        kill_date = data['kill_date'].replace('T', ' ')
+        kill_date = '%s:00' % kill_date
 
-    agent_id = data['agent_id']
-    agent_name = data['name']
-    adversary_id = data['adversary']
-    kill_date = data['kill_date'].replace('T', ' ')
-    kill_date = '%s:00' % kill_date
-    Agent.update(name=agent_name, adversary_id=adversary_id, kill_date=kill_date).where(Agent.id == agent_id).execute()
+        Agent.update(name=data['name'], adversary_id=data['adversary'], kill_date=kill_date) \
+            .where(Agent.id == agent_id).execute()
 
-    raise web.HTTPFound('/agent_details/%s' % agent_id)
+        raise web.HTTPFound('/agent_details/%s' % agent_id)
+    except KeyError:
+        return web.Response(status=400)
 
 
 @aiohttp_jinja2.template('agent/customize_technique.html')
@@ -285,12 +309,14 @@ async def register_agent(request):
 async def delete_tech_output(request):
     await check_authorized(request)
     data = await request.post()
+    try:
+        AgentTechnique.update(output=None, result=None, executed=None) \
+            .where((AgentTechnique.agent_id == data['agent_id']) & (AgentTechnique.technique_id == data['tech_id'])
+                   & (AgentTechnique.test_num == data['test_num'])).execute()
 
-    AgentTechnique.update(output=None, result=None, executed=None) \
-        .where((AgentTechnique.agent_id == data['agent_id']) & (AgentTechnique.technique_id == data['tech_id'])
-               & (AgentTechnique.test_num == data['test_num'])).execute()
-
-    return web.Response(text='deleted')
+        return web.Response(text='deleted')
+    except KeyError:
+        web.Response(status=400)
 
 
 async def delete_tech_assignment(request):

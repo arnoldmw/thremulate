@@ -99,11 +99,7 @@
     <script src="{{ url('static', filename='js/core/jquery.validate.min.js') }}"></script>
     <script type="text/javascript">
        
-       $.validator.setDefaults({
-            submitHandler: function () {
-                $("#reg-card").addClass("is-loading");
-            }
-        });
+
         $(document).ready(function () {
             $("#regform").validate({
                 rules: {
