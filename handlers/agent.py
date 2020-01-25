@@ -126,7 +126,8 @@ async def agent_tasks(request):
 
         techniques = []
 
-        for agent_techs in AgentTechnique.select().where(AgentTechnique.agent_id == agent_id):
+        for agent_techs in AgentTechnique.select() \
+                .where((AgentTechnique.agent_id == agent_id) & (AgentTechnique.executed.is_null(True))):
             tech_id = ('T%s' % agent_techs.technique_id)
             test_num = agent_techs.test_num
 
