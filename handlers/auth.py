@@ -201,10 +201,14 @@ async def reset_password(request):
     :return: Template with reset password form otherwise an exception is raised.
     """
     await check_permission(request, 'protected')
-    user_id = request.match_info['id']
-    session = await get_session(request)
-    username = session['username']
-    return {'username': username, 'user_id': user_id, 'title': 'Reset Password'}
+
+    try:
+        user_id = request.match_info['id']
+        session = await get_session(request)
+        username = session['username']
+        return {'username': username, 'user_id': user_id, 'title': 'Reset Password'}
+    except KeyError:
+        return web.Response(status=400)
 
 
 async def reset_password_post(request):
@@ -216,7 +220,7 @@ async def reset_password_post(request):
     await check_permission(request, 'protected')
     data = await request.post()
 
-    if 'confirm_password' in data and 'password' in data and 'user_id' in data and 'admin_password' in data:
+    try:
         if data['confirm_password'] == data['password']:
             admin_id = await authorized_userid(request)
             try:
@@ -230,7 +234,8 @@ async def reset_password_post(request):
             except User.DoesNotExist:
                 return web.Response(status=400)
 
-    return web.Response(status=400)
+    except KeyError:
+        return web.Response(status=400)
 
 
 async def reset_lockout_post(request):
@@ -242,10 +247,11 @@ async def reset_lockout_post(request):
     await check_permission(request, 'protected')
     data = await request.post()
 
-    if 'user_id' in data:
+    try:
         User.update(lockout_count=0).where(User.id == data['user_id']).execute()
         return web.Response(text='success')
-    return web.Response(status=400)
+    except KeyError:
+        return web.Response(status=400)
 
 
 def setup_auth_routes(app):
