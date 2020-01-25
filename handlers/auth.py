@@ -233,6 +233,11 @@ async def reset_lockout_post(request):
 
 
 def setup_auth_routes(app):
+    """
+    Adds auth routes to the application.
+    :param app:
+    :return:
+    """
     app.add_routes([
         web.get('/login', login, name='login'),
         web.post('/login_post', login_post, name='login_post'),

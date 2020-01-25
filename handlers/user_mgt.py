@@ -273,6 +273,11 @@ async def user_edit_post(request):
 
 
 def setup_user_mgt_routes(app):
+    """
+    Adds user_mgt routes to the application.
+    :param app:
+    :return: None
+    """
     app.add_routes([
         web.get('/users', users_index, name='users'),
         web.get('/user_profile', user_profile, name='user_profile'),

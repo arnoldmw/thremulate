@@ -146,6 +146,11 @@ def platform_exec_count():
 
 
 def setup_dashboard_routes(app):
+    """
+    Adds dashboard route to the application.
+    :param app:
+    :return: None
+    """
     app.add_routes([
         web.get('/dashboard', dashboard, name='dashboard'),
     ])

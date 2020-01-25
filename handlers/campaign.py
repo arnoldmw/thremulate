@@ -101,6 +101,11 @@ async def campaign_delete(request):
 
 
 def setup_campaign_routes(app):
+    """
+    Adds adversary routes to the application.
+    :param app:
+    :return: None
+    """
     app.add_routes([
         web.get('/adversaries', campaign_index, name='adversaries'),
         web.get('/campaign_details/{id}', campaign_details, name='campaign_details'),

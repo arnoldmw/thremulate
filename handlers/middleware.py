@@ -63,6 +63,11 @@ def create_error_middleware(overrides):
 
 
 def setup_middleware(app):
+    """
+    Adds middleware routes to the application.
+    :param app:
+    :return: None
+    """
     error_middleware = create_error_middleware({
         400: handle_400,
         401: handle_404,

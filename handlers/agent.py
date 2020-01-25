@@ -322,6 +322,11 @@ async def delete_tech_assignment(request):
 
 
 def setup_agent_routes(app):
+    """
+    Adds agent routes to the application.
+    :param app:
+    :return: None
+    """
     app.add_routes([
         web.get('/agent_techniques/{id}', agent_techniques),
         web.get('/agent_tasks/{id}', agent_tasks),
