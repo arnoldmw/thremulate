@@ -1,58 +1,44 @@
 {% extends 'base.html' %}
-
 {% block content %}
-
-
 <!-- Padding Top -->
 <div style="margin-top: 4%;"></div>
-
-
 <div class="row row-card-no-pd">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
                 <div class="card-head-row">
                     <h4 class="card-title">Update Agent</h4>
-
                 </div>
                 <p class="card-category">
                     Edit Agent details</p>
             </div>
-
             <form action="{{ url('agent_edit_post') }}" method="post">
                 <input type="hidden" name="agent_id" value="{{ agent.agt_id }}">
                 <div class="card-body">
-
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" name="name" placeholder="Agent Name"
                                 value="{{ agent.agt_name }}">
                         </div>
-
                         <div class="form-group">
                             <label for="adversary">Adversary</label>
                             <select id="adversary" name="adversary" class="form-control">
                                 {% for adv in adversaries %}
-
                                 {% if adv.adv_id == agent.adv_id %}
                                 <option value="{{ adv.adv_id }}" selected>{{ adv.adv_name }}</option>
                                 {% else %}
                                 <option value="{{ adv.adv_id }}">{{ adv.adv_name }}</option>
                                 {% endif %}
-
-
                                 {% endfor %}
                             </select>
                         </div>
-
                         <div class="form-group">
                             <label for="name">Kill Date</label>
                             {% set kd = agent.kill_date | string %}
-                            <input type="datetime-local" class="form-control" id="kill_date" name="kill_date" 
-                            value="{{ kd.replace(' ', 'T') }}">
+                            <input type="datetime-local" class="form-control" id="kill_date" name="kill_date"
+                                   value="{{ kd.replace(' ', 'T') }}">
                         </div>
-
                     </div>
                     <div class="card-action">
                         <input class="btn btn-primary" type="submit" name="submit" value="Update">
@@ -62,13 +48,5 @@
     </div>
 </div>
 </div>
-
-
 <script src="/static/js/core/jquery.3.2.1.min.js?v=hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4%3D"></script>
-
-<script>
-
-
-</script>
-
 {% endblock %}
