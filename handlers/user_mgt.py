@@ -11,6 +11,11 @@ from db_auth import check_password_hash, generate_password_hash
 
 @aiohttp_jinja2.template('user_mgt/users_index.html')
 async def users_index(request):
+    """
+    Retrieves all the users in the database.
+    :param request:
+    :return: Template with all users
+    """
     await check_permission(request, 'protected')
 
     users = User.select()
@@ -49,6 +54,12 @@ async def user_delete(request):
 
 @aiohttp_jinja2.template('user_mgt/admin_user_edit.html')
 async def admin_user_edit(request):
+    """
+    Retrieves the template for a superuser or adminisatrator to update the details of a user.
+    :param request:
+    :return: Template with user edit form.
+    """
+
     await check_permission(request, 'protected')
     user_id = request.match_info['id']
     user = User.get(User.id == user_id)
@@ -81,6 +92,12 @@ async def admin_user_edit(request):
 
 
 async def admin_user_edit_post(request):
+    """
+    Updates the details of a user submitted by a superuser or administrator.
+    :param request:
+    :return: Template showing all user if successful otherwise an exception.
+    """
+
     await check_permission(request, 'protected')
     data = await request.post()
     # print('register')
@@ -131,6 +148,12 @@ async def admin_user_edit_post(request):
 
 @aiohttp_jinja2.template('user_mgt/user_profile.html')
 async def user_profile(request):
+    """
+    Retrieves the template showing the profile of a user
+    :param request:
+    :return: Template with profile of a user if successful otherwise an exceptions
+    """
+
     user_id = await check_authorized(request)
 
     try:
@@ -163,6 +186,12 @@ async def user_profile(request):
 
 @aiohttp_jinja2.template('user_mgt/change_password.html')
 async def change_password(request):
+    """
+    Retrieves the template for changing the password of a user.
+    :param request:
+    :return: Template with the change password form.
+    """
+
     await check_authorized(request)
     session = await get_session(request)
     username = session['username']
@@ -170,6 +199,12 @@ async def change_password(request):
 
 
 async def change_password_post(request):
+    """
+    Changes the password of a user after the user submits the change password form.
+    :param request:
+    :return: user_profile template if successful otherwise an exception.
+    """
+
     user_id = await check_authorized(request)
     data = await request.post()
     if 'password' and 'confirm_password' and 'old_password' in data:
@@ -194,6 +229,12 @@ async def change_password_post(request):
 
 @aiohttp_jinja2.template('user_mgt/user_edit.html')
 async def user_edit(request):
+    """
+    Retrieves the template with the form for editing user details.
+    :param request:
+    :return: Template with user edit form.
+    """
+
     user_id = await check_authorized(request)
 
     try:
@@ -212,6 +253,12 @@ async def user_edit(request):
 
 
 async def user_edit_post(request):
+    """
+    Updates the details of a user after a user submits the user edit form.
+    :param request:
+    :return: user_profile template if successful otherwise an exception.
+    """
+
     user_id = await check_authorized(request)
     data = await request.post()
 

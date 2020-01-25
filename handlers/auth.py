@@ -12,10 +12,21 @@ from aiohttp_security import (
 
 @aiohttp_jinja2.template('auth/login.html')
 async def login(request):
+    """
+    Retrieves the login template for authentication.
+    :param request:
+    :return: home of the user if successful otherwise the same template with the error message.
+    """
     return {'title': 'Login'}
 
 
 async def login_post(request):
+    """
+    Checks if the credentials are valid or if the account is locked out. Increases the account lockout count for
+    every failed authentication attempt. Checks if the user must reset their password after it is reset by a superuser.
+    :param request:
+    :return: home of the user if successful otherwise an exception or error message on the login page.
+    """
     data = await request.post()
     if 'email' in data and 'password' in data:
         email = data['email']
@@ -43,6 +54,7 @@ async def login_post(request):
             response = web.HTTPFound('/home')
             await remember(request, response, str(user.id))
 
+            # Password must be reset when a super user resets it for better audit trails.
             if user.reset_pass:
                 raise web.HTTPFound('/force_reset_password')
 
@@ -63,6 +75,11 @@ async def login_post(request):
 
 @aiohttp_jinja2.template('auth/force_reset_password.html')
 async def force_reset_password(request):
+    """
+    Retrieves the template for resetting the password after a superuser reset it for another user.
+    :param request:
+    :return: Template with password reset form.
+    """
     user_id = await check_authorized(request)
     session = await get_session(request)
     session.invalidate()
@@ -70,6 +87,12 @@ async def force_reset_password(request):
 
 
 async def force_reset_password_post(request):
+    """
+    Updates the user password after it was reset by a superuser and sets the user reset_pass to False.
+    :param request:
+    :return: home of the user if successful otherwise an exception or error message on the force_reset_password
+            template.
+    """
     data = await request.post()
     if 'user_id' in data and 'current_password' in data and 'new_password' in data and 'confirm_new_password' in data:
         user_id = data['user_id']
@@ -159,7 +182,7 @@ async def reset_password_post(request):
                 admin_pass = User.get(User.id == admin_id).passwd
 
                 if check_password_hash(data['admin_password'], admin_pass):
-                    User.update(passwd=generate_password_hash(data['password']), reset_pass=True).\
+                    User.update(passwd=generate_password_hash(data['password']), reset_pass=True). \
                         where(User.id == data['user_id']).execute()
 
                     raise web.HTTPFound('/users')
