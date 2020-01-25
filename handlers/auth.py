@@ -165,32 +165,27 @@ async def register_post(request):
     data = await request.post()
 
     try:
-        fname = data['firstname']
-        lname = data['lastname']
-        email = data['email']
         passwd = data['password']
         conf_passwd = data['confirm_password']
 
         if passwd == conf_passwd:
-            try:
-                user = User.create(fname=fname, lname=lname, email=email,
-                                   passwd=generate_password_hash(passwd),
-                                   is_superuser=False, disabled=False)
-                UserPermissions.create(user_id=user.id, perm_id=Permissions.get(Permissions.name == 'public'))
-
-            except IntegrityError as error:
-                if 'id' in error.__context__.__str__():
-                    print('id constraint failed')
-                if 'email' in error.__context__.__str__():
-                    print('email constraint failed')
-
-            # TODO: Return error message to user
+            user = User.create(fname=data['firstname'], lname=data['lastname'], email=data['email'],
+                               passwd=generate_password_hash(passwd),
+                               is_superuser=False, disabled=False)
+            UserPermissions.create(user_id=user.id, perm_id=Permissions.get(Permissions.name == 'public'))
             raise web.HTTPFound('/users')
         else:
-            # TODO:  Return error message to user
+            # TODO:  Return passwords do not match message to user
             print('passwords do not match')
+
     except KeyError:
         return web.Response(status=400)
+    except IntegrityError as error:
+        # TODO: Return error message to user
+        if 'id' in error.__context__.__str__():
+            print('id constraint failed')
+        if 'email' in error.__context__.__str__():
+            print('email constraint failed')
 
 
 @aiohttp_jinja2.template('auth/reset_password.html')

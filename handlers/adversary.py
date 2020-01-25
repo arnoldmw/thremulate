@@ -4,6 +4,7 @@ from aiohttp_security import check_authorized
 from aiohttp_session import get_session
 # noinspection PyUnresolvedReferences
 from database import Adversary, Agent
+from peewee import IntegrityError
 
 
 @aiohttp_jinja2.template('adversary/adversary_index.html')
@@ -36,8 +37,14 @@ async def adversary_add(request):
     """
     await check_authorized(request)
     data = await request.post()
-    Adversary.create(name=data['updateName'])
-    raise web.HTTPFound('/adversaries')
+    try:
+        Adversary.create(name=data['updateName'])
+        raise web.HTTPFound('/adversaries')
+    except KeyError:
+        return web.Response(status=400)
+    except IntegrityError as error:
+        # TODO: Return error
+        print('Similar name exists')
 
 
 @aiohttp_jinja2.template('adversary/adversary_details.html')
@@ -50,27 +57,24 @@ async def adversary_details(request):
     await check_authorized(request)
     agents = []
 
-    if 'id' in request.match_info:
-        camp_id = request.match_info['id']
-
-        camp = Adversary.get(Adversary.id == camp_id)
-        camp_details = {'name': camp.name, 'created': camp.created_date.strftime("%d-%b-%Y %H:%M:%S"),
-                        'updated': camp.updated_date.strftime("%d-%b-%Y %H:%M:%S")}
-        for ag in camp.agents:
+    try:
+        adv_id = request.match_info['id']
+        adv = Adversary.get(Adversary.id == adv_id)
+        adv_details = {'name': adv.name, 'created': adv.created_date.strftime("%d-%b-%Y %H:%M:%S"),
+                       'updated': adv.updated_date.strftime("%d-%b-%Y %H:%M:%S")}
+        for ag in adv.agents:
             agents.append({'id': ag.id, 'name': ag.name, 'platform': ag.platform,
                            'initial_contact': ag.initial_contact.strftime("%d-%b-%Y %H:%M:%S"),
                            'last_contact': ag.last_contact.strftime("%d-%b-%Y %H:%M:%S")})
 
         session = await get_session(request)
         username = session['username']
-        return {'username': username, 'adversary': camp_details, 'agents': agents, 'title': 'Adversary Details'}
+        return {'username': username, 'adversary': adv_details, 'agents': agents, 'title': 'Adversary Details'}
 
-    else:
-        session = await get_session(request)
-        username = session['username']
-        context = {'username': username}
-        response = aiohttp_jinja2.render_template('adversary/adversary_index.html', request, context)
-        return response
+    except KeyError:
+        return web.Response(status=400)
+    except Adversary.DoesNotExist:
+        return web.Response(status=400)
 
 
 async def adversary_update(request):
@@ -81,10 +85,14 @@ async def adversary_update(request):
     """
     await check_authorized(request)
     data = await request.post()
-    # TODO: Check for UNIQUE constraint
-    q = Adversary.update(name=data['name']).where(Adversary.id == data['id'])
-    q.execute()
-    raise web.HTTPFound('/adversaries')
+
+    try:
+        name = data['name']
+        adv_id = data['id']
+        Adversary.update(name=name).where(Adversary.id == adv_id).execute()
+        raise web.HTTPFound('/adversaries')
+    except KeyError:
+        return web.Response(status=400)
 
 
 async def adversary_delete(request):
@@ -95,9 +103,11 @@ async def adversary_delete(request):
     """
     await check_authorized(request)
     data = await request.post()
-    q = Adversary.delete().where(Adversary.id == data['id'])
-    q.execute()
-    raise web.HTTPFound('/adversaries')
+    try:
+        Adversary.delete().where(Adversary.id == data['id']).execute()
+        raise web.HTTPFound('/adversaries')
+    except KeyError:
+        return web.Response(status=400)
 
 
 def setup_campaign_routes(app):
