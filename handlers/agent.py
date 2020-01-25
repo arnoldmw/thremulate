@@ -299,11 +299,17 @@ async def register_agent(request):
 
     try:
         Agent.create(id=data['id'], name=agent_name, hostname=data['hostname'], platform=data['platform'],
-                     plat_version=data['plat_version'], username=data['username'])
+                     plat_version=data['plat_version'], username=data['username'],
+                     adversary=Adversary.get(Adversary.name == 'Unknown'))
+        return web.Response(text='Agent has registered')
     except IntegrityError:
         return web.Response(text='Agent already registered')
-
-    return web.Response(text='Agent has registered')
+    except Adversary.DoesNotExist:
+        Adversary.create(name='Unknown')
+        Agent.create(id=data['id'], name=agent_name, hostname=data['hostname'], platform=data['platform'],
+                     plat_version=data['plat_version'], username=data['username'],
+                     adversary=Adversary.get(Adversary.name == 'Unknown'))
+        return web.Response(text='Agent has registered')
 
 
 async def delete_tech_output(request):
