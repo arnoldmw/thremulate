@@ -108,8 +108,8 @@ async def agent_techniques(request):
         agent_id = request.match_info['id']
         tech_id = ''
 
-        for agent_techs in AgentTechnique.select().where(AgentTechnique.agent_id == agent_id):
-            # return agent_techs.technique_id
+        for agent_techs in AgentTechnique.select() \
+                .where((AgentTechnique.agent_id == agent_id) & (AgentTechnique.executed.is_null(True))):
             tech_id = tech_id + str(agent_techs.technique_id) + ':' + str(agent_techs.test_num) + ','
 
         return web.Response(text=tech_id)
