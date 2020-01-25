@@ -25,7 +25,7 @@ async def login_post(request):
     Checks if the credentials are valid or if the account is locked out. Increases the account lockout count for
     every failed authentication attempt. Checks if the user must reset their password after it is reset by a superuser.
     :param request:
-    :return: home of the user if successful otherwise an exception or error message on the login page.
+    :return: home of the user if successful otherwise an exception is raised or error message on the login page.
     """
     data = await request.post()
     if 'email' in data and 'password' in data:
@@ -78,7 +78,7 @@ async def force_reset_password(request):
     """
     Retrieves the template for resetting the password after a superuser reset it for another user.
     :param request:
-    :return: Template with password reset form.
+    :return: Template with password reset form otherwise an exception is raised.
     """
     user_id = await check_authorized(request)
     session = await get_session(request)
@@ -90,8 +90,8 @@ async def force_reset_password_post(request):
     """
     Updates the user password after it was reset by a superuser and sets the user reset_pass to False.
     :param request:
-    :return: home of the user if successful otherwise an exception or error message on the force_reset_password
-            template.
+    :return: home of the user if successful otherwise an exception is raised or error message on the
+    force_reset_password template.
     """
     data = await request.post()
     if 'user_id' in data and 'current_password' in data and 'new_password' in data and 'confirm_new_password' in data:
@@ -128,6 +128,11 @@ async def force_reset_password_post(request):
 
 
 async def logout(request):
+    """
+    Logs outs the user amd deletes the session created for the user.
+    :param request:
+    :return: '/' if successful ootherwise an exception is raised.
+    """
     await check_authorized(request)
     response = web.HTTPFound('/')
     await forget(request, response)
@@ -138,11 +143,21 @@ async def logout(request):
 
 @aiohttp_jinja2.template('auth/register.html')
 async def register(request):
+    """
+    Retrieves template for registering user.
+    :param request:
+    :return: Template with register user form if successful otherwise an exception is raised.
+    """
     await check_permission(request, 'protected')
     return {'title': 'Register'}
 
 
 async def register_post(request):
+    """
+    Registers a user after the register user form is submitted
+    :param request:
+    :return: '/users' if successful otherwise an exception is raised.
+    """
     await check_permission(request, 'protected')
     data = await request.post()
 
@@ -164,6 +179,11 @@ async def register_post(request):
 
 @aiohttp_jinja2.template('auth/reset_password.html')
 async def reset_password(request):
+    """
+    Retrieves the template with reset password form.
+    :param request:
+    :return: Template with reset password form otherwise an exception is raised.
+    """
     await check_permission(request, 'protected')
     user_id = request.match_info['id']
     session = await get_session(request)
@@ -172,6 +192,11 @@ async def reset_password(request):
 
 
 async def reset_password_post(request):
+    """
+    Resets a user password through the superuser or administrator account.
+    :param request:
+    :return: '/users' if successful otherwise an exception is raised.
+    """
     await check_permission(request, 'protected')
     data = await request.post()
 
@@ -193,6 +218,11 @@ async def reset_password_post(request):
 
 
 async def reset_lockout_post(request):
+    """
+    Resets the account lockout count to zero (0).
+    :param request:
+    :return: 'success' if successful otherwise an exception is raised.
+    """
     await check_permission(request, 'protected')
     data = await request.post()
 

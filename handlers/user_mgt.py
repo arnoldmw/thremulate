@@ -12,14 +12,13 @@ from db_auth import check_password_hash, generate_password_hash
 @aiohttp_jinja2.template('user_mgt/users_index.html')
 async def users_index(request):
     """
-    Retrieves all the users in the database.
+    Retrieves the template showing all registered users.
     :param request:
-    :return: Template with all users
+    :return: Template with all users otherwise an exception is raised.
     """
     await check_permission(request, 'protected')
 
     users = User.select()
-    perms = []
     users_list = []
     user = {}
     for m in users:
@@ -30,11 +29,6 @@ async def users_index(request):
         user.__setitem__('disabled', m.disabled)
         user.__setitem__('superuser', m.is_superuser)
 
-        # for n in m.userpermissions:
-        #     perms.append(n.perm_name)
-        #
-        # user.__setitem__('perms', perms)
-
         users_list.append(user)
         user = {}
         # perms = []
@@ -44,6 +38,11 @@ async def users_index(request):
 
 
 async def user_delete(request):
+    """
+    Deletes a user from the database through the superuser account.
+    :param request:
+    :return: '/users' if successful otherwise an exception is raised
+    """
     await check_permission(request, 'protected')
     user_id = request.match_info['id']
 
@@ -55,11 +54,10 @@ async def user_delete(request):
 @aiohttp_jinja2.template('user_mgt/admin_user_edit.html')
 async def admin_user_edit(request):
     """
-    Retrieves the template for a superuser or adminisatrator to update the details of a user.
+    Retrieves the template for a superuser or administrator to update the details of a user.
     :param request:
-    :return: Template with user edit form.
+    :return: Template with user edit form otherwise an is raised.
     """
-
     await check_permission(request, 'protected')
     user_id = request.match_info['id']
     user = User.get(User.id == user_id)
@@ -95,9 +93,8 @@ async def admin_user_edit_post(request):
     """
     Updates the details of a user submitted by a superuser or administrator.
     :param request:
-    :return: Template showing all user if successful otherwise an exception.
+    :return: Template showing all users if successful otherwise an exception is raised.
     """
-
     await check_permission(request, 'protected')
     data = await request.post()
     # print('register')
@@ -149,11 +146,10 @@ async def admin_user_edit_post(request):
 @aiohttp_jinja2.template('user_mgt/user_profile.html')
 async def user_profile(request):
     """
-    Retrieves the template showing the profile of a user
+    Retrieves the template showing the profile of a user.
     :param request:
-    :return: Template with profile of a user if successful otherwise an exceptions
+    :return: Template with profile of a user if successful otherwise an exception is raised.
     """
-
     user_id = await check_authorized(request)
 
     try:
@@ -189,9 +185,8 @@ async def change_password(request):
     """
     Retrieves the template for changing the password of a user.
     :param request:
-    :return: Template with the change password form.
+    :return: Template with the change password form otherwise an exception is raised.
     """
-
     await check_authorized(request)
     session = await get_session(request)
     username = session['username']
@@ -202,9 +197,8 @@ async def change_password_post(request):
     """
     Changes the password of a user after the user submits the change password form.
     :param request:
-    :return: user_profile template if successful otherwise an exception.
+    :return: /'user_profile' template if successful otherwise an exception is raised.
     """
-
     user_id = await check_authorized(request)
     data = await request.post()
     if 'password' and 'confirm_password' and 'old_password' in data:
@@ -232,9 +226,8 @@ async def user_edit(request):
     """
     Retrieves the template with the form for editing user details.
     :param request:
-    :return: Template with user edit form.
+    :return: Template with user edit form otherwise an exception is raised.
     """
-
     user_id = await check_authorized(request)
 
     try:
@@ -256,9 +249,8 @@ async def user_edit_post(request):
     """
     Updates the details of a user after a user submits the user edit form.
     :param request:
-    :return: user_profile template if successful otherwise an exception.
+    :return: '/user_profile' template if successful otherwise an exception is raised.
     """
-
     user_id = await check_authorized(request)
     data = await request.post()
 
@@ -270,7 +262,7 @@ async def user_edit_post(request):
             user.email = data['email']
             user.save()
 
-            # Cannot update email with code below.
+            # Failed to update email with code below.
             # user.update(fname=data['fname'], lname=data['lname'], email=data['email']).execute()
             
             raise web.HTTPFound('/user_profile')
@@ -292,4 +284,3 @@ def setup_user_mgt_routes(app):
         web.get('/change_password', change_password, name='change_password'),
         web.post('/change_password_post', change_password_post, name='change_password_post'),
     ])
-
