@@ -31,7 +31,7 @@ async def users_index(request):
 
         users_list.append(user)
         user = {}
-        # perms = []
+
     session = await get_session(request)
     username = session['username']
     return {'username': username, 'users': users_list, 'title': 'Users'}
@@ -97,9 +97,6 @@ async def admin_user_edit_post(request):
     """
     await check_permission(request, 'protected')
     data = await request.post()
-    # print('register')
-    # for key in data.keys():
-    #     print(key + ': ' + data[key])
 
     permissions = []
 

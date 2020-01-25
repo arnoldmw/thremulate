@@ -1,50 +1,43 @@
 # noinspection PyUnresolvedReferences
-from handlers.auth import *
+import logging
+import ssl
+from pathlib import Path
+
+import aiohttp_debugtoolbar
+import aiohttp_jinja2
+import jinja2
+from aiohttp import web
+from aiohttp_security import SessionIdentityPolicy
+from aiohttp_security import (
+    check_authorized,
+)
+from aiohttp_security import setup as setup_security
+from aiohttp_session import setup
+from aiohttp_session.cookie_storage import EncryptedCookieStorage
 # noinspection PyUnresolvedReferences
-from handlers.logger import *
+from database import *
+# noinspection PyUnresolvedReferences
+from db_auth import DBAuthorizationPolicy
+# noinspection PyUnresolvedReferences
+from handlers.agent import *
+# noinspection PyUnresolvedReferences
+from handlers.auth import *
 # noinspection PyUnresolvedReferences
 from handlers.campaign import *
 # noinspection PyUnresolvedReferences
 from handlers.dashboard import *
 # noinspection PyUnresolvedReferences
-from handlers.agent import *
-# noinspection PyUnresolvedReferences
-from handlers.user_mgt import *
+from handlers.logger import *
 # noinspection PyUnresolvedReferences
 from handlers.middleware import setup_middleware
-
-import aiohttp_debugtoolbar
-
-from aiohttp_security import setup as setup_security
-from aiohttp_security import SessionIdentityPolicy
-from aiohttp_security import (
-    remember, forget, authorized_userid,
-    check_permission, check_authorized,
-)
-
-import logging
-
-import ssl
-
-from aiohttp import web
-import jinja2
-from pathlib import Path
-import aiohttp_jinja2
-
-
-from aiohttp_session import setup
-from aiohttp_session.cookie_storage import EncryptedCookieStorage
-
 # noinspection PyUnresolvedReferences
-from db_auth import DBAuthorizationPolicy
-
-# noinspection PyUnresolvedReferences
-from database import *
+from handlers.user_mgt import *
 
 THIS_DIR = Path(__file__).parent
 secret_key = b'\xd0\x04)E\x14\x98\xa1~\xecE\xae>(\x1d6\xec\xbfQ\xa4\x19\x0e\xbcre,\xf8\x8f\x84WV.\x8d'
 
 
+# noinspection PyUnusedLocal
 @aiohttp_jinja2.template('index.html')
 async def index(request):
     return {}
@@ -53,11 +46,7 @@ async def index(request):
 @aiohttp_jinja2.template('home.html')
 async def home(request):
     await check_authorized(request)
-
     session = await get_session(request)
-    # email = await authorized_userid(request)
-    # username = User.get(User.email == email).fname
-    # session['username'] = username
     username = session['username']
     return {'username': username, 'title': "Home"}
 
@@ -91,7 +80,7 @@ async def create_app():
 
     # HTTPS using Secure Sockets Layer
     ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
-    ssl_context.load_cert_chain(certfile='certificates/stae.crt', keyfile='certificates/stae.key')
+    ssl_context.load_cert_chain(certfile='certificates/thremulate.crt', keyfile='certificates/thremulate.key')
 
     aiohttp_debugtoolbar.setup(app, intercept_redirects=False)
     # web.run_app(app, host="localhost", port=8080, ssl_context=ssl_context)
@@ -102,5 +91,4 @@ async def create_app():
 if __name__ == '__main__':
     application = create_app()
     logging.basicConfig(level=logging.INFO, filename=THIS_DIR / 'logs/thremulate.log')
-    # web.run_app(application, host="localhost", port=8000, access_log_class=AccessLogger)
     web.run_app(application, host="0.0.0.0", port=8000, access_log_class=AccessLogger)

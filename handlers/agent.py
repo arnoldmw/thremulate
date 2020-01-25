@@ -1,40 +1,32 @@
+import random
+import string
+
 import aiohttp_jinja2
 from aiohttp import web
+from aiohttp_security import (
+    check_authorized,
+)
 from aiohttp_session import get_session
-from database import *
-import datetime
-
-import string
-import random
-
-# noinspection PyUnresolvedReferences
-from art.run_atomics import get_commands
 # noinspection PyUnresolvedReferences
 from art.run_atomics import agent_commands
 # noinspection PyUnresolvedReferences
 from art.run_atomics import get_all_techniques, get_one_technique_and_params
 # noinspection PyUnresolvedReferences
 from art.run_atomics import get_all_techniques_and_params
-
-from aiohttp_security import (
-    remember, forget, authorized_userid,
-    check_permission, check_authorized,
-)
+# noinspection PyUnresolvedReferences
+from art.run_atomics import get_commands
+from database import *
 
 
 @aiohttp_jinja2.template('agent/agent_index.html')
 async def agent_index(request):
     await check_authorized(request)
-    # fas fa - broadcast - tower
     agents = []
 
     # Avoids the N + 1 problem through fetching the related table together
     query = Agent.select().join(Adversary)
 
     for ag in query:
-        # ic = ag.initial_contact.strftime("%d-%b-%Y %H:%M:%S")
-        # lc = ag.last_contact.strftime("%d-%b-%Y %H:%M:%S")
-
         agents.append({'id': ag.id, 'name': ag.name, 'initial_contact': ag.initial_contact,
                        'last_contact': ag.last_contact, 'adversary': ag.adversary.name})
 
@@ -67,11 +59,8 @@ async def assign_tasks_post(request):
 
     for key in data.keys():
         if data[key] is not '':
-            print(key + ': ' + data[key])
             rec_data.append(data[key])
 
-    print('Data got')
-    print(rec_data)
     data_len = rec_data.__len__()
     rec_data = rec_data[1:data_len - 1]
 
@@ -85,7 +74,7 @@ async def assign_tasks_post(request):
 async def agent_output(request):
     data = await request.post()
     agent_id = data['id']
-    # print(data[2])
+
     tech_id = data['tech'].split(':')[0]
     test_num = data['tech'].split(':')[1]
     executed = data['executed']
@@ -127,8 +116,6 @@ async def agent_tasks(request):
     agent_id = request.match_info['id']
 
     techniques = []
-    tests = []
-    # t = {'tech_id': '', 'test_num': ''}
 
     for agent_techs in AgentTechnique.select().where(AgentTechnique.agent_id == agent_id):
         tech_id = ('T%s' % agent_techs.technique_id)
@@ -149,8 +136,7 @@ async def agent_tasks(request):
             param_dict = {}
             for p in params:
                 param_dict.__setitem__(p.param_name, p.param_value)
-                # list_of_param_dict.append(param_dict)
-                # param_dict.__setitem__(p.param_name, p.param_value)
+
             list_of_param_dict.append(param_dict)
         else:
             list_of_param_dict.append(None)
@@ -229,9 +215,6 @@ async def agent_edit_post(request):
 
 @aiohttp_jinja2.template('agent/customize_technique.html')
 async def customize_technique(request):
-    # arr = []
-    # data = await request.post()
-
     await check_authorized(request)
     tech_id = 'T' + request.query['tech_id']
     agent_id = request.query['agent_id']

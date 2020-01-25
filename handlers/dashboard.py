@@ -35,7 +35,6 @@ async def dashboard(request):
     counts.append(tech_count)  # 2
     counts.append(user_count)  # 3
     counts.append(percent_tech_executed)  # 4
-    # counts.append(cumulative_tech_execution)
 
     graph = []
 

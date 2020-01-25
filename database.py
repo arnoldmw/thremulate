@@ -1,10 +1,9 @@
 import datetime
-import uuid
 
 import bcrypt
-from playhouse.migrate import *
 # noinspection PyUnresolvedReferences
 from art.run_atomics import techniques_for_db
+from playhouse.migrate import *
 
 db = SqliteDatabase('db/adversary.db', pragmas={'foreign_keys': 1})
 
@@ -226,4 +225,3 @@ if __name__ == '__main__':
     #     except Technique.DoesNotExist:
     #         Technique.create(id=t['id'], name=t['name'])
     #         pass
-
