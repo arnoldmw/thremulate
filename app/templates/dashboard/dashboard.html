@@ -59,7 +59,7 @@
                             <a class="nav-link " href="{{ url('users') }}">Users</a>
                         </li>
                     </ul>
-                    </ul>
+
                     <ul class="nav navbar-nav navbar-right align-items-left">
                         <li class="nav-item">
                             <a href="#" class="nav-link">Help</a>
@@ -401,7 +401,7 @@
                                 fill: true,
                                 borderWidth: 1,
                                 data: [
-                                    {% for m in graph[0] %}
+                                    {% for m in graph[0] -%}
 
                         {{ m }},
 {% endfor %}
@@ -417,7 +417,7 @@
                         fill: true,
                         borderWidth: 1,
                         data: [
-                            {% for n in graph[1] %}
+                            {% for n in graph[1] -%}
 
                         {{ n }},
                     {% endfor %}
@@ -432,7 +432,7 @@
                         fill: true,
                         borderWidth: 1,
                         data: [
-                            {% for y in graph[2] %}
+                            {% for y in graph[2] -%}
                         {{ y }},
                     {% endfor %}
                         ]
