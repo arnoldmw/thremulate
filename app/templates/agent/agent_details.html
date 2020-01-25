@@ -54,18 +54,36 @@
                 <div class="card-head-row">
                     <h4 class="card-title">Agent Details</h4>
                 </div>
-                <p class="card-category">Name: {{ agent.name }}</p>
-                <p class="card-category">Adversary: {{ agent.adversary }}</p>
-                <p class="card-category">Platform:
-                    {% if agent.platform == 'windows' %}
-                    Windows
-                    {% elif agent.platform == 'linux' %}
-                    Linux
-                    {% elif agent.platform == 'macos' %}
-                    MacOS
-                    {% endif %}
+                <div class="row">
+                    <div class="col-md-2">
+                        <p class="card-category">Name: {{ agent.name }}</p>
+                        <p class="card-category">Adversary: {{ agent.adversary }}</p>
+                        <p class="card-category">Hostname: {{ agent.hostname }}</p>
+                    </div>
+                    <div class="col-md-3">
+                        <p class="card-category">Username: {{ agent.username }}</p>
 
-                </p>
+                        <p class="card-category">Platform:
+                            {% if agent.platform == 'windows' %}
+                            Windows
+                            {% elif agent.platform == 'linux' %}
+                            Linux
+                            {% elif agent.platform == 'macos' %}
+                            MacOS
+                            {% endif %}
+
+                        </p>
+
+                        <p class="card-category">Platform version: {{ agent.plat_version }}</p>
+
+
+                    </div>
+                    <div class="col-md-3">
+                        <p class="card-category">Kill Date: {{ agent.kill_date }}</p>
+                        <p class="card-category">Initial Contact: {{ agent.initial_contact }}</p>
+                        <p class="card-category">Last Contact: {{ agent.last_contact }}</p>
+                    </div>
+                </div>
                 <p class="card-category"><a href="{{ url('agents') }}">Back to Agents</a></p>
             </div>
             <input type="hidden" id="agent_id" name="agent_id" value="{{ agent.id }}">
@@ -88,12 +106,12 @@
                             <tbody>
                                 {% for detail in details %}
                                 <tr style="padding-top:1%">
-                                    <td style="width: 60%;">
+                                    <td style="width: 55%;">
                                         <div class="accordion accordion-default">
                                             <div class="card">
                                                 <div class="card-header" id="headingOne" data-toggle="collapse"
-                                                    data-target="#{{ detail.name }}{{ detail.test_num }}" aria-expanded="true"
-                                                    aria-controls="collapseOne">
+                                                     data-target="#{{ detail.name }}{{ detail.test_num }}"
+                                                     aria-expanded="true" aria-controls="collapseOne">
                                                     <div class="span-icon">
                                                         <div class="icon-speech"></div>
                                                     </div>
@@ -122,14 +140,17 @@
                     </td>
                     <td style="vertical-align: top!important;">
                         {% if detail.result == True %}
-                        <i class="fas fa-check-circle text-success result" style="font-size: 1.6em; margin-top: 0.5em;"></i>
+                        <i class="fas fa-check-circle text-success result"
+                           style="font-size: 1.6em; margin-top: 0.5em;"></i>
                         {% elif detail.result == None %}
-                        <i class="fas fa-question-circle text-primary result" style="font-size: 1.6em; margin-top: 0.5em;"></i>
+                        <i class="fas fa-question-circle text-primary result"
+                           style="font-size: 1.6em; margin-top: 0.5em;"></i>
                         {% else %}
-                        <i class="fas fa-times-circle text-danger result" style="font-size: 1.6em; margin-top: 0.5em;"></i>
+                        <i class="fas fa-times-circle text-danger result"
+                           style="font-size: 1.6em; margin-top: 0.5em;"></i>
                         {% endif %}
                     </td>
-                    <td >
+                    <td>
                         {% if detail.executed %}
                         <div class="executed-date">
                             {{ detail.executed.strftime("%d-%b-%Y %H:%M:%S") }}
@@ -179,17 +200,17 @@
                 var agent_id = $('#agent_id').val();
                 $.post("http://localhost:8000/delete_tech_output", { 'tech_id': tech_id, 'agent_id': agent_id, 'test_num': test_num },
                     function (data, status) {
-                        if(status == 'success'){
-                            if(data == 'deleted'){
-                            var table_row = btn.parents('tr');
-                            var output = table_row.find('.card-body');
-                            output[0].innerHTML = 'Awaiting execution';
-                            output.removeClass("text-left");
-                            output.addClass("text-center");
-                            // Changing replace icon
-                            table_row.find('.result').replaceWith('<i class="fas fa-question-circle text-primary result" style="font-size: 1.6em; margin-top: 0.5em;"></i>')
-                            // Changing executed date
-                            table_row.find('.executed-date').replaceWith('None')
+                        if (status == 'success') {
+                            if (data == 'deleted') {
+                                var table_row = btn.parents('tr');
+                                var output = table_row.find('.card-body');
+                                output[0].innerHTML = 'Awaiting execution';
+                                output.removeClass("text-left");
+                                output.addClass("text-center");
+                                // Changing replace icon
+                                table_row.find('.result').replaceWith('<i class="fas fa-question-circle text-primary result" style="font-size: 1.6em; margin-top: 0.5em;"></i>')
+                                // Changing executed date
+                                table_row.find('.executed-date').replaceWith('None')
                             }
                         }
                     });
@@ -205,9 +226,9 @@
             $("#deleteAssignment").click(function () {
                 var agent_id = $('#agent_id').val();
                 $.post("http://localhost:8000/delete_tech_assignment", { 'tech_id': tech_id, 'agent_id': agent_id, 'test_num': test_num },
-                function (data, status) {
-                        if(status == 'success'){
-                            if(data == 'deleted'){
+                    function (data, status) {
+                        if (status == 'success') {
+                            if (data == 'deleted') {
                                 btn.parents('tr').remove();
                             }
                         }
