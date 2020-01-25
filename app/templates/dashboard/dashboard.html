@@ -400,13 +400,9 @@
                                 legendColor: '#f3545d',
                                 fill: true,
                                 borderWidth: 1,
-                                data: [
-                                    {% for m in graph[0] -%}
-
-                        {{ m }},
-{% endfor %}
-                        ]
-                    // data: [154, 184, 175, 203, 210, 231, 240, 278, 252, 312, 320, 374]
+                                data: [{% for m in graph[0] -%}
+                                            {{ m }},
+                                        {%- endfor %}]
                 }, {
                         label: "Agents",
                         borderColor: gradientStroke3,
@@ -416,12 +412,10 @@
                         legendColor: '#fdaf4b',
                         fill: true,
                         borderWidth: 1,
-                        data: [
-                            {% for n in graph[1] -%}
-
+                        data: [{% for n in graph[1] -%}
                         {{ n }},
-                    {% endfor %}
-                    ]
+                    {%- endfor %} ]
+                   
                 }, {
                         label: "Techniques Executed",
                         borderColor: gradientStroke,
@@ -431,11 +425,10 @@
                         legendColor: '#177dff',
                         fill: true,
                         borderWidth: 1,
-                        data: [
-                            {% for y in graph[2] -%}
+                        data: [{% for y in graph[2] -%}
                         {{ y }},
-                    {% endfor %}
-                        ]
+                    {%- endfor %}]
+                        
                 }]
             },
                     options: {
@@ -527,21 +520,18 @@
                 var myDailySalesChart = new Chart(techStats, {
                     type: 'line',
                     data: {
-                        labels: [
-                            {% for day in weekly %}
+                        labels: [ {% for day in weekly -%}
+                           
             "{{ day.date }}",
+            {%- endfor %}],
 
-            {% endfor %}
-
-        ],
+        
                 datasets: [{
                     label: "Techniques Executed", fill: !0, backgroundColor: "rgba(255,255,255,0.2)", borderColor: "#fff", borderCapStyle: "butt", borderDash: [], borderDashOffset: 0, pointBorderColor: "#fff", pointBackgroundColor: "#fff", pointBorderWidth: 1, pointHoverRadius: 5, pointHoverBackgroundColor: "#fff", pointHoverBorderColor: "#fff", pointHoverBorderWidth: 1, pointRadius: 1, pointHitRadius: 5,
-                    data: [
-                        {% for data in weekly %}
-            "{{ data.count }}",
-
-                {% endfor %}
-                ]
+                    data: [{% for data in weekly -%}
+                         "{{ data.count }}",
+                {%- endfor %}]
+                
 		}]
 	},
                 options: {
