@@ -6,7 +6,7 @@ from aiohttp_security.abc import AbstractAuthorizationPolicy
 class DBAuthorizationPolicy(AbstractAuthorizationPolicy):
     async def authorized_userid(self, identity):
         try:
-            user = User.get(User.email == identity)
+            user = User.get(User.id == identity)
 
             if user.disabled:
                 return None
@@ -21,7 +21,7 @@ class DBAuthorizationPolicy(AbstractAuthorizationPolicy):
             return False
 
         try:
-            user = User.get(User.email == identity)
+            user = User.get(User.id == identity)
 
             if user.disabled is False:
                 is_superuser = user.is_superuser
@@ -67,4 +67,3 @@ def generate_password_hash(password):
     password_bin = password.encode('utf-8')
     hashed = bcrypt.hashpw(password_bin, bcrypt.gensalt())
     return hashed.decode('utf-8')
-

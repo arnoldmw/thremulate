@@ -1,11 +1,7 @@
 {% extends 'base.html' %}
-
 {% block content %}
-
 <!-- Padding Top -->
 <div style="margin-top: 4%;"></div>
-
-
 <div class="row row-card-no-pd">
     <div class="col-md-12">
         <div class="card">
@@ -16,12 +12,8 @@
             </div>
             <p class="card-category">Assign techniques to Agent</p>
             <p class="card-category"><a href="{{ url('agents') }}">Back to Agents</a></p>
-
-
             <div class="card-body">
-
                 <div class="table-responsive">
-
                     <table class="table table-matrix">
                         <thead class="bg-gray color-white">
                             <tr>
@@ -51,9 +43,6 @@
                             </tr>
                         </thead>
                         <tbody>
-
-
-
                             {% for i in range(0, 10) %}
                             <tr>
                                 {% if i < matrix.execution.__len__() %}
@@ -144,47 +133,14 @@
                                 {% else %}
                                 <td class="no-border"></td>
                                 {% endif %}
-
-
-
-
-
-
-
                             </tr>
-
-
-
                             {% endfor %}
-
-
                         </tbody>
                     </table>
-
                 </div>
-
-
-
-
-
-
-
-
-
-
             </div>
-
-            <!--            <div class="card-action">-->
-            <!--                <input type="submit" value="Assign" name="submit" class="btn btn-primary" />-->
-            <!--            </div>-->
-
         </div>
     </div>
 </div>
-
-
 <script src="{{ url('static', filename='js/core/jquery.3.2.1.min.js') }}"></script>
-
-
-
 {% endblock %}

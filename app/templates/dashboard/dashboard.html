@@ -8,7 +8,6 @@
 
     <link rel="icon" type="image/x-icon" href="{{ url('static', filename='img/icon.ico') }}" />
 
-
     <!-- Fonts and icons -->
     <script src="{{ url('static', filename='js/plugin/webfont/webfont.min.js') }}"></script>
     <script>
@@ -19,12 +18,7 @@
                 sessionStorage.fonts = true;
             }
         });
-
-
-
-
     </script>
-
     <!-- CSS Files -->
     <link rel="stylesheet" type="text/css" href="{{ url('static', filename='css/bootstrap.min.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ url('static', filename='css/atlantis.min.css') }}" />
@@ -37,116 +31,52 @@
 </head>
 
 <body data-background-color="dark">
-
     <div class="wrapper overlay-sidebar">
         <div class="main-header">
-            <!-- Logo Header -->
-
-            <!-- End Logo Header -->
-
             <!-- Navbar Header -->
             <nav class="navbar navbar-header navbar-expand-lg" data-background-color="dark">
 
                 <div class="container-fluid">
                     <ul class="navbar-nav topbar-nav">
                         <li class="nav-item">
-                            <a href="/" class="logo">
+                            <a href="{{ url('home') }}" class="logo">
                                 <div class="navbar-brand" style="color: white;">Thremulate</div>
                             </a>
                         </li>
-
                         <li class="nav-item">
-                            <a href="#" class="nav-link">Home</a>
+                            <a href="{{ url('home') }}" class="nav-link">Home</a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ url('dashboard') }}" class="nav-link">Dashboard</a>
                         </li>
-
                         <li class="nav-item">
-                            <a class="nav-link " href="{{ url('campaigns') }}" >Campaigns</a>
+                            <a class="nav-link " href="{{ url('adversaries') }}">Adversaries</a>
                         </li>
-
                         <li class="nav-item">
-                            <a class="nav-link " href="{{ url('agents') }}" >Agents</a>
+                            <a class="nav-link " href="{{ url('agents') }}">Agents</a>
                         </li>
-
-                          <li class="nav-item">
-                            <a class="nav-link " href="{{ url('users') }}" >Users</a>
+                        <li class="nav-item">
+                            <a class="nav-link " href="{{ url('users') }}">Users</a>
                         </li>
                     </ul>
 
-
-                    </ul>
                     <ul class="nav navbar-nav navbar-right align-items-left">
                         <li class="nav-item">
                             <a href="#" class="nav-link">Help</a>
                         </li>
-
                         <li class="nav-item">
-                            <a class="nav-link" href="#" aria-expanded="false">
+                            <a class="nav-link" href="{{ url('logout') }}" aria-expanded="false">
                                 <i class="fas icon-logout" data-toggle="tooltip" title="Log out"></i>
                             </a>
                         </li>
-
-
-
-
-                        <li class="nav-item dropdown hidden-caret">
-                            <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
-                                {{username}}
-                            </a>
-                            <ul class="dropdown-menu dropdown-user animated fadeIn">
-                                <div class="scroll-wrapper dropdown-user-scroll scrollbar-outer"
-                                    style="position: relative;">
-                                    <div class="dropdown-user-scroll scrollbar-outer scroll-content"
-                                        style="height: auto; margin-bottom: 0px; margin-right: 0px; max-height: 0px;">
-                                        <li>
-                                            <div class="user-box">
-
-                                                <div class="u-text">
-                                                    <h4>Arnold</h4>
-                                                    <p class="text-muted">arnold@thremulate.com</p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">My Profile</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Account Setting</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="{{url('logout')}}">Logout</a>
-                                        </li>
-                                    </div>
-                                    <div class="scroll-element scroll-x">
-                                        <div class="scroll-element_outer">
-                                            <div class="scroll-element_size"></div>
-                                            <div class="scroll-element_track"></div>
-                                            <div class="scroll-bar ui-draggable ui-draggable-handle"></div>
-                                        </div>
-                                    </div>
-                                    <div class="scroll-element scroll-y">
-                                        <div class="scroll-element_outer">
-                                            <div class="scroll-element_size"></div>
-                                            <div class="scroll-element_track"></div>
-                                            <div class="scroll-bar ui-draggable ui-draggable-handle"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </ul>
+                        <li class="nav-item">
+                            <a href="{{ url('user_profile') }}" class="nav-link">{{ username }}</a>
                         </li>
                     </ul>
-
-
-
                 </div>
             </nav>
             <!-- End Navbar -->
         </div>
-
-        <!-- Sidebar -->
-
-        <!-- End Sidebar -->
 
         <div class="main-panel">
             <div class="content">
@@ -155,20 +85,15 @@
                     <div class="page-inner py-5">
                         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                             <div>
-                                <h2 class="text-white pb-2 fw-bold">Dashboard</h2>
-                                <h5 class="text-white op-7 mb-2">Thremulate Admin Dashboard</h5>
+                                <h2 class="text-white pb-2 fw-bold">Thremulate Dashboard</h2>
+                                <h5 class="text-white op-7 mb-2"><i>Comprehensive Adversary Emulation</i></h5>
                             </div>
-                            <div class="ml-md-auto py-2 py-md-0">
-                                <a href="{{ url('users') }}" class="btn btn-white btn-border btn-round mr-2">Manage
-                                    Users</a>
-                                <a href="#" class="btn btn-secondary btn-round">Add Campaign</a>
-                            </div>
+
                         </div>
                     </div>
                 </div>
 
                 <div class="page-inner mt--5">
-
                     <div class="row row-card-no-pd mt--2">
                         <div class="col-sm-6 col-md-3">
                             <div class="card card-stats card-round">
@@ -181,7 +106,7 @@
                                         </div>
                                         <div class="col-7 col-stats">
                                             <div class="numbers">
-                                                <p class="card-category">Campaigns</p>
+                                                <p class="card-category">Adversaries</p>
                                                 <h4 class="card-title">{{ counts[0] }}</h4>
                                             </div>
                                         </div>
@@ -247,8 +172,6 @@
                             </div>
                         </div>
                     </div>
-
-
                     <div class="row">
                         <div class="col-md-8">
                             <div class="card">
@@ -265,27 +188,25 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="col-md-4">
                             <div class="card card-primary">
                                 <div class="card-header">
-                                    <div class="card-title">Techniques Statistics 
+                                    <div class="card-title">Techniques Statistics
                                         <span class="text-sm" style="font-size: 0.8em;">(past 7 days)</span>
-                                </div>
-                                <div class="card-body pb-0">
-                                    <div class="mb-4 mt-2">
-                                        <h1>Executed: {{ counts[5] }}</h1>
                                     </div>
-                                    <div class="pull-in">
-                                        <canvas id="tech-stats"></canvas>
+                                    <div class="card-body pb-0">
+                                        <div class="mb-4 mt-2">
+                                            <h1>Executed: {{ counts[5] }}</h1>
+                                        </div>
+                                        <div class="pull-in">
+                                            <canvas id="tech-stats"></canvas>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            </div>
-
                             <div class="card card-primary bg-primary-gradient">
                                 <div class="card-header">
-                                    <div class="card-title">Techniques Progress 
+                                    <div class="card-title">Techniques Progress
                                         <span class="text-sm" style="font-size: 0.8em;">(assigned and executed)</span>
                                     </div>
                                 </div>
@@ -293,18 +214,8 @@
                                     <div id="task-complete" class="chart-circle mt-4 mb-3"></div>
                                 </div>
                             </div>
-
-
-
-
                         </div>
-
-
-
                     </div>
-
-
-
 
                     <div class="row">
                         <div class="col-md-4">
@@ -314,8 +225,6 @@
                                     <p class="card-category">Based on number of techniques executed</p>
                                 </div>
                                 <div class="card-body pb-0">
-
-
                                     {% for top_agent in top_active_agents %}
                                     <div class="d-flex">
                                         <div class="avatar">
@@ -336,12 +245,8 @@
                                             <h3 class="text-info fw-bold">{{top_agent.count}}</h3>
                                         </div>
                                     </div>
-
-
                                     <div class="separator-dashed"></div>
-
                                     {% endfor %}
-
                                 </div>
                             </div>
                         </div>
@@ -352,14 +257,12 @@
                                 </div>
                                 <div class="card-body">
                                     <ol class="activity-feed">
-
                                         {% for t in timeline %}
                                         <li class="feed-item feed-item-success">
-                                            <time class="date" >{{ t.executed.strftime("%d %b") }}</time>
+                                            <time class="date">{{ t.executed.strftime("%d %b") }}</time>
                                             <span class="text">{{ t.count }} technique(s) executed</span>
                                         </li>
                                         {% endfor %}
-                                        
                                     </ol>
                                 </div>
                             </div>
@@ -369,527 +272,299 @@
                                 <div class="card-header">
                                     <div class="card-title">Techniques Executed</div>
                                 </div>
-								<div class="card-body">
-									
-										<h3>
-										<span class="text-success fw-bold"> 20</span> out of <span class="text-success fw-bold"> {{ counts[2] }} </span>techniques
-									</h3>
-									
-								</div>
-							</div>
-
-                        <div class="card" >
-                            <div class="card-header">
-                                <div class="card-title">Technique Execution per Platform</div>
-                                
+                                <div class="card-body">
+                                    <h3>
+                                        <span class="text-success fw-bold"> 20</span> out of <span
+                                            class="text-success fw-bold"> {{ counts[2] }} </span>techniques
+                                    </h3>
+                                </div>
                             </div>
-                            <div class="card-body pb-0">
 
-
-                                
-                                <div class="d-flex">
-                                    <div class="avatar">
-                                        <i class="fab fa-windows" style="font-size: 2.5em;"></i>
-                                    </div>
-                                    <div class="flex-1 pt-1 ml-2">
-                                        <h6 class="fw-bold mb-1">Windows</h6>
-                                       
-                                    </div>
-                                    <div class="d-flex ml-auto align-items-center">
-                                        <h3 class="text-info fw-bold">{{ plat_exec.windows }}</h3>
-                                    </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Technique Execution per Platform</div>
                                 </div>
-                                <div class="separator-dashed"></div>
+                                <div class="card-body pb-0">
+                                    <div class="d-flex">
+                                        <div class="avatar">
+                                            <i class="fab fa-windows" style="font-size: 2.5em;"></i>
+                                        </div>
+                                        <div class="flex-1 pt-1 ml-2">
+                                            <h6 class="fw-bold mb-1">Windows</h6>
+                                        </div>
+                                        <div class="d-flex ml-auto align-items-center">
+                                            <h3 class="text-info fw-bold">{{ plat_exec.windows }}</h3>
+                                        </div>
+                                    </div>
+                                    <div class="separator-dashed"></div>
 
-                                <div class="d-flex">
-                                    <div class="avatar">
-                                        <i class="
+                                    <div class="d-flex">
+                                        <div class="avatar">
+                                            <i class="
                                         fab fa-linux" style="font-size: 2.5em;"></i>
+                                        </div>
+                                        <div class="flex-1 pt-1 ml-2">
+                                            <h6 class="fw-bold mb-1">Linux</h6>
+                                        </div>
+                                        <div class="d-flex ml-auto align-items-center">
+                                            <h3 class="text-info fw-bold">{{ plat_exec.linux }}</h3>
+                                        </div>
                                     </div>
-                                    <div class="flex-1 pt-1 ml-2">
-                                        <h6 class="fw-bold mb-1">Linux</h6>
-                                       
+                                    <div class="separator-dashed"></div>
+                                    <div class="d-flex">
+                                        <div class="avatar">
+                                            <i class="fab fa-apple" style="font-size: 2.5em;"></i>
+                                        </div>
+                                        <div class="flex-1 pt-1 ml-2">
+                                            <h6 class="fw-bold mb-1">MacOS</h6>
+                                        </div>
+                                        <div class="d-flex ml-auto align-items-center">
+                                            <h3 class="text-info fw-bold">{{ plat_exec.macos }}</h3>
+                                        </div>
                                     </div>
-                                    <div class="d-flex ml-auto align-items-center">
-                                        <h3 class="text-info fw-bold">{{ plat_exec.linux }}</h3>
-                                    </div>
+                                    <div class="separator-dashed"></div>
                                 </div>
-                                <div class="separator-dashed"></div>
-
-
-                                <div class="d-flex">
-                                    <div class="avatar">
-                                        <i class="fab fa-apple" style="font-size: 2.5em;"></i>
-                                    </div>
-                                    <div class="flex-1 pt-1 ml-2">
-                                        <h6 class="fw-bold mb-1">MacOS</h6>
-                                       
-                                    </div>
-                                    <div class="d-flex ml-auto align-items-center">
-                                        <h3 class="text-info fw-bold">{{ plat_exec.macos }}</h3>
-                                    </div>
-                                </div>
-
-
-                                <div class="separator-dashed"></div>
-
-                               
-
                             </div>
                         </div>
                     </div>
-
-
-
-
-
-
-
-
-
-
-                </div>
-
-
-
-
-
-                <!-- {% block content %}{% endblock %} -->
-
-
-            </div>
-
-
-
-        </div>
-        <footer class="footer">
-            <div class="container-fluid">
-                <nav class="pull-left">
-                    <ul class="nav">
-                        <!--                            <li class="nav-item">-->
-                        <!--                                <a class="nav-link" href="https://www.themekita.com">-->
-                        <!--                                    ThemeKita-->
-                        <!--                                </a>-->
-                        <!--                            </li>-->
-                        <!--                            <li class="nav-item">-->
-                        <!--                                <a class="nav-link" href="#">-->
-                        <!--                                    Help-->
-                        <!--                                </a>-->
-                        <!--                            </li>-->
-                        <!--                            <li class="nav-item">-->
-                        <!--                                <a class="nav-link" href="#">-->
-                        <!--                                    Licenses-->
-                        <!--                                </a>-->
-                        <!--                            </li>-->
-                    </ul>
-                </nav>
-                <div class="copyright ml-auto">
-                    Built with <a href="https://github.com/aio-libs/aiohttp">aiohttp</a> |
-                    Made with <i class="fa fa-heart heart text-danger"></i> by <a
-                        href="https://www.themekita.com">ThemeKita</a>
-
                 </div>
             </div>
-        </footer>
-    </div>
+            <footer class="footer">
+                <div class="container-fluid">
+                    <nav class="pull-left">
+                        <ul class="nav"></ul>
+                    </nav>
+                    <div class="copyright ml-auto"></div>
+                </div>
+            </footer>
 
-
-    <!-- Custom template | don't include it in your project! -->
-    <!--		<div class="custom-template">-->
-    <!--			<div class="title">Settings</div>-->
-    <!--			<div class="custom-content">-->
-    <!--				<div class="switcher">-->
-    <!--					<div class="switch-block">-->
-    <!--						<h4>Logo Header</h4>-->
-    <!--						<div class="btnSwitch">-->
-    <!--							<button type="button" class="changeLogoHeaderColor" data-color="dark"></button>-->
-    <!--							<button type="button" class="selected changeLogoHeaderColor" data-color="blue"></button>-->
-    <!--							<button type="button" class="changeLogoHeaderColor" data-color="purple"></button>-->
-    <!--							<button type="button" class="changeLogoHeaderColor" data-color="light-blue"></button>-->
-    <!--							<button type="button" class="changeLogoHeaderColor" data-color="green"></button>-->
-    <!--							<button type="button" class="changeLogoHeaderColor" data-color="orange"></button>-->
-    <!--							<button type="button" class="changeLogoHeaderColor" data-color="red"></button>-->
-    <!--							<button type="button" class="changeLogoHeaderColor" data-color="white"></button>-->
-    <!--							<br />-->
-    <!--							<button type="button" class="changeLogoHeaderColor" data-color="dark2"></button>-->
-    <!--							<button type="button" class="changeLogoHeaderColor" data-color="blue2"></button>-->
-    <!--							<button type="button" class="changeLogoHeaderColor" data-color="purple2"></button>-->
-    <!--							<button type="button" class="changeLogoHeaderColor" data-color="light-blue2"></button>-->
-    <!--							<button type="button" class="changeLogoHeaderColor" data-color="green2"></button>-->
-    <!--							<button type="button" class="changeLogoHeaderColor" data-color="orange2"></button>-->
-    <!--							<button type="button" class="changeLogoHeaderColor" data-color="red2"></button>-->
-    <!--						</div>-->
-    <!--					</div>-->
-    <!--					<div class="switch-block">-->
-    <!--						<h4>Navbar Header</h4>-->
-    <!--						<div class="btnSwitch">-->
-    <!--							<button type="button" class="changeTopBarColor" data-color="dark"></button>-->
-    <!--							<button type="button" class="changeTopBarColor" data-color="blue"></button>-->
-    <!--							<button type="button" class="changeTopBarColor" data-color="purple"></button>-->
-    <!--							<button type="button" class="changeTopBarColor" data-color="light-blue"></button>-->
-    <!--							<button type="button" class="changeTopBarColor" data-color="green"></button>-->
-    <!--							<button type="button" class="changeTopBarColor" data-color="orange"></button>-->
-    <!--							<button type="button" class="changeTopBarColor" data-color="red"></button>-->
-    <!--							<button type="button" class="changeTopBarColor" data-color="white"></button>-->
-    <!--							<br />-->
-    <!--							<button type="button" class="changeTopBarColor" data-color="dark2"></button>-->
-    <!--							<button type="button" class="selected changeTopBarColor" data-color="blue2"></button>-->
-    <!--							<button type="button" class="changeTopBarColor" data-color="purple2"></button>-->
-    <!--							<button type="button" class="changeTopBarColor" data-color="light-blue2"></button>-->
-    <!--							<button type="button" class="changeTopBarColor" data-color="green2"></button>-->
-    <!--							<button type="button" class="changeTopBarColor" data-color="orange2"></button>-->
-    <!--							<button type="button" class="changeTopBarColor" data-color="red2"></button>-->
-    <!--						</div>-->
-    <!--					</div>-->
-    <!--					<div class="switch-block">-->
-    <!--						<h4>Sidebar</h4>-->
-    <!--						<div class="btnSwitch">-->
-    <!--							<button type="button" class="selected changeSideBarColor" data-color="white"></button>-->
-    <!--							<button type="button" class="changeSideBarColor" data-color="dark"></button>-->
-    <!--							<button type="button" class="changeSideBarColor" data-color="dark2"></button>-->
-    <!--						</div>-->
-    <!--					</div>-->
-    <!--					<div class="switch-block">-->
-    <!--						<h4>Background</h4>-->
-    <!--						<div class="btnSwitch">-->
-    <!--							<button type="button" class="changeBackgroundColor" data-color="bg2"></button>-->
-    <!--							<button type="button" class="changeBackgroundColor selected" data-color="bg1"></button>-->
-    <!--							<button type="button" class="changeBackgroundColor" data-color="bg3"></button>-->
-    <!--							<button type="button" class="changeBackgroundColor" data-color="dark"></button>-->
-    <!--						</div>-->
-    <!--					</div>-->
-    <!--				</div>-->
-    <!--			</div>-->
-    <!--			<div class="custom-toggle">-->
-    <!--				<i class="flaticon-settings"></i>-->
-    <!--			</div>-->
-    <!--		</div>-->
-    <!-- End Custom template -->
-    </div>
-
-
-    <!--   Core JS Files   -->
-    <script src="/static/js/core/jquery.3.2.1.min.js?v=hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4%3D"></script>
-    <script src="/static/js/core/popper.min.js?v=JjkbVCqolMR6n0Aba76nsbS0Qc2hpLbUwwhuLohbZcg%3D"></script>
+            <!--   Core JS Files   -->
+            <script src="/static/js/core/jquery.3.2.1.min.js?v=hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4%3D"></script>
+            <script src="/static/js/core/popper.min.js?v=JjkbVCqolMR6n0Aba76nsbS0Qc2hpLbUwwhuLohbZcg%3D"></script>
     <script src="/static/js/core/bootstrap.min.js?v=5-02zu5UULQkO7w1GIr6vftCgMfFdZcAHeDtFnKZsBs%3D"></script>
 
+            <!-- jQuery UI -->
+            <script
+                    src="/static/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js?v=KZyMuNJB1Uv-_00w0GOueV9CboVXZh8BEIaM58Z4F8g%3D"></script>
+            <script
+                    src="/static/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js?v=F8rcoZj02Vst0w9W-sBE5OCzYqw8T1ns1KNU4FZF0Uc%3D"></script>
 
-    <!-- jQuery UI -->
-    <script
-        src="/static/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js?v=KZyMuNJB1Uv-_00w0GOueV9CboVXZh8BEIaM58Z4F8g%3D"></script>
-    <script
-        src="/static/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js?v=F8rcoZj02Vst0w9W-sBE5OCzYqw8T1ns1KNU4FZF0Uc%3D"></script>
+            <!-- Chart JS -->
+            <script
+                    src="/static/js/plugin/chart.js/chart.min.js?v=wB6PNUVKf5LtEoybIRpB07SwDpFsqu1YvxYW8Z6aA4o%3D"></script>
 
+            <!-- Chart Circle -->
+            <script
+                    src="/static/js/plugin/chart-circle/circles.min.js?v=f0tEwPlUrJETusmrvQlPN96nmpMg-wiLsJEGCqMUtZg%3D"></script>
 
-    <!-- jQuery Scrollbar -->
-    <script
-        src="/static/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js?v=yG90Y9wYISPhWT1qW_rsBRv7xsqzlzMPwvIEinH9eRo%3D"></script>
+            <!-- Atlantis JS -->
+            <script src="/static/js/atlantis.min.js?v=g1nQSzePmnrvtuAad_HG2id0QfW6-nODQQiwm6hyqfk%3D"></script>
+            <script>
+                $(document).ready(function () {
+                    var htmlLegendsChart = document.getElementById('htmlLegendsChart').getContext('2d');
+                    // Chart with HTML Legends
+                    var gradientStroke = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
+                    gradientStroke.addColorStop(0, '#177dff');
+                    gradientStroke.addColorStop(1, '#80b6f4');
 
+                    var gradientFill = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
+                    gradientFill.addColorStop(0, "rgba(23, 125, 255, 0.7)");
+                    gradientFill.addColorStop(1, "rgba(128, 182, 244, 0.3)");
 
-    <!-- Chart JS -->
-    <script src="/static/js/plugin/chart.js/chart.min.js?v=wB6PNUVKf5LtEoybIRpB07SwDpFsqu1YvxYW8Z6aA4o%3D"></script>
+                    var gradientStroke2 = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
+                    gradientStroke2.addColorStop(0, '#f3545d');
+                    gradientStroke2.addColorStop(1, '#ff8990');
 
+                    var gradientFill2 = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
+                    gradientFill2.addColorStop(0, "rgba(243, 84, 93, 0.7)");
+                    gradientFill2.addColorStop(1, "rgba(255, 137, 144, 0.3)");
 
-    <!-- jQuery Sparkline -->
-    <script
-        src="/static/js/plugin/jquery.sparkline/jquery.sparkline.min.js?v=BuAkLaFyq4WYXbN3TFSsG1M5GltEeFehAMURi4KBpUM%3D"></script>
+                    var gradientStroke3 = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
+                    gradientStroke3.addColorStop(0, '#fdaf4b');
+                    gradientStroke3.addColorStop(1, '#ffc478');
 
+                    var gradientFill3 = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
+                    gradientFill3.addColorStop(0, "rgba(253, 175, 75, 0.7)");
+                    gradientFill3.addColorStop(1, "rgba(255, 196, 120, 0.3)");
 
-    <!-- Chart Circle -->
-    <script
-        src="/static/js/plugin/chart-circle/circles.min.js?v=f0tEwPlUrJETusmrvQlPN96nmpMg-wiLsJEGCqMUtZg%3D"></script>
-
-
-    <!-- Datatables -->
-    <script
-        src="/static/js/plugin/datatables/datatables.min.js?v=qDR-LgAvHkIAv3FesIgtiuoJ4E-Nqi74WL09ZDclYOY%3D"></script>
-
-
-    <!-- Bootstrap Notify -->
-    <script
-        src="/static/js/plugin/bootstrap-notify/bootstrap-notify.min.js?v=381ETYNQPu16sjp0JZ1jjqShakixVTnklNuRKUd_qbk%3D"></script>
-
-
-    <!-- jQuery Vector Maps -->
-    <script src="/static/js/plugin/jqvmap/jquery.vmap.min.js?v=a1ehOsZTADR0Lrfb51B8cuneDsol_VwaVj7qIWwTCAE%3D"></script>
-    <script
-        src="/static/js/plugin/jqvmap/maps/jquery.vmap.world.js?v=gSvZVL_Ip1QHp-3bhHaWb-sNa3I6IcSTah6icCofum4%3D"></script>
-
-
-    <!-- Sweet Alert -->
-    <script
-        src="/static/js/plugin/sweetalert/sweetalert.min.js?v=FSEeC-c0OJh-0FI23EzpCWL3xGRSQnNkRGV2UF5maXs%3D"></script>
-
-
-    <!-- Atlantis JS -->
-    <script src="/static/js/atlantis.min.js?v=g1nQSzePmnrvtuAad_HG2id0QfW6-nODQQiwm6hyqfk%3D"></script>
-
-
-  
-
-
-    <div id="pDebug">
-        <div style="display: block; " id="pDebugToolbarHandle">
-            <a title="Show Toolbar" id="pShowToolBarButton" href="/_debugtoolbar/32313033303037323431343430"
-                target="pDebugToolbar">«
-                FIXME: Debug Toolbar</a>
-        </div>
-    </div>
-
-
-    <script src="http://localhost:8001/livereload.js"></script>
-    <div
-        style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
-        <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
-        </div>
-    </div>
-
-    <script>
-
-        $(document).ready(function () {
-            var htmlLegendsChart = document.getElementById('htmlLegendsChart').getContext('2d');
-
-            // Chart with HTML Legends
-
-            var gradientStroke = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
-            gradientStroke.addColorStop(0, '#177dff');
-            gradientStroke.addColorStop(1, '#80b6f4');
-
-            var gradientFill = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
-            gradientFill.addColorStop(0, "rgba(23, 125, 255, 0.7)");
-            gradientFill.addColorStop(1, "rgba(128, 182, 244, 0.3)");
-
-            var gradientStroke2 = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
-            gradientStroke2.addColorStop(0, '#f3545d');
-            gradientStroke2.addColorStop(1, '#ff8990');
-
-            var gradientFill2 = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
-            gradientFill2.addColorStop(0, "rgba(243, 84, 93, 0.7)");
-            gradientFill2.addColorStop(1, "rgba(255, 137, 144, 0.3)");
-
-            var gradientStroke3 = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
-            gradientStroke3.addColorStop(0, '#fdaf4b');
-            gradientStroke3.addColorStop(1, '#ffc478');
-
-            var gradientFill3 = htmlLegendsChart.createLinearGradient(500, 0, 100, 0);
-            gradientFill3.addColorStop(0, "rgba(253, 175, 75, 0.7)");
-            gradientFill3.addColorStop(1, "rgba(255, 196, 120, 0.3)");
-
-            var myHtmlLegendsChart = new Chart(htmlLegendsChart, {
-                type: 'line',
-                data: {
-                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                    datasets: [{
-                        label: "Campaigns",
-                        borderColor: gradientStroke2,
-                        pointBackgroundColor: gradientStroke2,
+                    var myHtmlLegendsChart = new Chart(htmlLegendsChart, {
+                        type: 'line',
+                        data: {
+                            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                            datasets: [{
+                                label: "Adversaries",
+                                borderColor: gradientStroke2,
+                                pointBackgroundColor: gradientStroke2,
+                                pointRadius: 0,
+                                backgroundColor: gradientFill2,
+                                legendColor: '#f3545d',
+                                fill: true,
+                                borderWidth: 1,
+                                data: [{% for m in graph[0] -%}
+                                            {{ m }},
+                                        {%- endfor %}]
+                }, {
+                        label: "Agents",
+                        borderColor: gradientStroke3,
+                        pointBackgroundColor: gradientStroke3,
                         pointRadius: 0,
-                        backgroundColor: gradientFill2,
-                        legendColor: '#f3545d',
+                        backgroundColor: gradientFill3,
+                        legendColor: '#fdaf4b',
                         fill: true,
                         borderWidth: 1,
-                        data: [
-                            {% for m in graph[0] %}
-
-                        {{ m }},
-{% endfor %}
-                        ]
-                    // data: [154, 184, 175, 203, 210, 231, 240, 278, 252, 312, 320, 374]
-                }, {
-                label: "Agents",
-                borderColor: gradientStroke3,
-                pointBackgroundColor: gradientStroke3,
-                pointRadius: 0,
-                backgroundColor: gradientFill3,
-                legendColor: '#fdaf4b',
-                fill: true,
-                borderWidth: 1,
-                data: [
-                    {% for n in graph[1] %}
-
+                        data: [{% for n in graph[1] -%}
                         {{ n }},
-            {% endfor %}
-                    ]
+                    {%- endfor %} ]
+                   
                 }, {
-                label: "Techniques Executed",
-                borderColor: gradientStroke,
-                pointBackgroundColor: gradientStroke,
-                pointRadius: 0,
-                backgroundColor: gradientFill,
-                legendColor: '#177dff',
-                fill: true,
-                borderWidth: 1,
-                data: [
-                    {% for y in graph[2] %}
+                        label: "Techniques Executed",
+                        borderColor: gradientStroke,
+                        pointBackgroundColor: gradientStroke,
+                        pointRadius: 0,
+                        backgroundColor: gradientFill,
+                        legendColor: '#177dff',
+                        fill: true,
+                        borderWidth: 1,
+                        data: [{% for y in graph[2] -%}
                         {{ y }},
-            {% endfor %}
-                        ]
+                    {%- endfor %}]
+                        
                 }]
             },
-            options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            legend: {
-                display: false
-            },
-            tooltips: {
-                bodySpacing: 4,
-                mode: "nearest",
-                intersect: 0,
-                position: "nearest",
-                xPadding: 10,
-                yPadding: 10,
-                caretPadding: 10
-            },
-            layout: {
-                padding: { left: 15, right: 15, top: 15, bottom: 15 }
-            },
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        fontColor: "rgba(141,148,152,0.5)",
-                        // fontColor: "rgba(0,0,0,0.5)",
-                        fontStyle: "500",
-                        beginAtZero: false,
-                        maxTicksLimit: 5,
-                        padding: 20
-                    },
-                    gridLines: {
-                        drawTicks: false,
+                    options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    legend: {
                         display: false
-                    }
-                }],
-                xAxes: [{
-                    gridLines: {
-                        zeroLineColor: "transparent"
                     },
-                    ticks: {
-                        padding: 20,
-                        fontColor: "rgba(141,148,152,0.5)",
-                        fontStyle: "500"
+                    tooltips: {
+                        bodySpacing: 4,
+                        mode: "nearest",
+                        intersect: 0,
+                        position: "nearest",
+                        xPadding: 10,
+                        yPadding: 10,
+                        caretPadding: 10
+                    },
+                    layout: {
+                        padding: { left: 15, right: 15, top: 15, bottom: 15 }
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                fontColor: "rgba(141,148,152,0.5)",
+                                // fontColor: "rgba(0,0,0,0.5)",
+                                fontStyle: "500",
+                                beginAtZero: false,
+                                maxTicksLimit: 5,
+                                padding: 20
+                            },
+                            gridLines: {
+                                drawTicks: false,
+                                display: false
+                            }
+                        }],
+                        xAxes: [{
+                            gridLines: {
+                                zeroLineColor: "transparent"
+                            },
+                            ticks: {
+                                padding: 20,
+                                fontColor: "rgba(141,148,152,0.5)",
+                                fontStyle: "500"
+                            }
+                        }]
+                    },
+                    legendCallback: function (chart) {
+                        var text = [];
+                        text.push('<ul class="' + chart.id + '-legend html-legend">');
+                        for (var i = 0; i < chart.data.datasets.length; i++) {
+                            text.push('<li><span style="background-color:' + chart.data.datasets[i].legendColor + '"></span>');
+                            if (chart.data.datasets[i].label) {
+                                text.push(chart.data.datasets[i].label);
+                            }
+                            text.push('</li>');
+                        }
+                        text.push('</ul>');
+                        return text.join('');
                     }
-                }]
-            },
-            legendCallback: function (chart) {
-                var text = [];
-                text.push('<ul class="' + chart.id + '-legend html-legend">');
-                for (var i = 0; i < chart.data.datasets.length; i++) {
-                    text.push('<li><span style="background-color:' + chart.data.datasets[i].legendColor + '"></span>');
-                    if (chart.data.datasets[i].label) {
-                        text.push(chart.data.datasets[i].label);
-                    }
-                    text.push('</li>');
                 }
-                text.push('</ul>');
-                return text.join('');
-            }
-        }
         });
 
-        var myLegendContainer = document.getElementById("myChartLegend");
+                var myLegendContainer = document.getElementById("myChartLegend");
+                // generate HTML legend
+                myLegendContainer.innerHTML = myHtmlLegendsChart.generateLegend();
+                // bind onClick event to all LI-tags of the legend
+                var legendItems = myLegendContainer.getElementsByTagName('li');
+                for (var i = 0; i < legendItems.length; i += 1) {
+                    legendItems[i].addEventListener("click", legendClickCallback, false);
+                }
 
-        // generate HTML legend
-        myLegendContainer.innerHTML = myHtmlLegendsChart.generateLegend();
-
-        // bind onClick event to all LI-tags of the legend
-        var legendItems = myLegendContainer.getElementsByTagName('li');
-        for (var i = 0; i < legendItems.length; i += 1) {
-            legendItems[i].addEventListener("click", legendClickCallback, false);
-        }
-
-
-
-        // Tasks Completed
-        Circles.create({
-            id: 'task-complete',
-            radius: 50,
-            value: {{ counts[4] }},
-            maxValue: 100,
-            width: 7,
-            text: function (value) { return value + '%'; },
-            colors: ['#eee', '#177dff'],
-            duration: 400,
-            wrpClass: 'circles-wrp',
-            textClass: 'circles-text',
-            styleWrapper: true,
-            styleText: true
+                // Tasks Completed
+                Circles.create({
+                    id: 'task-complete',
+                    radius: 50,
+                    value: {{ counts[4] }},
+                    maxValue: 100,
+                    width: 7,
+                    text: function (value) { return value + '%'; },
+                    colors: ['#eee', '#177dff'],
+                    duration: 400,
+                    wrpClass: 'circles-wrp',
+                    textClass: 'circles-text',
+                    styleWrapper: true,
+                    styleText: true
         });
 
-
-
-
-
-
-
-
-        var techStats = document.getElementById('tech-stats').getContext('2d');
-        var myDailySalesChart = new Chart(techStats, {
-            type: 'line',
-            data: {
-                labels: [
-                    {% for day in weekly %}
+                var techStats = document.getElementById('tech-stats').getContext('2d');
+                var myDailySalesChart = new Chart(techStats, {
+                    type: 'line',
+                    data: {
+                        labels: [ {% for day in weekly -%}
+                           
             "{{ day.date }}",
+            {%- endfor %}],
 
-            {% endfor %}
-
-
-
-        ],
-        datasets: [{
-            label: "Techniques Executed", fill: !0, backgroundColor: "rgba(255,255,255,0.2)", borderColor: "#fff", borderCapStyle: "butt", borderDash: [], borderDashOffset: 0, pointBorderColor: "#fff", pointBackgroundColor: "#fff", pointBorderWidth: 1, pointHoverRadius: 5, pointHoverBackgroundColor: "#fff", pointHoverBorderColor: "#fff", pointHoverBorderWidth: 1, pointRadius: 1, pointHitRadius: 5,
-            data: [
-                {% for data in weekly %}
-            "{{ data.count }}",
-
-        {% endfor %}
-        ]
+        
+                datasets: [{
+                    label: "Techniques Executed", fill: !0, backgroundColor: "rgba(255,255,255,0.2)", borderColor: "#fff", borderCapStyle: "butt", borderDash: [], borderDashOffset: 0, pointBorderColor: "#fff", pointBackgroundColor: "#fff", pointBorderWidth: 1, pointHoverRadius: 5, pointHoverBackgroundColor: "#fff", pointHoverBorderColor: "#fff", pointHoverBorderWidth: 1, pointRadius: 1, pointHitRadius: 5,
+                    data: [{% for data in weekly -%}
+                         "{{ data.count }}",
+                {%- endfor %}]
+                
 		}]
 	},
-        options: {
-            maintainAspectRatio: !1, legend: {
-                display: !1
-            }
+                options: {
+                    maintainAspectRatio: !1, legend: {
+                        display: !1
+                    }
 		, animation: {
-                easing: "easeInOutBack"
-            }
+                        easing: "easeInOutBack"
+                    }
 		, scales: {
-                yAxes: [{
-                    display: !1, ticks: {
-                        fontColor: "rgba(0,0,0,0.5)", fontStyle: "bold", beginAtZero: !0, maxTicksLimit: 10, padding: 0
-                    }
-                    , gridLines: {
-                        drawTicks: !1, display: !1
+                        yAxes: [{
+                            display: !1, ticks: {
+                                fontColor: "rgba(0,0,0,0.5)", fontStyle: "bold", beginAtZero: !0, maxTicksLimit: 10, padding: 0
+                            }
+                            , gridLines: {
+                                drawTicks: !1, display: !1
+                            }
+                        }
+                        ], xAxes: [{
+                            display: !1, gridLines: {
+                                zeroLineColor: "transparent"
+                            }
+                            , ticks: {
+                                padding: -20, fontColor: "rgba(255,255,255,0.2)", fontStyle: "bold"
+                            }
+                        }
+                        ]
                     }
                 }
-                ], xAxes: [{
-                    display: !1, gridLines: {
-                        zeroLineColor: "transparent"
-                    }
-                    , ticks: {
-                        padding: -20, fontColor: "rgba(255,255,255,0.2)", fontStyle: "bold"
-                    }
-                }
-                ]
-            }
-        }
 });
-
-
-
-
-
-
         });
 
-
-    </script>
-
-
-
-
-
-
-
+            </script>
 </body>
 
 </html>

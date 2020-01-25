@@ -1,10 +1,8 @@
 {% extends 'base.html' %}
-
 {% block content %}
 
 <!-- Padding Top -->
 <div style="margin-top: 4%;"></div>
-
 <!-- Modal for deleting Output -->
 <div class="modal fade" id="deleteOutputModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true" style="color: #575962;">
@@ -56,9 +54,8 @@
                 <div class="card-head-row">
                     <h4 class="card-title">Agent Details</h4>
                 </div>
-                <!--                <p class="card-category">Details</p>-->
                 <p class="card-category">Name: {{ agent.name }}</p>
-                <p class="card-category">Campaign: {{ agent.campaign }}</p>
+                <p class="card-category">Adversary: {{ agent.adversary }}</p>
                 <p class="card-category">Platform:
                     {% if agent.platform == 'windows' %}
                     Windows
@@ -81,7 +78,6 @@
                         <table id="agentDetails" class="table display text-center" width="100%">
                             <thead class="font-weight-bold">
                                 <tr>
-                                    <!--                                <td>Technique</td>-->
                                     <td>Output</td>
                                     <td>Result</td>
                                     <td>Executed</td>
@@ -92,7 +88,6 @@
                             <tbody>
                                 {% for detail in details %}
                                 <tr style="padding-top:1%">
-                                    <!--                                <td>{{ detail.name }}</td>-->
                                     <td style="width: 60%;">
                                         <div class="accordion accordion-default">
                                             <div class="card">
@@ -111,9 +106,6 @@
 
                                                 <div id="{{ detail.name }}{{ detail.test_num }}" class="collapse"
                                                     aria-labelledby="headingOne" data-parent="#accordion">
-
-
-
                                                     {% if detail.output %}
                                                     <div class="card-body text-left">
                                                         {{ detail.output.replace('\r\n', '<br>') | safe }}
@@ -126,12 +118,10 @@
                                                 </div>
                                             </div>
                                         </div>
-
                     </div>
                     </td>
                     <td style="vertical-align: top!important;">
                         {% if detail.result == True %}
-
                         <i class="fas fa-check-circle text-success result" style="font-size: 1.6em; margin-top: 0.5em;"></i>
                         {% elif detail.result == None %}
                         <i class="fas fa-question-circle text-primary result" style="font-size: 1.6em; margin-top: 0.5em;"></i>
@@ -144,7 +134,6 @@
                         <div class="executed-date">
                             {{ detail.executed.strftime("%d-%b-%Y %H:%M:%S") }}
                         </div>
-                        
                         {% else %}
                         <div class="executed-date">
                             None
@@ -152,7 +141,6 @@
                         {% endif %}
                     </td>
                     <td style="vertical-align: top!important;" class="text-right">
-                        <!-- <div> -->
                         {% if detail.output %}
                         <button type="button" class="btn btn-link btn-danger js-delete-output" data-toggle="modal"
                             data-target="#deleteOutputModal" data-tech-id="{{ detail.tech_id }}"
@@ -161,83 +149,51 @@
                                 style="font-size: 1.5em;"> </i>
                         </button>
                         {% endif %}
-
-
                         <button type="button" class="btn btn-link btn-danger js-delete-assignment" data-toggle="modal"
                             data-target="#deleteAssignmentModal" data-tech-id="{{ detail.tech_id }}"
                             data-test-num="{{ detail.test_num }}">
-
                             <i class="fas fa-times-circle" data-toggle="tooltip" title="Delete Assignment!"
                                 style="font-size: 1.5em;"> </i>
-
-
-
                         </button>
-                        <!-- </div> -->
                     </td>
-
                     </tr>
                     {% endfor %}
                     </tbody>
                     </table>
                 </div>
-
-
         </div>
-
         </form>
     </div>
 </div>
 </div>
-
 <script src="/static/js/core/jquery.3.2.1.min.js?v=hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4%3D"></script>
-
 <script>
     $(document).ready(function () {
         $("#agentDetails").DataTable();
-
         // Delete Output
         $("#agentDetails .js-delete-output").on("click", function () {
             var btn = $(this);
             var tech_id = btn.attr("data-tech-id");
             var test_num = btn.attr("data-test-num");
-
-
             $("#deleteOutput").click(function () {
-
                 var agent_id = $('#agent_id').val();
                 $.post("http://localhost:8000/delete_tech_output", { 'tech_id': tech_id, 'agent_id': agent_id, 'test_num': test_num },
                     function (data, status) {
-                        
                         if(status == 'success'){
                             if(data == 'deleted'){
-
                             var table_row = btn.parents('tr');
                             var output = table_row.find('.card-body');
                             output[0].innerHTML = 'Awaiting execution';
                             output.removeClass("text-left");
                             output.addClass("text-center");
-
                             // Changing replace icon
                             table_row.find('.result').replaceWith('<i class="fas fa-question-circle text-primary result" style="font-size: 1.6em; margin-top: 0.5em;"></i>')
-
                             // Changing executed date
                             table_row.find('.executed-date').replaceWith('None')
-                            
-
-
                             }
                         }
                     });
-
-
                 $('#deleteOutputModal').modal('hide');
-
-
-                // Try to force reload
-                // location.reload(true);
-                // window.location.assign("http://localhost:8000/campaigns/");
-
             });
         });
 
@@ -246,36 +202,19 @@
             var btn = $(this);
             var tech_id = btn.attr("data-tech-id");
             var test_num = btn.attr("data-test-num");
-
-
             $("#deleteAssignment").click(function () {
-
-
                 var agent_id = $('#agent_id').val();
                 $.post("http://localhost:8000/delete_tech_assignment", { 'tech_id': tech_id, 'agent_id': agent_id, 'test_num': test_num },
                 function (data, status) {
-                        
                         if(status == 'success'){
                             if(data == 'deleted'){
                                 btn.parents('tr').remove();
                             }
                         }
                     });
-
-
                 $('#deleteAssignmentModal').modal('hide');
-
-
-                // Try to force reload
-                // location.reload(true);
-                // window.location.assign("http://localhost:8000/campaigns/");
-
             });
         });
-
     });
-
-
 </script>
-
 {% endblock %}

@@ -2,9 +2,9 @@ import datetime
 import uuid
 
 import bcrypt
-from playhouse.migrate import *
 # noinspection PyUnresolvedReferences
-from art.run_atomics import get_all_techniques
+from art.run_atomics import techniques_for_db
+from playhouse.migrate import *
 
 db = SqliteDatabase('db/adversary.db', pragmas={'foreign_keys': 1})
 
@@ -14,7 +14,7 @@ class BaseModel(Model):
         database = db
 
 
-class Campaign(BaseModel):
+class Adversary(BaseModel):
     name = CharField(unique=True)
     created_date = DateTimeField(default=datetime.datetime.now)
     updated_date = DateTimeField(default=datetime.datetime.now)
@@ -29,14 +29,14 @@ class Agent(BaseModel):
     plat_version = CharField(max_length=20, null=True)
     domain = CharField(max_length=20, null=True)
     initial_contact = DateTimeField(default=datetime.datetime.now, null=True)
+    kill_date = DateTimeField(null=True)
     last_contact = DateTimeField(default=datetime.datetime.now, null=True)
-    campaign = ForeignKeyField(Campaign, backref='agents', null=True)
+    adversary = ForeignKeyField(Adversary, backref='agents', null=True)
 
 
 class Technique(BaseModel):
     id = IntegerField(primary_key=True)
     name = CharField(max_length=30)
-    parameters = CharField(max_length=30, null=True)
 
 
 class AgentTechnique(BaseModel):
@@ -72,7 +72,7 @@ class Parameter(BaseModel):
 
 
 class User(BaseModel):
-    id = UUIDField(primary_key=True)
+    id = UUIDField(primary_key=True, default=uuid.uuid4())
     fname = CharField(max_length=25)
     lname = CharField(max_length=255)
     email = CharField(unique=True, index=True)
@@ -80,6 +80,7 @@ class User(BaseModel):
     is_superuser = BooleanField(default=False)
     disabled = BooleanField(default=False)
     reset_pass = BooleanField(default=False)
+    lockout_count = IntegerField(default=0)
 
 
 class Permissions(BaseModel):
@@ -102,22 +103,22 @@ def migrate():
     # db.create_tables([Parameter])
     # db.create_tables([TacticTechnique])
 
-    # db.drop_tables([Campaign, Agent, Technique, AgentTechnique, Tactic, TacticTechnique])
-    # db.create_tables([Campaign, Agent, Technique, AgentTechnique, Tactic, TacticTechnique])
+    # db.drop_tables([Adversary, Agent, Technique, AgentTechnique, Tactic, TacticTechnique])
+    # db.create_tables([Adversary, Agent, Technique, AgentTechnique, Tactic, TacticTechnique])
 
-    # camp = Campaign(name='Fin7', created_date=datetime.datetime.now, updated_date=datetime.datetime.now)
+    # camp = Adversary(name='Fin7', created_date=datetime.datetime.now, updated_date=datetime.datetime.now)
     # camp.save()
 
-    # Campaign.create(name='Fin7')
-    # Campaign.create(name='Cobalt')
+    # Adversary.create(name='Fin7')
+    # Adversary.create(name='Cobalt')
 
     # Agent.create(id=5, name='Hunter', os_name='Windows 10', os_version='10.4.5', product_id='5FF',
-    #              domain='home.local', campaign=Campaign.get_by_id(1))
+    #              domain='home.local', adversary=Adversary.get_by_id(1))
 
     # Agent.create(id=5, name='Hunter', os_name='Windows 10', os_version='10.4.5', product_id='5FF',
-    #              domain='home.local', campaign=Campaign.get(Campaign.name == 'Fin7'))
+    #              domain='home.local', adversary=Adversary.get(Adversary.name == 'Fin7'))
     # Agent.create(id=4, name='Sniffer', os_name='Windows 7', os_version='7.3.4', product_id='6KKL', domain='work.com',
-    #              campaign=Campaign.get(Campaign.name == 'Cobalt'))
+    #              adversary=Adversary.get(Adversary.name == 'Cobalt'))
     #
     # Technique.create(id=1057, name='Process Discovery')
     # Technique.create(id=1124, name='System Time Discovery')
@@ -217,10 +218,11 @@ if __name__ == '__main__':
     # ]
     # User.insert_many(data_source).execute()
 
-    # user = User.get(User.fname == 'Admin')
-    # print(user.reset_pass)
-
-    q = AgentTechnique.delete() \
-        .where((AgentTechnique.agent_id == 5) & (AgentTechnique.technique_id == 1082)
-               & (AgentTechnique.test_num == 0))
-    print(q)
+    # tech_table = techniques_for_db()
+    # for t in tech_table:
+    #     try:
+    #         tech = Technique.get(Technique.id == t['id'])
+    #         # print(tech.name)
+    #     except Technique.DoesNotExist:
+    #         Technique.create(id=t['id'], name=t['name'])
+    #         pass

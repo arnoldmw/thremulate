@@ -1,12 +1,7 @@
 {% extends 'base.html' %}
-
 {% block content %}
-
-
 <!-- Padding Top -->
 <div style="margin-top: 4%;"></div>
-
-
 <div class="row row-card-no-pd">
     <div class="col-md-12">
         <div class="card">
@@ -14,23 +9,17 @@
                 <div class="card-head-row">
                     <h4 class="card-title">Users</h4>
                 </div>
-				<p class="card-category">
-                   All Users</p>
-
+                <p class="card-category">
+                    All Users</p>
             </div>
             <div class="card-body">
-
                 <!-- Button -->
                 <div class="d-flex">
                     <button id="add-user" class="btn btn-primary btn-round ml-auto mb-3">
                         <i class="fas fa-user-plus"></i>
-                        <!-- <i class="fa fa-plus"></i> -->
                         Add User
                     </button>
                 </div>
-
-
-
                 <!-- Modal for deleting-->
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalLabel" aria-hidden="true" style="color: #575962;">
@@ -53,11 +42,10 @@
                     </div>
                 </div>
 
-
                 <!-- Table -->
                 <div class="table-responsive">
-                    <table id="users" class="table display  table-striped table-hover cell-border text-center" cellspacing="0"
-                        width="100%">
+                    <table id="users" class="table display  table-striped table-hover cell-border text-center"
+                           cellspacing="0" width="100%">
                         <thead class="font-weight-bold">
                             <tr>
                                 <td>#</td>
@@ -66,7 +54,6 @@
                                 <td>Email</td>
                                 <td>Disabled</td>
                                 <td>Admin</td>
-
                                 <td style="width: 10%">Action</td>
                             </tr>
                         </thead>
@@ -79,39 +66,26 @@
                                 <td>{{ user.email }}</td>
                                 <td>{{ user.disabled }}</td>
                                 <td>{{ user.superuser }}</td>
-
                                 <td>
                                     <div class="form-button-action">
-
                                         <button type="button" data-toggle="modal"
                                             class="btn btn-link btn-primary btn-lg js-edit"
                                             data-original-title="Edit Task" data-user-id="{{ user.id }}" data-target="">
                                             <i class="fas fa-user-edit" data-toggle="tooltip" title="Update User"></i>
-
                                             </i>
                                         </button>
-
                                         <button type="button" class="btn btn-link btn-primary js-password"
                                             data-user-id="{{ user.id }}">
                                             <i class="fas fa-key" data-toggle="tooltip" title="Change Password"> </i>
-                                            <!-- <i class="fa fa-lock" data-toggle="tooltip" title="Change Password"> </i> -->
                                         </button>
-
                                         <button type="button" class="btn btn-link btn-danger js-delete"
                                             data-toggle="modal" data-target="#exampleModal" data-original-title="Assign"
                                             data-user-id="{{ user.id }}">
-                                            <!-- <i class="la flaticon-remove-user" data-toggle="tooltip" title="Remove User!"> </i> -->
-                                            <i class="fas fa-user-times" data-toggle="tooltip" title="Remove User!"> </i>
+                                            <i class="fas fa-user-times" data-toggle="tooltip" title="Remove User!">
+                                            </i>
                                         </button>
-
-
-
-
-
                                     </div>
                                 </td>
-
-
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -130,61 +104,33 @@
 
         $("#users").DataTable();
 
-
         // Delete user
         $("#users .js-delete").on("click", function () {
             var cid = $(this).attr("data-user-id");
-
-
             $("#deleteUser").click(function () {
-
-
-
-                $.get("http://localhost:8000/user_delete/"+ cid );
-
-
+                $.get("http://localhost:8000/user_delete/" + cid);
                 $('#exampleModal').modal('hide');
-
-
-                // Try to force reload
+                // Reload page
                 location.reload(true);
-
             });
-
-
         });
-
 
         // Update user
         $("#users .js-edit").on("click", function () {
             var cid = $(this).attr("data-user-id");
-
-            window.location.assign("http://localhost:8000/user_edit/" + cid);
-
+            window.location.assign("http://localhost:8000/admin_user_edit/" + cid);
         });
-       
+
         // Change user password
         $("#users .js-password").on("click", function () {
             var cid = $(this).attr("data-user-id");
-
             window.location.assign("http://localhost:8000/reset_password/" + cid);
-
         });
-        
+
         // Add new user
         $("#add-user").on("click", function () {
-
             window.location.assign("http://localhost:8000/register");
-
         });
-
-
-
-
     });
-
 </script>
-
-
-
 {% endblock %}

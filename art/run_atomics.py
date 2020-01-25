@@ -1,5 +1,6 @@
 # noinspection PyUnresolvedReferences
 # from runner import AtomicRunner
+
 from .runner import AtomicRunner
 
 matrix = {'persistence': [1156, 1015, 1182, 1103, 1138, 1131, 1067, 1176, 1042, 1136, 1038,
@@ -171,62 +172,6 @@ def get_techniques_details():
     return tech_list
 
 
-def assign():
-    executor = AtomicRunner()
-
-    tech = executor.techniques
-
-    print('---------------------------------------------')
-    for key in tech.keys():
-        print(tech[key]['attack_technique'])
-        print(tech[key]['display_name'])
-        print('---------------------------------------------')
-        for at in tech[key]['atomic_tests']:
-            # print(at)
-            # platforms = tech[key]['atomic_tests'][0]['supported_platforms']
-            platforms = at['supported_platforms']
-
-            if 'input_arguments' in at.keys():
-                params = at['input_arguments']
-                # default_param = at['input_arguments']
-
-                for p in params.keys():
-                    default_params = params[p]['default']
-                    print('Parameter: ' + p)
-                    print('Default parameter value: ' + default_params)
-
-            launcher_name = at['executor']['name']
-            elevation_required = at['executor']['elevation_required']
-            default_command = at['executor']['command']
-
-            print(platforms)
-            print('Launcher Name: ' + launcher_name)
-            print('Administrator: ' + str(elevation_required))
-
-            launcher = ''
-
-            if launcher_name == 'command_prompt':
-                launcher = 'C:\\Windows\\System32\\cmd.exe /C '
-
-            if launcher_name == 'powershell':
-                launcher = 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe '
-
-            for com in default_command.split('\n'):
-                if com == "":
-                    continue
-
-                print('Execute: ' + launcher + com)
-
-            print('---------------------------------------------')
-
-    # # def execute(self, technique_name, position=0, parameters=None):
-    # executor.execute("T1124")
-    # # executor.execute("T1124", 0, {'computer_name': 'arnpc'})
-    # command = executor.command
-    # launcher = executor.launcher
-    #
-
-
 def get_commands(list_of_techs):
     executor = AtomicRunner()
 
@@ -290,24 +235,18 @@ def agent_commands(technique_list, plat, params):
     return all_commands
 
 
+def techniques_for_db():
+    executor = AtomicRunner()
+    tech = executor.techniques
+
+    data = []
+    for key in tech.keys():
+        data.append({'id': int(tech[key]['attack_technique'][1:]), 'name': tech[key]['display_name']})
+
+    return data
+
+
 if __name__ == '__main__':
     print('run_atomic')
-    # one = get_one_technique_and_params('T1002')
-    # print(one)
 
-    # executor = AtomicRunner()
-    # executor.execute("T1124", 0, {'computer_name': 'arnpc'})
-    # command = executor.command
-    # launcher = executor.launcher
-    # m = better_get_commands(['T1002', 'T1082'], 'windows',
-    #                         [{'input_file': 'C:\\pen\\certs', 'output_file': 'C:\\test\\Data.zip'}, None])
-    # m = better_get_commands(['T1005', 'T1002'], 'windows')
-    # print(m)
-
-    # k = get_all_techniques()
-
-    # n = get_all_techniques_and_params()
-    # print(n)
-
-    # print(get_all_techniques('windows'))
-    get_all_techniques('windows')
+    print(techniques_for_db())
