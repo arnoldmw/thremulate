@@ -23,7 +23,7 @@ from handlers.agent import *
 # noinspection PyUnresolvedReferences
 from handlers.auth import *
 # noinspection PyUnresolvedReferences
-from handlers.campaign import *
+from handlers.adversary import *
 # noinspection PyUnresolvedReferences
 from handlers.dashboard import *
 # noinspection PyUnresolvedReferences
@@ -79,8 +79,8 @@ async def create_app():
     setup_security(app, SessionIdentityPolicy(), DBAuthorizationPolicy())
 
     # HTTPS using Secure Sockets Layer
-    ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
-    ssl_context.load_cert_chain(certfile='certificates/thremulate.crt', keyfile='certificates/thremulate.key')
+    # ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+    # ssl_context.load_cert_chain(certfile='certificates/thremulate.crt', keyfile='certificates/thremulate.key')
 
     aiohttp_debugtoolbar.setup(app, intercept_redirects=False)
     # web.run_app(app, host="localhost", port=8080, ssl_context=ssl_context)

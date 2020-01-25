@@ -6,8 +6,8 @@ from aiohttp_session import get_session
 from database import Adversary, Agent
 
 
-@aiohttp_jinja2.template('adversary/campaign_index.html')
-async def campaign_index(request):
+@aiohttp_jinja2.template('adversary/adversary_index.html')
+async def adversary_index(request):
     """
     Retrieves the template showing all adversaries.
     :param request:
@@ -28,7 +28,7 @@ async def campaign_index(request):
     return {'username': username, 'adversaries': adversaries, 'title': 'Adversaries'}
 
 
-async def campaign_add(request):
+async def adversary_add(request):
     """
     Adds an adversary to the database.
     :param request:
@@ -36,12 +36,12 @@ async def campaign_add(request):
     """
     await check_authorized(request)
     data = await request.post()
-    Adversary.create(name=data['addName'])
+    Adversary.create(name=data['updateName'])
     raise web.HTTPFound('/adversaries')
 
 
-@aiohttp_jinja2.template('adversary/campaign_details.html')
-async def campaign_details(request):
+@aiohttp_jinja2.template('adversary/adversary_details.html')
+async def adversary_details(request):
     """
     Retrieves the template with the details of an adversary.
     :param request:
@@ -69,11 +69,11 @@ async def campaign_details(request):
         session = await get_session(request)
         username = session['username']
         context = {'username': username}
-        response = aiohttp_jinja2.render_template('adversary/campaign_index.html', request, context)
+        response = aiohttp_jinja2.render_template('adversary/adversary_index.html', request, context)
         return response
 
 
-async def campaign_update(request):
+async def adversary_update(request):
     """
     Updates the name of an adversary.
     :param request:
@@ -87,7 +87,7 @@ async def campaign_update(request):
     raise web.HTTPFound('/adversaries')
 
 
-async def campaign_delete(request):
+async def adversary_delete(request):
     """
     Deletes an adversary.
     :param request:
@@ -107,9 +107,9 @@ def setup_campaign_routes(app):
     :return: None
     """
     app.add_routes([
-        web.get('/adversaries', campaign_index, name='adversaries'),
-        web.get('/campaign_details/{id}', campaign_details, name='campaign_details'),
-        web.post('/campaign_add', campaign_add),
-        web.post('/campaign_update', campaign_update),
-        web.post('/campaign_delete', campaign_delete),
+        web.get('/adversaries', adversary_index, name='adversaries'),
+        web.get('/adversary_details/{id}', adversary_details, name='adversary_details'),
+        web.post('/adversary_add', adversary_add),
+        web.post('/adversary_update', adversary_update),
+        web.post('/adversary_delete', adversary_delete),
     ])
