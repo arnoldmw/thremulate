@@ -8,6 +8,11 @@ from database import Adversary, Agent
 
 @aiohttp_jinja2.template('adversary/campaign_index.html')
 async def campaign_index(request):
+    """
+    Retrieves the template showing all adversaries.
+    :param request:
+    :return: '/adversaries' if successful other an exception is raised.
+    """
     await check_authorized(request)
     adversaries = []
 
@@ -24,6 +29,11 @@ async def campaign_index(request):
 
 
 async def campaign_add(request):
+    """
+    Adds an adversary to the database.
+    :param request:
+    :return: '/adversaries' if successful other an exception is raised.
+    """
     await check_authorized(request)
     data = await request.post()
     Adversary.create(name=data['addName'])
@@ -32,6 +42,11 @@ async def campaign_add(request):
 
 @aiohttp_jinja2.template('adversary/campaign_details.html')
 async def campaign_details(request):
+    """
+    Retrieves the template with the details of an adversary.
+    :param request:
+    :return: '/adversary_details'  if successful other an exception is raised.
+    """
     await check_authorized(request)
     agents = []
 
@@ -59,6 +74,11 @@ async def campaign_details(request):
 
 
 async def campaign_update(request):
+    """
+    Updates the name of an adversary.
+    :param request:
+    :return: '/adversaries' if successful other an exception is raised.
+    """
     await check_authorized(request)
     data = await request.post()
     # TODO: Check for UNIQUE constraint
@@ -68,6 +88,11 @@ async def campaign_update(request):
 
 
 async def campaign_delete(request):
+    """
+    Deletes an adversary.
+    :param request:
+    :return: '/adversaries if successful otherwise an exception is raised.
+    """
     await check_authorized(request)
     data = await request.post()
     q = Adversary.delete().where(Adversary.id == data['id'])
