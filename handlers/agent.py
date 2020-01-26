@@ -96,7 +96,7 @@ async def agent_output(request):
         AgentTechnique.update(output=output, executed=executed, result=result).where(
             (AgentTechnique.agent_id == agent_id) & (AgentTechnique.technique_id == tech_id) & (
                     AgentTechnique.test_num == test_num)).execute()
-
+        Agent.update(last_contact=executed).where(Agent.id == agent_id).execute()
         return web.Response(text='success')
     except KeyError:
         web.Response(text='failed')  # Wrong parameters
@@ -125,7 +125,7 @@ async def agent_tasks(request):
         agent_id = request.match_info['id']
 
         techniques = []
-
+        Agent.update(last_contact=datetime.datetime.now()).where(Agent.id == agent_id).execute()
         for agent_techs in AgentTechnique.select() \
                 .where((AgentTechnique.agent_id == agent_id) & (AgentTechnique.executed.is_null(True))):
             tech_id = ('T%s' % agent_techs.technique_id)
