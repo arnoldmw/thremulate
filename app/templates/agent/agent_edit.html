@@ -16,7 +16,7 @@
             <form action="{{ url('agent_edit_post') }}" method="post">
                 <input type="hidden" name="agent_id" value="{{ agent.agt_id }}">
                 <div class="card-body">
-                    <div class="col-lg-4">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" name="name" placeholder="Agent Name"
@@ -45,7 +45,10 @@
                         </div>
                     </div>
                     <div class="card-action">
-                        <input class="btn btn-primary" type="submit" name="submit" value="Update">
+                        <div class="col-md-4 text-center pl-0">
+                            <input class="btn btn-primary btn-round mr-1" type="submit" name="submit" value="Update">
+                            <a class="btn btn-danger btn-round ml-1" href="{{ url('agents') }}">Cancel</a>
+                        </div>
                     </div>
             </form>
         </div>
