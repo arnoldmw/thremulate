@@ -229,8 +229,12 @@ async def agent_edit_post(request):
     data = await request.post()
     try:
         agent_id = data['agent_id']
-        kill_date = data['kill_date'].replace('T', ' ')
-        kill_date = '%s:00' % kill_date
+        kill_date = data['kill_date']
+        if kill_date != '':
+            kill_date = kill_date.replace('T', ' ')
+            kill_date = '%s:00' % kill_date
+        else:
+            kill_date = None
 
         Agent.update(name=data['name'], adversary_id=data['adversary'], kill_date=kill_date) \
             .where(Agent.id == agent_id).execute()
