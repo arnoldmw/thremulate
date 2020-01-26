@@ -13,18 +13,18 @@
                     Edit Agent details</p>
                 <p class="card-category"><a href="{{ url('agents') }}">Back to Agents</a></p>
             </div>
-            <form action="{{ url('agent_edit_post') }}" method="post">
+            <form action="{{ url('agent_edit_post') }}" method="post" id="agent-edit-form">
                 <input type="hidden" name="agent_id" value="{{ agent.agt_id }}">
                 <div class="card-body">
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Agent Name"
-                                value="{{ agent.agt_name }}">
+                            <input type="text" class="form-control" id="name" name="name"
+                                   value="{{ agent.agt_name }}" required minlength="2">
                         </div>
                         <div class="form-group">
                             <label for="adversary">Adversary</label>
-                            <select id="adversary" name="adversary" class="form-control">
+                            <select id="adversary" name="adversary" class="form-control" required>
                                 {% for adv in adversaries %}
                                 {% if adv.adv_id == agent.adv_id %}
                                 <option value="{{ adv.adv_id }}" selected>{{ adv.adv_name }}</option>
@@ -61,6 +61,38 @@
         $('#remove-kill-date').click(function () {
             $('#kill_date').val('');
         });
+        // Javascript validation
+        $("#agent-edit-form").validate({
+                rules: {
+                    name: {
+                        required: true,
+                        minlength: 5
+                    },
+                },
+                messages: {
+                    name: {
+                        required: "Please provide a name",
+                        minlength: "Your password must be at least 2 characters long"
+                    },
+                },
+                errorElement: "em",
+                errorPlacement: function (error, element) {
+                    // Add the `invalid-feedback` class to the error element
+                    error.addClass("invalid-feedback");
+
+                    if (element.prop("type") === "checkbox") {
+                        error.insertAfter(element.next("label"));
+                    } else {
+                        error.insertAfter(element);
+                    }
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).parent().addClass("has-error").removeClass("has-success");
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).parent().addClass("has-success").removeClass("has-error");
+                }
+            });
     });
 
 </script>
