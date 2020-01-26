@@ -36,7 +36,7 @@ def config_file():
             # Check if current kill date is different from the one stored so that we change it
             if config['AGENT']['kill_date'] != kill_date_string:
                 print('[+] Agent received new kill date')
-                print(kill_date_string)
+                print('[+] %s' % kill_date_string)
                 config['AGENT'] = {'id': agent_id,
                                    'kill_date': kill_date_string}
                 with open('config.ini', 'w') as configfile:
