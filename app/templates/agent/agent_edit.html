@@ -11,6 +11,7 @@
                 </div>
                 <p class="card-category">
                     Edit Agent details</p>
+                <p class="card-category"><a href="{{ url('agents') }}">Back to Agents</a></p>
             </div>
             <form action="{{ url('agent_edit_post') }}" method="post">
                 <input type="hidden" name="agent_id" value="{{ agent.agt_id }}">
@@ -37,11 +38,9 @@
                             <label for="name">Kill Date</label>
                             {% set kd = agent.kill_date | string %}
                             <input type="datetime-local" class="form-control" id="kill_date" name="kill_date"
-                                   value="{{ kd.replace(' ', 'T') }}">
+                                value="{{ kd.replace(' ', 'T') }}">
                             <button id="remove-kill-date" type="button" class="btn btn-link btn-danger form-control">
-                                Remove Kill Date
-                                <!-- <i class="fa fa-times" data-toggle="tooltip" title="Delete Output!" -->
-                                <!-- style="font-size: 1.5em;"> </i> -->
+                                Change Kill Date to None
                             </button>
                         </div>
                     </div>
@@ -55,11 +54,11 @@
 </div>
 <script src="/static/js/core/jquery.3.2.1.min.js?v=hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4%3D"></script>
 <script>
-$(document).ready(function () {
-    $('#remove-kill-date').click(function(){
-        $('#kill_date').val('');
+    $(document).ready(function () {
+        $('#remove-kill-date').click(function () {
+            $('#kill_date').val('');
+        });
     });
-});
 
 </script>
 {% endblock %}
