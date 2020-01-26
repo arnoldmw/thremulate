@@ -47,7 +47,6 @@ async def index(request):
 async def home(request):
     await check_authorized(request)
     session = await get_session(request)
-    # username = session['username']
     current_user = session['current_user']
     return {'current_user': current_user, 'title': "Home"}
 

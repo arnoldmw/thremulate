@@ -31,8 +31,8 @@ async def agent_index(request):
                        'last_contact': ag.last_contact, 'adversary': ag.adversary.name})
 
     session = await get_session(request)
-    username = session['username']
-    return {'username': username, 'agents': agents, 'title': 'Agents'}
+    current_user = session['current_user']
+    return {'current_user': current_user, 'agents': agents, 'title': 'Agents'}
 
 
 @aiohttp_jinja2.template('agent/assign_tasks.html')
@@ -46,8 +46,8 @@ async def assign_tasks(request):
     tech_matrix = get_all_techniques(agent_platform)
 
     session = await get_session(request)
-    username = session['username']
-    return {'username': username, 'matrix': tech_matrix, 'agent_id': agent_id, 'title': 'Techniques'}
+    current_user = session['current_user']
+    return {'current_user': current_user, 'matrix': tech_matrix, 'agent_id': agent_id, 'title': 'Techniques'}
 
 
 async def assign_tasks_post(request):
@@ -193,8 +193,8 @@ async def agent_details(request):
             break
 
         session = await get_session(request)
-        username = session['username']
-        return {'username': username, 'agent': agent, 'details': details, 'title': 'Agent Details'}
+        current_user = session['current_user']
+        return {'current_user': current_user, 'agent': agent, 'details': details, 'title': 'Agent Details'}
     except KeyError:
         return web.Response(status=400)
     except Agent.DoesNotExist:
@@ -216,8 +216,8 @@ async def agent_edit(request):
             adversaries.append({'adv_id': adv.id, 'adv_name': adv.name})
 
         session = await get_session(request)
-        username = session['username']
-        return {'username': username, 'agent': agent, 'adversaries': adversaries, 'title': 'Update Agent'}
+        current_user = session['current_user']
+        return {'current_user': current_user, 'agent': agent, 'adversaries': adversaries, 'title': 'Update Agent'}
     except KeyError:
         return web.Response(status=400)
     except Agent.DoesNotExist:
@@ -252,12 +252,12 @@ async def customize_technique(request):
     agent_platform = Agent.get(Agent.id == agent_id).platform
 
     session = await get_session(request)
-    username = session['username']
+    current_user = session['current_user']
 
     tech = get_one_technique_and_params(tech_id, agent_platform)
     tech.__setitem__('agent_id', agent_id)
     tech.__setitem__('title', 'Techniques')
-    tech.__setitem__('username', username)
+    tech.__setitem__('current_user', current_user)
 
     return tech
 

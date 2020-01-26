@@ -60,8 +60,6 @@ async def login_post(request):
             if user.reset_pass:
                 raise web.HTTPFound('/force_reset_password')
 
-            # session.__setitem__('username', user.fname)
-            # session.__setitem__('is_su', user.is_superuser)
             session.__setitem__('current_user', {'fname': user.fname, 'is_su': user.is_superuser})
 
             raise web.HTTPFound('/home')
@@ -202,8 +200,8 @@ async def reset_password(request):
     try:
         user_id = request.match_info['id']
         session = await get_session(request)
-        username = session['username']
-        return {'username': username, 'user_id': user_id, 'title': 'Reset Password'}
+        current_user = session['current_user']
+        return {'current_user': current_user, 'user_id': user_id, 'title': 'Reset Password'}
     except KeyError:
         return web.Response(status=400)
 

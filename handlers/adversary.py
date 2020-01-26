@@ -24,9 +24,8 @@ async def adversary_index(request):
                             'no_of_agents': adv.agents.count()})
 
     session = await get_session(request)
-    username = session['username']
-
-    return {'username': username, 'adversaries': adversaries, 'title': 'Adversaries'}
+    current_user = session['current_user']
+    return {'current_user': current_user, 'adversaries': adversaries, 'title': 'Adversaries'}
 
 
 async def adversary_add(request):
@@ -68,8 +67,8 @@ async def adversary_details(request):
                            'last_contact': ag.last_contact.strftime("%d-%b-%Y %H:%M:%S")})
 
         session = await get_session(request)
-        username = session['username']
-        return {'username': username, 'adversary': adv_details, 'agents': agents, 'title': 'Adversary Details'}
+        current_user = session['current_user']
+        return {'current_user': current_user, 'adversary': adv_details, 'agents': agents, 'title': 'Adversary Details'}
 
     except KeyError:
         return web.Response(status=400)

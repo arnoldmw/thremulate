@@ -33,8 +33,8 @@ async def users_index(request):
         user = {}
 
     session = await get_session(request)
-    username = session['username']
-    return {'username': username, 'users': users_list, 'title': 'Users'}
+    current_user = session['current_user']
+    return {'current_user': current_user, 'users': users_list, 'title': 'Users'}
 
 
 async def user_delete(request):
@@ -89,8 +89,8 @@ async def admin_user_edit(request):
             perm_list.append({'id': pm.id, 'name': pm.name})
 
         session = await get_session(request)
-        username = session['username']
-        return {'username': username, 'user': user_selected, 'perm_list': perm_list, 'title': 'User Edit'}
+        current_user = session['current_user']
+        return {'current_user': current_user, 'user': user_selected, 'perm_list': perm_list, 'title': 'User Edit'}
     except KeyError:
         return web.Response(status=400)
     except User.DoesNotExist:
@@ -174,8 +174,8 @@ async def user_profile(request):
         user_selected.__setitem__('user_perms', perms)
 
         session = await get_session(request)
-        username = session['username']
-        return {'username': username, 'user': user_selected, 'title': 'My Account'}
+        current_user = session['current_user']
+        return {'current_user': current_user, 'user': user_selected, 'title': 'My Account'}
     except User.DoesNotExist:
         web.Response(status=404)
 
@@ -189,8 +189,8 @@ async def change_password(request):
     """
     await check_authorized(request)
     session = await get_session(request)
-    username = session['username']
-    return {'username': username, 'title': 'Reset Password'}
+    current_user = session['current_user']
+    return {'current_user': current_user, 'title': 'Reset Password'}
 
 
 async def change_password_post(request):
@@ -240,8 +240,8 @@ async def user_edit(request):
         user_selected.__setitem__('email', user.email)
 
         session = await get_session(request)
-        username = session['username']
-        return {'username': username, 'user': user_selected, 'title': 'Edit Details'}
+        current_user = session['current_user']
+        return {'current_user': current_user, 'user': user_selected, 'title': 'Edit Details'}
     except User.DoesNotExist:
         return web.Response(status=404)
 
