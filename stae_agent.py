@@ -116,6 +116,8 @@ def get_techniques():
         response = str(req.data.decode('utf-8'))
 
         if req.status == 200:
+            if response == '':
+                return ''
             response = response.split(',')
             result = []
 
@@ -138,6 +140,8 @@ def download_and_run_commands():
         response = str(req.data.decode('utf-8'))
 
         if req.status == 200:
+            if response == '':
+                return ''
             results = []
             agent_commands = response.split(';')
 
@@ -163,14 +167,20 @@ def send_output():
     # http://localhost:8000/agent_techniques/5
 
     if agent_tech is None:
-        print('[+] Agent sent nothing to the server')
+        print('[+] No techniques executed')
+        return
+    if agent_tech == '':
+        print('[+] No techniques assigned')
         return
 
     std_out = download_and_run_commands()
     # url = 'http://localhost:8000/agent_tasks/5'
 
     if std_out is None:
-        print('[+] Agent sent nothing to the server')
+        print('[+] No techniques executed')
+        return
+    if std_out == '':
+        print('[+] No techniques assigned')
         return
 
     url = 'http://localhost:8000/agent_output'
