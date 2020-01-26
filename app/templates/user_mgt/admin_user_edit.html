@@ -14,7 +14,7 @@
                     <a href="{{ url('users') }}">Back to Users</a>
                 </p>
             </div>
-            <form action="{{ url('admin_user_edit_post') }}" method="post">
+            <form action="{{ url('admin_user_edit_post') }}" method="post" id="admin-user-edit">
                 <div class="card-body">
 
                     <div class="row">
@@ -71,7 +71,7 @@
 
                             <div class="form-group">
                                 <label class="form-label d-block">Super User</label>
-                                <div class="selectgroup selectgroup-primary selectgroup-pills" na>
+                                <div class="selectgroup selectgroup-primary selectgroup-pills" id="superuser">
 
                                     <label class="selectgroup-item">
                                         {% if user.superuser == True %}
@@ -186,6 +186,52 @@
                 }
             });
         });
+        // Javascript validation
+        $("#admin-user-edit").validate({
+            rules: {
+                fname: {
+                    required: true,
+                    minlength: 2
+                },
+                lname: {
+                    required: true,
+                    minlength: 2
+                },
+                email: {
+                    required: true,
+                    email: true
+                }
+            },
+            messages: {
+                firstname: {
+                    required: "Please enter your First name",
+                    minlength: "First name must be at least 2 characters long"
+                },
+                lastname: {
+                    required: "Please enter your First name",
+                    minlength: "First name must be at least 2 characters long"
+                },
+                email: "Please enter a valid email address"
+            },
+            errorElement: "em",
+            errorPlacement: function (error, element) {
+                // Add the `invalid-feedback` class to the error element
+                error.addClass("invalid-feedback");
+
+                if (element.prop("type") === "checkbox") {
+                    error.insertAfter(element.next("label"));
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).parent().addClass("has-error").removeClass("has-success");
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).parent().addClass("has-success").removeClass("has-error");
+            }
+        });
+
     });
 </script>
 {% endblock %}
