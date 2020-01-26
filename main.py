@@ -47,8 +47,9 @@ async def index(request):
 async def home(request):
     await check_authorized(request)
     session = await get_session(request)
-    username = session['username']
-    return {'username': username, 'title': "Home"}
+    # username = session['username']
+    current_user = session['current_user']
+    return {'current_user': current_user, 'title': "Home"}
 
 
 async def create_app():

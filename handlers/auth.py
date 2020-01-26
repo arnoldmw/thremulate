@@ -60,7 +60,9 @@ async def login_post(request):
             if user.reset_pass:
                 raise web.HTTPFound('/force_reset_password')
 
-            session.__setitem__('username', user.fname)
+            # session.__setitem__('username', user.fname)
+            # session.__setitem__('is_su', user.is_superuser)
+            session.__setitem__('current_user', {'fname': user.fname, 'is_su': user.is_superuser})
 
             raise web.HTTPFound('/home')
 
