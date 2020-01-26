@@ -58,6 +58,12 @@ def config_file():
     else:
         config.read('config.ini')
         if 'kill_date' in config['AGENT']:
+            if kill_date_string == 'None':
+                config['AGENT'] = {'id': agent_id}
+                with open('config.ini', 'w') as configfile:
+                    config.write(configfile)
+                    return
+
             confirm_kill()
 
 
