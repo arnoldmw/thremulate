@@ -9,9 +9,18 @@
                 <div class="card-head-row">
                     <h4 class="card-title">Adversary Details</h4>
                 </div>
-                <p class="card-category"> <strong>Name</strong> : {{ adversary.name }}</p>
-                <p class="card-category"><strong>Created</strong>: {{ adversary.created }}</p>
-                <p class="card-category"><strong>Updated</strong>: {{ adversary.updated }}</p>
+                <div class="row card-category">
+                    <div class="col-md-1">Name:</div>
+                    <div class="col-md-2">{{ adversary.name }}</div>
+                </div>
+                <div class="row card-category">
+                    <div class="col-md-1">Created:</div>
+                    <div class="col-md-2">{{ adversary.created }}</div>
+                </div>
+                <div class="row card-category">
+                    <div class="col-md-1">Updated:</div>
+                    <div class="col-md-2">{{ adversary.updated }}</div>
+                </div>
                 <p class="card-category"><a href="{{ url('adversaries') }}">Back to Adversaries</a></p>
             </div>
             <div class="card-body">
