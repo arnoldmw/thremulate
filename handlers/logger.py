@@ -14,7 +14,7 @@ class AccessLogger(AbstractAccessLogger):
 
     def log(self, request, response, time):
         fern = fernet.Fernet(secret_key)
-        session_dict = {'session': {'AIOHTTP_SECURITY': '', 'username': ''}}
+        session_dict = {'session': {'AIOHTTP_SECURITY': '', 'current_user': {'fname': ''}}}
         if 'AIOHTTP_SESSION' in request.cookies:
             session_val = fern.decrypt(request.cookies['AIOHTTP_SESSION'].encode('utf-8'))
             session_dict.clear()
@@ -23,7 +23,7 @@ class AccessLogger(AbstractAccessLogger):
         self.logger.info(f' {request.remote} '
 
                          f'{session_dict["session"]["AIOHTTP_SECURITY"]} '
-                         f'{session_dict["session"]["username"]} '
+                         f'{session_dict["session"]["current_user"]["fname"]} '
                          f'[{datetime.datetime.now()} +{time.__round__(4)}] '
                          f'"{request.method} {request.path} HTTP/{request.version[0]}.{request.version[1]}" '
                          f'{response.status} '
