@@ -9,11 +9,11 @@ Thremulate's server and agent are totally platform independent. Therefore, you c
 
 ## Philosophy
 
-- **Security Assessments for All**
+- **Security Assessments for All:** 
 Organizations that may not have full time red team personnel or IT security budget constraints or irregular security assessments can leverage the power of this software to test their defenses.
-- **Security Monitoring Effectiveness**
+- **Security Monitoring Effectiveness:**
 Security personnel should validate their continuous and/or network security monitoring measures effectiveness at preventing and/or detecting adversarial behavior on the end-points or network. Thremulate helps you do this with utmost ease. Run an adversarial technique and confirm if it is prevented or detected as malicious.
-- **Raise Information Security Awareness**
+- **Raise Information Security Awareness:**
 The lead author created Thremulate to raise awareness about cyber threats out there in the wild (unknown) inclined on compromising and/or destroying digital infrastructure. Thremulate is a spot-on example of how we can use threat intelligence to reinforce our defenses. 
 
 ## Features
@@ -24,7 +24,7 @@ The lead author created Thremulate to raise awareness about cyber threats out th
 ![Screen](screenshots/dashboard.png)
 5. Living Off the Land techniques
 6. Fileless attack techniques
-7. Very modular and easily extendable application plus many other features.
+7. Modular design and easily extendable application and many other features.
 ## Use Cases
 
 1. Adversary emulation
@@ -78,7 +78,7 @@ In order to have a more open and welcoming community,the maintainers of this rep
 
 ## Author
 
-1. Mwesigwa Arnold (Lead Maintainer/Author)
+1. Mwesigwa Arnold (Maintainer/Author)
 
 ## License
 Apache License 2.0. 
@@ -87,10 +87,11 @@ See the [LICENSE](LICENSE.txt) file for more details.
 ## Acknowledgements
 - [ATT&CK](https://attack.mitre.org/)
 - [Atomic Red Team](https://github.com/redcanaryco/atomic-red-team)
-- All the threat actors out there whose techniques I have used. I am (un)grateful.
+- All the threat actors whose techniques I used. I am (un)grateful.
 
 ## Support
 
-Having problems? Or a comment? 
+Having problems? Open up an issue.
 
-Phish me an [email](thremulate@gmail.com). (Reminder. It's not fun firing up a fortified VM every time with SIFT(forensic workstation) on standby just to read email) 
+Got a private comment? Send me an [email](thremulate@gmail.com). (It is not fun running SIFT(forensic workstation) 
+every time I read email) 

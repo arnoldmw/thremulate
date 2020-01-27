@@ -78,7 +78,7 @@ async def create_app():
     # Setting authentication and authorization
     setup_security(app, SessionIdentityPolicy(), DBAuthorizationPolicy())
 
-    aiohttp_debugtoolbar.setup(app, intercept_redirects=False)
+    # aiohttp_debugtoolbar.setup(app, intercept_redirects=False)
     # web.run_app(app, host="localhost", port=8080, ssl_context=ssl_context)
 
     return app
