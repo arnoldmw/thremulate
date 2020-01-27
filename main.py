@@ -78,10 +78,6 @@ async def create_app():
     # Setting authentication and authorization
     setup_security(app, SessionIdentityPolicy(), DBAuthorizationPolicy())
 
-    # HTTPS using Secure Sockets Layer
-    # ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
-    # ssl_context.load_cert_chain(certfile='certificates/thremulate.crt', keyfile='certificates/thremulate.key')
-
     aiohttp_debugtoolbar.setup(app, intercept_redirects=False)
     # web.run_app(app, host="localhost", port=8080, ssl_context=ssl_context)
 
@@ -91,4 +87,9 @@ async def create_app():
 if __name__ == '__main__':
     application = create_app()
     logging.basicConfig(level=logging.INFO, filename=THIS_DIR / 'logs/thremulate.log')
-    web.run_app(application, host="0.0.0.0", port=8000, access_log_class=AccessLogger)
+
+    # HTTPS using Secure Sockets Layer
+    ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+    ssl_context.load_cert_chain(certfile='certificates/thremulate.crt', keyfile='certificates/thremulate.key')
+
+    web.run_app(application, host="0.0.0.0", port=8000, access_log_class=AccessLogger, ssl_context=ssl_context)
