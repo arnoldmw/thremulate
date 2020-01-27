@@ -40,7 +40,7 @@
                             </div>
                             <div class="modal-body">
                                 <p class="small">Create a new Adversary</p>
-                                <form role="form" id="addAdversary" action="/adversary_add" method="POST">
+                                <form role="form" id="addAdversary" action="{{ url('adversary_add') }}" method="POST">
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="form-group form-group-default">
@@ -183,6 +183,7 @@
 <script>
     $(document).ready(function () {
         $("#adversaries").DataTable();
+        // Add adversary
         $("#addAdversaryButton").click(function () {
             document.getElementById('addAdversary').submit();
             $('#addAdversaryModal').modal('hide');
@@ -191,14 +192,14 @@
         // Adversary details
         $("#adversaries .js-details").on("click", function () {
             var cid = $(this).attr("data-adv-id");
-            window.location.assign("http://localhost:8000/adversary_details/" + cid);
+            window.location.assign("/adversary_details/" + cid);
         });
 
         // Delete Adversary
         $("#adversaries .js-delete").on("click", function () {
             var cid = $(this).attr("data-adv-id");
             $("#deleteAdversary").click(function () {
-                $.post("http://localhost:8000/adversary_delete", { 'id': cid });
+                $.post("/adversary_delete", { 'id': cid });
                 $('#exampleModal').modal('hide');
                 // Try to force reload
                 location.reload(true);
@@ -210,7 +211,7 @@
             var cid = $(this).attr("data-adv-id");
             $("#editRowButton").click(function () {
                 var name = $("#updateName").val();
-                $.post("http://localhost:8000/adversary_update", { 'id': cid, 'name': name });
+                $.post("/adversary_update", { 'id': cid, 'name': name });
                 $('#EditRowModal').modal('hide');
                 location.reload(true);
             });

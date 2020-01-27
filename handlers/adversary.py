@@ -37,7 +37,7 @@ async def adversary_add(request):
     await check_authorized(request)
     data = await request.post()
     try:
-        Adversary.create(name=data['updateName'])
+        Adversary.create(name=data['addName'])
         raise web.HTTPFound('/adversaries')
     except KeyError:
         return web.Response(status=400)
@@ -118,7 +118,7 @@ def setup_campaign_routes(app):
     app.add_routes([
         web.get('/adversaries', adversary_index, name='adversaries'),
         web.get('/adversary_details/{id}', adversary_details, name='adversary_details'),
-        web.post('/adversary_add', adversary_add),
-        web.post('/adversary_update', adversary_update),
-        web.post('/adversary_delete', adversary_delete),
+        web.post('/adversary_add', adversary_add, name='adversary_add'),
+        web.post('/adversary_update', adversary_update, name='adversary_update'),
+        web.post('/adversary_delete', adversary_delete, name='adversary_delete'),
     ])

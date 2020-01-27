@@ -200,7 +200,7 @@
             var test_num = btn.attr("data-test-num");
             $("#deleteOutput").click(function () {
                 var agent_id = $('#agent_id').val();
-                $.post("http://localhost:8000/delete_tech_output", { 'tech_id': tech_id, 'agent_id': agent_id, 'test_num': test_num },
+                $.post("/delete_tech_output", { 'tech_id': tech_id, 'agent_id': agent_id, 'test_num': test_num },
                     function (data, status) {
                         if (status == 'success') {
                             if (data == 'deleted') {
@@ -227,7 +227,7 @@
             var test_num = btn.attr("data-test-num");
             $("#deleteAssignment").click(function () {
                 var agent_id = $('#agent_id').val();
-                $.post("http://localhost:8000/delete_tech_assignment", { 'tech_id': tech_id, 'agent_id': agent_id, 'test_num': test_num },
+                $.post("/delete_tech_assignment", { 'tech_id': tech_id, 'agent_id': agent_id, 'test_num': test_num },
                     function (data, status) {
                         if (status == 'success') {
                             if (data == 'deleted') {
