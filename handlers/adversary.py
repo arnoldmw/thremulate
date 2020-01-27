@@ -41,9 +41,10 @@ async def adversary_add(request):
         raise web.HTTPFound('/adversaries')
     except KeyError:
         return web.Response(status=400)
-    except IntegrityError as error:
+    except IntegrityError:
         # TODO: Return error
-        print('Similar name exists')
+        # Always returns status of 500
+        web.Response(text='exists', status=200)
 
 
 @aiohttp_jinja2.template('adversary/adversary_details.html')

@@ -9,8 +9,8 @@
                 <div class="card-head-row">
                     <h4 class="card-title">Adversaries</h4>
                 </div>
-               <p class="card-category">
-                   All Adversaries</p>
+                <p class="card-category">
+                    All Adversaries</p>
             </div>
             <div class="card-body">
                 <!-- Button -->
@@ -22,17 +22,17 @@
                     </button>
                 </div>
                 <!-- Modal for Adding Adversary -->
-                <div class="modal fade" id="addAdversaryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                     aria-hidden="true" style="color: #575962;">
+                <div class="modal fade" id="addAdversaryModal" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true" style="color: #575962;">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header no-bd">
                                 <h5 class="modal-title">
-                    <span class="fw-mediumbold">
-                        New</span>
+                                    <span class="fw-mediumbold">
+                                        New</span>
                                     <span class="fw-light">
-                        Adversary
-                    </span>
+                                        Adversary
+                                    </span>
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -62,17 +62,16 @@
                 </div>
                 <!-- Modal for Updating Adversary -->
                 <div class="modal fade" id="EditRowModal" tabindex="-1" role="dialog"
-                     aria-labelledby="exampleModalLabel"
-                     aria-hidden="true" style="color: #575962;">
+                     aria-labelledby="exampleModalLabel" aria-hidden="true" style="color: #575962;">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header no-bd">
                                 <h5 class="modal-title">
-                    <span class="fw-mediumbold">
-                        Update</span>
+                                    <span class="fw-mediumbold">
+                                        Update</span>
                                     <span class="fw-light">
-                        Adversary
-                    </span>
+                                        Adversary
+                                    </span>
                                 </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -124,8 +123,8 @@
 
                 <!-- Table -->
                 <div class="table-responsive">
-                    <table id="adversaries" class="table display  table-striped table-hover cell-border text-center" cellspacing="0"
-                           width="100%">
+                    <table id="adversaries" class="table display  table-striped table-hover cell-border text-center"
+                           cellspacing="0" width="100%">
                         <thead class="font-weight-bold">
                         <tr>
                             <td>#</td>
@@ -153,20 +152,22 @@
                                             class="btn btn-link btn-primary btn-lg js-edit"
                                             data-original-title="Edit Task" data-adv-id="{{ adv.id }}"
                                             data-target="#EditRowModal">
-                                        <i class="fa fa-edit" data-toggle="tooltip" title="Edit" style="font-size: 18px;"></i>
+                                        <i class="fa fa-edit" data-toggle="tooltip" title="Edit"
+                                           style="font-size: 18px;"></i>
                                     </button>
 
                                     <button type="button" class="btn btn-link btn-primary js-details"
-                                              data-original-title=""
-                                            data-adv-id="{{ adv.id }}">
-                                        <i class="fas fa-info-circle" data-toggle="tooltip" title="More Infomation" style="font-size: 20px;"> 
+                                            data-original-title="" data-adv-id="{{ adv.id }}">
+                                        <i class="fas fa-info-circle" data-toggle="tooltip" title="More Infomation"
+                                           style="font-size: 20px;">
                                         </i>
                                     </button>
 
                                     <button type="button" class="btn btn-link btn-danger js-delete"
                                             data-toggle="modal" data-target="#exampleModal" data-original-title="Assign"
                                             data-adv-id="{{ adv.id }}">
-                                        <i class="fa fa-times" data-toggle="tooltip" title="Remove!" style="font-size: 20px;"> </i>
+                                        <i class="fa fa-times" data-toggle="tooltip" title="Remove!"
+                                           style="font-size: 20px;"> </i>
                                     </button>
                                 </div>
                             </td>
@@ -185,8 +186,28 @@
         $("#adversaries").DataTable();
         // Add adversary
         $("#addAdversaryButton").click(function () {
-            document.getElementById('addAdversary').submit();
+            var form = $('#addAdversary').serialize();
             $('#addAdversaryModal').modal('hide');
+            $.post("{{ url('adversary_add') }}", form, function (data, status) {
+                if (status == 'success') {
+                    // $(document).replaceWith(data);
+                    console.log("success");
+                    // Try to force reload
+                    location.reload(true);
+                }
+                else {
+                    $.notify({
+                        // options
+                        icon: 'fas fa-times',
+                        title: 'Error',
+                        message: 'Adversary already exists'
+                    }, {
+                        // settings
+                        type: 'danger'
+                    });
+                }
+            });
+
         });
 
         // Adversary details
@@ -216,6 +237,6 @@
                 location.reload(true);
             });
         });
-        });
+    });
 </script>
 {% endblock %}
