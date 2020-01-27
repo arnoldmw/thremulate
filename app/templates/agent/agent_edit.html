@@ -1,67 +1,99 @@
 {% extends 'base.html' %}
-
 {% block content %}
-
-
 <!-- Padding Top -->
 <div style="margin-top: 4%;"></div>
-
-
 <div class="row row-card-no-pd">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
                 <div class="card-head-row">
                     <h4 class="card-title">Update Agent</h4>
-
                 </div>
                 <p class="card-category">
                     Edit Agent details</p>
+                <p class="card-category"><a href="{{ url('agents') }}">Back to Agents</a></p>
             </div>
-
-            <form action="{{ url('agent_edit_post') }}" method="post">
+            <form action="{{ url('agent_edit_post') }}" method="post" id="agent-edit-form">
                 <input type="hidden" name="agent_id" value="{{ agent.agt_id }}">
                 <div class="card-body">
-
-                    <div class="col-lg-4">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Agent Name"
-                                value="{{ agent.agt_name }}">
+                            <input type="text" class="form-control" id="name" name="name"
+                                   value="{{ agent.agt_name }}" required minlength="2">
                         </div>
-
                         <div class="form-group">
-                            <label for="campaign">Campaign</label>
-                            <select id="campaign" name="campaign" class="form-control">
-                                {% for camp in campaigns %}
-
-                                {% if camp.camp_id == agent.camp_id %}
-                                <option value="{{ camp.camp_id }}" selected>{{ camp.camp_name }}</option>
+                            <label for="adversary">Adversary</label>
+                            <select id="adversary" name="adversary" class="form-control" required>
+                                {% for adv in adversaries %}
+                                {% if adv.adv_id == agent.adv_id %}
+                                <option value="{{ adv.adv_id }}" selected>{{ adv.adv_name }}</option>
                                 {% else %}
-                                <option value="{{ camp.camp_id }}">{{ camp.camp_name }}</option>
+                                <option value="{{ adv.adv_id }}">{{ adv.adv_name }}</option>
                                 {% endif %}
-
-
                                 {% endfor %}
                             </select>
                         </div>
-
+                        <div class="form-group">
+                            <label for="name">Kill Date</label>
+                            {% set kd = agent.kill_date | string %}
+                            <input type="datetime-local" class="form-control" id="kill_date" name="kill_date"
+                                value="{{ kd.replace(' ', 'T') }}">
+                            <button id="remove-kill-date" type="button" class="btn btn-link btn-danger form-control">
+                                Change Kill Date to None
+                            </button>
+                        </div>
                     </div>
                     <div class="card-action">
-                        <input class="btn btn-primary" type="submit" name="submit" value="Update">
+                        <div class="col-md-4 text-center pl-0">
+                            <input class="btn btn-primary btn-round mr-1" type="submit" name="submit" value="Update">
+                            <a class="btn btn-danger btn-round ml-1" href="{{ url('agents') }}">Cancel</a>
+                        </div>
                     </div>
             </form>
         </div>
     </div>
 </div>
 </div>
-
-
 <script src="/static/js/core/jquery.3.2.1.min.js?v=hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4%3D"></script>
-
 <script>
+    $(document).ready(function () {
+        $('#remove-kill-date').click(function () {
+            $('#kill_date').val('');
+        });
+        // Javascript validation
+        $("#agent-edit-form").validate({
+                rules: {
+                    name: {
+                        required: true,
+                        minlength: 5
+                    },
+                },
+                messages: {
+                    name: {
+                        required: "Please provide a name",
+                        minlength: "Your password must be at least 2 characters long"
+                    },
+                },
+                errorElement: "em",
+                errorPlacement: function (error, element) {
+                    // Add the `invalid-feedback` class to the error element
+                    error.addClass("invalid-feedback");
 
+                    if (element.prop("type") === "checkbox") {
+                        error.insertAfter(element.next("label"));
+                    } else {
+                        error.insertAfter(element);
+                    }
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).parent().addClass("has-error").removeClass("has-success");
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).parent().addClass("has-success").removeClass("has-error");
+                }
+            });
+    });
 
 </script>
-
 {% endblock %}

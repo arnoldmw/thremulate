@@ -1,9 +1,10 @@
 import datetime
+import uuid
 
 import bcrypt
-from playhouse.migrate import *
 # noinspection PyUnresolvedReferences
-from art.run_atomics import get_all_techniques
+from art.run_atomics import techniques_for_db
+from playhouse.migrate import *
 
 db = SqliteDatabase('db/adversary.db', pragmas={'foreign_keys': 1})
 
@@ -13,7 +14,7 @@ class BaseModel(Model):
         database = db
 
 
-class Campaign(BaseModel):
+class Adversary(BaseModel):
     name = CharField(unique=True)
     created_date = DateTimeField(default=datetime.datetime.now)
     updated_date = DateTimeField(default=datetime.datetime.now)
@@ -22,30 +23,32 @@ class Campaign(BaseModel):
 class Agent(BaseModel):
     id = IntegerField(primary_key=True)
     name = CharField(unique=True, null=True)
+    hostname = CharField(max_length=30, null=True)
+    username = CharField(max_length=30, null=True)
     platform = CharField(max_length=20, null=True)
-    # os_version = CharField(max_length=20, null=True)
-    # product_id = CharField(max_length=30, null=True)
+    plat_version = CharField(max_length=20, null=True)
     domain = CharField(max_length=20, null=True)
     initial_contact = DateTimeField(default=datetime.datetime.now, null=True)
+    kill_date = DateTimeField(null=True)
     last_contact = DateTimeField(default=datetime.datetime.now, null=True)
-    campaign = ForeignKeyField(Campaign, backref='agents', null=True)
+    adversary = ForeignKeyField(Adversary, backref='agents', null=True)
 
 
 class Technique(BaseModel):
     id = IntegerField(primary_key=True)
     name = CharField(max_length=30)
-    parameters = CharField(max_length=30, null=True)
 
 
 class AgentTechnique(BaseModel):
     technique_id = ForeignKeyField(Technique)
-    agent_id = ForeignKeyField(Agent)
+    agent_id = ForeignKeyField(Agent, backref='techniques')
+    test_num = IntegerField()
     output = TextField(null=True)
     result = BooleanField(null=True)
     executed = DateTimeField(null=True)
 
     class Meta:
-        primary_key = CompositeKey('technique_id', 'agent_id')
+        primary_key = CompositeKey('technique_id', 'agent_id', 'test_num')
 
 
 class Tactic(BaseModel):
@@ -61,19 +64,23 @@ class TacticTechnique(BaseModel):
 
 
 class Parameter(BaseModel):
-    technique_id = ForeignKeyField(Technique)
-    agent_id = ForeignKeyField(Agent)
+    technique_id = ForeignKeyField(Technique, on_delete='CASCADE')
+    agent_id = ForeignKeyField(Agent, on_delete='CASCADE')
+    test_num = IntegerField()
     param_name = CharField(max_length=30)
     param_value = CharField(max_length=50)
 
 
 class User(BaseModel):
+    id = UUIDField(primary_key=True, default=uuid.uuid4())
     fname = CharField(max_length=25)
     lname = CharField(max_length=255)
     email = CharField(unique=True, index=True)
     passwd = CharField(max_length=255)
     is_superuser = BooleanField(default=False)
     disabled = BooleanField(default=False)
+    reset_pass = BooleanField(default=False)
+    lockout_count = IntegerField(default=0)
 
 
 class Permissions(BaseModel):
@@ -96,22 +103,22 @@ def migrate():
     # db.create_tables([Parameter])
     # db.create_tables([TacticTechnique])
 
-    # db.drop_tables([Campaign, Agent, Technique, AgentTechnique, Tactic, TacticTechnique])
-    # db.create_tables([Campaign, Agent, Technique, AgentTechnique, Tactic, TacticTechnique])
+    # db.drop_tables([Adversary, Agent, Technique, AgentTechnique, Tactic, TacticTechnique])
+    # db.create_tables([Adversary, Agent, Technique, AgentTechnique, Tactic, TacticTechnique])
 
-    # camp = Campaign(name='Fin7', created_date=datetime.datetime.now, updated_date=datetime.datetime.now)
+    # camp = Adversary(name='Fin7', created_date=datetime.datetime.now, updated_date=datetime.datetime.now)
     # camp.save()
 
-    # Campaign.create(name='Fin7')
-    # Campaign.create(name='Cobalt')
+    # Adversary.create(name='Fin7')
+    # Adversary.create(name='Cobalt')
 
     # Agent.create(id=5, name='Hunter', os_name='Windows 10', os_version='10.4.5', product_id='5FF',
-    #              domain='home.local', campaign=Campaign.get_by_id(1))
+    #              domain='home.local', adversary=Adversary.get_by_id(1))
 
     # Agent.create(id=5, name='Hunter', os_name='Windows 10', os_version='10.4.5', product_id='5FF',
-    #              domain='home.local', campaign=Campaign.get(Campaign.name == 'Fin7'))
+    #              domain='home.local', adversary=Adversary.get(Adversary.name == 'Fin7'))
     # Agent.create(id=4, name='Sniffer', os_name='Windows 7', os_version='7.3.4', product_id='6KKL', domain='work.com',
-    #              campaign=Campaign.get(Campaign.name == 'Cobalt'))
+    #              adversary=Adversary.get(Adversary.name == 'Cobalt'))
     #
     # Technique.create(id=1057, name='Process Discovery')
     # Technique.create(id=1124, name='System Time Discovery')
@@ -197,74 +204,25 @@ def migrate():
 
 if __name__ == '__main__':
     print('Main running')
-    # migrate()
-    # users_list = User.select().join(UserPermissions, on=(UserPermissions.user_id == User.id))\
-    # users_list = User.select().join(UserPermissions).where(User.id == 2)
-    # users_list = User.get(User.id == 2)
-    # perms = []
-    # user = {}
-    # user.__setitem__('fname', users_list.fname)
-    # for p in users_list.userpermissions:
-    #
-    #     perms.append({'perm_id': p.perm_id.id, 'perm_name': p.perm_id.name})
-    #
-    # user.__setitem__('perms', perms)
-    #
-    # print(user)
-    # user = User.select().where(User.id == 5)
-    # user = User.get(User.id == 5)
-    # perms = []
-    # users_selected = {}
-    #
-    # users_selected.__setitem__('fname', user.fname)
-    # users_selected.__setitem__('lname', user.lname)
-    # users_selected.__setitem__('email', user.email)
-    # users_selected.__setitem__('disabled', user.disabled)
-    # users_selected.__setitem__('superuser', user.is_superuser)
-    # for n in user.permissions:
-    #     perms.append(n.perm_name)
-    # users_selected.__setitem__('perms', perms)
 
-    # perms = Permissions.select()
-    # UPDATE USER DETAILS
-    # User.update(fname='John', lname='John', email='john@john.con', disabled=False, is_superuser=False)\
-    #     .where(User.id == 5).execute()
-    # fn.Count(AgentTechnique.technique_id).alias('count')
-    # truncate_date('day', AgentTechnique.executed)
-    # res = AgentTechnique.select(AgentTechnique.technique_id, )\
-    #     .where(('2019-12-22' <= AgentTechnique.executed) & (AgentTechnique.executed <= '2019-12-28'))
+    # db.drop_tables([User])
+    # db.create_tables([User])
 
-    # permissions = Permissions.select()
-    # perm_list = []
-    # for pm in permissions:
-    #     perm_list.append({'id': pm.id, 'name': pm.name})
-    #
-    # print(perm_list)
+    # data_source = [
+    #     {'id': uuid.uuid4(), 'fname': 'Admin', 'lname': 'Ad', 'email': 'admin@thremulate.com',
+    #      'passwd': generate_password_hash('admin'), 'is_superuser': '1', 'disabled': '0'},
+    #     {'id': uuid.uuid4(), 'fname': 'Moderator', 'lname': 'Mo', 'email': 'moderator@thremulate.com',
+    #      'passwd': generate_password_hash('moderator'), 'is_superuser': '0', 'disabled': '0'},
+    #     {'id': uuid.uuid4(), 'fname': 'User', 'lname': 'Us', 'email': 'user@thremulate.com',
+    #      'passwd': generate_password_hash('user'), 'is_superuser': '0', 'disabled': '0'}
+    # ]
+    # User.insert_many(data_source).execute()
 
-    # User.update(passwd=generate_password_hash('arn')).where(User.id == 12).execute()
-
-    # user = User.get(User.id == 2)
-    # print(user.userpermissions.count())
-    # for p in user.userpermissions:
-    #     # perms.append()
-    #     print(p.perm_id.name)
-    # perms.append({'perm_id': p.perm_id.id, 'perm_name': p.perm_id.name})
-
-    # Permissions.create(id=4, name=None)
-    # UserPermissions.create(user_id=5, perm_id=2)
-    # User.update(fname='Doe', lname='Doe', email='john', is_superuser=False,
-    # disabled=False).where(User.id == 5).execute()
-    # UserPermissions.delete().where(UserPermissions.user_id == 5).execute()
-    # UserPermissions.create(user_id=6, perm_id=Permissions.get(Permissions.name == 'public'))
-
-    try:
-        User.create(fname='Johnnie', lname='Peterson', email='amwesigwa16@gmail.com', passwd='kkkkkkk', is_superuser=False, disabled=False)
-    except IntegrityError as error:
-        if 'id' in error.__context__.__str__():
-            print('id constraint failed')
-        if 'email' in error.__context__.__str__():
-            print('email constraint failed')
-
-
-
-
+    # tech_table = techniques_for_db()
+    # for t in tech_table:
+    #     try:
+    #         tech = Technique.get(Technique.id == t['id'])
+    #         # print(tech.name)
+    #     except Technique.DoesNotExist:
+    #         Technique.create(id=t['id'], name=t['name'])
+    #         pass

@@ -1,180 +1,83 @@
 {% extends 'base.html' %}
-
 {% block content %}
-
-
 <!-- Padding Top -->
 <div style="margin-top: 4%;"></div>
-
-
 <div class="row row-card-no-pd">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
                 <div class="card-head-row">
-                    <h4 class="card-title">Customize Technique</h4>
-
+                    <h4 class="card-title">{{ name }} (T{{ id }})</h4>
                 </div>
                 <p class="card-category">
-                    View or Modify parameters for technique</p>
-                <p class="card-category">
-                    <!-- <button class="btn btn-primary btn-link"> -->
-                    <a href="{{ 'agents' }}">Back to Agents</a>
-                    <!-- </button> -->
-                </p>
+                    <p class="card-category">
+                        View or Modify values for this technique</p>
+                    <p class="card-category">
+                        <a href="{{ url('assign_get', id=agent_id) }}">Back to Assigning Techniques</a>
+                    </p>
             </div>
             <div class="card-body">
-
-
-                <!-- Table -->
-                <div class="table-responsive">
-                    <!-- <table id="agents" class="table display  table-striped table-hover cell-border" cellspacing="0" -->
-                    <table id="" class="table display  table-striped table-hover cell-border" cellspacing="0"
-                        width="100%">
-                        <thead class="font-weight-bold">
-                            <tr>
-                                <td>Key</td>
-                                <td>Value</td>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            <input class="value" type="hidden" value="{{ agent_id }}">
-                            <input class="value" type="hidden" value="{{ id }}">
-
-
-                            <tr>
-                                <td>Technique Id</td>
-                                <td>T{{ id }}</td>
-                            </tr>
-                            <tr>
-                                <td>Name</td>
-                                <td>{{ name }}</td>
-                            </tr>
-                            <tr>
-                                <td>Description</td>
-                                <td>{{ description }}</td>
-                            </tr>
-
-                            {% if params %}
-                            <tr>
-                                <td>Parameter names</td>
-                                <td>
-                                    {% for param in params %}
-                                    <div class="key">{{ param}}</div>
-                                    <!-- <br> -->
-                                    {% endfor %}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Parameters</td>
-                                <td>
-                                    {% for def_param in def_params %}
-                                    <!-- {{ def_param}} <br> -->
-                                    <input type="text" name="" value="{{ def_param}}"
-                                        class="value form-control form-control-sm" style="height: 34px!important;"> <br>
-                                    {% endfor %}
-                                </td>
-                            </tr>
-
+                {% for test in tests %}
+                <h4> {{ loop.index }}. {% filter upper %} {{ test.at_test.name}} {% endfilter %}</h4>
+                <p>Description: {{ test.description}}</p>
+                <p>Elevation required: {{ test.at_test.elevation_required}}</p>
+                {% if test.at_test.command %}
+                <p>Command(s): <br> {{ test.at_test.command.replace('\n', '<br>') | safe }}</p>
+                {% endif %}
+                {% if test.at_test.steps %}
+                <p>Steps: <br> {{ test.at_test.steps.replace('\n', '<br>') | safe}}</p>
+                {% endif %}
+                <div class="row">
+                    <div class="col-md-8">
+                        <form action="" method="post" class="assign">
+                            <input type="hidden" name="agent_id" value="{{ agent_id }}">
+                            <input type="hidden" name="tech_id" value="{{ id }}">
+                            <input type="hidden" name="test_id" value="{{ test.test_id }}">
+                            {% for param in test.params %}
+                            <div class="form-group">
+                                <label for="email2">{{ param.pname }}</label>
+                                <input type="text" class="form-control form-control-sm" id="" name="{{ param.pname }}"
+                                    value="{{ param.pvalue }}">
+                            </div>
+                            {% endfor %}
+                            <div style="height: 1em;"></div>
+                            {% if test.at_test.command %}
+                            <input type="button" class="btn btn-primary btn-round submit-tech" value="Assign"
+                                style="padding:.5rem 1.2rem;" name="submit">
+                            <input type="button" id="custom-done" class="btn btn-danger btn-round" value="Cancel"
+                                style="padding:.5rem 1.2rem;" name="cancel">
                             {% endif %}
-
-                            <tr>
-                                <td>Commands</td>
-                                <td>
-                                    {% for command in commands %}
-                                    {{ command}} <br>
-                                    {% endfor %}
-                                </td>
-                            </tr>
-
-
-
-
-
-
-                        </tbody>
-                    </table>
+                        </form>
+                    </div>
                 </div>
-
-                <input id="submit-custom" type="button" class="btn btn-primary btn-round" value="Assign">
-                <input type="button" id="custom-done" class="btn btn-danger btn-round" value="Cancel">
-
+                <hr>
+                <div style="height: 2em;"></div>
+                {% endfor %}
             </div>
         </div>
     </div>
 </div>
-
 <script src="{{ url('static', filename='js/core/jquery.3.2.1.min.js') }}"></script>
-
 <script>
     $(document).ready(function () {
         // Submit customised parameters
-        $("#submit-custom").click(function () {
-
-            // var vals = [];
-            // var keys = [];
-
-            var key_arr = [];
-            var val_arr = [];
-
-            vals = $(".value");
-            keys = $(".key");
-            // console.log("Array vals length: " + vals.length);
-
-            // console.log("Data length:" + vals.length);
-
-            var i;
-            console.log('#########################################');
-
-            for (i = 0; i < vals.length; i++) {
-                if (vals[i] == undefined) {
-                    vals[i].value = "";
-                }
-                // console.log('Value ' + i + ':' + vals[i].value);
-
-                val_arr[i] = vals[i].value;
-            }
-
-            console.log('#########################################');
-
-            if (keys != undefined || keys.length > 0) {
-                var k;
-                //  console.log("Data length:" + keys.length);
-                for (k = 0; k < keys.length; k++) {
-                    if (keys[k] == undefined) {
-                        keys[k].innerHTML = '';
+        $(".submit-tech").click(function () {
+            btn = $(this)
+            var assignment_form = btn.parent().serialize();
+            $.post("{{ url('customize_technique_post') }}", assignment_form, function (data, status) {
+                if(status == 'success'){
+                    if(data != 'Assigned'){
+                        btn.parent().replaceWith('<p class="text-danger" style="font-size: 1.5em;"><i class="fas fa-times-circle"></i>  '  + data + '</p>');
                     }
-                    // console.log('Key ' + k + ':' + keys[k].innerHTML);
-                    key_arr[k] = keys[k].innerHTML;
+                    else{
+                        btn.parent().replaceWith('<p class="text-success" style="font-size: 1.5em;"><i class="fas fa-check-circle"></i>  Assigned</p>');
+                    }
+                } 
+                else{
+                    btn.parent().replaceWith('<p class="text-danger" style="font-size: 1.5em;"><i class="fas fa-times-circle"></i>  Bad Request</p>');
                 }
-
-            }
-
-            var kk = key_arr.toString();
-            vv = val_arr.toString();
-            console.log(kk);
-            console.log(vv);
-
-            $.post("http://localhost:8000/customize_technique_post",
-                { 'keys': kk, 'values': vv });
-
-            // console.log(keys.toString());
-            // console.log( vals.toString());
-
-
-            // Goes back to previous webpage to assign more techniques     
-            // window.history.back();
-            window.location.assign("http://localhost:8000/assign_tasks/" + val_arr[0]);
-
+            });
         });
-
-
     });
-
-
 </script>
-
-
 {% endblock %}

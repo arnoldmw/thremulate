@@ -8,7 +8,6 @@
 
     <link rel="icon" type="image/x-icon" href="{{ url('static', filename='img/icon.ico') }}" />
 
-
     <!-- Fonts and icons -->
     <script src="{{ url('static', filename='js/plugin/webfont/webfont.min.js') }}"></script>
     <script>
@@ -19,27 +18,24 @@
                 sessionStorage.fonts = true;
             }
         });
-
-
-
-
-
-
-
-
-
-
     </script>
 
     <!-- CSS Files -->
     <link rel="stylesheet" type="text/css" href="{{ url('static', filename='css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url('static', filename='css/matrix.min.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ url('static', filename='css/atlantis.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url('static', filename='css/custom.css') }}" />
 
     <style>
         .nav-item .nav-link{
             font-size: 14px!important;
         }
-    
+        .border a {
+            color: #ffffff;
+            }
+        .no-border{
+        border: none !important;
+        }
     </style>
 </head>
 
@@ -47,272 +43,81 @@
 
     <div class="wrapper overlay-sidebar">
         <div class="main-header">
-            <!-- Logo Header -->
-           
-            <!-- End Logo Header -->
-
             <!-- Navbar Header -->
             <nav class="navbar navbar-header navbar-expand-lg" data-background-color="dark">
 
                 <div class="container-fluid">
                     <ul class="navbar-nav topbar-nav">
                         <li class="nav-item">
-                            <a href="/" class="logo">
+                            <a href="{{ url('home') }}" class="logo">
                                 <div class="navbar-brand" style="color: white;">Thremulate</div>
                             </a>
                         </li>
-
                         <li class="nav-item">
-                            <a href="#" class="nav-link">Home</a>
+                            <a href="{{ url('home') }}" class="nav-link">Home</a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ url('dashboard') }}" class="nav-link">Dashboard</a>
                         </li>
-
                         <li class="nav-item dropdown">
-                            <a class="nav-link drop" href="" id="campdropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Campaigns</a>
-                            <div class="dropdown-menu" aria-labelledby="campdropdown">
-                              <a class="dropdown-item" href="{{ url('campaigns') }}">View Campaigns</a>
-                              <a class="dropdown-item" href="#">Another action</a>
-                              <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
+                            <a class="nav-link " href="{{ url('adversaries') }}" >Adversaries</a>
                           </li>
-
                         <li class="nav-item dropdown">
-                            <a class="nav-link drop" href="" id="agentdropdown" 
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Agents</a>
-                            <div class="dropdown-menu" aria-labelledby="agentdropdown">
-                              <a class="dropdown-item" href="{{ url('agents') }}">View Agents</a>
-                              <a class="dropdown-item" href="#">Another action</a>
-                              <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
+                            <a class="nav-link " href="{{ url('agents') }}" >Agents</a>
                           </li>
-                        
+                        {% if current_user.is_su %}
                           <li class="nav-item dropdown">
-                            <a class="nav-link drop" href="" id="agentdropdown" 
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Users</a>
-                            <div class="dropdown-menu" aria-labelledby="agentdropdown">
-                              <a class="dropdown-item" href="{{ url('users') }}">View Users</a>
-                              <a class="dropdown-item" href="{{ url('register') }}">Add User</a>
-                              <!-- <a class="dropdown-item" href="#">Something else here</a> -->
-                            </div>
+                            <a class="nav-link " href="{{ url('users') }}" >Users</a>
                           </li>
+                        {% endif %}
                         </ul>
-
-                        
                         </ul>
                           <ul class="nav navbar-nav navbar-right align-items-left">
                             <li class="nav-item">
                                 <a href="#" class="nav-link">Help</a>
                             </li>
-                                                
                             <li class="nav-item">
-                                <a class="nav-link" href="#" aria-expanded="false">
+                                <a class="nav-link" href="{{ url('logout') }}" aria-expanded="false">
                                     <i class="fas icon-logout" data-toggle="tooltip" title="Log out"></i>
                                 </a>
                             </li>
-    
-                            
-                        
-    
-                            <li class="nav-item dropdown hidden-caret">
-                                <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
-                                    <i class="fas fa-user" data-toggle="tooltip" title="Account"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-user animated fadeIn">
-                                    <div class="scroll-wrapper dropdown-user-scroll scrollbar-outer"
-                                        style="position: relative;">
-                                        <div class="dropdown-user-scroll scrollbar-outer scroll-content"
-                                            style="height: auto; margin-bottom: 0px; margin-right: 0px; max-height: 0px;">
-                                            <li>
-                                                <div class="user-box">
-    
-                                                    <div class="u-text">
-                                                        <h4>Arnold</h4>
-                                                        <p class="text-muted">arnold@thremulate.com</p>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="#">My Profile</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="#">Account Setting</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="#">Logout</a>
-                                            </li>
-                                        </div>
-                                        <div class="scroll-element scroll-x">
-                                            <div class="scroll-element_outer">
-                                                <div class="scroll-element_size"></div>
-                                                <div class="scroll-element_track"></div>
-                                                <div class="scroll-bar ui-draggable ui-draggable-handle"></div>
-                                            </div>
-                                        </div>
-                                        <div class="scroll-element scroll-y">
-                                            <div class="scroll-element_outer">
-                                                <div class="scroll-element_size"></div>
-                                                <div class="scroll-element_track"></div>
-                                                <div class="scroll-bar ui-draggable ui-draggable-handle"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </ul>
+                            <li class="nav-item">
+                                <a href="{{ url('user_profile') }}" class="nav-link">{{ current_user.fname }}</a>
                             </li>
                           </ul>    
-
-                        
-                   
                 </div>
             </nav>
             <!-- End Navbar -->
         </div>
-
-        <!-- Sidebar -->
-        
-        <!-- End Sidebar -->
-
         <div class="main-panel">
             <div class="content">
-
                 <div class="page-inner mt--5">
 
-
                     {% block content %}{% endblock %}
-
 
                 </div>
             </div>
             <footer class="footer">
                 <div class="container-fluid">
-                    <nav class="pull-left">
-                        <ul class="nav">
-                            <!--                            <li class="nav-item">-->
-                            <!--                                <a class="nav-link" href="https://www.themekita.com">-->
-                            <!--                                    ThemeKita-->
-                            <!--                                </a>-->
-                            <!--                            </li>-->
-                            <!--                            <li class="nav-item">-->
-                            <!--                                <a class="nav-link" href="#">-->
-                            <!--                                    Help-->
-                            <!--                                </a>-->
-                            <!--                            </li>-->
-                            <!--                            <li class="nav-item">-->
-                            <!--                                <a class="nav-link" href="#">-->
-                            <!--                                    Licenses-->
-                            <!--                                </a>-->
-                            <!--                            </li>-->
-                        </ul>
-                    </nav>
-                    <div class="copyright ml-auto">
-                        <!-- Built with <a href="https://github.com/aio-libs/aiohttp">aiohttp</a> |
-                        Made with <i class="fa fa-heart heart text-danger"></i> by <a
-                            href="https://www.themekita.com">ThemeKita</a> -->
-
-                    </div>
+                    <div class="copyright ml-auto"></div>
                 </div>
             </footer>
         </div>
-
-
     </div>
-
-
     <!--   Core JS Files   -->
      <script src="/static/js/core/jquery.3.2.1.min.js?v=hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4%3D"></script>
     <script src="/static/js/core/popper.min.js?v=JjkbVCqolMR6n0Aba76nsbS0Qc2hpLbUwwhuLohbZcg%3D"></script>
     <script src="/static/js/core/bootstrap.min.js?v=5-02zu5UULQkO7w1GIr6vftCgMfFdZcAHeDtFnKZsBs%3D"></script>
-
-
+    <script src="{{ url('static', filename='js/core/jquery.validate.min.js') }}"></script>
     <!-- jQuery UI -->
     <script src="/static/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js?v=KZyMuNJB1Uv-_00w0GOueV9CboVXZh8BEIaM58Z4F8g%3D"></script>
-    <script
-        src="/static/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js?v=F8rcoZj02Vst0w9W-sBE5OCzYqw8T1ns1KNU4FZF0Uc%3D"></script>
-
-
-    <!-- jQuery Scrollbar -->
-    <script
-        src="/static/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js?v=yG90Y9wYISPhWT1qW_rsBRv7xsqzlzMPwvIEinH9eRo%3D"></script>
-
-
-    <!-- Chart JS -->
-    <script src="/static/js/plugin/chart.js/chart.min.js?v=wB6PNUVKf5LtEoybIRpB07SwDpFsqu1YvxYW8Z6aA4o%3D"></script>
-
-
-    <!-- jQuery Sparkline -->
-    <script
-        src="/static/js/plugin/jquery.sparkline/jquery.sparkline.min.js?v=BuAkLaFyq4WYXbN3TFSsG1M5GltEeFehAMURi4KBpUM%3D"></script>
-
-
-    <!-- Chart Circle -->
-    <script
-        src="/static/js/plugin/chart-circle/circles.min.js?v=f0tEwPlUrJETusmrvQlPN96nmpMg-wiLsJEGCqMUtZg%3D"></script>
-
+    <script src="/static/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js?v=F8rcoZj02Vst0w9W-sBE5OCzYqw8T1ns1KNU4FZF0Uc%3D"></script>
 
     <!-- Datatables -->
-    <script
-        src="/static/js/plugin/datatables/datatables.min.js?v=qDR-LgAvHkIAv3FesIgtiuoJ4E-Nqi74WL09ZDclYOY%3D"></script>
-
-
-    <!-- Bootstrap Notify -->
-    <script
-        src="/static/js/plugin/bootstrap-notify/bootstrap-notify.min.js?v=381ETYNQPu16sjp0JZ1jjqShakixVTnklNuRKUd_qbk%3D"></script>
-
-
-    <!-- jQuery Vector Maps -->
-    <script src="/static/js/plugin/jqvmap/jquery.vmap.min.js?v=a1ehOsZTADR0Lrfb51B8cuneDsol_VwaVj7qIWwTCAE%3D"></script>
-    <script
-        src="/static/js/plugin/jqvmap/maps/jquery.vmap.world.js?v=gSvZVL_Ip1QHp-3bhHaWb-sNa3I6IcSTah6icCofum4%3D"></script>
-
-
-    <!-- Sweet Alert -->
-    <script
-        src="/static/js/plugin/sweetalert/sweetalert.min.js?v=FSEeC-c0OJh-0FI23EzpCWL3xGRSQnNkRGV2UF5maXs%3D"></script>
-
+    <script src="/static/js/plugin/datatables/datatables.min.js?v=qDR-LgAvHkIAv3FesIgtiuoJ4E-Nqi74WL09ZDclYOY%3D"></script>
 
     <!-- Atlantis JS -->
     <script src="/static/js/atlantis.min.js?v=g1nQSzePmnrvtuAad_HG2id0QfW6-nODQQiwm6hyqfk%3D"></script>
 
-
-    <script>
-
-
-        $(document).ready(function(){
-
-            // $(".nav-item").mouseenter(function(){
-            //     $(this).children("a.drop").dropdown("toggle");
-            // });
-
-            $(".drop").mouseenter(function(){             
-                $(this).dropdown("toggle");
-
-            });
-
-            // $(".drop").mouseleave(function(){
-            //     $(this).dropdown("toggle");
-
-            // });
-
-        });
-
-    </script>
-
-
-    <div id="pDebug">
-        <div style="display: block; " id="pDebugToolbarHandle">
-            <a title="Show Toolbar" id="pShowToolBarButton" href="/_debugtoolbar/32313033303037323431343430"
-                target="pDebugToolbar">«
-                FIXME: Debug Toolbar</a>
-        </div>
-    </div>
-
-
-    <script src="http://localhost:8001/livereload.js"></script>
-    <div
-        style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
-        <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
-        </div>
-    </div>
 </body>
-
 </html>

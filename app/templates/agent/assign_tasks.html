@@ -1,11 +1,7 @@
 {% extends 'base.html' %}
-
 {% block content %}
-
 <!-- Padding Top -->
 <div style="margin-top: 4%;"></div>
-
-
 <div class="row row-card-no-pd">
     <div class="col-md-12">
         <div class="card">
@@ -13,63 +9,138 @@
                 <div class="card-head-row">
                     <h4 class="card-title">Techniques</h4>
                 </div>
-                <p class="card-category">Assign techniques to Agent</p>
-                <p class="card-category"><a href="{{ url('agents') }}">Back to Agents</a></p>
-
             </div>
+            <p class="card-category">Assign techniques to Agent</p>
+            <p class="card-category"><a href="{{ url('agents') }}">Back to Agents</a></p>
             <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-matrix">
+                        <thead class="bg-gray color-white">
+                            <tr>
+                                <!-- <th scope="col"><a class="matrix-tactics-url" href="/tactics/TA0001/">Initial Access</a>
+                                </th> -->
+                                <th scope="col"><a class="matrix-tactics-url" href="/tactics/TA0002/">Execution</a>
+                                </th>
+                                <th scope="col"><a class="matrix-tactics-url" href="/tactics/TA0003/">Persistence</a>
+                                </th>
+                                <th scope="col"><a class="matrix-tactics-url" href="/tactics/TA0004/">Privilege
+                                        Escalation</a></th>
+                                <th scope="col"><a class="matrix-tactics-url" href="/tactics/TA0005/">Defense
+                                        Evasion</a></th>
+                                <th scope="col"><a class="matrix-tactics-url" href="/tactics/TA0006/">Credential
+                                        Access</a></th>
+                                <th scope="col"><a class="matrix-tactics-url" href="/tactics/TA0007/">Discovery</a>
+                                </th>
+                                <th scope="col"><a class="matrix-tactics-url" href="/tactics/TA0008/">Lateral
+                                        Movement</a></th>
+                                <th scope="col"><a class="matrix-tactics-url" href="/tactics/TA0009/">Collection</a>
+                                </th>
+                                <th scope="col"><a class="matrix-tactics-url" href="/tactics/TA0011/">Command and
+                                        Control</a></th>
+                                <th scope="col"><a class="matrix-tactics-url" href="/tactics/TA0010/">Exfiltration</a>
+                                </th>
+                                <!-- <th scope="col"><a class="matrix-tactics-url" href="/tactics/TA0040/">Impact</a></th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in range(0, 10) %}
+                            <tr>
+                                {% if i < matrix.execution.__len__() %}
+                                <td class="border">
+                                    <a
+                                        href="{{ url('customize_technique', query_={'agent_id': agent_id, 'tech_id': matrix.execution[i].id} ) }}">
+                                        {{matrix.execution[i].name}}</a> </td>
+                                {% else %}
+                                <td class="no-border"></td>
+                                {% endif %}
 
-                {% for tech in techs %}
-                <form action="{{ url('customize_technique') }}" method="post" accept-charset="utf-8"
-                    enctype="application/x-www-form-urlencoded" id="{{ tech.id }}">
+                                {% if i < matrix.persistence.__len__() %}
+                                <td class="border"> <a
+                                        href="{{ url('customize_technique', query_={'agent_id': agent_id, 'tech_id': matrix.persistence[i].id} ) }}">{{matrix.persistence[i].name}}</a>
+                                </td>
+                                {% else %}
+                                <td class="no-border"></td>
+                                {% endif %}
 
-                    <input type="hidden" value="{{ agent_id }}" name="agent_id">
+                                {% if i < matrix.privilege_escalation.__len__() %}
+                                <td class="border"> <a
+                                        href="{{ url('customize_technique', query_={'agent_id': agent_id, 'tech_id': matrix.privilege_escalation[i].id} ) }}">
+                                        {{matrix.privilege_escalation[i].name}}</a>
+                                </td>
+                                {% else %}
+                                <td class="no-border"></td>
+                                {% endif %}
 
-                    <div class="form-group">
-                        <div class="selectgroup selectgroup-pills">
-                            <label class="selectgroup-item">
-                                <input type="checkbox" name="{{ tech.id }}" value="{{ tech.id }}"
-                                    class="selectgroup-input">
-                                <span class="selectgroup-button">{{ tech.name }} (T{{ tech.id }})</span>
-                            </label>
-                        </div>
-                    </div>
+                                {% if i < matrix.defense_evasion.__len__() %}
+                                <td class="border"> <a
+                                        href="{{ url('customize_technique', query_={'agent_id': agent_id, 'tech_id': matrix.defense_evasion[i].id} ) }}">
+                                        {{matrix.defense_evasion[i].name}}</a>
+                                </td>
+                                {% else %}
+                                <td class="no-border"></td>
+                                {% endif %}
 
-                </form>
-                {% endfor %}
+                                {% if i < matrix.credential_access.__len__() %}
+                                <td class="border"> <a
+                                        href="{{ url('customize_technique', query_={'agent_id': agent_id, 'tech_id': matrix.credential_access[i].id} ) }}">
+                                        {{matrix.credential_access[i].name}}</a>
+                                </td>
+                                {% else %}
+                                <td class="no-border"></td>
+                                {% endif %}
+
+                                {% if i < matrix.discovery.__len__() %}
+                                <td class="border"> <a
+                                        href="{{ url('customize_technique', query_={'agent_id': agent_id, 'tech_id': matrix.discovery[i].id} ) }}">
+                                        {{matrix.discovery[i].name}}</a>
+                                </td>
+                                {% else %}
+                                <td class="no-border"></td>
+                                {% endif %}
+
+                                {% if i < matrix.lateral_movement.__len__() %}
+                                <td class="border"> <a
+                                        href="{{ url('customize_technique', query_={'agent_id': agent_id, 'tech_id': matrix.lateral_movement[i].id} ) }}">
+                                        {{matrix.lateral_movement[i].name}}</a>
+                                </td>
+                                {% else %}
+                                <td class="no-border"></td>
+                                {% endif %}
+
+                                {% if i < matrix.collection.__len__() %}
+                                <td class="border"> <a
+                                        href="{{ url('customize_technique', query_={'agent_id': agent_id, 'tech_id': matrix.collection[i].id} ) }}">
+                                        {{matrix.collection[i].name}}</a>
+                                </td>
+                                {% else %}
+                                <td class="no-border"></td>
+                                {% endif %}
+
+                                {% if i < matrix.command_and_control.__len__() %}
+                                <td class="border"> <a
+                                        href="{{ url('customize_technique', query_={'agent_id': agent_id, 'tech_id': matrix.command_and_control[i].id} ) }}">
+                                        {{matrix.command_and_control[i].name}}</a>
+                                </td>
+                                {% else %}
+                                <td class="no-border"></td>
+                                {% endif %}
+
+                                {% if i < matrix.exfiltration.__len__() %}
+                                <td class="border"> <a
+                                        href="{{ url('customize_technique', query_={'agent_id': agent_id, 'tech_id': matrix.exfiltration[i].id} ) }}">
+                                        {{matrix.exfiltration[i].name}}</a>
+                                </td>
+                                {% else %}
+                                <td class="no-border"></td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
-            <div class="card-action">
-                <input type="submit" value="Assign" name="submit" class="btn btn-primary" />
-            </div>
-
         </div>
     </div>
 </div>
-
-<!-- <script src="/static/js/core/jquery.3.2.1.min.js?v=hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4%3D"></script> -->
-
 <script src="{{ url('static', filename='js/core/jquery.3.2.1.min.js') }}"></script>
-
-<script>
-    $(document).ready(function () {
-        // Send to Customize technique webpage
-        $(":checkbox").click(function () {
-
-            // Form id == input id 
-            var form_id = '#' + $(this).attr("name");
-            // console.log("form id " + form_id);
-            $(form_id).submit();
-
-            // var tech_id = $(this).val();
-            // var agent_id = $("#agent_id").val();
-            // console.log(tech_id);
-            // console.log(agent_id);
-
-            // $.post("http://localhost:8000/customize_technique",{ 'agent_id': agent_id , 'tech_id': tech_id });
-
-        });
-    });
-</script>
-
 {% endblock %}

@@ -1,0 +1,237 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Padding Top -->
+<div style="margin-top: 4%;"></div>
+
+<div class="row row-card-no-pd">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-head-row">
+                    <h4 class="card-title">Update User</h4>
+                </div>
+                <p class="card-category">
+                    <a href="{{ url('users') }}">Back to Users</a>
+                </p>
+            </div>
+            <form action="{{ url('admin_user_edit_post') }}" method="post" id="admin-user-edit">
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="hidden" name="user_id" value="{{ user.id }}">
+                                <label for="">First Name</label>
+                                <input type="text" class="form-control" id="fname" name="fname"
+                                    value="{{ user.fname }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Last Name</label>
+                                <input type="text" class="form-control" id="lname" name="lname"
+                                    value="{{ user.lname }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email"
+                                    value="{{ user.email }}">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label d-block">Account Status</label>
+                                <div class="selectgroup selectgroup-primary selectgroup-pills">
+
+                                    <label class="selectgroup-item">
+                                        {% if user.disabled == True %}
+                                        <input type="radio" name="disabled" value="True" class="selectgroup-input"
+                                            checked>
+                                        <span class="selectgroup-button selectgroup-button-icon"><i class="fas fa-lock"
+                                                data-toggle="tooltip" title="Locked"></i></span>
+                                        {% else %}
+                                        <input type="radio" name="disabled" value="True" class="selectgroup-input">
+                                        <span class="selectgroup-button selectgroup-button-icon"><i class="fas fa-lock"
+                                                data-toggle="tooltip" title="Locked"></i></span>
+                                        {% endif %}
+                                    </label>
+
+                                    <label class="selectgroup-item">
+                                        {% if user.disabled == False %}
+                                        <input type="radio" name="disabled" value="False" class="selectgroup-input"
+                                            checked>
+                                        <span class="selectgroup-button selectgroup-button-icon"><i
+                                                class="fas fa-lock-open" data-toggle="tooltip"
+                                                title="Unlocked"></i></span>
+                                        {% else %}
+                                        <input type="radio" name="disabled" value="False" class="selectgroup-input">
+                                        <span class="selectgroup-button selectgroup-button-icon"><i
+                                                class="fas fa-lock-open" data-toggle="tooltip"
+                                                title="Unlocked"></i></span>
+                                        {% endif %}
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label d-block">Super User</label>
+                                <div class="selectgroup selectgroup-primary selectgroup-pills" id="superuser">
+
+                                    <label class="selectgroup-item">
+                                        {% if user.superuser == True %}
+                                        <input type="radio" name="superuser" value="True" class="selectgroup-input"
+                                            checked>
+                                        <span class="selectgroup-button selectgroup-button-icon"><i
+                                                class="fas fa-user-ninja" data-toggle="tooltip"
+                                                title="Superuser"></i></span>
+                                        {% else %}
+                                        <input type="radio" name="superuser" value="True" class="selectgroup-input">
+                                        <span class="selectgroup-button selectgroup-button-icon"><i
+                                                class="fas fa-user-ninja" data-toggle="tooltip"
+                                                title="Superuser"></i></span>
+                                        {% endif %}
+                                    </label>
+
+                                    <label class="selectgroup-item">
+                                        {% if user.superuser == False %}
+                                        <input type="radio" name="superuser" value="False" class="selectgroup-input"
+                                            checked>
+                                        <span class="selectgroup-button selectgroup-button-icon"><i class="fas fa-user"
+                                                data-toggle="tooltip" title="Non-Superuser"></i></span>
+                                        {% else %}
+                                        <input type="radio" name="superuser" value="False" class="selectgroup-input">
+                                        <span class="selectgroup-button selectgroup-button-icon"><i class="fas fa-user"
+                                                data-toggle="tooltip" title="Non-Superuser"></i></span>
+                                        {% endif %}
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Permissions</label><br>
+                                <div class="selectgroup selectgroup-pills">
+
+                                    {% for p in perm_list %}
+                                    {% if p.id == user.user_perms[0].perm_id or p.id == user.user_perms[1].perm_id %}
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" name="{{p.name}}" value="{{ p.id }}"
+                                            class="selectgroup-input" checked>
+                                        <span class="selectgroup-button">{{p.name}}</span>
+                                    </label>
+                                    {% else %}
+                                    <label class="selectgroup-item">
+                                        <input type="checkbox" name="{{p.name}}" value="{{ p.id }}"
+                                            class="selectgroup-input">
+                                        <span class="selectgroup-button">{{p.name}}</span>
+                                    </label>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="button" id="cancel" name="cancel" class="btn btn-danger btn-round" value="Cancel">
+                <input class="btn btn-primary btn-round" type="submit" name="submit" value="Update">
+            </form>
+            <hr>
+            <div class="form-group">
+                <label for="">Lockout Count</label><br>
+                <button class="btn btn-primary btn-link" id="reset-lockout" data-user-id="{{ user.id }}"><span
+                        class="btn-label"><i class="fas fa-lock-open"></i></span>
+                    Reset Lockout Count
+                </button>
+
+            </div>
+            <div class="form-group">
+                <label for="">Password</label><br>
+                <button class="btn btn-primary btn-link"><span class="btn-label"><i class="fas fa-key"></i></span>
+                    <a href="{{ url('reset_password', id=user.id | string) }}">Reset Password</a>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="{{ url('static', filename='js/core/jquery.3.2.1.min.js') }}"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#cancel").click(function () {
+            window.location.assign("/users");
+        });
+
+        // Reset lockout
+        $("#reset-lockout").click(function () {
+            var user_id = $(this).attr("data-user-id");
+            $.post("{{ url('reset_lockout_post') }}", { 'user_id': user_id }, function (data, status) {
+                if (status == 'success' && data == 'success') {
+                    $.notify({
+                        // options
+                        icon: 'fas fa-check',
+                        title: 'Success',
+                        message: 'Reset lockout count'
+                    }, {
+                        // settings
+                        type: 'success'
+                    });
+                }
+                else {
+                    $.notify({
+                        // options
+                        icon: 'fas fa-times',
+                        title: 'Error',
+                        message: 'Failed to reset lockout count'
+                    }, {
+                        // settings
+                        type: 'danger'
+                    });
+                }
+            });
+        });
+        // Javascript validation
+        $("#admin-user-edit").validate({
+            rules: {
+                fname: {
+                    required: true,
+                    minlength: 2
+                },
+                lname: {
+                    required: true,
+                    minlength: 2
+                },
+                email: {
+                    required: true,
+                    email: true
+                }
+            },
+            messages: {
+                firstname: {
+                    required: "Please enter your First name",
+                    minlength: "First name must be at least 2 characters long"
+                },
+                lastname: {
+                    required: "Please enter your First name",
+                    minlength: "First name must be at least 2 characters long"
+                },
+                email: "Please enter a valid email address"
+            },
+            errorElement: "em",
+            errorPlacement: function (error, element) {
+                // Add the `invalid-feedback` class to the error element
+                error.addClass("invalid-feedback");
+
+                if (element.prop("type") === "checkbox") {
+                    error.insertAfter(element.next("label"));
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).parent().addClass("has-error").removeClass("has-success");
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).parent().addClass("has-success").removeClass("has-error");
+            }
+        });
+
+    });
+</script>
+{% endblock %}

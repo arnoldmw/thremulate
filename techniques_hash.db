@@ -8,14 +8,14 @@
     "T1012": {
         "0": "b0b1102edcbffb75c2810944a5df10fa7048ae0fa80c4e9719c3c088bf410325"
     },
-    "T1055": {
-        "0": "01e700facac59db8fdeba2c83ef1c4a8590f3f1985ce6984cf6601adaba7391c"
-    },
     "T1082": {
         "0": "bbc63e4d67178e3dbea89b6a1a890e00ab69fe2464214e0fb172ba2ef241f215"
     },
     "T1124": {
         "0": "ab40ef729f2a7d10fe8628284d561f96aef2945a6e1ea94d1177a5b4d4311a98",
         "1": "ae51cf35e67addd41e14e97d331d14f9f48f2fd99e8072651226b546136c10ea"
+    },
+    "T1183": {
+        "0": "7aad986e01f5a3bcf0c6d616c68b2e1f39ce7b5e063a94f2b4de8f7f265cab01"
     }
 }

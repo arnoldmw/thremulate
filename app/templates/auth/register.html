@@ -5,28 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Thremulate | {{ title }}</title>
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-
     <link rel="icon" type="image/x-icon" href="{{ url('static', filename='img/icon.ico') }}" />
-
-    <!-- Fonts and icons -->
-    <script src="{{ url('static', filename='js/plugin/webfont/webfont.min.js') }}"></script>
-    <script>
-        WebFont.load({
-            google: { "families": ["Lato:300,400,700,900"] },
-            custom: { "families": ["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['{{ url('static', filename='css/fonts.min.css') }}'] },
-            active: function () {
-                sessionStorage.fonts = true;
-            }
-        });
-
-
-    </script>
-
-
     <!-- CSS Files -->
     <link rel="stylesheet" type="text/css" href="{{ url('static', filename='css/bootstrap.min.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ url('static', filename='css/atlantis.min.css') }}" />
-
     <style>
         .cmxform fieldset p label span.error { color: red; }
         form.cmxform { width: 30em; }
@@ -36,22 +18,16 @@
             float: none;
         }
         </style>
-
 </head>
 
 <body data-background-color="dark">
-
     <div class="main-panel" style="width: 100%;padding-top: 3%;">
         <div class="container">
-
             <div class="row">
                 <div class="col-12 text-center">
                     <h1 style="color: #f9fbfd;">Thremulate</h1>
                 </div>
             </div>
-
-
-
             <div class="row">
                 <div class="col"></div>
                 <div class="col-7">
@@ -59,36 +35,30 @@
                         <div class="card-header">
                             <div class="card-title">Register</div>
                         </div>
-
-
                         <form id="regform" method="POST" action="{{ url('register_post') }}">
-
                             <div class="card-body">
                                 <div class="form-group">
                                     <div class="form-row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <input id="firstname" name="firstname" type="text"
-                                                    class="form-control input-solid" required="" minlength="5"
+                                                    class="form-control " required="" minlength="5"
                                                     placeholder="First Name">
-                                                <!-- <label for="firstname" class="placeholder"></label> -->
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group ">
                                                 <input id="lastname" name="lastname" type="text"
-                                                    class="form-control input-solid" required="" minlength="5"
+                                                    class="form-control " required="" minlength="5"
                                                     placeholder="Last Name">
-                                                <!-- <label for="lastname" class="placeholder">Last Name</label> -->
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="form-group ">
-                                        <input id="email" name="email" type="email" class="form-control input-solid"
+                                        <input id="email" name="email" type="email" class="form-control "
                                             required="" minlength="5" placeholder="Email">
-                                        <!-- <label for="email" class="placeholder">Email</label> -->
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -96,69 +66,41 @@
                                         <div class="col-md-6">
                                             <div class="form-group ">
                                                 <input id="password" name="password" type="password"
-                                                    class="form-control input-solid" required="" minlength="5"
+                                                    class="form-control " required="" minlength="5"
                                                     placeholder="Password">
-                                                <!-- <label for="email" class="placeholder">Password</label> -->
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <input id="confirm_password" name="confirm_password" type="password"
-                                                    class="form-control input-solid" required="" minlength="5"
+                                                    class="form-control " required="" minlength="5"
                                                     placeholder="Confirm Password">
-                                                <!-- <label for="confirm_password" class="placeholder">Confirm Password</label> -->
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
-                              
-
-
-                                
                             </div>
-
-
                             <div class="card-action text-center">
                                 <div id="send">
                                     <input class="btn btn-lg btn-primary btn-block" type="submit" id="submit"
                                         value="Register">
                                 </div>
-
                                 <a href="{{ 'users' }}">Back to Users</a>
-
-
                             </div>
                         </form>
                     </div>
                 </div>
                 <div class="col"></div>
             </div>
-
-
         </div>
     </div>
-
     <!--   Core JS Files   -->
     <script src="{{ url('static', filename='js/core/jquery.3.2.1.min.js') }}"></script>
     <script src="{{ url('static', filename='js/core/jquery.validate.min.js') }}"></script>
-    <!-- <script src="{{ url('static', filename='js/core/bootstrap.min.js') }}"></script> -->
-
-
-    <!-- Atlantis JS -->
-    <!-- <script src="{{ url('static', filename='js/atlantis.min.js') }}"></script> -->
     <script type="text/javascript">
-        $.validator.setDefaults({
-            submitHandler: function () {
-                // alert("submitted!");
-                $("#reg-card").addClass("is-loading");
-                $("#regform").submit();
-            }
-        });
+       
 
         $(document).ready(function () {
-
-
             $("#regform").validate({
                 rules: {
                     firstname: "required",
@@ -175,15 +117,11 @@
                     email: {
                         required: true,
                         email: true
-                    },
-                   
-                
-
+                    }
                 },
                 messages: {
                     firstname: "Please enter your First name",
                     lastname: "Please enter your Last name",
-
                     password: {
                         required: "Please provide a password",
                         minlength: "Your password must be at least 5 characters long"
@@ -193,9 +131,7 @@
                         minlength: "Your password must be at least 5 characters long",
                         equalTo: "Please enter the same password on the left"
                     },
-                    email: "Please enter a valid email address",
-                   
-
+                    email: "Please enter a valid email address"
                 },
                 errorElement: "em",
                 errorPlacement: function (error, element) {
@@ -209,16 +145,14 @@
                     }
                 },
                 highlight: function (element, errorClass, validClass) {
-                    $(element).addClass("is-invalid").removeClass("is-valid");
+                    $(element).parent().addClass("has-error").removeClass("has-success");
                 },
                 unhighlight: function (element, errorClass, validClass) {
-                    $(element).addClass("is-valid").removeClass("is-invalid");
+                    $(element).parent().addClass("has-success").removeClass("has-error");
                 }
             });
-
         });
     </script>
-
 </body>
 
 </html>

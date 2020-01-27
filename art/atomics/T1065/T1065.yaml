@@ -1,6 +1,6 @@
 ---
 attack_technique: T1065
-display_name: Adversaries may conduct C2 communications over a non-standard port to bypass proxies and firewalls.
+display_name: Uncommonly Used Port
 
 atomic_tests:
 - name: Testing usage of uncommonly used port with PowerShell

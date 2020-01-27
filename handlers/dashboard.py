@@ -2,15 +2,18 @@ import datetime
 
 import aiohttp_jinja2
 from aiohttp import web
+from aiohttp_security import check_authorized
+from aiohttp_session import get_session
 from database import *
 
 
 @aiohttp_jinja2.template('dashboard/dashboard.html')
 async def dashboard(request):
+    await check_authorized(request)
     counts = []
 
-    # Campaign count
-    camp_count = Campaign.select().count()
+    # Adversary count
+    camp_count = Adversary.select().count()
     # Agent count
     agent_count = Agent.select().count()
     # Technique count
@@ -32,14 +35,13 @@ async def dashboard(request):
     counts.append(tech_count)  # 2
     counts.append(user_count)  # 3
     counts.append(percent_tech_executed)  # 4
-    # counts.append(cumulative_tech_execution)
 
     graph = []
 
     camp_month_count = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    # Number of campaigns per month
-    query6 = Campaign.select(Campaign.id, Campaign.created_date.month.alias('month'),
-                             fn.Count(Campaign.id).alias('count')).group_by(Campaign.created_date.month)
+    # Number of adversaries per month
+    query6 = Adversary.select(Adversary.id, Adversary.created_date.month.alias('month'),
+                              fn.Count(Adversary.id).alias('count')).group_by(Adversary.created_date.month)
 
     for q in query6:
         # Array index begin from 0
@@ -88,10 +90,66 @@ async def dashboard(request):
 
     counts.append(exec_in_week)
 
-    return {'counts': counts, 'graph': graph, 'weekly': weekly}
+    top_active_agents = most_active_agents()
+    timeline = timeline_data()
+    platform_execution = platform_exec_count()
+
+    session = await get_session(request)
+    current_user = session['current_user']
+    return {'current_user': current_user, 'counts': counts, 'graph': graph, 'weekly': weekly,
+            'top_active_agents': top_active_agents, 'timeline': timeline, 'plat_exec': platform_execution}
+
+
+def most_active_agents():
+    most_active_agents_in_db = []
+    number_executed = fn.Count(AgentTechnique.executed)
+    query7 = AgentTechnique.select(AgentTechnique.agent_id,
+                                   number_executed.alias('count'), Agent.name, Agent.platform) \
+        .join(Agent) \
+        .group_by(AgentTechnique.agent_id) \
+        .having(AgentTechnique.executed.is_null(False)).order_by(number_executed.desc()).limit(5).dicts()
+
+    for a in query7:
+        most_active_agents_in_db.append(a)
+
+    return most_active_agents_in_db
+
+
+def timeline_data():
+    t_data = []
+    query = AgentTechnique.select(AgentTechnique.executed, fn.Count(AgentTechnique.agent_id).alias('count')) \
+        .group_by(AgentTechnique.executed.day).having(AgentTechnique.executed.is_null(False)) \
+        .order_by(AgentTechnique.executed.desc()).limit(6).dicts()
+
+    for n in query:
+        t_data.append(n)
+
+    return t_data
+
+
+def platform_exec_count():
+    plat_execution = AgentTechnique.select(Agent.platform, AgentTechnique.agent_id,
+                                           fn.Count(AgentTechnique.technique_id).alias('count')).join(Agent) \
+        .group_by(AgentTechnique.agent_id).having(AgentTechnique.executed.is_null(False)).dicts()
+
+    plat_exec = {'windows': 0, 'linux': 0, 'macos': 0}
+    for p in plat_execution:
+        if p['platform'] == 'windows':
+            plat_exec['windows'] = plat_exec['windows'] + p['count']
+        if p['platform'] == 'macos':
+            plat_exec['macos'] = plat_exec['macos'] + p['count']
+        if p['platform'] == 'linux':
+            plat_exec['linux'] = plat_exec['linux'] + p['count']
+
+    return plat_exec
 
 
 def setup_dashboard_routes(app):
+    """
+    Adds dashboard route to the application.
+    :param app:
+    :return: None
+    """
     app.add_routes([
         web.get('/dashboard', dashboard, name='dashboard'),
     ])
