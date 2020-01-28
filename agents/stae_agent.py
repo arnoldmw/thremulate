@@ -22,6 +22,9 @@ agent_id = 0
 kill_date_string = ''
 THIS_DIR = Path(__file__).parent
 
+INTERVAL = 5
+SERVER_IP = ''
+
 
 def check_cert():
     """
@@ -347,6 +350,6 @@ if __name__ == '__main__':
         except KeyError:
             pass
     while True:
-        time.sleep(4)
+        time.sleep(INTERVAL)
         send_output()
         config_file()
