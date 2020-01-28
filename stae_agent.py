@@ -12,7 +12,8 @@ from pathlib import Path
 
 from urllib3.exceptions import MaxRetryError
 
-http = urllib3.PoolManager()
+urllib3.disable_warnings()
+http = urllib3.PoolManager(ca_certs='thremulate.crt')
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
                          ' (KHTML, like Gecko) Chrome/78.0.3904.97 Safa'}
 TIMEOUT = 15
@@ -20,6 +21,32 @@ executed = []
 agent_id = 0
 kill_date_string = ''
 THIS_DIR = Path(__file__).parent
+
+
+def check_cert():
+    if not os.path.exists(path='thremulate.crt'):
+        certificate = b"""
+-----BEGIN CERTIFICATE-----
+MIIC8DCCAdigAwIBAgIURbRyjExMFO4ZWcA9A3kOsxMojswwDQYJKoZIhvcNAQEL
+BQAwFDESMBAGA1UEAwwJbG9jYWxob3N0MB4XDTIwMDEyNzE2NTIwN1oXDTMwMDEy
+NDE2NTIwN1owFDESMBAGA1UEAwwJbG9jYWxob3N0MIIBIjANBgkqhkiG9w0BAQEF
+AAOCAQ8AMIIBCgKCAQEAvbIA0b7znei4rAdTAlk3phm5SdvI6+7JzTE7w+14anoH
+pXcD/nPzgenV722i/Bp19OpJ80qdfP6uHa+11tVqWXxqG843wTJ9u4c1VhMLf9ju
+XBXJGBl2Ud+jOLgmJtYgKOE9Km88AbT84kQMkao15ySy94tfL8dSA27hFvfrrvzp
+YTzDYXbyMzsf61LBWnGXAcWau20j5w3+UYjxARWJuMswpaaupd0miBMGpGZBgPqw
+E7oQE6rTXk+n0jKuE+nUONQqPk8N4R/CbZ6Pk3wZHZOgM2bKSCxKvI2va66MEuIk
+nZhpm02wyDm7vF8pxsmdlDa41txFtSFLSahjJ+AUXQIDAQABozowODAPBgNVHRME
+CDAGAQH/AgEAMCUGA1UdEQQeMByCCWxvY2FsaG9zdIIJMTI3LjAuMC4xhwR/AAAB
+MA0GCSqGSIb3DQEBCwUAA4IBAQBtTSub5ioRpVqWWjYxZYtkSRgWa3/CwH957ngR
+PWsKEbjr5dynaFhJI6DTOfOF42q9njBvaLK1baGB4K7TgfMyPiozWVR8wicthmuY
+s/5ewV1ZWax1LMpVATERanzo/t5knhCNRegkYUL1eQqI1rAtUZF9jJ84q1a4ONwN
+TKiGpUrVqVXFNopyF60vC8koO2LqKXqxdlhlArZml/a2gLFb9F+yVIimx4eKAtS0
+x3MOEQiUgH8ha4wvJpsr/WzD0EBcyPop6MogvgSP+hzJ0N0wb+A//cNsuTIZAUZ8
+X4E1Yf/YLC8FZCgjz3Z9NUltZ6MNuahcJPfeVhd47cg9lK8o
+-----END CERTIFICATE-----
+        """
+        with open("thremulate.crt", "wb") as f:
+            f.write(certificate)
 
 
 def config_file():
@@ -100,7 +127,7 @@ def get_platform():
 
 
 def register():
-    url = 'http://localhost:8000/register_agent'
+    url = 'https://localhost:8000/register_agent'
 
     try:
         req = http.request('POST', url, fields={'id': agent_id, 'hostname': platform.node(), 'platform': get_platform(),
@@ -112,14 +139,13 @@ def register():
             print('[+] ' + response)
 
     except MaxRetryError:
-        print('[+] Agent failed to register with server after 3 retries')
-        pass
+        sys.exit('[+] Agent failed to register with server after 3 retries\n[+] Agent stopped!!')
 
 
 def get_techniques():
     try:
 
-        url = ('http://localhost:8000/agent_techniques/%s' % agent_id)
+        url = ('https://localhost:8000/agent_techniques/%s' % agent_id)
         req = http.request('GET', url, headers=headers)
         response = str(req.data.decode('utf-8'))
 
@@ -143,7 +169,7 @@ def get_techniques():
 
 def download_and_run_commands():
     try:
-        url = ('http://localhost:8000/agent_tasks/%s' % agent_id)
+        url = ('https://localhost:8000/agent_tasks/%s' % agent_id)
         req = http.request('GET', url, headers=headers)
         response = str(req.data.decode('utf-8'))
 
@@ -170,7 +196,7 @@ def download_and_run_commands():
 
 def send_output():
     std_out = download_and_run_commands()
-    # url = 'http://localhost:8000/agent_tasks/5'
+    # url = 'https://localhost:8000/agent_tasks/5'
 
     if std_out is None:
         print('[+] Failed to get techniques from the server')
@@ -180,7 +206,7 @@ def send_output():
         return
 
     agent_tech = get_techniques()
-    # http://localhost:8000/agent_techniques/5
+    # https://localhost:8000/agent_techniques/5
 
     if agent_tech is None:
         # print('[+] Failed to get techniques from the server')
@@ -189,7 +215,7 @@ def send_output():
         print('[+] No techniques assigned')
         return
 
-    url = 'http://localhost:8000/agent_output'
+    url = 'https://localhost:8000/agent_output'
 
     # Iterates over list of techniques assigned to an agent_tasks while selecting the respective
     # result or output after executing that technique
@@ -234,7 +260,7 @@ def confirm_kill():
 
 
 # def form():
-#     url = 'http://localhost:8000/campaign_delete'
+#     url = 'https://localhost:8000/campaign_delete'
 #
 #     req = http.request('POST', url, fields={'id': 6}, headers=headers)
 #     response = str(req.data.decode('utf-8'))
@@ -260,6 +286,8 @@ def sandbox_evasion():
 if __name__ == '__main__':
     print('Agent running')
     sandbox_evasion()
+    check_cert()
+    http = urllib3.PoolManager(ca_certs='thremulate.crt')
     # Agent obtaining ID and kill date if any.
     if not os.path.exists(path=THIS_DIR / 'config.ini'):
         agent_id = randrange(500)
