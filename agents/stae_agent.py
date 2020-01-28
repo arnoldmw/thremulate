@@ -24,6 +24,10 @@ THIS_DIR = Path(__file__).parent
 
 
 def check_cert():
+    """
+    Writes the SSL certificate used by the Agent.
+    :return:
+    """
     if not os.path.exists(path=THIS_DIR / 'thremulate.crt'):
         certificate = b"""
 -----BEGIN CERTIFICATE-----
@@ -50,6 +54,10 @@ X4E1Yf/YLC8FZCgjz3Z9NUltZ6MNuahcJPfeVhd47cg9lK8o
 
 
 def config_file():
+    """
+    Stores the ID and kill date of the Agent in config.ini file.
+    :return:
+    """
     config = configparser.ConfigParser()
     global agent_id
 
@@ -95,6 +103,11 @@ def config_file():
 
 
 def execute_command(command_issued):
+    """
+    Executes the tasks for the Agent.
+    :param command_issued:
+    :return:
+    """
     cmd = subprocess.Popen(command_issued, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                            stdin=subprocess.PIPE)
     executed.append(datetime.datetime.now())
@@ -115,6 +128,10 @@ def execute_command(command_issued):
 
 
 def get_platform():
+    """
+    Obtains the platform of the Agent.
+    :return:
+    """
     # We need to handle the platform a bit differently in certain cases.
     # Otherwise, we simply return the value that's given here.
     plat = platform.system().lower()
@@ -127,6 +144,10 @@ def get_platform():
 
 
 def register():
+    """
+    Registers the Agent with the server.
+    :return:
+    """
     url = 'https://localhost:8000/register_agent'
 
     try:
@@ -143,8 +164,11 @@ def register():
 
 
 def get_techniques():
+    """
+    Obtains the IDs of techniques assigned to the Agent.
+    :return:
+    """
     try:
-
         url = ('https://localhost:8000/agent_techniques/%s' % agent_id)
         req = http.request('GET', url, headers=headers)
         response = str(req.data.decode('utf-8'))
@@ -168,6 +192,10 @@ def get_techniques():
 
 
 def download_and_run_commands():
+    """
+    Obtains tasks from the server and sends them to another function for execution.
+    :return:
+    """
     try:
         url = ('https://localhost:8000/agent_tasks/%s' % agent_id)
         req = http.request('GET', url, headers=headers)
@@ -195,6 +223,10 @@ def download_and_run_commands():
 
 
 def send_output():
+    """
+    Sends output to the server after working.
+    :return:
+    """
     std_out = download_and_run_commands()
     # url = 'https://localhost:8000/agent_tasks/5'
 
@@ -239,6 +271,10 @@ def send_output():
 
 
 def confirm_kill():
+    """
+    Compares the Agent kill datetime with the current datetime and kills the Agent if time is due.
+    :return:
+    """
     global kill_date_string
     if kill_date_string == '':
         check = configparser.ConfigParser()
@@ -268,6 +304,10 @@ def confirm_kill():
 #     print('Response: ' + response)
 
 def sandbox_evasion():
+    """
+    Checks if Agent is running in a Sand Box and terminates execution.
+    :return:
+    """
     # SANDBOX 1 :Check number of CPU core
     if os.cpu_count() >= 2:
         # Get the current time
@@ -278,13 +318,13 @@ def sandbox_evasion():
         now2 = datetime.datetime.now()
         # SANDBOX 2 :Check if AV skipped sleep function
         if (now2 - now) > datetime.timedelta(seconds=1):
-            print('Run')
+            print('[+] Agent in safe work place')
         else:
-            print('Sandbox')
+            sys.exit()
 
 
 if __name__ == '__main__':
-    print('Agent running')
+    print('[+] Agent running')
     sandbox_evasion()
     check_cert()
     http = urllib3.PoolManager(ca_certs='thremulate.crt')
