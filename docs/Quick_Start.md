@@ -9,7 +9,7 @@ Ready to run your first Thremulate adversary emulation? Thremulate agents can ru
 python main.py
 ```
 
-- Open your favorite browser on the computer running the Thremulate server and navigate to **https://localhost:8000**. Login with **admin@thremulate.com** as the username and **password** as the password.
+- Open your favorite browser on the computer running the Thremulate server and navigate to **https://localhost:8000**. (If you are running the Thremulate server on a remote computer, replace localhost with the IP address of the remote server). Login with **admin@thremulate.com** as the email and **password** as the password.
 
    ```
    http:\\localhost:8000
@@ -39,7 +39,7 @@ Otherwise run the agent via command line while passing the IP address of the Thr
    example: win-agent.exe -thremulate 127.0.0.1
    ```
 
-## 5. The Agent says it has registered. I am ready to Thremulate. Great!!
+## 5. Upon running the Agent, it said it has registered. I am ready to Thremulate. Great!!
 
 - On the computer running ther server, in the browser navigate to the http://localhost:8000/agents. This leads you to a page which shows all the agents that have phoned back to the server.
 
