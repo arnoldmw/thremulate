@@ -1,4 +1,5 @@
 import configparser
+import argparse
 import datetime
 import sys
 from getpass import getuser
@@ -24,6 +25,28 @@ THIS_DIR = Path(__file__).parent
 
 INTERVAL = 5
 SERVER_IP = ''
+
+
+def agent_arguments():
+    global SERVER_IP
+    global INTERVAL
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-s", "--server", help="IP address of the Thremulate server.")
+    parser.add_argument("-i", "--interval", type=int,
+                        help="Time interval in seconds for the Agent to check for new assignments.")
+    parser.add_argument("-v", "--verbose", help="Increase Agent verbosity.", action="store_true")
+    args = parser.parse_args()
+
+    SERVER_IP = args.server
+    INTERVAL = args.interval
+
+    if SERVER_IP is None:
+        sys.exit('[+] Server IP address is required\n[+] Agent Stopped!!\n[+] Use -h or --help flag for help')
+    print('[+] Server is at %s' % SERVER_IP)
+    if INTERVAL is None:
+        print('[+] No beacon interval set.\n[+] Agent defaulted to 5 seconds')
+    if args.verbose:
+        print("[+] Verbosity enabled")
 
 
 def check_cert():
@@ -329,8 +352,9 @@ def sandbox_evasion():
 
 
 if __name__ == '__main__':
-    print('[+] Agent running')
+    agent_arguments()
     sandbox_evasion()
+    print('[+] Agent running')
     check_cert()
     http = urllib3.PoolManager(ca_certs='thremulate.crt')
     # Agent obtaining ID and kill date if any.
@@ -350,6 +374,9 @@ if __name__ == '__main__':
         except KeyError:
             pass
     while True:
-        time.sleep(INTERVAL)
-        send_output()
-        config_file()
+        try:
+            time.sleep(INTERVAL)
+            send_output()
+            config_file()
+        except KeyboardInterrupt:
+            sys.exit('[+] Agent stopped')
