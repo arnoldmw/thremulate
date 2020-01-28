@@ -1,0 +1,28 @@
+---
+attack_technique: T1012
+display_name: Query Registry
+
+atomic_tests:
+  - name: Query Registry
+    description: |
+      Query Windows Registry
+      References:
+
+      https://blog.cylance.com/windows-registry-persistence-part-2-the-run-keys-and-search-order
+
+      https://blog.cylance.com/windows-registry-persistence-part-1-introduction-attack-phases-and-windows-services
+
+      References:
+
+      http://www.handgrep.se/repository/cheatsheets/postexploitation/WindowsPost-Exploitation.pdf
+
+      https://www.offensive-security.com/wp-content/uploads/2015/04/wp.Registry_Quick_Find_Chart.en_us.pdf
+
+    supported_platforms:
+      - windows
+
+    executor:
+      name: command_prompt
+      elevation_required: true
+      command: |
+        reg query HKCU\Software\Microsoft\Windows\CurrentVersion\Run

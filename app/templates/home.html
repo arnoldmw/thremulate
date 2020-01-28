@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<!-- Padding Top -->
+<div style="margin-top: 4%;"></div>
+
+
+<div class="row row-card-no-pd">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-head-row">
+                    <h4 class="card-title">Agents</h4>
+
+                </div>
+                <p class="card-category">
+                    All agents</p>
+            </div>
+            <div class="card-body">
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/static/js/core/jquery.3.2.1.min.js?v=hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4%3D"></script>
+
+<script>
+
+$(document).ready(function(){
+    $("#agents").DataTable();
+});
+
+</script>
+
+{% endblock %}

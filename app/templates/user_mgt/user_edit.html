@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Padding Top -->
+<div style="margin-top: 4%;"></div>
+<div class="row row-card-no-pd">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-head-row">
+                    <h4 class="card-title">My Account</h4>
+                </div>
+                <p class="card-category">
+                    View or Modify your Account
+                </p>
+            </div>
+            <form action="{{ url('user_edit_post') }}" method="post">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">First Name</label>
+                                <input type="text" class="form-control" id="fname" name="fname"
+                                       value="{{ user.fname }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Last Name</label>
+                                <input type="text" class="form-control" id="lname" name="lname"
+                                       value="{{ user.lname }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email"
+                                       value="{{ user.email }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-action">
+                    <input type="button" id="cancel" name="cancel" class="btn btn-danger btn-round" value="Cancel">
+                    <input class="btn btn-primary btn-round" type="submit" name="submit" value="Update">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="{{ url('static', filename='js/core/jquery.3.2.1.min.js') }}"></script>
+<script>
+    $(document).ready(function () {
+        $("#cancel").click(function () {
+            javascript: history.back()
+        });
+    });
+
+</script>
+{% endblock %}

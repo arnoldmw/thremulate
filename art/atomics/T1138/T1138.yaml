@@ -1,0 +1,26 @@
+---
+attack_technique: T1138
+display_name: Application Shimming
+
+atomic_tests:
+  - name: Application Shim Installation
+    description: |
+      To test injecting DLL into a custom application
+      you need to copy AtomicShim.dll Into C:\Tools
+      As well as Compile the custom app.
+      We believe observing the shim install is a good
+      place to start.
+
+    supported_platforms:
+      - windows
+    input_arguments:
+      file_path:
+        description: Path to the shim databaase file
+        type: String
+        default: C:\AtomicRedTeam\atomics\T1138\src\AtomicShimx86.sdb
+    executor:
+      name: command_prompt
+      elevation_required: true
+      command: |
+        sdbinst.exe #{file_path}
+        sdbinst.exe -u #{file_path}

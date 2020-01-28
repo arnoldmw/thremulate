@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Padding Top -->
+<div style="margin-top: 4%;"></div>
+<div class="row row-card-no-pd">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-head-row">
+                    <h4 class="card-title">Agents</h4>
+                </div>
+                <p class="card-category">
+                    All agents</p>
+            </div>
+            <div class="card-body">
+                <!-- Table -->
+                <div class="table-responsive">
+                    <table id="agents" class="table display  table-striped table-hover cell-border text-center"
+                           cellspacing="0" width="100%">
+                        <thead class="font-weight-bold">
+                        <tr>
+                            <td>#</td>
+                            <td>Name</td>
+                            <td>Initial Contact</td>
+                            <td>Last Contact</td>
+                            <td>Adversary</td>
+                            <td>Action</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for agent_tasks in agents %}
+                        <tr>
+                            <td>{{ agent_tasks.id }}</td>
+                            <td>{{ agent_tasks.name }}</td>
+                            <td>{{ agent_tasks.initial_contact.strftime("%d-%b-%Y %H:%M:%S") }}</td>
+                            <td>{{ agent_tasks.last_contact.strftime("%d-%b-%Y %H:%M:%S") }}</td>
+                            <td>{{ agent_tasks.adversary }}</td>
+                            <td>
+                                <button type="button" class="btn btn-link btn-danger" data-toggle="modal"
+                                        data-original-title="Remove">
+                                    <a href="{{ url('assign_get', id=agent_tasks.id) }}">
+                                        <i class="fa fa-play" data-toggle="tooltip" title="Assign techniques"
+                                           style="font-size: 18px;"> </i>
+                                    </a>
+                                </button>
+                                <button type="button" class="btn btn-link btn-danger">
+                                    <a href="{{ url('agent_details', id=agent_tasks.id) }}">
+                                        <i class="fas fa-info-circle" data-toggle="tooltip" title="More information"
+                                           style="font-size: 20px;"> </i>
+                                    </a>
+                                </button>
+                                <button type="button" class="btn btn-link btn-danger">
+                                    <a href="{{ url('agent_edit', id=agent_tasks.id) }}">
+                                        <i class="fa fa-edit" data-toggle="tooltip" title="Update Agent"
+                                           style="font-size: 18px;"> </i>
+                                    </a>
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/static/js/core/jquery.3.2.1.min.js?v=hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4%3D"></script>
+<script>
+    $(document).ready(function () {
+        $("#agents").DataTable();
+    });
+
+</script>
+{% endblock %}

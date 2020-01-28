@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Thremulate | {{ title }}</title>
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport'/>
+
+    <link rel="icon" type="image/x-icon" href="{{ url('static', filename='img/icon.ico') }}"/>
+
+    <!-- Fonts and icons -->
+    <script src="{{ url('static', filename='js/plugin/webfont/webfont.min.js') }}"></script>
+    <script>
+        WebFont.load({
+            google: { "families": ["Lato:300,400,700,900"] },
+            custom: { "families": ["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['{{ url('static', filename='css/fonts.min.css') }}'] },
+            active: function () {
+                sessionStorage.fonts = true;
+            }
+        });
+
+    </script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" type="text/css" href="{{ url('static', filename='css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url('static', filename='css/matrix.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url('static', filename='css/atlantis.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url('static', filename='css/custom.css') }}"/>
+
+    <style>
+        .nav-item .nav-link{
+            font-size: 14px!important;
+        }
+        .border a {
+            color: #ffffff;
+            }
+        .no-border{
+        border: none !important;
+        }
+
+    </style>
+</head>
+
+<body data-background-color="dark">
+
+<div class="wrapper overlay-sidebar">
+    <div class="main-header">
+        <!-- Navbar Header -->
+        <nav class="navbar navbar-header navbar-expand-lg" data-background-color="dark">
+
+            <div class="container-fluid">
+                <ul class="navbar-nav topbar-nav">
+                    <li class="nav-item">
+                        <a href="{{ url('home') }}" class="logo">
+                            <div class="navbar-brand" style="color: white;">Thremulate</div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url('home') }}" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url('dashboard') }}" class="nav-link">Dashboard</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link " href="{{ url('adversaries') }}">Adversaries</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link " href="{{ url('agents') }}">Agents</a>
+                    </li>
+                    {% if current_user.is_su %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link " href="{{ url('users') }}">Users</a>
+                    </li>
+                    {% endif %}
+                </ul>
+                </ul>
+                <ul class="nav navbar-nav navbar-right align-items-left">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Help</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('logout') }}" aria-expanded="false">
+                            <i class="fas icon-logout" data-toggle="tooltip" title="Log out"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url('user_profile') }}" class="nav-link">{{ current_user.fname }}</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- End Navbar -->
+    </div>
+    <div class="main-panel">
+        <div class="content">
+            <div class="page-inner mt--5">
+
+                {% block content %}{% endblock %}
+
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="copyright ml-auto"></div>
+            </div>
+        </footer>
+    </div>
+</div>
+<!--   Core JS Files   -->
+<script src="/static/js/core/jquery.3.2.1.min.js?v=hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4%3D"></script>
+<script src="/static/js/core/popper.min.js?v=JjkbVCqolMR6n0Aba76nsbS0Qc2hpLbUwwhuLohbZcg%3D"></script>
+<script src="/static/js/core/bootstrap.min.js?v=5-02zu5UULQkO7w1GIr6vftCgMfFdZcAHeDtFnKZsBs%3D"></script>
+<script src="{{ url('static', filename='js/core/jquery.validate.min.js') }}"></script>
+<!-- jQuery UI -->
+<script src="/static/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js?v=KZyMuNJB1Uv-_00w0GOueV9CboVXZh8BEIaM58Z4F8g%3D"></script>
+<script src="/static/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js?v=F8rcoZj02Vst0w9W-sBE5OCzYqw8T1ns1KNU4FZF0Uc%3D"></script>
+
+<!-- Datatables -->
+<script src="/static/js/plugin/datatables/datatables.min.js?v=qDR-LgAvHkIAv3FesIgtiuoJ4E-Nqi74WL09ZDclYOY%3D"></script>
+
+<!-- Atlantis JS -->
+<script src="/static/js/atlantis.min.js?v=g1nQSzePmnrvtuAad_HG2id0QfW6-nODQQiwm6hyqfk%3D"></script>
+
+</body>
+</html>
