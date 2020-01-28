@@ -24,7 +24,7 @@ THIS_DIR = Path(__file__).parent
 
 
 def check_cert():
-    if not os.path.exists(path='thremulate.crt'):
+    if not os.path.exists(path=THIS_DIR / 'thremulate.crt'):
         certificate = b"""
 -----BEGIN CERTIFICATE-----
 MIIC8DCCAdigAwIBAgIURbRyjExMFO4ZWcA9A3kOsxMojswwDQYJKoZIhvcNAQEL

@@ -3,3 +3,5 @@ __pycache__/
 *.log
 *.pot
 techniques_hash.db
+agents/thremulate.crt
+agents/config.ini
