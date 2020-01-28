@@ -273,7 +273,7 @@ def sandbox_evasion():
         # Get the current time
         now = datetime.datetime.now()
         # Stop code execution for 1 seconds
-        time.sleep(1)
+        time.sleep(2)
         # Get the time after 2 seconds
         now2 = datetime.datetime.now()
         # SANDBOX 2 :Check if AV skipped sleep function
