@@ -19,19 +19,19 @@ from database import *
 # noinspection PyUnresolvedReferences
 from db_auth import DBAuthorizationPolicy
 # noinspection PyUnresolvedReferences
-from handlers.agent import *
+from modules.agent import *
 # noinspection PyUnresolvedReferences
-from handlers.auth import *
+from modules.auth import *
 # noinspection PyUnresolvedReferences
-from handlers.adversary import *
+from modules.adversary import *
 # noinspection PyUnresolvedReferences
-from handlers.dashboard import *
+from modules.dashboard import *
 # noinspection PyUnresolvedReferences
-from handlers.logger import *
+from modules.logger import *
 # noinspection PyUnresolvedReferences
-from handlers.middleware import setup_middleware
+from modules.middleware import setup_middleware
 # noinspection PyUnresolvedReferences
-from handlers.user_mgt import *
+from modules.user_mgt import *
 
 THIS_DIR = Path(__file__).parent
 secret_key = b'\xd0\x04)E\x14\x98\xa1~\xecE\xae>(\x1d6\xec\xbfQ\xa4\x19\x0e\xbcre,\xf8\x8f\x84WV.\x8d'
