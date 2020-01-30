@@ -136,7 +136,6 @@ class AdversaryTests(AioHTTPTestCase):
         self.assertTrue(resp_two.status == 200, msg="Failed to access /adversary_details/1. Received status code {0}"
                         .format(resp_two.status))
 
-    @unittest.skip("Need to handle exception")
     @unittest_run_loop
     async def test_adversary_add(self):
         resp = await self.client.request("POST", "/login_post", data=data)
@@ -145,6 +144,8 @@ class AdversaryTests(AioHTTPTestCase):
         resp_two = await self.client.request("POST", "/adversary_add", data={'addName': 'APT4000'})
         self.assertTrue(resp_two.status == 200, msg="Failed to access /adversary_add. Received status code {0}"
                         .format(resp_two.status))
+        text = await resp_two.text()
+        self.assertFalse(text == 'exists', msg="Adversary already exists")
 
     @unittest_run_loop
     async def test_adversary_update(self):

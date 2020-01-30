@@ -189,9 +189,7 @@
             var form = $('#addAdversary').serialize();
             $('#addAdversaryModal').modal('hide');
             $.post("{{ url('adversary_add') }}", form, function (data, status) {
-                if (status == 'success') {
-                    // $(document).replaceWith(data);
-                    console.log("success");
+                if (status == 'success' && data == 'success') {
                     // Try to force reload
                     location.reload(true);
                 }
@@ -199,7 +197,7 @@
                     $.notify({
                         // options
                         icon: 'fas fa-times',
-                        title: 'Error',
+                        title: 'Failed',
                         message: 'Adversary already exists'
                     }, {
                         // settings
