@@ -10,11 +10,11 @@
                     <h4 class="card-title">{{ name }} (T{{ id }})</h4>
                 </div>
                 <p class="card-category">
-                    <p class="card-category">
-                        View or Modify values for this technique</p>
-                    <p class="card-category">
-                        <a href="{{ url('assign_get', id=agent_id) }}">Back to Assigning Techniques</a>
-                    </p>
+                <p class="card-category">
+                    View or Modify values for this technique</p>
+                <p class="card-category">
+                    <a href="{{ url('assign_get', id=agent_id) }}">Back to Assigning Techniques</a>
+                </p>
             </div>
             <div class="card-body">
                 {% for test in tests %}
@@ -37,15 +37,15 @@
                             <div class="form-group">
                                 <label for="email2">{{ param.pname }}</label>
                                 <input type="text" class="form-control form-control-sm" id="" name="{{ param.pname }}"
-                                    value="{{ param.pvalue }}">
+                                       value="{{ param.pvalue }}">
                             </div>
                             {% endfor %}
                             <div style="height: 1em;"></div>
                             {% if test.at_test.command %}
                             <input type="button" class="btn btn-primary btn-round submit-tech" value="Assign"
-                                style="padding:.5rem 1.2rem;" name="submit">
+                                   style="padding:.5rem 1.2rem;" name="submit">
                             <input type="button" id="custom-done" class="btn btn-danger btn-round" value="Cancel"
-                                style="padding:.5rem 1.2rem;" name="cancel">
+                                   style="padding:.5rem 1.2rem;" name="cancel">
                             {% endif %}
                         </form>
                     </div>
@@ -79,5 +79,6 @@
             });
         });
     });
+
 </script>
 {% endblock %}

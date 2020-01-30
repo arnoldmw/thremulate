@@ -3,56 +3,56 @@ attack_technique: T1077
 display_name: Windows Admin Shares
 
 atomic_tests:
-- name: Map admin share
-  description: |
-    Connecting To Remote Shares
+  - name: Map admin share
+    description: |
+      Connecting To Remote Shares
 
-  supported_platforms:
-    - windows
+    supported_platforms:
+      - windows
 
-  input_arguments:
-    share_name:
-      description: Examples C$, IPC$, Admin$
-      type: String
-      default: C$
-    user_name:
-      description: Username
-      type: String
-      default: DOMAIN\Administrator
-    password:
-      description: Password
-      type: String
-      default: P@ssw0rd1
-    computer_name:
-      description: Target Computer Name
-      type: String
-      default: Target
-  executor:
-    name: command_prompt
-    elevation_required: false
-    command: |
-      cmd.exe /c "net use \\#{computer_name}\#{share_name} #{password} /u:#{user_name}"
+    input_arguments:
+      share_name:
+        description: Examples C$, IPC$, Admin$
+        type: String
+        default: C$
+      user_name:
+        description: Username
+        type: String
+        default: DOMAIN\Administrator
+      password:
+        description: Password
+        type: String
+        default: P@ssw0rd1
+      computer_name:
+        description: Target Computer Name
+        type: String
+        default: Target
+    executor:
+      name: command_prompt
+      elevation_required: false
+      command: |
+        cmd.exe /c "net use \\#{computer_name}\#{share_name} #{password} /u:#{user_name}"
 
-- name: Map Admin Share PowerShell
-  description: |
-    Map Admin share utilizing PowerShell
-  supported_platforms:
-    - windows
-  input_arguments:
-    share_name:
-      description: Examples C$, IPC$, Admin$
-      type: String
-      default: C$
-    computer_name:
-      description: Target Computer Name
-      type: String
-      default: Target
-    map_name:
-      description: Mapped Drive Letter
-      type: String
-      default: g
-  executor:
-    name: powershell
-    elevation_required: false
-    command: |
-      New-PSDrive -name #{map_name} -psprovider filesystem -root \\#{computer_name}\#{share_name}
+  - name: Map Admin Share PowerShell
+    description: |
+      Map Admin share utilizing PowerShell
+    supported_platforms:
+      - windows
+    input_arguments:
+      share_name:
+        description: Examples C$, IPC$, Admin$
+        type: String
+        default: C$
+      computer_name:
+        description: Target Computer Name
+        type: String
+        default: Target
+      map_name:
+        description: Mapped Drive Letter
+        type: String
+        default: g
+    executor:
+      name: powershell
+      elevation_required: false
+      command: |
+        New-PSDrive -name #{map_name} -psprovider filesystem -root \\#{computer_name}\#{share_name}

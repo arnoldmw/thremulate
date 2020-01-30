@@ -23,17 +23,17 @@
                                 <input type="hidden" name="user_id" value="{{ user.id }}">
                                 <label for="">First Name</label>
                                 <input type="text" class="form-control" id="fname" name="fname"
-                                    value="{{ user.fname }}">
+                                       value="{{ user.fname }}">
                             </div>
                             <div class="form-group">
                                 <label for="">Last Name</label>
                                 <input type="text" class="form-control" id="lname" name="lname"
-                                    value="{{ user.lname }}">
+                                       value="{{ user.lname }}">
                             </div>
                             <div class="form-group">
                                 <label for="email">Email</label>
                                 <input type="email" class="form-control" id="email" name="email"
-                                    value="{{ user.email }}">
+                                       value="{{ user.email }}">
                             </div>
                             <div class="form-group">
                                 <label class="form-label d-block">Account Status</label>
@@ -42,20 +42,22 @@
                                     <label class="selectgroup-item">
                                         {% if user.disabled == True %}
                                         <input type="radio" name="disabled" value="True" class="selectgroup-input"
-                                            checked>
+                                               checked>
                                         <span class="selectgroup-button selectgroup-button-icon"><i class="fas fa-lock"
-                                                data-toggle="tooltip" title="Locked"></i></span>
+                                                                                                    data-toggle="tooltip"
+                                                                                                    title="Locked"></i></span>
                                         {% else %}
                                         <input type="radio" name="disabled" value="True" class="selectgroup-input">
                                         <span class="selectgroup-button selectgroup-button-icon"><i class="fas fa-lock"
-                                                data-toggle="tooltip" title="Locked"></i></span>
+                                                                                                    data-toggle="tooltip"
+                                                                                                    title="Locked"></i></span>
                                         {% endif %}
                                     </label>
 
                                     <label class="selectgroup-item">
                                         {% if user.disabled == False %}
                                         <input type="radio" name="disabled" value="False" class="selectgroup-input"
-                                            checked>
+                                               checked>
                                         <span class="selectgroup-button selectgroup-button-icon"><i
                                                 class="fas fa-lock-open" data-toggle="tooltip"
                                                 title="Unlocked"></i></span>
@@ -76,7 +78,7 @@
                                     <label class="selectgroup-item">
                                         {% if user.superuser == True %}
                                         <input type="radio" name="superuser" value="True" class="selectgroup-input"
-                                            checked>
+                                               checked>
                                         <span class="selectgroup-button selectgroup-button-icon"><i
                                                 class="fas fa-user-ninja" data-toggle="tooltip"
                                                 title="Superuser"></i></span>
@@ -91,13 +93,15 @@
                                     <label class="selectgroup-item">
                                         {% if user.superuser == False %}
                                         <input type="radio" name="superuser" value="False" class="selectgroup-input"
-                                            checked>
+                                               checked>
                                         <span class="selectgroup-button selectgroup-button-icon"><i class="fas fa-user"
-                                                data-toggle="tooltip" title="Non-Superuser"></i></span>
+                                                                                                    data-toggle="tooltip"
+                                                                                                    title="Non-Superuser"></i></span>
                                         {% else %}
                                         <input type="radio" name="superuser" value="False" class="selectgroup-input">
                                         <span class="selectgroup-button selectgroup-button-icon"><i class="fas fa-user"
-                                                data-toggle="tooltip" title="Non-Superuser"></i></span>
+                                                                                                    data-toggle="tooltip"
+                                                                                                    title="Non-Superuser"></i></span>
                                         {% endif %}
                                     </label>
                                 </div>
@@ -111,13 +115,13 @@
                                     {% if p.id == user.user_perms[0].perm_id or p.id == user.user_perms[1].perm_id %}
                                     <label class="selectgroup-item">
                                         <input type="checkbox" name="{{p.name}}" value="{{ p.id }}"
-                                            class="selectgroup-input" checked>
+                                               class="selectgroup-input" checked>
                                         <span class="selectgroup-button">{{p.name}}</span>
                                     </label>
                                     {% else %}
                                     <label class="selectgroup-item">
                                         <input type="checkbox" name="{{p.name}}" value="{{ p.id }}"
-                                            class="selectgroup-input">
+                                               class="selectgroup-input">
                                         <span class="selectgroup-button">{{p.name}}</span>
                                     </label>
                                     {% endif %}
@@ -233,5 +237,6 @@
         });
 
     });
+
 </script>
 {% endblock %}

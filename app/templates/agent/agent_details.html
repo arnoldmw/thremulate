@@ -5,7 +5,7 @@
 <div style="margin-top: 4%;"></div>
 <!-- Modal for deleting Output -->
 <div class="modal fade" id="deleteOutputModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true" style="color: #575962;">
+     aria-hidden="true" style="color: #575962;">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -27,7 +27,7 @@
 
 <!-- Modal for deleting Assignment-->
 <div class="modal fade" id="deleteAssignmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true" style="color: #575962;">
+     aria-hidden="true" style="color: #575962;">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -90,54 +90,54 @@
             </div>
             <input type="hidden" id="agent_id" name="agent_id" value="{{ agent.id }}">
             <form action="{{ url('assign_post') }}" method="post" accept-charset="utf-8"
-                enctype="application/x-www-form-urlencoded">
+                  enctype="application/x-www-form-urlencoded">
                 <div class="card-body">
 
                     <!-- Table -->
                     <div class="table-responsive">
                         <table id="agentDetails" class="table display text-center" width="100%">
                             <thead class="font-weight-bold">
-                                <tr>
-                                    <td>Output</td>
-                                    <td>Result</td>
-                                    <td>Executed</td>
-                                    <td>Action</td>
+                            <tr>
+                                <td>Output</td>
+                                <td>Result</td>
+                                <td>Executed</td>
+                                <td>Action</td>
 
-                                </tr>
+                            </tr>
                             </thead>
                             <tbody>
-                                {% for detail in details %}
-                                <tr style="padding-top:1%">
-                                    <td style="width: 55%;">
-                                        <div class="accordion accordion-default">
-                                            <div class="card">
-                                                <div class="card-header" id="headingOne" data-toggle="collapse"
-                                                     data-target="#{{ detail.name }}{{ detail.test_num }}"
-                                                     aria-expanded="true" aria-controls="collapseOne">
-                                                    <div class="span-icon">
-                                                        <div class="icon-speech"></div>
-                                                    </div>
-                                                    <div class="span-title">
-                                                        {{ detail.name }} (T{{ detail.tech_id}}) Test
-                                                        {{ detail.test_num }}
-                                                    </div>
-                                                    <div class="span-mode" style="margin-right: .5em;"></div>
+                            {% for detail in details %}
+                            <tr style="padding-top:1%">
+                                <td style="width: 55%;">
+                                    <div class="accordion accordion-default">
+                                        <div class="card">
+                                            <div class="card-header" id="headingOne" data-toggle="collapse"
+                                                 data-target="#{{ detail.name }}{{ detail.test_num }}"
+                                                 aria-expanded="true" aria-controls="collapseOne">
+                                                <div class="span-icon">
+                                                    <div class="icon-speech"></div>
                                                 </div>
+                                                <div class="span-title">
+                                                    {{ detail.name }} (T{{ detail.tech_id}}) Test
+                                                    {{ detail.test_num }}
+                                                </div>
+                                                <div class="span-mode" style="margin-right: .5em;"></div>
+                                            </div>
 
-                                                <div id="{{ detail.name }}{{ detail.test_num }}" class="collapse"
-                                                    aria-labelledby="headingOne" data-parent="#accordion">
-                                                    {% if detail.output %}
-                                                    <div class="card-body text-left">
-                                                        {{ detail.output.replace('\r\n', '<br>') | safe }}
-                                                    </div>
-                                                    {% else %}
-                                                    <div class="card-body text-center">
-                                                        Awaiting Execution
-                                                    </div>
-                                                    {% endif %}
+                                            <div id="{{ detail.name }}{{ detail.test_num }}" class="collapse"
+                                                 aria-labelledby="headingOne" data-parent="#accordion">
+                                                {% if detail.output %}
+                                                <div class="card-body text-left">
+                                                    {{ detail.output.replace('\r\n', '<br>') | safe }}
                                                 </div>
+                                                {% else %}
+                                                <div class="card-body text-center">
+                                                    Awaiting Execution
+                                                </div>
+                                                {% endif %}
                                             </div>
                                         </div>
+                                    </div>
                     </div>
                     </td>
                     <td style="vertical-align: top!important;">
@@ -166,17 +166,17 @@
                     <td style="vertical-align: top!important;" class="text-right">
                         {% if detail.output %}
                         <button type="button" class="btn btn-link btn-danger js-delete-output" data-toggle="modal"
-                            data-target="#deleteOutputModal" data-tech-id="{{ detail.tech_id }}"
-                            data-test-num="{{ detail.test_num }}">
+                                data-target="#deleteOutputModal" data-tech-id="{{ detail.tech_id }}"
+                                data-test-num="{{ detail.test_num }}">
                             <i class="fa fa-times" data-toggle="tooltip" title="Delete Output!"
-                                style="font-size: 1.5em;"> </i>
+                               style="font-size: 1.5em;"> </i>
                         </button>
                         {% endif %}
                         <button type="button" class="btn btn-link btn-danger js-delete-assignment" data-toggle="modal"
-                            data-target="#deleteAssignmentModal" data-tech-id="{{ detail.tech_id }}"
-                            data-test-num="{{ detail.test_num }}">
+                                data-target="#deleteAssignmentModal" data-tech-id="{{ detail.tech_id }}"
+                                data-test-num="{{ detail.test_num }}">
                             <i class="fas fa-times-circle" data-toggle="tooltip" title="Delete Assignment!"
-                                style="font-size: 1.5em;"> </i>
+                               style="font-size: 1.5em;"> </i>
                         </button>
                     </td>
                     </tr>
@@ -239,5 +239,6 @@
             });
         });
     });
+
 </script>
 {% endblock %}

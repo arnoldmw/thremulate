@@ -3,52 +3,52 @@ attack_technique: T1176
 display_name: Browser Extensions
 
 atomic_tests:
-- name: Chrome (Developer Mode)
-  description: |
-    
-  supported_platforms:
-    - linux
-    - windows
-    - macos
-  executor: 
-    name: manual
-    steps: |
-      1. Navigate to [chrome://extensions](chrome://extensions) and
-      tick 'Developer Mode'.
+  - name: Chrome (Developer Mode)
+    description: |
 
-      2. Click 'Load unpacked extension...' and navigate to
-      [Browser_Extension](../t1176/)
+    supported_platforms:
+      - linux
+      - windows
+      - macos
+    executor:
+      name: manual
+      steps: |
+        1. Navigate to [chrome://extensions](chrome://extensions) and
+        tick 'Developer Mode'.
 
-      3. Click 'Select'
+        2. Click 'Load unpacked extension...' and navigate to
+        [Browser_Extension](../t1176/)
 
-- name: Chrome (Chrome Web Store)
-  description: |
-    
-  supported_platforms:
-    - linux
-    - windows
-    - macos
-  executor: 
-    name: manual
-    steps: |
-      1. Navigate to https://chrome.google.com/webstore/detail/minimum-viable-malicious/odlpfdolehmhciiebahbpnaopneicend
-      in Chrome
+        3. Click 'Select'
 
-      2. Click 'Add to Chrome'
+  - name: Chrome (Chrome Web Store)
+    description: |
 
-- name: Firefox
-  description: |
-    Create a file called test.wma, with the duration of 30 seconds
-  supported_platforms:
-    - linux
-    - windows
-    - macos
-  executor: 
-    name: manual
-    steps: |
-      1. Navigate to [about:debugging](about:debugging) and
-      click "Load Temporary Add-on"
+    supported_platforms:
+      - linux
+      - windows
+      - macos
+    executor:
+      name: manual
+      steps: |
+        1. Navigate to https://chrome.google.com/webstore/detail/minimum-viable-malicious/odlpfdolehmhciiebahbpnaopneicend
+        in Chrome
 
-      2. Navigate to [manifest.json](./manifest.json)
+        2. Click 'Add to Chrome'
 
-      3. Then click 'Open'
+  - name: Firefox
+    description: |
+      Create a file called test.wma, with the duration of 30 seconds
+    supported_platforms:
+      - linux
+      - windows
+      - macos
+    executor:
+      name: manual
+      steps: |
+        1. Navigate to [about:debugging](about:debugging) and
+        click "Load Temporary Add-on"
+
+        2. Navigate to [manifest.json](./manifest.json)
+
+        3. Then click 'Open'

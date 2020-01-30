@@ -37,14 +37,12 @@ async def adversary_add(request):
     await check_authorized(request)
     data = await request.post()
     try:
-        Adversary.create(name=data['addName'])
-        raise web.HTTPFound('/adversaries')
+        Adversary.get(Adversary.name == data['addName'])
+        return web.Response(text='exists')
     except KeyError:
         return web.Response(status=400)
-    except IntegrityError:
-        # TODO: Return error
-        # Always returns status of 500
-        web.Response(text='exists', status=200)
+    except Adversary.DoesNotExist:
+        Adversary.create(name=data['addName'])
 
 
 @aiohttp_jinja2.template('adversary/adversary_details.html')
