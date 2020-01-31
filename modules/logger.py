@@ -2,11 +2,10 @@ import datetime
 import json
 import logging
 
-from main import secret_key
 import base64
 from cryptography import fernet
 from aiohttp.abc import AbstractAccessLogger
-
+secret_key = b'\xd0\x04)E\x14\x98\xa1~\xecE\xae>(\x1d6\xec\xbfQ\xa4\x19\x0e\xbcre,\xf8\x8f\x84WV.\x8d'
 secret_key = base64.urlsafe_b64encode(secret_key)
 
 

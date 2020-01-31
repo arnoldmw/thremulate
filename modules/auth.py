@@ -19,7 +19,11 @@ async def login(request):
     :param request:
     :return: home of the user if successful otherwise the same template with the error message.
     """
-    return {'title': 'Login'}
+    user_id = await authorized_userid(request)
+    if user_id is None:
+        return {'title': 'Login'}
+
+    raise web.HTTPFound('/home')
 
 
 async def login_post(request):

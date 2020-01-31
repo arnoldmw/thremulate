@@ -27,14 +27,16 @@ async def dashboard(request):
 
     percent_tech_executed = int((exec3.count() / (exec4.count() + exec3.count())) * 100)
 
-    # Number of techniques executed
-    # cumulative_tech_execution = AgentTechnique.select().where(AgentTechnique.executed.is_null(False)).count()
+    # Number of distinct or unique techniques executed
+    unique_tech_execution_count = AgentTechnique.select(AgentTechnique.technique_id) \
+        .where(AgentTechnique.executed.is_null(False)).distinct().count()
 
     counts.append(camp_count)  # 0
     counts.append(agent_count)  # 1
     counts.append(tech_count)  # 2
     counts.append(user_count)  # 3
     counts.append(percent_tech_executed)  # 4
+    counts.append(unique_tech_execution_count)  # 5
 
     graph = []
 
