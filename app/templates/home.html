@@ -12,29 +12,45 @@
         <div class="card">
             <div class="card-header">
                 <div class="card-head-row">
-                    <h4 class="card-title">Agents</h4>
+                    <h4 class="card-title">Deploy Agent</h4>
 
                 </div>
                 <p class="card-category">
-                    All agents</p>
+                   Paste in the terminal</p>
             </div>
             <div class="card-body">
-
-
+                <div class="row">
+                    <div class="col-md-4">
+                        <!-- <h2 class="font-weight-bold text-center card-category"> Windows</h2> -->
+                        <h3 class="font-weight-bold text-center mb-4">Windows</h3>
+                        <p>Powershell v4 and v5 :</p>
+                        <kbd>mkdir C:/test;Invoke-WebRequest -Uri "http://localhost:81/menu.exe" -OutFile "C:/test/agent.exe";
+                            C:/test/agent.exe -server localhost
+                        </kbd>
+                        <p class="mt-3">Powershell v2 and v3 :</p>
+                        <kbd>(New-Object System.Net.WebClient).DownloadFile("http://localhost:81/menu.exe", "C:/test/agent.exe");
+                            C:/test/agent.exe -server localhost</kbd>
+                    </div>
+                    <div class="col-md-4">
+                        <h3 class="font-weight-bold text-center mb-4">Linux</h3>
+                        <p>Bash cURL :</p>
+                        <kbd>mkdir /opt/test;curl http://localhost:81/agent.exe -o /opt/test/agent.exe ;
+                            /opt/test/agent.exe -server localhost</kbd>
+                        <p class="mt-3">Bash wget</p>
+                        <kbd>mkdir /opt/test;curl http://localhost:81/agent.exe -o /opt/test/agent.exe ;
+                            /opt/test/agent.exe -server localhost</kbd>
+                    </div>
+                    <div class="col-md-4">
+                        <h3 class="font-weight-bold text-center mb-4">MacOS</h3>
+                        <p>Bash cURL :</p>
+                        <kbd>mkdir /opt/test;curl http://localhost:81/agent.exe -o /opt/test/agent.exe ;
+                            /opt/test/agent.exe -server localhost</kbd>
+                    </div>
+                </div>
 
             </div>
         </div>
     </div>
 </div>
-
-
-<script src="/static/js/core/jquery.3.2.1.min.js?v=hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4%3D"></script>
-
-<script>
-
-$(document).ready(function(){
-    $("#agents").DataTable();
-});
-</script>
 
 {% endblock %}

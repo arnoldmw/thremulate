@@ -3,45 +3,45 @@ attack_technique: T1049
 display_name: System Network Connections Discovery
 
 atomic_tests:
-- name: System Network Connections Discovery
-  description: |
-    Get a listing of network connections.
+  - name: System Network Connections Discovery
+    description: |
+      Get a listing of network connections.
 
-  supported_platforms:
-    - windows
+    supported_platforms:
+      - windows
 
-  executor:
-    name: command_prompt
-    elevation_required: false
-    command: |
-      netstat
-      net use
-      net sessions
+    executor:
+      name: command_prompt
+      elevation_required: false
+      command: |
+        netstat
+        net use
+        net sessions
 
-- name: System Network Connections Discovery with PowerShell
-  description: |
-    Get a listing of network connections.
+  - name: System Network Connections Discovery with PowerShell
+    description: |
+      Get a listing of network connections.
 
-  supported_platforms:
-    - windows
+    supported_platforms:
+      - windows
 
-  executor:
-    name: powershell
-    elevation_required: false
-    command: |
-      Get-NetTCPConnection
+    executor:
+      name: powershell
+      elevation_required: false
+      command: |
+        Get-NetTCPConnection
 
-- name: System Network Connections Discovery Linux & MacOS
-  description: |
-    Get a listing of network connections.
+  - name: System Network Connections Discovery Linux & MacOS
+    description: |
+      Get a listing of network connections.
 
-  supported_platforms:
-    - linux
-    - macos
+    supported_platforms:
+      - linux
+      - macos
 
-  executor:
-    name: sh
-    elevation_required: false
-    command: |
-      netstat
-      who -a
+    executor:
+      name: sh
+      elevation_required: false
+      command: |
+        netstat
+        who -a

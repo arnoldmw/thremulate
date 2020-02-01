@@ -24,10 +24,11 @@
                 <p class="card-category"><a href="{{ url('adversaries') }}">Back to Adversaries</a></p>
             </div>
             <div class="card-body">
-                <h3 class="text-center">{{ adversary.name }}  Agents </h3>
+                <h3 class="text-center">{{ adversary.name }} Agents </h3>
                 <!-- Table -->
                 <div class="table-responsive">
-                    <table id="agents" class="table display  table-striped table-hover cell-border text-center" cellspacing="0"
+                    <table id="agents" class="table display  table-striped table-hover cell-border text-center"
+                           cellspacing="0"
                            width="100%">
                         <thead class="font-weight-bold">
                         <tr>
@@ -80,5 +81,6 @@
 $(document).ready(function(){
     $("#agents").DataTable();
 });
+
 </script>
 {% endblock %}

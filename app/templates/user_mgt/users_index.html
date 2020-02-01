@@ -22,7 +22,7 @@
                 </div>
                 <!-- Modal for deleting-->
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true" style="color: #575962;">
+                     aria-labelledby="exampleModalLabel" aria-hidden="true" style="color: #575962;">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -47,47 +47,47 @@
                     <table id="users" class="table display  table-striped table-hover cell-border text-center"
                            cellspacing="0" width="100%">
                         <thead class="font-weight-bold">
-                            <tr>
-                                <td>#</td>
-                                <td>First Name</td>
-                                <td>Last Name</td>
-                                <td>Email</td>
-                                <td>Disabled</td>
-                                <td>Admin</td>
-                                <td style="width: 10%">Action</td>
-                            </tr>
+                        <tr>
+                            <td>#</td>
+                            <td>First Name</td>
+                            <td>Last Name</td>
+                            <td>Email</td>
+                            <td>Disabled</td>
+                            <td>Admin</td>
+                            <td style="width: 10%">Action</td>
+                        </tr>
                         </thead>
                         <tbody>
-                            {% for user in users %}
-                            <tr>
-                                <td>{{ loop.index }}</td>
-                                <td>{{ user.fname }}</td>
-                                <td>{{ user.lname }}</td>
-                                <td>{{ user.email }}</td>
-                                <td>{{ user.disabled }}</td>
-                                <td>{{ user.superuser }}</td>
-                                <td>
-                                    <div class="form-button-action">
-                                        <button type="button" data-toggle="modal"
+                        {% for user in users %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ user.fname }}</td>
+                            <td>{{ user.lname }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.disabled }}</td>
+                            <td>{{ user.superuser }}</td>
+                            <td>
+                                <div class="form-button-action">
+                                    <button type="button" data-toggle="modal"
                                             class="btn btn-link btn-primary btn-lg js-edit"
                                             data-original-title="Edit Task" data-user-id="{{ user.id }}" data-target="">
-                                            <i class="fas fa-user-edit" data-toggle="tooltip" title="Update User"></i>
-                                            </i>
-                                        </button>
-                                        <button type="button" class="btn btn-link btn-primary js-password"
+                                        <i class="fas fa-user-edit" data-toggle="tooltip" title="Update User"></i>
+                                        </i>
+                                    </button>
+                                    <button type="button" class="btn btn-link btn-primary js-password"
                                             data-user-id="{{ user.id }}">
-                                            <i class="fas fa-key" data-toggle="tooltip" title="Change Password"> </i>
-                                        </button>
-                                        <button type="button" class="btn btn-link btn-danger js-delete"
+                                        <i class="fas fa-key" data-toggle="tooltip" title="Change Password"> </i>
+                                    </button>
+                                    <button type="button" class="btn btn-link btn-danger js-delete"
                                             data-toggle="modal" data-target="#exampleModal" data-original-title="Assign"
                                             data-user-id="{{ user.id }}">
-                                            <i class="fas fa-user-times" data-toggle="tooltip" title="Remove User!">
-                                            </i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            {% endfor %}
+                                        <i class="fas fa-user-times" data-toggle="tooltip" title="Remove User!">
+                                        </i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -132,5 +132,6 @@
             window.location.assign("{{ url('register') }}");
         });
     });
+
 </script>
 {% endblock %}

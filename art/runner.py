@@ -190,6 +190,7 @@ def apply_executor(executor, path, parameters):
     # ##############################################################################################################
     # execute_command(launcher, built_command, path)
 
+
 #
 # def get_command(agent_launcher, agent_command):
 #     return [agent_launcher, agent_command]
@@ -486,5 +487,3 @@ class AtomicRunner:
 def clear(args):
     """Clears a stale hash from the Hash DB."""
     clear_hash(HASH_DB_RELATIVE_PATH, args.technique, args.position)
-
-

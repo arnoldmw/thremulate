@@ -1,4 +1,3 @@
-# noinspection PyUnresolvedReferences
 import logging
 import ssl
 from pathlib import Path
@@ -19,23 +18,24 @@ from database import *
 # noinspection PyUnresolvedReferences
 from db_auth import DBAuthorizationPolicy
 # noinspection PyUnresolvedReferences
-from handlers.agent import *
+from modules.agent import *
 # noinspection PyUnresolvedReferences
-from handlers.auth import *
+from modules.auth import *
 # noinspection PyUnresolvedReferences
-from handlers.adversary import *
+from modules.adversary import *
 # noinspection PyUnresolvedReferences
-from handlers.dashboard import *
+from modules.dashboard import *
 # noinspection PyUnresolvedReferences
-from handlers.logger import *
+from modules.logger import *
 # noinspection PyUnresolvedReferences
-from handlers.middleware import setup_middleware
+from modules.middleware import setup_middleware
 # noinspection PyUnresolvedReferences
-from handlers.user_mgt import *
+from modules.user_mgt import *
+# noinspection PyUnresolvedReferences
+from config.settings import config as server
 
 THIS_DIR = Path(__file__).parent
 secret_key = b'\xd0\x04)E\x14\x98\xa1~\xecE\xae>(\x1d6\xec\xbfQ\xa4\x19\x0e\xbcre,\xf8\x8f\x84WV.\x8d'
-
 
 # noinspection PyUnusedLocal
 @aiohttp_jinja2.template('index.html')
@@ -83,6 +83,7 @@ async def create_app():
 
     return app
 
+
 # adev runserver --livereload --debug-toolbar
 if __name__ == '__main__':
     application = create_app()
@@ -92,4 +93,5 @@ if __name__ == '__main__':
     ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
     ssl_context.load_cert_chain(certfile='certificates/thremulate.crt', keyfile='certificates/thremulate.key')
 
-    web.run_app(application, host="0.0.0.0", port=8000, access_log_class=AccessLogger, ssl_context=ssl_context)
+    web.run_app(application, host=server['host'], port=server['https'], access_log_class=AccessLogger,
+                ssl_context=ssl_context)
