@@ -195,7 +195,7 @@
                     <div class="col-md-4">
                         <div class="card card-primary">
                             <div class="card-header">
-                                <div class="card-title">Techniques Statistics
+                                <div class="card-title">Tests Statistics
                                     <span class="text-sm" style="font-size: 0.8em;">(past 7 days)</span>
                                 </div>
                                 <div class="card-body pb-0">
@@ -210,7 +210,7 @@
                         </div>
                         <div class="card card-primary bg-primary-gradient">
                             <div class="card-header">
-                                <div class="card-title">Techniques Progress
+                                <div class="card-title">Tests Progress
                                     <span class="text-sm" style="font-size: 0.8em;">(assigned and executed)</span>
                                 </div>
                             </div>
@@ -226,7 +226,7 @@
                         <div class="card" style="min-height: 516px;">
                             <div class="card-header">
                                 <div class="card-title">Most Active Agents</div>
-                                <p class="card-category">Based on number of techniques executed</p>
+                                <p class="card-category">Based on number of Tests executed</p>
                             </div>
                             <div class="card-body pb-0">
                                 {% for top_agent in top_active_agents %}
@@ -422,7 +422,7 @@
                     {%- endfor %} ]
                    
                 }, {
-                        label: "Techniques Executed",
+                        label: "Tests Executed",
                         borderColor: gradientStroke,
                         pointBackgroundColor: gradientStroke,
                         pointRadius: 0,
@@ -532,7 +532,7 @@
 
         
                 datasets: [{
-                    label: "Techniques Executed", fill: !0, backgroundColor: "rgba(255,255,255,0.2)", borderColor: "#fff", borderCapStyle: "butt", borderDash: [], borderDashOffset: 0, pointBorderColor: "#fff", pointBackgroundColor: "#fff", pointBorderWidth: 1, pointHoverRadius: 5, pointHoverBackgroundColor: "#fff", pointHoverBorderColor: "#fff", pointHoverBorderWidth: 1, pointRadius: 1, pointHitRadius: 5,
+                    label: "Tests Executed", fill: !0, backgroundColor: "rgba(255,255,255,0.2)", borderColor: "#fff", borderCapStyle: "butt", borderDash: [], borderDashOffset: 0, pointBorderColor: "#fff", pointBackgroundColor: "#fff", pointBorderWidth: 1, pointHoverRadius: 5, pointHoverBackgroundColor: "#fff", pointHoverBorderColor: "#fff", pointHoverBorderWidth: 1, pointRadius: 1, pointHitRadius: 5,
                     data: [{% for data in weekly -%}
                          "{{ data.count }}",
                 {%- endfor %}]
