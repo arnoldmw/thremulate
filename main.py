@@ -1,4 +1,3 @@
-# noinspection PyUnresolvedReferences
 import logging
 import ssl
 from pathlib import Path
@@ -32,10 +31,11 @@ from modules.logger import *
 from modules.middleware import setup_middleware
 # noinspection PyUnresolvedReferences
 from modules.user_mgt import *
+# noinspection PyUnresolvedReferences
+from config.settings import config as server
 
 THIS_DIR = Path(__file__).parent
 secret_key = b'\xd0\x04)E\x14\x98\xa1~\xecE\xae>(\x1d6\xec\xbfQ\xa4\x19\x0e\xbcre,\xf8\x8f\x84WV.\x8d'
-
 
 # noinspection PyUnusedLocal
 @aiohttp_jinja2.template('index.html')
@@ -93,4 +93,5 @@ if __name__ == '__main__':
     ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
     ssl_context.load_cert_chain(certfile='certificates/thremulate.crt', keyfile='certificates/thremulate.key')
 
-    web.run_app(application, host="0.0.0.0", port=8000, access_log_class=AccessLogger, ssl_context=ssl_context)
+    web.run_app(application, host=server['host'], port=server['https'], access_log_class=AccessLogger,
+                ssl_context=ssl_context)
