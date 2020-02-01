@@ -12,24 +12,29 @@
   - Atomic Test #2: Bypass UAC using Event Viewer - PowerShell [windows]
   - Atomic Test #3: Bypass UAC using Fodhelper [windows]
   - Atomic Test #4: Bypass UAC using Fodhelper - PowerShell [windows]
+  - Atomic Test #5: Bypass UAC using ComputerDefaults - PowerShell [windows]
+  - Atomic Test #6: Bypass UAC by Mocking Trusted Directories [windows]
 - [T1191 CMSTP](./T1191/T1191.md)
   - Atomic Test #1: CMSTP Executing Remote Scriptlet [windows]
   - Atomic Test #2: CMSTP Executing UAC Bypass [windows]
 - T1116 Code Signing [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
-- T1500 Compile After Delivery [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
+- [T1500 Compile After Delivery](./T1500/T1500.md)
+  - Atomic Test #1: Compile After Delivery using csc.exe [windows]
 - [T1223 Compiled HTML File](./T1223/T1223.md)
   - Atomic Test #1: Compiled HTML Help Local Payload [windows]
   - Atomic Test #2: Compiled HTML Help Remote Payload [windows]
 - T1109 Component Firmware [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
-- [T1122 Component Object Model Hijacking](./T1122/T1122.md)
-  - Atomic Test #1: Component Object Model Hijacking [windows]
+- T1122 Component Object Model Hijacking [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
+- [T1090 Connection Proxy](./T1090/T1090.md)
+  - Atomic Test #2: portproxy reg key [windows]
 - [T1196 Control Panel Items](./T1196/T1196.md)
   - Atomic Test #1: Control Panel Items [windows]
 - [T1207 DCShadow](./T1207/T1207.md)
   - Atomic Test #1: DCShadow - Mimikatz [windows]
 - [T1038 DLL Search Order Hijacking](./T1038/T1038.md)
   - Atomic Test #1: DLL Search Order Hijacking - amsi.dll [windows]
-- T1073 DLL Side-Loading [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
+- [T1073 DLL Side-Loading](./T1073/T1073.md)
+  - Atomic Test #1: DLL Side-Loading using the Notepad++ GUP.exe binary [windows]
 - [T1140 Deobfuscate/Decode Files or Information](./T1140/T1140.md)
   - Atomic Test #1: Deobfuscate/Decode Files Or Information [windows]
   - Atomic Test #2: Certutil Rename and Decode [windows]
@@ -39,6 +44,12 @@
   - Atomic Test #10: Uninstall Sysmon [windows]
   - Atomic Test #11: AMSI Bypass - AMSI InitFailed [windows]
   - Atomic Test #12: AMSI Bypass - Remove AMSI Provider Reg Key [windows]
+  - Atomic Test #13: Disable Arbitrary Security Windows Service [windows]
+  - Atomic Test #14: Disable PowerShell Script Block Logging [windows]
+  - Atomic Test #15: PowerShell Bypass of AntiMalware Scripting Interface [windows]
+  - Atomic Test #16: Tamper with Windows Defender ATP PowerShell [windows]
+  - Atomic Test #17: Tamper with Windows Defender Command Prompt [windows]
+  - Atomic Test #18: Tamper with Windows Defender Registry [windows]
 - T1480 Execution Guardrails [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - T1211 Exploitation for Defense Evasion [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - T1181 Extra Window Memory Injection [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
@@ -52,7 +63,8 @@
   - Atomic Test #10: bcdedit [windows]
   - Atomic Test #11: wbadmin [windows]
   - Atomic Test #13: Delete-PrefetchFile [windows]
-- [T1222 File Permissions Modification](./T1222/T1222.md)
+- T1006 File System Logical Offsets [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
+- [T1222 File and Directory Permissions Modification](./T1222/T1222.md)
   - Atomic Test #1: Take ownership using takeown utility [windows]
   - Atomic Test #2: Take ownership recursively using takeown utility [windows]
   - Atomic Test #3: cacls - Grant permission to specified user or group [windows]
@@ -60,13 +72,14 @@
   - Atomic Test #5: icacls - Grant permission to specified user or group [windows]
   - Atomic Test #6: icacls - Grant permission to specified user or group recursively [windows]
   - Atomic Test #7: attrib - Remove read-only attribute [windows]
-- T1006 File System Logical Offsets [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - T1484 Group Policy Modification [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - [T1158 Hidden Files and Directories](./T1158/T1158.md)
-  - Atomic Test #4: Create Windows System File with Attrib [windows]
-  - Atomic Test #5: Create Windows Hidden File with Attrib [windows]
-  - Atomic Test #11: Create ADS command prompt [windows]
-  - Atomic Test #12: Create ADS PowerShell [windows]
+  - Atomic Test #3: Create Windows System File with Attrib [windows]
+  - Atomic Test #4: Create Windows Hidden File with Attrib [windows]
+  - Atomic Test #8: Create ADS command prompt [windows]
+  - Atomic Test #9: Create ADS PowerShell [windows]
+- [T1143 Hidden Window](./T1143/T1143.md)
+  - Atomic Test #1: Hidden Window [windows]
 - [T1183 Image File Execution Options Injection](./T1183/T1183.md)
   - Atomic Test #1: IFEO Add Debugger [windows]
   - Atomic Test #2: IFEO Global Flags [windows]
@@ -75,6 +88,8 @@
 - [T1070 Indicator Removal on Host](./T1070/T1070.md)
   - Atomic Test #1: Clear Logs [windows]
   - Atomic Test #2: FSUtil [windows]
+  - Atomic Test #6: Delete System Logs Using PowerShell [windows]
+  - Atomic Test #7: Delete System Logs Using Clear-EventLogId [windows]
 - [T1202 Indirect Command Execution](./T1202/T1202.md)
   - Atomic Test #1: Indirect Command Execution - pcalua.exe [windows]
   - Atomic Test #2: Indirect Command Execution - forfiles.exe [windows]
@@ -87,26 +102,42 @@
   - Atomic Test #3: Masquerading - cscript.exe running as notepad.exe [windows]
   - Atomic Test #4: Masquerading - wscript.exe running as svchost.exe [windows]
   - Atomic Test #5: Masquerading - powershell.exe running as taskhostw.exe [windows]
+  - Atomic Test #6: Masquerading - non-windows exe running as windows exe [windows]
+  - Atomic Test #7: Masquerading - windows exe running as different windows exe [windows]
+  - Atomic Test #8: Malicious process Masquerading as LSM.exe [windows]
 - [T1112 Modify Registry](./T1112/T1112.md)
   - Atomic Test #1: Modify Registry of Current User Profile - cmd [windows]
   - Atomic Test #2: Modify Registry of Local Machine - cmd [windows]
   - Atomic Test #3: Modify Registry of Another User Profile [windows]
   - Atomic Test #4: Modify registry to store logon credentials [windows]
+  - Atomic Test #5: Modify registry to store PowerShell code [windows]
+  - Atomic Test #6: Add domain to Trusted sites Zone [windows]
+  - Atomic Test #7: Javascript in registry [windows]
 - [T1170 Mshta](./T1170/T1170.md)
   - Atomic Test #1: Mshta executes JavaScript Scheme Fetch Remote Payload With GetObject [windows]
+  - Atomic Test #2: Mshta calls a local VBScript file to launch notepad.exe [windows]
+  - Atomic Test #3: Mshta executes VBScript to execute malicious command [windows]
+  - Atomic Test #4: Mshta Executes Remote HTML Application (HTA) [windows]
 - [T1096 NTFS File Attributes](./T1096/T1096.md)
   - Atomic Test #1: Alternate Data Streams (ADS) [windows]
+  - Atomic Test #2: Store file in Alternate Data Stream (ADS) [windows]
 - [T1126 Network Share Connection Removal](./T1126/T1126.md)
   - Atomic Test #1: Add Network Share [windows]
   - Atomic Test #2: Remove Network Share [windows]
   - Atomic Test #3: Remove Network Share PowerShell [windows]
 - [T1027 Obfuscated Files or Information](./T1027/T1027.md)
+  - Atomic Test #2: Execute base64-encoded PowerShell [windows]
+  - Atomic Test #3: Execute base64-encoded PowerShell from Windows Registry [windows]
+- [T1502 Parent PID Spoofing](./T1502/T1502.md)
+  - Atomic Test #1: Parent PID Spoofing using PowerShell [windows]
 - T1186 Process Doppelgänging [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
-- T1093 Process Hollowing [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
+- [T1093 Process Hollowing](./T1093/T1093.md)
+  - Atomic Test #1: Process Hollowing using PowerShell [windows]
 - [T1055 Process Injection](./T1055/T1055.md)
   - Atomic Test #1: Process Injection via mavinject.exe [windows]
   - Atomic Test #2: Process Injection via PowerSploit [windows]
-  - Atomic Test #4: Process Injection via C# [windows]
+  - Atomic Test #5: Process Injection via C# [windows]
+  - Atomic Test #6: svchost writing a file to a UNC path [windows]
 - T1108 Redundant Access [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - [T1121 Regsvcs/Regasm](./T1121/T1121.md)
   - Atomic Test #1: Regasm Uninstall Method Call Test [windows]
@@ -119,14 +150,27 @@
   - Atomic Test #3: Windows Signed Driver Rootkit Test [windows]
 - [T1085 Rundll32](./T1085/T1085.md)
   - Atomic Test #1: Rundll32 execute JavaScript Remote Payload With GetObject [windows]
+  - Atomic Test #2: Rundll32 execute VBscript command [windows]
+  - Atomic Test #3: Rundll32 advpack.dll Execution [windows]
+  - Atomic Test #4: Rundll32 ieadvpack.dll Execution [windows]
+  - Atomic Test #5: Rundll32 syssetup.dll Execution [windows]
+  - Atomic Test #6: Rundll32 setupapi.dll Execution [windows]
 - T1198 SIP and Trust Provider Hijacking [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - [T1064 Scripting](./T1064/T1064.md)
+  - Atomic Test #2: Create and Execute Batch Script [windows]
 - [T1218 Signed Binary Proxy Execution](./T1218/T1218.md)
   - Atomic Test #1: mavinject - Inject DLL into running process [windows]
   - Atomic Test #2: SyncAppvPublishingServer - Execute arbitrary PowerShell code [windows]
   - Atomic Test #3: Register-CimProvider - Execute evil dll [windows]
+  - Atomic Test #4: Msiexec.exe - Execute Local MSI file [windows]
+  - Atomic Test #5: Msiexec.exe - Execute Remote MSI file [windows]
+  - Atomic Test #6: Msiexec.exe - Execute Arbitrary DLL [windows]
+  - Atomic Test #7: Odbcconf.exe - Execute Arbitrary DLL [windows]
+  - Atomic Test #8: InfDefaultInstall.exe .inf Execution [windows]
 - [T1216 Signed Script Proxy Execution](./T1216/T1216.md)
   - Atomic Test #1: PubPrn.vbs Signed Script Bypass [windows]
+  - Atomic Test #2: SyncAppvPublishingServe Signed Script PowerShell Command Execution [windows]
+  - Atomic Test #3: manage-bde.wsf Signed Script Command Execution [windows]
 - T1045 Software Packing [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - T1221 Template Injection [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - [T1099 Timestomp](./T1099/T1099.md)
@@ -137,7 +181,9 @@
   - Atomic Test #1: MSBuild Bypass Using Inline Tasks [windows]
 - T1078 Valid Accounts [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - T1497 Virtualization/Sandbox Evasion [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
-- T1102 Web Service [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
+- [T1102 Web Service](./T1102/T1102.md)
+  - Atomic Test #1: Reach out to C2 Pointer URLs via command_prompt [windows]
+  - Atomic Test #2: Reach out to C2 Pointer URLs via powershell [windows]
 - [T1220 XSL Script Processing](./T1220/T1220.md)
   - Atomic Test #1: MSXSL Bypass using local files [windows]
   - Atomic Test #2: MSXSL Bypass using remote files [windows]
@@ -160,16 +206,21 @@
   - Atomic Test #1: Install AppInit Shim [windows]
 - [T1138 Application Shimming](./T1138/T1138.md)
   - Atomic Test #1: Application Shim Installation [windows]
+  - Atomic Test #2: New shim database files created in the default shim database directory [windows]
+  - Atomic Test #3: Registry key creation and/or modification events for SDB [windows]
 - [T1088 Bypass User Account Control](./T1088/T1088.md)
   - Atomic Test #1: Bypass UAC using Event Viewer [windows]
   - Atomic Test #2: Bypass UAC using Event Viewer - PowerShell [windows]
   - Atomic Test #3: Bypass UAC using Fodhelper [windows]
   - Atomic Test #4: Bypass UAC using Fodhelper - PowerShell [windows]
+  - Atomic Test #5: Bypass UAC using ComputerDefaults - PowerShell [windows]
+  - Atomic Test #6: Bypass UAC by Mocking Trusted Directories [windows]
 - [T1038 DLL Search Order Hijacking](./T1038/T1038.md)
   - Atomic Test #1: DLL Search Order Hijacking - amsi.dll [windows]
 - T1068 Exploitation for Privilege Escalation [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - T1181 Extra Window Memory Injection [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
-- T1044 File System Permissions Weakness [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
+- [T1044 File System Permissions Weakness](./T1044/T1044.md)
+  - Atomic Test #1: File System Permissions Weakness [windows]
 - [T1179 Hooking](./T1179/T1179.md)
   - Atomic Test #1: Hook PowerShell TLS Encrypt/Decrypt Messages [windows]
 - [T1183 Image File Execution Options Injection](./T1183/T1183.md)
@@ -178,18 +229,25 @@
 - [T1050 New Service](./T1050/T1050.md)
   - Atomic Test #1: Service Installation [windows]
   - Atomic Test #2: Service Installation PowerShell Installs A Local Service using PowerShell [windows]
+- [T1502 Parent PID Spoofing](./T1502/T1502.md)
+  - Atomic Test #1: Parent PID Spoofing using PowerShell [windows]
 - T1034 Path Interception [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - T1013 Port Monitors [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
+- [T1504 PowerShell Profile](./T1504/T1504.md)
+  - Atomic Test #1: Append malicious start-process cmdlet [windows]
 - [T1055 Process Injection](./T1055/T1055.md)
   - Atomic Test #1: Process Injection via mavinject.exe [windows]
   - Atomic Test #2: Process Injection via PowerSploit [windows]
-  - Atomic Test #4: Process Injection via C# [windows]
+  - Atomic Test #5: Process Injection via C# [windows]
+  - Atomic Test #6: svchost writing a file to a UNC path [windows]
 - T1178 SID-History Injection [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - [T1053 Scheduled Task](./T1053/T1053.md)
   - Atomic Test #1: At.exe Scheduled task [windows]
   - Atomic Test #2: Scheduled task Local [windows]
   - Atomic Test #3: Scheduled task Remote [windows]
-- T1058 Service Registry Permissions Weakness [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
+  - Atomic Test #4: Powershell Cmdlet Scheduled Task [windows]
+- [T1058 Service Registry Permissions Weakness](./T1058/T1058.md)
+  - Atomic Test #1: Service Registry Permissions Weakness [windows]
 - T1078 Valid Accounts [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - [T1100 Web Shell](./T1100/T1100.md)
   - Atomic Test #1: Web Shell Written to Disk [windows]
@@ -210,6 +268,8 @@
   - Atomic Test #1: Install AppInit Shim [windows]
 - [T1138 Application Shimming](./T1138/T1138.md)
   - Atomic Test #1: Application Shim Installation [windows]
+  - Atomic Test #2: New shim database files created in the default shim database directory [windows]
+  - Atomic Test #3: Registry key creation and/or modification events for SDB [windows]
 - T1131 Authentication Package [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - [T1197 BITS Jobs](./T1197/T1197.md)
   - Atomic Test #1: Download & Execute [windows]
@@ -223,20 +283,20 @@
 - [T1042 Change Default File Association](./T1042/T1042.md)
   - Atomic Test #1: Change Default File Association [windows]
 - T1109 Component Firmware [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
-- [T1122 Component Object Model Hijacking](./T1122/T1122.md)
-  - Atomic Test #1: Component Object Model Hijacking [windows]
+- T1122 Component Object Model Hijacking [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - [T1136 Create Account](./T1136/T1136.md)
   - Atomic Test #3: Create a new user in a command prompt [windows]
   - Atomic Test #4: Create a new user in PowerShell [windows]
 - [T1038 DLL Search Order Hijacking](./T1038/T1038.md)
   - Atomic Test #1: DLL Search Order Hijacking - amsi.dll [windows]
 - T1133 External Remote Services [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
-- T1044 File System Permissions Weakness [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
+- [T1044 File System Permissions Weakness](./T1044/T1044.md)
+  - Atomic Test #1: File System Permissions Weakness [windows]
 - [T1158 Hidden Files and Directories](./T1158/T1158.md)
-  - Atomic Test #4: Create Windows System File with Attrib [windows]
-  - Atomic Test #5: Create Windows Hidden File with Attrib [windows]
-  - Atomic Test #11: Create ADS command prompt [windows]
-  - Atomic Test #12: Create ADS PowerShell [windows]
+  - Atomic Test #3: Create Windows System File with Attrib [windows]
+  - Atomic Test #4: Create Windows Hidden File with Attrib [windows]
+  - Atomic Test #8: Create ADS command prompt [windows]
+  - Atomic Test #9: Create ADS PowerShell [windows]
 - [T1179 Hooking](./T1179/T1179.md)
   - Atomic Test #1: Hook PowerShell TLS Encrypt/Decrypt Messages [windows]
 - [T1062 Hypervisor](./T1062/T1062.md)
@@ -247,6 +307,9 @@
 - T1177 LSASS Driver [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - [T1037 Logon Scripts](./T1037/T1037.md)
   - Atomic Test #1: Logon Scripts [windows]
+  - Atomic Test #2: Startup Folder Script [windows]
+  - Atomic Test #3: Scheduled Task Startup Script [windows]
+  - Atomic Test #5: File Ending with .jse in Startup Folder [windows]
 - [T1031 Modify Existing Service](./T1031/T1031.md)
   - Atomic Test #1: Modify Fax service to run PowerShell [windows]
 - [T1128 Netsh Helper DLL](./T1128/T1128.md)
@@ -258,23 +321,30 @@
   - Atomic Test #1: DDEAUTO [windows]
 - T1034 Path Interception [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - T1013 Port Monitors [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
+- [T1504 PowerShell Profile](./T1504/T1504.md)
+  - Atomic Test #1: Append malicious start-process cmdlet [windows]
 - T1108 Redundant Access [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - [T1060 Registry Run Keys / Startup Folder](./T1060/T1060.md)
   - Atomic Test #1: Reg Key Run [windows]
   - Atomic Test #2: Reg Key RunOnce [windows]
   - Atomic Test #3: PowerShell Registry RunOnce [windows]
-  - Atomic Test #4: Startup Folder [windows]
 - T1198 SIP and Trust Provider Hijacking [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - [T1053 Scheduled Task](./T1053/T1053.md)
   - Atomic Test #1: At.exe Scheduled task [windows]
   - Atomic Test #2: Scheduled task Local [windows]
   - Atomic Test #3: Scheduled task Remote [windows]
+  - Atomic Test #4: Powershell Cmdlet Scheduled Task [windows]
 - [T1180 Screensaver](./T1180/T1180.md)
   - Atomic Test #1: Set Arbitrary Binary as Screensaver [windows]
 - [T1101 Security Support Provider](./T1101/T1101.md)
   - Atomic Test #1: Modify SSP configuration in registry [windows]
-- T1058 Service Registry Permissions Weakness [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
-- T1023 Shortcut Modification [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
+- [T1505 Server Software Component](./T1505/T1505.md)
+  - Atomic Test #1: Install MS Exchange Transport Agent Persistence [windows]
+- [T1058 Service Registry Permissions Weakness](./T1058/T1058.md)
+  - Atomic Test #1: Service Registry Permissions Weakness [windows]
+- [T1023 Shortcut Modification](./T1023/T1023.md)
+  - Atomic Test #1: Shortcut Modification [windows]
+  - Atomic Test #2: Create shortcut to cmd in startup folders [windows]
 - T1019 System Firmware [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - T1209 Time Providers [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - T1078 Valid Accounts [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
@@ -287,6 +357,41 @@
   - Atomic Test #2: Winlogon Userinit Key Persistence - PowerShell [windows]
   - Atomic Test #3: Winlogon Notify Key Logon Persistence - PowerShell [windows]
 
+# impact
+- [T1531 Account Access Removal](./T1531/T1531.md)
+  - Atomic Test #1: Change User Password - Windows [windows]
+  - Atomic Test #2: Delete User - Windows [windows]
+- [T1485 Data Destruction](./T1485/T1485.md)
+  - Atomic Test #1: Windows - Delete Volume Shadow Copies [windows]
+  - Atomic Test #2: Windows - Delete Windows Backup Catalog [windows]
+  - Atomic Test #3: Windows - Disable Windows Recovery Console Repair [windows]
+  - Atomic Test #4: Windows - Overwrite file with Sysinternals SDelete [windows]
+  - Atomic Test #6: Windows - Delete Backup Files [windows]
+- T1486 Data Encrypted for Impact [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
+- T1491 Defacement [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
+- T1488 Disk Content Wipe [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
+- T1487 Disk Structure Wipe [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
+- T1499 Endpoint Denial of Service [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
+- T1495 Firmware Corruption [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
+- [T1490 Inhibit System Recovery](./T1490/T1490.md)
+  - Atomic Test #1: Windows - Delete Volume Shadow Copies [windows]
+  - Atomic Test #2: Windows - Delete Volume Shadow Copies via WMI [windows]
+  - Atomic Test #3: Windows - Delete Windows Backup Catalog [windows]
+  - Atomic Test #4: Windows - Disable Windows Recovery Console Repair [windows]
+  - Atomic Test #5: Windows - Delete Volume Shadow Copies via WMI with PowerShell [windows]
+- T1498 Network Denial of Service [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
+- [T1496 Resource Hijacking](./T1496/T1496.md)
+- T1494 Runtime Data Manipulation [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
+- [T1489 Service Stop](./T1489/T1489.md)
+  - Atomic Test #1: Windows - Stop service using Service Controller [windows]
+  - Atomic Test #2: Windows - Stop service using net.exe [windows]
+  - Atomic Test #3: Windows - Stop service by killing process [windows]
+- T1492 Stored Data Manipulation [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
+- [T1529 System Shutdown/Reboot](./T1529/T1529.md)
+  - Atomic Test #1: Shutdown System - Windows [windows]
+  - Atomic Test #2: Restart System - Windows [windows]
+- T1493 Transmitted Data Manipulation [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
+
 # discovery
 - [T1087 Account Discovery](./T1087/T1087.md)
   - Atomic Test #8: Enumerate all accounts [windows]
@@ -296,9 +401,12 @@
 - [T1010 Application Window Discovery](./T1010/T1010.md)
   - Atomic Test #1: List Process Main Windows - C# .NET [windows]
 - [T1217 Browser Bookmark Discovery](./T1217/T1217.md)
+  - Atomic Test #4: List Google Chrome Bookmarks on Windows with powershell [windows]
+  - Atomic Test #5: List Google Chrome Bookmarks on Windows with command prompt [windows]
 - [T1482 Domain Trust Discovery](./T1482/T1482.md)
   - Atomic Test #1: Windows - Discover domain trusts with dsquery [windows]
   - Atomic Test #2: Windows - Discover domain trusts with nltest [windows]
+  - Atomic Test #3: Powershell enumerate domains and forests [windows]
 - [T1083 File and Directory Discovery](./T1083/T1083.md)
   - Atomic Test #1: File and Directory Discovery [windows]
   - Atomic Test #2: File and Directory Discovery [windows]
@@ -306,6 +414,7 @@
 - [T1135 Network Share Discovery](./T1135/T1135.md)
   - Atomic Test #2: Network Share Discovery command prompt [windows]
   - Atomic Test #3: Network Share Discovery PowerShell [windows]
+  - Atomic Test #4: View available share drives [windows]
 - [T1040 Network Sniffing](./T1040/T1040.md)
   - Atomic Test #3: Packet Capture Windows Command Prompt [windows]
   - Atomic Test #4: Packet Capture PowerShell [windows]
@@ -314,23 +423,37 @@
   - Atomic Test #6: Examine domain password policy - Windows [windows]
 - T1120 Peripheral Device Discovery [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - [T1069 Permission Groups Discovery](./T1069/T1069.md)
-  - Atomic Test #1: Elevated group enumeration using net group [windows]
+  - Atomic Test #2: Basic Permission Groups Discovery Windows [windows]
+  - Atomic Test #3: Permission Groups Discovery PowerShell [windows]
+  - Atomic Test #4: Elevated group enumeration using net group [windows]
 - [T1057 Process Discovery](./T1057/T1057.md)
+  - Atomic Test #2: Process Discovery - tasklist [windows]
 - [T1012 Query Registry](./T1012/T1012.md)
   - Atomic Test #1: Query Registry [windows]
 - [T1018 Remote System Discovery](./T1018/T1018.md)
   - Atomic Test #1: Remote System Discovery - net [windows]
-  - Atomic Test #2: Remote System Discovery - ping sweep [windows]
-  - Atomic Test #3: Remote System Discovery - arp [windows]
-  - Atomic Test #6: Remote System Discovery - nslookup [windows]
+  - Atomic Test #2: Remote System Discovery - net group Domain Computers [windows]
+  - Atomic Test #3: Remote System Discovery - nltest [windows]
+  - Atomic Test #4: Remote System Discovery - ping sweep [windows]
+  - Atomic Test #5: Remote System Discovery - arp [windows]
+  - Atomic Test #8: Remote System Discovery - nslookup [windows]
 - [T1063 Security Software Discovery](./T1063/T1063.md)
   - Atomic Test #1: Security Software Discovery [windows]
   - Atomic Test #2: Security Software Discovery - powershell [windows]
   - Atomic Test #4: Security Software Discovery - Sysmon Service [windows]
+  - Atomic Test #5: Security Software Discovery - AV Discovery via WMI [windows]
+- [T1518 Software Discovery](./T1518/T1518.md)
+  - Atomic Test #1: Find and Display Internet Explorer Browser Version [windows]
+  - Atomic Test #2: Applications Installed [windows]
 - [T1082 System Information Discovery](./T1082/T1082.md)
   - Atomic Test #1: System Information Discovery [windows]
+  - Atomic Test #6: Hostname Discovery (Windows) [windows]
+  - Atomic Test #8: Windows MachineGUID Discovery [windows]
 - [T1016 System Network Configuration Discovery](./T1016/T1016.md)
   - Atomic Test #1: System Network Configuration Discovery [windows]
+  - Atomic Test #2: List Windows Firewall Rules [windows]
+  - Atomic Test #4: System Network Configuration Discovery (Trickbot Style) [windows]
+  - Atomic Test #5: List Open Egress Ports [windows]
 - [T1049 System Network Connections Discovery](./T1049/T1049.md)
   - Atomic Test #1: System Network Connections Discovery [windows]
   - Atomic Test #2: System Network Connections Discovery with PowerShell [windows]
@@ -362,10 +485,12 @@
   - Atomic Test #10: Copy NTDS.dit from Volume Shadow Copy [windows]
   - Atomic Test #11: GPP Passwords (findstr) [windows]
   - Atomic Test #12: GPP Passwords (Get-GPPPassword) [windows]
+  - Atomic Test #13: LSASS read with pypykatz [windows]
+  - Atomic Test #14: Registry parse with pypykatz [windows]
+- T1503 Credentials from Web Browsers [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - [T1081 Credentials in Files](./T1081/T1081.md)
-  - Atomic Test #3: Runs Mimikatz & Mimikittenz by name [windows]
-  - Atomic Test #4: Extracting passwords with findstr [windows]
-  - Atomic Test #5: Access "unattend.xml" [windows]
+  - Atomic Test #3: Extracting passwords with findstr [windows]
+  - Atomic Test #4: Access unattend.xml [windows]
 - [T1214 Credentials in Registry](./T1214/T1214.md)
   - Atomic Test #1: Enumeration for Credentials in Registry [windows]
 - T1212 Exploitation for Credential Access [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
@@ -376,7 +501,8 @@
   - Atomic Test #1: Input Capture [windows]
 - [T1141 Input Prompt](./T1141/T1141.md)
   - Atomic Test #2: PowerShell - Prompt User for Password [windows]
-- T1208 Kerberoasting [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
+- [T1208 Kerberoasting](./T1208/T1208.md)
+  - Atomic Test #1: Request for service tickets [windows]
 - T1171 LLMNR/NBT-NS Poisoning and Relay [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - [T1040 Network Sniffing](./T1040/T1040.md)
   - Atomic Test #3: Packet Capture Windows Command Prompt [windows]
@@ -385,16 +511,22 @@
   - Atomic Test #1: Install and Register Password Filter DLL [windows]
 - [T1145 Private Keys](./T1145/T1145.md)
   - Atomic Test #1: Private Keys [windows]
+- T1539 Steal Web Session Cookie [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - T1111 Two-Factor Authentication Interception [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 
 # lateral-movement
 - T1017 Application Deployment Software [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
-- T1175 Distributed Component Object Model [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
+- T1175 Component Object Model and Distributed COM [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - T1210 Exploitation of Remote Services [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
+- T1534 Internal Spearphishing [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - [T1037 Logon Scripts](./T1037/T1037.md)
   - Atomic Test #1: Logon Scripts [windows]
+  - Atomic Test #2: Startup Folder Script [windows]
+  - Atomic Test #3: Scheduled Task Startup Script [windows]
+  - Atomic Test #5: File Ending with .jse in Startup Folder [windows]
 - [T1075 Pass the Hash](./T1075/T1075.md)
   - Atomic Test #1: Mimikatz Pass the Hash [windows]
+  - Atomic Test #2: crackmapexec Pass the Hash [windows]
 - [T1097 Pass the Ticket](./T1097/T1097.md)
   - Atomic Test #1: Mimikatz Kerberos Ticket Attack [windows]
 - [T1076 Remote Desktop Protocol](./T1076/T1076.md)
@@ -404,6 +536,7 @@
   - Atomic Test #7: certutil download (urlcache) [windows]
   - Atomic Test #8: certutil download (verifyctl) [windows]
   - Atomic Test #9: Windows - BITSAdmin BITS Download [windows]
+  - Atomic Test #10: Windows - PowerShell Download [windows]
 - T1021 Remote Services [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - T1091 Replication Through Removable Media [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - T1051 Shared Webroot [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
@@ -412,6 +545,8 @@
 - [T1077 Windows Admin Shares](./T1077/T1077.md)
   - Atomic Test #1: Map admin share [windows]
   - Atomic Test #2: Map Admin Share PowerShell [windows]
+  - Atomic Test #3: Copy and Execute File with PsExec [windows]
+  - Atomic Test #4: Execute command writing output to local Admin Share [windows]
 - [T1028 Windows Remote Management](./T1028/T1028.md)
   - Atomic Test #1: Enable Windows Remote Management [windows]
   - Atomic Test #2: PowerShell Lateral Movement [windows]
@@ -421,16 +556,18 @@
 
 # collection
 - [T1123 Audio Capture](./T1123/T1123.md)
-  - Atomic Test #1: SourceRecorder via Windows command prompt [windows]
-  - Atomic Test #2: PowerShell Cmdlet via Windows command prompt [windows]
+  - Atomic Test #1: using device audio capture commandlet [windows]
 - [T1119 Automated Collection](./T1119/T1119.md)
   - Atomic Test #1: Automated Collection Command Prompt [windows]
   - Atomic Test #2: Automated Collection PowerShell [windows]
+  - Atomic Test #3: Recon information for export with PowerShell [windows]
+  - Atomic Test #4: Recon information for export with Command Prompt [windows]
 - [T1115 Clipboard Data](./T1115/T1115.md)
   - Atomic Test #1: Utilize Clipboard to store or execute commands from [windows]
   - Atomic Test #2: PowerShell [windows]
 - [T1074 Data Staged](./T1074/T1074.md)
   - Atomic Test #1: Stage data from Discovery.bat [windows]
+  - Atomic Test #3: Zip a Folder with PowerShell for Staging in Temp [windows]
 - T1213 Data from Information Repositories [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - [T1005 Data from Local System](./T1005/T1005.md)
 - T1039 Data from Network Shared Drive [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
@@ -468,10 +605,12 @@
 - [T1223 Compiled HTML File](./T1223/T1223.md)
   - Atomic Test #1: Compiled HTML Help Local Payload [windows]
   - Atomic Test #2: Compiled HTML Help Remote Payload [windows]
+- T1175 Component Object Model and Distributed COM [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - [T1196 Control Panel Items](./T1196/T1196.md)
   - Atomic Test #1: Control Panel Items [windows]
 - [T1173 Dynamic Data Exchange](./T1173/T1173.md)
   - Atomic Test #1: Execute Commands [windows]
+  - Atomic Test #2: Execute PowerShell script via Word DDE [windows]
 - T1106 Execution through API [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - T1129 Execution through Module Load [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - T1203 Exploitation for Client Execution [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
@@ -482,6 +621,9 @@
 - T1177 LSASS Driver [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - [T1170 Mshta](./T1170/T1170.md)
   - Atomic Test #1: Mshta executes JavaScript Scheme Fetch Remote Payload With GetObject [windows]
+  - Atomic Test #2: Mshta calls a local VBScript file to launch notepad.exe [windows]
+  - Atomic Test #3: Mshta executes VBScript to execute malicious command [windows]
+  - Atomic Test #4: Mshta Executes Remote HTML Application (HTA) [windows]
 - [T1086 PowerShell](./T1086/T1086.md)
   - Atomic Test #1: Mimikatz [windows]
   - Atomic Test #2: BloodHound [windows]
@@ -506,19 +648,34 @@
   - Atomic Test #3: Regsvr32 local DLL execution [windows]
 - [T1085 Rundll32](./T1085/T1085.md)
   - Atomic Test #1: Rundll32 execute JavaScript Remote Payload With GetObject [windows]
+  - Atomic Test #2: Rundll32 execute VBscript command [windows]
+  - Atomic Test #3: Rundll32 advpack.dll Execution [windows]
+  - Atomic Test #4: Rundll32 ieadvpack.dll Execution [windows]
+  - Atomic Test #5: Rundll32 syssetup.dll Execution [windows]
+  - Atomic Test #6: Rundll32 setupapi.dll Execution [windows]
 - [T1053 Scheduled Task](./T1053/T1053.md)
   - Atomic Test #1: At.exe Scheduled task [windows]
   - Atomic Test #2: Scheduled task Local [windows]
   - Atomic Test #3: Scheduled task Remote [windows]
+  - Atomic Test #4: Powershell Cmdlet Scheduled Task [windows]
 - [T1064 Scripting](./T1064/T1064.md)
+  - Atomic Test #2: Create and Execute Batch Script [windows]
 - [T1035 Service Execution](./T1035/T1035.md)
   - Atomic Test #1: Execute a Command as a Service [windows]
+  - Atomic Test #2: Use PsExec to execute a command on a remote host [windows]
 - [T1218 Signed Binary Proxy Execution](./T1218/T1218.md)
   - Atomic Test #1: mavinject - Inject DLL into running process [windows]
   - Atomic Test #2: SyncAppvPublishingServer - Execute arbitrary PowerShell code [windows]
   - Atomic Test #3: Register-CimProvider - Execute evil dll [windows]
+  - Atomic Test #4: Msiexec.exe - Execute Local MSI file [windows]
+  - Atomic Test #5: Msiexec.exe - Execute Remote MSI file [windows]
+  - Atomic Test #6: Msiexec.exe - Execute Arbitrary DLL [windows]
+  - Atomic Test #7: Odbcconf.exe - Execute Arbitrary DLL [windows]
+  - Atomic Test #8: InfDefaultInstall.exe .inf Execution [windows]
 - [T1216 Signed Script Proxy Execution](./T1216/T1216.md)
   - Atomic Test #1: PubPrn.vbs Signed Script Bypass [windows]
+  - Atomic Test #2: SyncAppvPublishingServe Signed Script PowerShell Command Execution [windows]
+  - Atomic Test #3: manage-bde.wsf Signed Script Command Execution [windows]
 - T1072 Third-party Software [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - [T1127 Trusted Developer Utilities](./T1127/T1127.md)
   - Atomic Test #1: MSBuild Bypass Using Inline Tasks [windows]
@@ -528,6 +685,8 @@
   - Atomic Test #2: WMI Reconnaissance Processes [windows]
   - Atomic Test #3: WMI Reconnaissance Software [windows]
   - Atomic Test #4: WMI Reconnaissance List Remote Services [windows]
+  - Atomic Test #5: WMI Execute Local Process [windows]
+  - Atomic Test #6: WMI Execute Remote Process [windows]
 - [T1028 Windows Remote Management](./T1028/T1028.md)
   - Atomic Test #1: Enable Windows Remote Management [windows]
   - Atomic Test #2: PowerShell Lateral Movement [windows]
@@ -544,6 +703,7 @@
 - T1043 Commonly Used Port [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - T1092 Communication Through Removable Media [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - [T1090 Connection Proxy](./T1090/T1090.md)
+  - Atomic Test #2: portproxy reg key [windows]
 - T1094 Custom Command and Control Protocol [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - T1024 Custom Cryptographic Protocol [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - [T1132 Data Encoding](./T1132/T1132.md)
@@ -560,43 +720,21 @@
   - Atomic Test #7: certutil download (urlcache) [windows]
   - Atomic Test #8: certutil download (verifyctl) [windows]
   - Atomic Test #9: Windows - BITSAdmin BITS Download [windows]
+  - Atomic Test #10: Windows - PowerShell Download [windows]
 - [T1071 Standard Application Layer Protocol](./T1071/T1071.md)
-  - Atomic Test #1: Malicious User Agents [windows]
-  - Atomic Test #3: DNS Large Query Volume [windows]
-  - Atomic Test #4: DNS Regular Beaconing [windows]
-  - Atomic Test #5: DNS Long Domain Query [windows]
-- T1032 Standard Cryptographic Protocol [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
+  - Atomic Test #1: Malicious User Agents - Powershell [windows]
+  - Atomic Test #2: Malicious User Agents - CMD [windows]
+  - Atomic Test #4: DNS Large Query Volume [windows]
+  - Atomic Test #5: DNS Regular Beaconing [windows]
+  - Atomic Test #6: DNS Long Domain Query [windows]
+- [T1032 Standard Cryptographic Protocol](./T1032/T1032.md)
+  - Atomic Test #1: OpenSSL C2 [windows]
 - T1095 Standard Non-Application Layer Protocol [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
 - [T1065 Uncommonly Used Port](./T1065/T1065.md)
   - Atomic Test #1: Testing usage of uncommonly used port with PowerShell [windows]
-- T1102 Web Service [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
-
-# impact
-- [T1485 Data Destruction](./T1485/T1485.md)
-  - Atomic Test #1: Windows - Delete Volume Shadow Copies [windows]
-  - Atomic Test #2: Windows - Delete Windows Backup Catalog [windows]
-  - Atomic Test #3: Windows - Disable Windows Recovery Console Repair [windows]
-  - Atomic Test #4: Windows - Overwrite file with Sysinternals SDelete [windows]
-- T1486 Data Encrypted for Impact [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
-- T1491 Defacement [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
-- T1488 Disk Content Wipe [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
-- T1487 Disk Structure Wipe [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
-- T1499 Endpoint Denial of Service [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
-- T1495 Firmware Corruption [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
-- [T1490 Inhibit System Recovery](./T1490/T1490.md)
-  - Atomic Test #1: Windows - Delete Volume Shadow Copies [windows]
-  - Atomic Test #2: Windows - Delete Volume Shadow Copies via WMI [windows]
-  - Atomic Test #3: Windows - Delete Windows Backup Catalog [windows]
-  - Atomic Test #4: Windows - Disable Windows Recovery Console Repair [windows]
-- T1498 Network Denial of Service [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
-- [T1496 Resource Hijacking](./T1496/T1496.md)
-- T1494 Runtime Data Manipulation [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
-- [T1489 Service Stop](./T1489/T1489.md)
-  - Atomic Test #1: Windows - Stop service using Service Controller [windows]
-  - Atomic Test #2: Windows - Stop service using net.exe [windows]
-  - Atomic Test #3: Windows - Stop service by killing process [windows]
-- T1492 Stored Data Manipulation [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
-- T1493 Transmitted Data Manipulation [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
+- [T1102 Web Service](./T1102/T1102.md)
+  - Atomic Test #1: Reach out to C2 Pointer URLs via command_prompt [windows]
+  - Atomic Test #2: Reach out to C2 Pointer URLs via powershell [windows]
 
 # initial-access
 - T1189 Drive-by Compromise [CONTRIBUTE A TEST](https://atomicredteam.io/contributing)
