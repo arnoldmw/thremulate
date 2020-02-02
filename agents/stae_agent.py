@@ -50,6 +50,7 @@ def agent_arguments():
         sys.exit('[+] Server IP address is required\n[+] Agent Stopped!!\n[+] Use -h or --help flag for help')
     print('[+] Server is at %s' % SERVER_IP)
     if INTERVAL is None:
+        INTERVAL = 5
         print('[+] No beacon interval set.\n[+] Agent defaulted to 5 seconds')
     if args.verbose:
         VERBOSE = True
