@@ -144,10 +144,10 @@ atomic_tests:
 
   executor:
     name: command_prompt
-    elevation_required: true
+    elevation_required: false
     command: |
-      copy C:\Windows\System32\cmd.exe C:\lsm.exe
-      C:\lsm.exe /c echo T1036 > C:\T1036.txt
+      copy C:\Windows\System32\cmd.exe C:\test\lsm.exe
+      C:\test\lsm.exe /c echo T1036 > C:\test\T1036.txt
     cleanup_command: |
       del C:\T1036.txt
       del C:\lsm.exe
