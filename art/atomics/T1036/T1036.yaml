@@ -14,10 +14,10 @@ atomic_tests:
     name: command_prompt
     elevation_required: false
     command: |
-      cmd.exe /c copy %SystemRoot%\System32\cmd.exe %SystemRoot%\Temp\lsass.exe
-      cmd.exe /c %SystemRoot%\Temp\lsass.exe
+      cmd.exe /c copy %SystemRoot%\System32\cmd.exe C:\test\lsass.exe
+      cmd.exe /c C:\test\lsass.exe /C hostname
     cleanup_command: |
-      del /Q /F %SystemRoot%\Temp\lsass.exe
+      del /Q /F C:\test\lsass.exe
 
 - name: Masquerading as Linux crond process.
   description: |
@@ -60,10 +60,10 @@ atomic_tests:
     name: command_prompt
     elevation_required: false
     command: |
-      copy %SystemRoot%\System32\wscript.exe %APPDATA%\svchost.exe /Y
-      cmd.exe /c %APPDATA%\svchost.exe /B
+      copy %SystemRoot%\System32\wscript.exe C:\test\svchost.exe /Y
+      cmd.exe /c C:\test\svchost.exe /B
     cleanup_command: |
-      del /Q /F %APPDATA%\svchost.exe
+      del /Q /F C:\test\svchost.exe
 
 - name: Masquerading - powershell.exe running as taskhostw.exe
   description: |
@@ -76,10 +76,10 @@ atomic_tests:
     name: command_prompt
     elevation_required: false
     command: |
-      copy %windir%\System32\windowspowershell\v1.0\powershell.exe %APPDATA%\taskhostw.exe /Y
+      copy %windir%\System32\windowspowershell\v1.0\powershell.exe C:\test\taskhostw.exe /Y
       cmd.exe /K %APPDATA%\taskhostw.exe
     cleanup_command: |
-      del /Q /F %APPDATA%\taskhostw.exe
+      del /Q /F C:\test\taskhostw.exe
 
 - name: Masquerading - non-windows exe running as windows exe
   description: |

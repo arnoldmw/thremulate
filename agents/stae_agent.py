@@ -99,8 +99,7 @@ def config_file():
 
     # When operator sets a kill date, kill_date_string will not be 'None'
     # None was converted to a string. Do not remove it.
-    if kill_date_string != 'None' and \
-            isinstance(datetime.datetime.strptime(kill_date_string, '%Y-%m-%d %H:%M:%S'), datetime.datetime):
+    if kill_date_string != 'None' and kill_date_string != '':
 
         config.read('config.ini')
         if 'kill_date' in config['AGENT']:
