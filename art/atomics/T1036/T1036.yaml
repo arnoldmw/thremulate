@@ -44,8 +44,8 @@ atomic_tests:
     name: command_prompt
     elevation_required: false
     command: |
-      copy %SystemRoot%\System32\cscript.exe %APPDATA%\notepad.exe /Y
-      cmd.exe /c %APPDATA%\notepad.exe /B
+      copy %SystemRoot%\System32\cscript.exe C:\test\notepad.exe /Y
+      cmd.exe /c C:\test\notepad.exe /B
     cleanup_command: |
       del /Q /F %APPDATA%\notepad.exe
 
