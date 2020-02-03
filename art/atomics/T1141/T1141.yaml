@@ -31,4 +31,4 @@ atomic_tests:
     elevation_required: false
     command: |  
       $cred = $host.UI.PromptForCredential('Windows Security Update', '',[Environment]::UserName, [Environment]::UserDomainName)
-      write-warning $cred.GetNetworkCredential().Password
+      $cred.GetNetworkCredential().Password
