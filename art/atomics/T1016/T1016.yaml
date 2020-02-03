@@ -46,8 +46,8 @@ atomic_tests:
     elevation_required: false
     command: |
       arp -a
-      netstat -ant | awk '{print $NF}' | grep -v '[a-z]' | sort | uniq -c
       ifconfig
+      netstat -ant | awk '{print $NF}' | grep -v '[a-z]' | sort | uniq -c
 
 - name: System Network Configuration Discovery (Trickbot Style)
   description: |
