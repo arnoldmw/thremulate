@@ -227,15 +227,15 @@ def agent_commands(technique_list, plat, params):
     for index, tech in enumerate(technique_list):
         executor.execute(tech['tech_id'], tech['test_num'], params[index])
         comm = ''
-        new_com = ''
         for command in executor.command.split('\n'):
             if command is '':
                 continue
             if 'powershell' in executor.launcher:
                 comm = comm + command + ';'
 
-            # if command is not '':
-            #     comm = comm + executor.launcher + ' ' + command + ' & '
+            elif 'cmd' in executor.launcher:
+                comm = comm + command + ' & '
+
         if 'powershell' in executor.launcher:
             if '|' in comm:
                 comm = '\"& {}\"'.format(comm)
@@ -243,6 +243,9 @@ def agent_commands(technique_list, plat, params):
             else:
                 comm = '\"{}\"'.format(comm)
                 all_commands.append(executor.launcher + ' -Command ' + comm + '++')
+
+        elif 'cmd' in executor.launcher:
+            all_commands.append(executor.launcher + ' ' + comm + '++')
 
     return all_commands
 
