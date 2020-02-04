@@ -4,11 +4,9 @@ Mwesigwa Arnold 2020.
 
 Thremulate is a light weight adversary emulation application grounded on the MITRE [ATT&CK™](https://attack.mitre.org/) framework.
 Thremulate's server and agent are totally platform independent. Therefore, you can execute over 140 adversarial techniques on Windows, Linux and MacOS operating systems without a hitch.
+> Thremulate is currently undergoing quality assurance to fix bugs. Therefore not all adversary techniques will work as expected. It will soon be production ready :ok_hand:. Keep checking.
 
 ## Why should I use Thremulate?
-
-## Philosophy
-
 - **Security Assessments for All:** 
 Organizations that may not have full time red team personnel or IT security budget constraints or irregular security assessments can leverage the power of this software to test their defenses.
 - **Security Monitoring Effectiveness:**
@@ -21,7 +19,7 @@ The lead author created Thremulate to raise awareness about cyber threats out th
 2. Authentication and Authorization
 3. Multi-user for team collaboration
 4. Analytics dashboard
-![Screen](screenshots/dashboard.png)
+![Dashboard](screenshots/dashboard.png)
 5. Living Off the Land techniques
 6. Fileless attack techniques
 7. Modular design and easily extendable application and many other features.
@@ -34,17 +32,17 @@ The lead author created Thremulate to raise awareness about cyber threats out th
 ## Major requirement
 - Python 3.5.3 or later
 
-## Rules of Engagement
+## Rule of Engagement
 
-**"ALWAYS OBTAIN WRITTEN PERMISSION FROM THE AUTHORISED PERSON FOR THIS KIND OF ACTIVITY WHENEVER YOU ARE WORKING WITH INFRASTRUCTURE YOU DO NOT PERSONALLY OWN , OTHERWISE HAVE A COUPLE OF RESUMES OR CVS READY"**
+> **"ALWAYS OBTAIN WRITTEN PERMISSION FROM THE AUTHORISED PERSON FOR THIS KIND OF ACTIVITY WHENEVER YOU ARE WORKING WITH INFRASTRUCTURE YOU DO NOT PERSONALLY OWN , OTHERWISE HAVE A COUPLE OF RESUMES OR CVS READY"**
 
- *'The First Rule of Offensive Security', Mwesigwa Arnold.*
+ *'The First Rule of Offensive Security',Mwesigwa Arnold  .*
 
 ## Installation
 
 Start by cloning this repository.
 ```
-git clone https://github.com/infosecone/thremulate.git 
+git clone https://github.com/arnoldmw/thremulate.git 
 ```
 Install the requirements for the project. It is recommended to create a virtual environment for every project.
 ```python
@@ -78,10 +76,9 @@ In order to have a more open and welcoming community,the maintainers of this rep
 
 ## Author
 
-1. Mwesigwa Arnold (Maintainer/Author)
+1. [Arnold Mwesigwa](https://github.com/arnoldmw) (Maintainer/Author)
 
 ## License
-Apache License 2.0. 
 See the [LICENSE](LICENSE.txt) file for more details.
 
 ## Acknowledgements
@@ -91,7 +88,7 @@ See the [LICENSE](LICENSE.txt) file for more details.
 
 ## Support
 
-Having problems? Open up an issue.
+Encountering problems? Open up an issue.
 
-Got a private comment? Send me an [email](thremulate@gmail.com). (It is not fun running SIFT(forensic workstation) 
-every time I read email) 
+Got a private comment? Send me an email thremulate@gmail.com. (It is not fun running SIFT(forensic workstation) 
+every time I read email. So keep it clean :wink:) 
