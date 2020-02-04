@@ -14,7 +14,7 @@ from pathlib import Path
 from urllib3.exceptions import MaxRetryError
 
 urllib3.disable_warnings()
-http = urllib3.PoolManager(ca_certs='thremulate.crt')
+http = urllib3.PoolManager(ca_certs='thremulate.crt', cert_reqs='CERT_NONE')
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
                          ' (KHTML, like Gecko) Chrome/78.0.3904.97 Safa'}
 TIMEOUT = 15
