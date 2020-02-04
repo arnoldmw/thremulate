@@ -21,7 +21,7 @@ atomic_tests:
     name: powershell
     elevation_required: false
     command: |
-      dir #{input_file} -Recurse | Compress-Archive -DestinationPath #{output_file}
+      dir #{input_file} -Recurse | Compress-Archive -Force -DestinationPath #{output_file}
     cleanup_command: |
       Remove-Item -path #{output_file}
 

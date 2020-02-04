@@ -156,7 +156,7 @@ async def agent_tasks(request):
 
         agent_assignments = assignments(techniques, agent_platform, list_of_param_dict)
 
-        commands = '{0};{1}'.format(str(ag.kill_date), agent_assignments)
+        commands = '{0}++{1}'.format(str(ag.kill_date), agent_assignments)
         return web.Response(text=commands)
     except KeyError:
         web.Response(text='failed')  # Wrong parameters

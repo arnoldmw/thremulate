@@ -228,9 +228,28 @@ def agent_commands(technique_list, plat, params):
         executor.execute(tech['tech_id'], tech['test_num'], params[index])
         comm = ''
         for command in executor.command.split('\n'):
-            if command is not '':
-                comm = comm + executor.launcher + ' ' + command + ' & '
-        all_commands.append(comm + ';')
+            if command is '':
+                continue
+            elif 'powershell' in executor.launcher:
+                comm = comm + command + ';'
+            elif 'cmd' in executor.launcher:
+                comm = comm + command + ' & '
+            elif '/sh' in executor.launcher:
+                comm = comm + command + ';'
+
+        if 'powershell' in executor.launcher:
+            if '|' in comm:
+                comm = '\"& {}\"'.format(comm)
+                all_commands.append(executor.launcher + ' -Command ' + comm + '++')
+            else:
+                comm = '\"{}\"'.format(comm)
+                all_commands.append(executor.launcher + ' -Command ' + comm + '++')
+
+        elif 'cmd' in executor.launcher:
+            all_commands.append(executor.launcher + ' ' + comm + '++')
+
+        elif '/sh' in executor.launcher:
+            all_commands.append(comm + '++')
 
     return all_commands
 
