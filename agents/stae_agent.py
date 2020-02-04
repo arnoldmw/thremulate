@@ -14,7 +14,7 @@ from pathlib import Path
 from urllib3.exceptions import MaxRetryError
 
 urllib3.disable_warnings()
-http = urllib3.PoolManager(ca_certs='thremulate.crt')
+http = urllib3.PoolManager(ca_certs='thremulate.crt', cert_reqs='CERT_NONE')
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
                          ' (KHTML, like Gecko) Chrome/78.0.3904.97 Safa'}
 TIMEOUT = 15
@@ -50,6 +50,7 @@ def agent_arguments():
         sys.exit('[+] Server IP address is required\n[+] Agent Stopped!!\n[+] Use -h or --help flag for help')
     print('[+] Server is at %s' % SERVER_IP)
     if INTERVAL is None:
+        INTERVAL = 5
         print('[+] No beacon interval set.\n[+] Agent defaulted to 5 seconds')
     if args.verbose:
         VERBOSE = True
@@ -98,8 +99,7 @@ def config_file():
 
     # When operator sets a kill date, kill_date_string will not be 'None'
     # None was converted to a string. Do not remove it.
-    if kill_date_string != 'None' and \
-            isinstance(datetime.datetime.strptime(kill_date_string, '%Y-%m-%d %H:%M:%S'), datetime.datetime):
+    if kill_date_string != 'None' and kill_date_string != '':
 
         config.read('config.ini')
         if 'kill_date' in config['AGENT']:
@@ -251,7 +251,7 @@ def download_and_run_commands():
 
         if req.status == 200:
             results = []
-            agent_commands = response.split(';')
+            agent_commands = response.split('++')
 
             for i, command in enumerate(agent_commands):
                 if command is '':

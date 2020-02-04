@@ -3,21 +3,21 @@ attack_technique: T1144
 display_name: Gatekeeper Bypass
 
 atomic_tests:
-  - name: Gatekeeper Bypass
-    description: |
-      Gatekeeper Bypass via command line
+- name: Gatekeeper Bypass
+  description: |
+    Gatekeeper Bypass via command line
 
-    supported_platforms:
-      - macos
+  supported_platforms:
+    - macos
 
-    input_arguments:
-      app_path:
-        description: Path to app to be used
-        type: Path
-        default: myapp.app
+  input_arguments:
+    app_path:
+      description: Path to app to be used
+      type: Path
+      default: myapp.app
 
-    executor:
-      name: sh
-      command: |
-        sudo xattr -r -d com.apple.quarantine #{app_path}
-        sudo spctl --master-disable
+  executor:
+    name: sh
+    command: |
+      sudo xattr -r -d com.apple.quarantine #{app_path}
+      sudo spctl --master-disable

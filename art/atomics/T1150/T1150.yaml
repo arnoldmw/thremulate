@@ -3,22 +3,22 @@ attack_technique: T1150
 display_name: Plist Modification
 
 atomic_tests:
-  - name: Plist Modification
-    description: |
-      Modify MacOS plist file in one of two directories
+- name: Plist Modification
+  description: |
+    Modify MacOS plist file in one of two directories
 
-    supported_platforms:
-      - macos
+  supported_platforms:
+    - macos
 
-    executor:
-      name: manual
-      steps: |
-        1. Modify a .plist in
+  executor:
+    name: manual
+    steps: |
+      1. Modify a .plist in
 
-            /Library/Preferences
+          /Library/Preferences
 
-            OR
+          OR
 
-            ~/Library/Preferences
+          ~/Library/Preferences
 
-        2. Subsequently, follow the steps for adding and running via [Launch Agent](Persistence/Launch_Agent.md)
+      2. Subsequently, follow the steps for adding and running via [Launch Agent](Persistence/Launch_Agent.md)
