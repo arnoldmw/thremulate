@@ -92,6 +92,8 @@ async def start_site_two():
     app_two.add_routes([
         web.static('/get_agent/', path=THIS_DIR / 'agents', show_index=True)
     ])
+    setup_agent_communication_routes(app_two)
+
     app_runner = web.AppRunner(app_two)
     runners.append(app_runner)
     await app_runner.setup()
