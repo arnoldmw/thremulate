@@ -87,14 +87,9 @@ async def create_app():
     return app
 
 
-async def index_two(request):
-    return web.Response(text='App 2')
-
-
 async def start_site_two():
     app_two = web.Application()
     app_two.add_routes([
-        web.get('/', index_two, name='index'),
         web.static('/get_agent/', path=THIS_DIR / 'agents', show_index=True)
     ])
     app_runner = web.AppRunner(app_two)
