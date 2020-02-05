@@ -1,3 +1,4 @@
+import asyncio
 import logging
 import ssl
 from pathlib import Path
@@ -36,6 +37,8 @@ from config.settings import config as server
 
 THIS_DIR = Path(__file__).parent
 secret_key = b'\xd0\x04)E\x14\x98\xa1~\xecE\xae>(\x1d6\xec\xbfQ\xa4\x19\x0e\xbcre,\xf8\x8f\x84WV.\x8d'
+runners = []
+
 
 # noinspection PyUnusedLocal
 @aiohttp_jinja2.template('index.html')
@@ -84,14 +87,61 @@ async def create_app():
     return app
 
 
-# adev runserver --livereload --debug-toolbar
-if __name__ == '__main__':
-    application = create_app()
-    logging.basicConfig(level=logging.INFO, filename=THIS_DIR / 'logs/thremulate.log')
+async def index_two(request):
+    return web.Response(text='App 2')
+
+
+async def start_site_two():
+    global runners
+    app_two = web.Application()
+    app_two.add_routes([
+        web.get('/', index_two, name='index')
+    ])
+    app_runner = web.AppRunner(app_two)
+    runners.append(app_runner)
+    await app_runner.setup()
+
+    site = web.TCPSite(app_runner, host=server['host'], port=server['http'])
+    message = """
+======== Running on http://{0}:{1} ========
+            (Press CTRL+C to quit)
+""" .format(server['host'], server['http'])
+
+    await site.start()
+    print(message)
+
+
+async def start_site_one():
+    app_one = await create_app()
+    app_runner = web.AppRunner(app_one)
+    runners.append(app_runner)
+    await app_runner.setup()
 
     # HTTPS using Secure Sockets Layer
     ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
     ssl_context.load_cert_chain(certfile='certificates/thremulate.crt', keyfile='certificates/thremulate.key')
+    site = web.TCPSite(runner=app_runner, host=server['host'], port=server['https'],
+                       ssl_context=ssl_context)
+    message = """
+======== Running on https://{0}:{1} ========
+""".format(server['host'], server['https'])
 
-    web.run_app(application, host=server['host'], port=server['https'], access_log_class=AccessLogger,
-                ssl_context=ssl_context)
+    await site.start()
+    print(message)
+
+
+# adev runserver --livereload --debug-toolbar
+if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO, filename=THIS_DIR / 'logs/thremulate.log')
+
+    loop = asyncio.get_event_loop()
+    loop.create_task(start_site_one())
+    loop.create_task(start_site_two())
+
+    try:
+        loop.run_forever()
+    except:
+        pass
+    finally:
+        for runner in runners:
+            loop.run_until_complete(runner.cleanup())
