@@ -29,9 +29,6 @@ class AccessLogger(AbstractAccessLogger):
                          f'{response.content_length} '
                          # f'{request.headers["User-Agent"]} '
                          )
-        # Stops asyncio warnings because asycio implements its own exception handling. This throws many exceptions
-        # that cannot be handled due to this being a development environment.
-        logging.getLogger('asyncio').setLevel(logging.CRITICAL)
 
         logging.getLogger('peewee').setLevel(logging.CRITICAL)
         logging.getLogger('aiohttp.access').setLevel(logging.INFO)
