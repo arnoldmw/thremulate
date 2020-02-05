@@ -16,35 +16,42 @@
 
                 </div>
                 <p class="card-category">
-                   Paste in the terminal</p>
+                    Paste in the terminal</p>
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-4">
                         <!-- <h2 class="font-weight-bold text-center card-category"> Windows</h2> -->
                         <h3 class="font-weight-bold text-center mb-4">Windows</h3>
-                        <p>Powershell v4 and v5 :</p>
-                        <kbd>mkdir C:/test;Invoke-WebRequest -Uri "http://localhost:81/menu.exe" -OutFile "C:/test/agent.exe";
-                            C:/test/agent.exe -server localhost
+                        <p>Powershell (All Versions):</p>
+                        <kbd>(New-Object System.Net.WebClient).DownloadFile("http://<span
+                                class="address"></span>:8080/get_agent/win_agent.exe",
+                            "C:/test/agent.exe");
+                            C:/test/agent.exe -server localhost;</kbd>
+                        <p class="mt-3" >Powershell v3, v4 & v5 :</p>
+                        <kbd>mkdir C:/test;Invoke-WebRequest -Uri "http://<span
+                                class="address"></span>:8080/get_agent/win_agent.exe"
+                            -OutFile "C:/test/agent.exe";
+                            C:/test/agent.exe -server localhost;
                         </kbd>
-                        <p class="mt-3">Powershell v2 and v3 :</p>
-                        <kbd>(New-Object System.Net.WebClient).DownloadFile("http://localhost:81/menu.exe", "C:/test/agent.exe");
-                            C:/test/agent.exe -server localhost</kbd>
                     </div>
                     <div class="col-md-4">
                         <h3 class="font-weight-bold text-center mb-4">Linux</h3>
                         <p>Bash cURL :</p>
-                        <kbd>mkdir /opt/test;curl http://localhost:81/agent.exe -o /opt/test/agent.exe ;
-                            /opt/test/agent.exe -server localhost</kbd>
+                        <kbd>mkdir /opt/test;curl http://<span class="address"></span>:8080/get_agent/win_agent.exe -o
+                            /opt/test/agent.exe ;
+                            /opt/test/agent.exe -server localhost;</kbd>
                         <p class="mt-3">Bash wget</p>
-                        <kbd>mkdir /opt/test;curl http://localhost:81/agent.exe -o /opt/test/agent.exe ;
-                            /opt/test/agent.exe -server localhost</kbd>
+                        <kbd>mkdir /opt/test;curl http://<span class="address"></span>:8080/get_agent/win_agent.exe -o
+                            /opt/test/agent.exe ;
+                            /opt/test/agent.exe -server localhost;</kbd>
                     </div>
                     <div class="col-md-4">
                         <h3 class="font-weight-bold text-center mb-4">MacOS</h3>
                         <p>Bash cURL :</p>
-                        <kbd>mkdir /opt/test;curl http://localhost:81/agent.exe -o /opt/test/agent.exe ;
-                            /opt/test/agent.exe -server localhost</kbd>
+                        <kbd>mkdir /opt/test;curl http://<span class="address"></span>:8080/get_agent/win_agent.exe -o
+                            /opt/test/agent.exe ;
+                            /opt/test/agent.exe -server localhost;</kbd>
                     </div>
                 </div>
 
@@ -52,5 +59,18 @@
         </div>
     </div>
 </div>
+<script>
 
+    var address = location.hostname;
+
+    // address = address + ;
+
+    var items = document.getElementsByClassName("address");
+    for (i = 0; i < items.length; i++) {
+        items[i].innerText = location.hostname
+    }
+
+
+
+</script>
 {% endblock %}
