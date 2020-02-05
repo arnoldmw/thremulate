@@ -345,6 +345,15 @@ async def delete_tech_assignment(request):
     return web.Response(text='success')
 
 
+def setup_agent_communication_routes(app):
+    app.add_routes([
+        web.get('/agent_techniques/{id}', agent_techniques),
+        web.get('/agent_tasks/{id}', agent_tasks),
+        web.post('/agent_output', agent_output),
+        web.post('/register_agent', register_agent),
+    ])
+
+
 def setup_agent_routes(app):
     """
     Adds agent routes to the application.
@@ -352,14 +361,10 @@ def setup_agent_routes(app):
     :return: None
     """
     app.add_routes([
-        web.get('/agent_techniques/{id}', agent_techniques),
-        web.get('/agent_tasks/{id}', agent_tasks),
         web.get('/customize_technique/', customize_technique, name='customize_technique'),
         web.post('/customize_technique_post', customize_technique_post, name='customize_technique_post'),
-        web.post('/agent_output', agent_output),
         web.get('/assign_tasks/{id}', assign_tasks, name='assign_get'),
         web.post('/assign_tasks_post', assign_tasks_post, name='assign_post'),
-        web.post('/register_agent', register_agent),
         web.post('/delete_tech_output', delete_tech_output),
         web.post('/delete_tech_assignment', delete_tech_assignment),
         web.get('/agents', agent_index, name='agents'),
