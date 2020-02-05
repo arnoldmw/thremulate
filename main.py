@@ -132,6 +132,9 @@ async def start_site_one():
 
 # adev runserver --livereload --debug-toolbar
 if __name__ == '__main__':
+    # Stops asyncio warnings because asycio implements its own exception handling. This throws many exceptions
+    # that cannot be handled due to this being a development environment.
+    logging.getLogger('asyncio').setLevel(logging.CRITICAL)
     logging.basicConfig(level=logging.INFO, filename=THIS_DIR / 'logs/thremulate.log')
 
     loop = asyncio.get_event_loop()
