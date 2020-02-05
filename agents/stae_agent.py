@@ -344,7 +344,6 @@ def sandbox_evasion():
         if (now2 - now) > datetime.timedelta(seconds=1):
             if VERBOSE:
                 print('[+] Agent not in a sandbox')
-            print('[+] Agent in safe work place')
         else:
             sys.exit()
 
