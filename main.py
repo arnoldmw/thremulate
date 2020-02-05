@@ -92,7 +92,6 @@ async def index_two(request):
 
 
 async def start_site_two():
-    global runners
     app_two = web.Application()
     app_two.add_routes([
         web.get('/', index_two, name='index'),
