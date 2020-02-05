@@ -193,7 +193,7 @@ def register():
     Registers the Agent with the server.
     :return:
     """
-    url = 'https://{0}:8000/register_agent'.format(SERVER_IP)
+    url = 'http://{0}:8080/register_agent'.format(SERVER_IP)
 
     try:
         req = http.request('POST', url, fields={'id': agent_id, 'hostname': platform.node(), 'platform': get_platform(),
@@ -214,7 +214,7 @@ def get_techniques():
     :return:
     """
     try:
-        url = 'https://{0}:8000/agent_techniques/{1}'.format(SERVER_IP, agent_id)
+        url = 'http://{0}:8080/agent_techniques/{1}'.format(SERVER_IP, agent_id)
         req = http.request('GET', url, headers=headers)
         response = str(req.data.decode('utf-8'))
 
@@ -244,8 +244,8 @@ def download_and_run_commands():
     if VERBOSE:
         print('[+] Checking for new tasks')
     try:
-        # url = ('https://%s:8000/agent_tasks/%s' % SERVER_IP % agent_id)
-        url = 'https://{0}:8000/agent_tasks/{1}'.format(SERVER_IP, agent_id)
+        # url = ('http://%s:8080/agent_tasks/%s' % SERVER_IP % agent_id)
+        url = 'http://{0}:8080/agent_tasks/{1}'.format(SERVER_IP, agent_id)
         req = http.request('GET', url, headers=headers)
         response = str(req.data.decode('utf-8'))
 
@@ -276,7 +276,7 @@ def send_output():
     :return:
     """
     std_out = download_and_run_commands()
-    # url = 'https://%s:8000/agent_tasks/5' % SERVER_IP
+    # url = 'http://%s:8080/agent_tasks/5' % SERVER_IP
 
     if std_out is None:
         print('[+] Failed to get techniques from the server')
@@ -288,7 +288,7 @@ def send_output():
         return
 
     agent_tech = get_techniques()
-    # https://%s:8000/agent_techniques/5 % SERVER_IP
+    # http://%s:8080/agent_techniques/5 % SERVER_IP
 
     if agent_tech is None:
         # print('[+] Failed to get techniques from the server')
@@ -299,7 +299,7 @@ def send_output():
 
         return
 
-    url = 'https://{0}:8000/agent_output'.format(SERVER_IP)
+    url = 'http://{0}:8080/agent_output'.format(SERVER_IP)
 
     # Iterates over list of techniques assigned to an agent_tasks while selecting the respective
     # result or output after executing that technique
