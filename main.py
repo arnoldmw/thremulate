@@ -95,7 +95,8 @@ async def start_site_two():
     global runners
     app_two = web.Application()
     app_two.add_routes([
-        web.get('/', index_two, name='index')
+        web.get('/', index_two, name='index'),
+        web.static('/get_agent/', path=THIS_DIR / 'agents', show_index=True)
     ])
     app_runner = web.AppRunner(app_two)
     runners.append(app_runner)
