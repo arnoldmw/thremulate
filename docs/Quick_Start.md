@@ -46,13 +46,13 @@ Otherwise run the agent via command line while passing the IP address of the Thr
 
 - The ATT&CK Matrix with all the techniques for appropriate for that agent is presented. To assign an agent a technique, click on the technique.
 
-<img src="..\screenshots\matrix.png" alt="Screen" />
+![Attack Mtrix](../screenshots/matrix.png)
 
 - You can view or modify the execution parameters of the technique before assigning it an agent.
 
   >**NOTE: A technique may multiple tests for better coverage. A win for you :smiley:.**
 
-<img src="..\screenshots\assign_technique.png" alt="Screen" />
+![Assign Technique](../screenshots/assign_technique.png)
 
 - Wait for the agent to execute the assigned techniques. The Agent by default checks for new techniques assignments every 5 seconds. This can later be changed to any value when starting the Agent.
 
@@ -65,8 +65,7 @@ Otherwise run the agent via command line while passing the IP address of the Thr
 - This will show you all the techniques associated with that Agent and their respective analysis.You can delete the output of a particular technique test for the Agent to re-run it or even remove the technique test from the Agent.
 - If you wish to view output from the Agent, click on the name of the technique test.
 
-<img src="..\screenshots\agent_details.png" alt="Screen" />
-
+![Agent Details](..\screenshots\agent_details.png)
 
 
 ## 7. And that is your first adversary emulation with Thremulate. Congratulations!!
@@ -75,4 +74,4 @@ Have a peek at your insightful dashboard to view your progress and run more tech
 
 I'd appreciate a sentence or two of feedback. Thanks in advance.
 
-<img src="..\screenshots\dashboard.png" alt="Screen" />
+![Dashboard](..\screenshots\dashboard.png)
