@@ -3,7 +3,6 @@ import logging
 import ssl
 from pathlib import Path
 import os
-import aiohttp_debugtoolbar
 import aiohttp_jinja2
 import jinja2
 from aiohttp import web
@@ -81,9 +80,6 @@ async def create_app():
     # Setting authentication and authorization
     setup_security(app, SessionIdentityPolicy(), DBAuthorizationPolicy())
 
-    # aiohttp_debugtoolbar.setup(app, intercept_redirects=False)
-    # web.run_app(app, host="localhost", port=8080, ssl_context=ssl_context)
-
     return app
 
 
@@ -127,7 +123,6 @@ async def start_site_one():
     print(message)
 
 
-# adev runserver --livereload --debug-toolbar
 if __name__ == '__main__':
     if not os.path.exists(path=THIS_DIR / 'logs'):
         os.makedirs('logs')
