@@ -18,7 +18,7 @@
             </div>
             <div class="card-body">
                 {% for test in tests %}
-                <h4>TEST {{ loop.index }}</h4>
+                <h4 class="font-weight-bold text-white">TEST {{ loop.index }}</h4>
                 <p>Description: {{ test.description}}</p>
                 <p>Elevation required: {{ test.at_test.elevation_required}}</p>
                 {% if test.at_test.steps %}
@@ -41,8 +41,6 @@
                             {% if test.at_test.command %}
                             <input type="button" class="btn btn-primary btn-round submit-tech" value="Assign"
                                    style="padding:.5rem 1.2rem;" name="submit">
-                            <input type="button" id="custom-done" class="btn btn-danger btn-round" value="Cancel"
-                                   style="padding:.5rem 1.2rem;" name="cancel">
                             {% endif %}
                         </form>
                     </div>
