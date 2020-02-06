@@ -40,13 +40,13 @@ Otherwise run the agent via command line while passing the IP address of the Thr
 
 ## 5. Upon running the Agent, it said it has registered. I am ready to Thremulate. Great!!
 
-- On the computer running ther server, in the browser navigate to the https://localhost:8000/agents. This leads you to a page which shows all the agents that have registered with the server.
+- In the browser navigate to the https://localhost:8000/agents. This leads you to a page which shows all the agents that have registered with the server.
 
 - A random name was given to your Agent. You can change it later by clicking on the Edit button with the 'Update Agent' tooltip. Access tooltips by hovering over the buttons. To assign an agent techniques to execute, click on the 'Play' button with the 'Assign techniques' tooltip. 
 
 - The ATT&CK Matrix with all the techniques for appropriate for that agent is presented. To assign an agent a technique, click on the technique.
 
-![Attack Mtrix](../screenshots/matrix.png)
+![Attack Matrix](../screenshots/matrix.png)
 
 - You can view or modify the execution parameters of the technique before assigning it an agent.
 
@@ -60,12 +60,12 @@ Otherwise run the agent via command line while passing the IP address of the Thr
 
 ## 6. Agent says it executed TXXXX:X. How do I know that the agent really executed TXXXX:X ?
 
-- One more time on the computer running ther server, in the browser navigate to the https://localhost:8000/agents. Click on the Information button with the 'More information' tooltip.
+- Navigate to https://localhost:8000/agents. Click on the Information button with the 'More information' tooltip.
 
 - This will show you all the techniques associated with that Agent and their respective analysis.You can delete the output of a particular technique test for the Agent to re-run it or even remove the technique test from the Agent.
 - If you wish to view output from the Agent, click on the name of the technique test.
 
-![Agent Details](..\screenshots\agent_details.png)
+![Agent Details](../screenshots/agent_details.png)
 
 
 ## 7. And that is your first adversary emulation with Thremulate. Congratulations!!
@@ -74,4 +74,4 @@ Have a peek at your insightful dashboard to view your progress and run more tech
 
 I'd appreciate a sentence or two of feedback. Thanks in advance.
 
-![Dashboard](..\screenshots\dashboard.png)
+![Dashboard](../screenshots/dashboard.png)
