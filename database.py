@@ -104,9 +104,6 @@ def init_db():
     db.connect()
     print('[+] Setting up default database')
 
-    # db.drop_tables([Adversary, Agent, Technique, AgentTechnique, Tactic, TacticTechnique,
-    #                 Parameter, User, Permissions, UserPermissions])
-    # print('[+] All tables dropped')
     db.create_tables([Adversary, Agent, Technique, AgentTechnique, Tactic, TacticTechnique,
                       Parameter, User, Permissions, UserPermissions])
     print('[+] All tables created')
@@ -119,11 +116,6 @@ def init_db():
         {'name': 'Lazarus'}
     ]
     Adversary.insert_many(adversary_data).execute()
-
-    # Agent table
-    print('[+] Adding Agent records')
-    Agent.create(id=1, name='Hunter', platform='windows', plat_version='10.4.5', username='JohnDoe',
-                 domain='home.local', hostname='Johnie', adversary=Adversary.get(Adversary.name == 'Unknown'))
 
     # Tactics table
     print('[+] Adding Tactics records')
