@@ -1,12 +1,14 @@
 import datetime
 import uuid
+from pathlib import Path
 
 import bcrypt
 # noinspection PyUnresolvedReferences
 from art.run_atomics import techniques_for_db
 from playhouse.migrate import *
 
-db = SqliteDatabase('db/adversary.db', pragmas={'foreign_keys': 1})
+THIS_DIR = Path(__file__).parent
+db = SqliteDatabase(THIS_DIR / 'db/adversary.db', pragmas={'foreign_keys': 1})
 
 
 class BaseModel(Model):
@@ -27,7 +29,7 @@ class Agent(BaseModel):
     username = CharField(max_length=30, null=True)
     platform = CharField(max_length=20, null=True)
     plat_version = CharField(max_length=20, null=True)
-    domain = CharField(max_length=20, null=True)
+    domain = CharField(max_length=30, null=True)
     initial_contact = DateTimeField(default=datetime.datetime.now, null=True)
     kill_date = DateTimeField(null=True)
     last_contact = DateTimeField(default=datetime.datetime.now, null=True)
@@ -98,131 +100,87 @@ def generate_password_hash(password):
     return hashed.decode('utf-8')
 
 
-def migrate():
+def init_db():
     db.connect()
-    # db.create_tables([Parameter])
-    # db.create_tables([TacticTechnique])
+    print('[+] Setting up default database')
 
-    # db.drop_tables([Adversary, Agent, Technique, AgentTechnique, Tactic, TacticTechnique])
-    # db.create_tables([Adversary, Agent, Technique, AgentTechnique, Tactic, TacticTechnique])
+    # db.drop_tables([Adversary, Agent, Technique, AgentTechnique, Tactic, TacticTechnique,
+    #                 Parameter, User, Permissions, UserPermissions])
+    # print('[+] All tables dropped')
+    db.create_tables([Adversary, Agent, Technique, AgentTechnique, Tactic, TacticTechnique,
+                      Parameter, User, Permissions, UserPermissions])
+    print('[+] All tables created')
 
-    # camp = Adversary(name='Fin7', created_date=datetime.datetime.now, updated_date=datetime.datetime.now)
-    # camp.save()
+    # Adversary table
+    print('[+] Adding Adversary records')
+    adversary_data = [
+        {'name': 'Unknown'},
+        {'name': 'Fin7'},
+        {'name': 'Lazarus'}
+    ]
+    Adversary.insert_many(adversary_data).execute()
 
-    # Adversary.create(name='Fin7')
-    # Adversary.create(name='Cobalt')
+    # Agent table
+    print('[+] Adding Agent records')
+    Agent.create(id=1, name='Hunter', platform='windows', plat_version='10.4.5', username='JohnDoe',
+                 domain='home.local', hostname='Johnie', adversary=Adversary.get(Adversary.name == 'Unknown'))
 
-    # Agent.create(id=5, name='Hunter', os_name='Windows 10', os_version='10.4.5', product_id='5FF',
-    #              domain='home.local', adversary=Adversary.get_by_id(1))
+    # Tactics table
+    print('[+] Adding Tactics records')
+    tactics_data = [
+        {'id': 1, 'name': 'Initial Access'},
+        {'id': 2, 'name': 'Execution'},
+        {'id': 3, 'name': 'Persistence'},
+        {'id': 4, 'name': 'Privilege Escalation'},
+        {'id': 5, 'name': 'Defense Evasion'},
+        {'id': 6, 'name': 'Credential Access'},
+        {'id': 7, 'name': 'Discovery'},
+        {'id': 8, 'name': 'Lateral Movement'},
+        {'id': 9, 'name': 'Collection'},
+        {'id': 10, 'name': 'Exfiltration'},
+        {'id': 11, 'name': 'Command and Control'},
+        {'id': 40, 'name': 'Impact'},
+    ]
+    Tactic.insert_many(tactics_data).execute()
 
-    # Agent.create(id=5, name='Hunter', os_name='Windows 10', os_version='10.4.5', product_id='5FF',
-    #              domain='home.local', adversary=Adversary.get(Adversary.name == 'Fin7'))
-    # Agent.create(id=4, name='Sniffer', os_name='Windows 7', os_version='7.3.4', product_id='6KKL', domain='work.com',
-    #              adversary=Adversary.get(Adversary.name == 'Cobalt'))
-    #
-    # Technique.create(id=1057, name='Process Discovery')
-    # Technique.create(id=1124, name='System Time Discovery')
-    # Technique.create(id=1012, name='Query Registry')
+    # Technique table
+    tech_table = techniques_for_db()
+    for t in tech_table:
+        try:
+            Technique.get(Technique.id == t['id'])
+        except Technique.DoesNotExist:
+            Technique.create(id=t['id'], name=t['name'])
+            pass
 
-    # reg query HKLM\Software\Microsoft\Windows\CurrentVersion\Run
-    output1 = '''
-    Image Name                     PID Session Name        Session#    Mem Usage
-    ========================= ======== ================ =========== ============
-    System Idle Process              0 Services                   0          8 K
-    System                           4 Services                   0      1,708 K
-    Registry                        96 Services                   0      9,080 K
-    smss.exe                       448 Services                   0        704 K
-    csrss.exe                      712 Services                   0      4,324 K
-    wininit.exe                    776 Services                   0      5,084 K
-    csrss.exe                      792 Console                    1      4,584 K
-    services.exe                   836 Services                   0      7,684 K
-    '''
+    # TODO: TacticTechnique table
 
-    output2 = '''
-    SecurityHealth    REG_EXPAND_SZ    %ProgramFiles%\Windows Defender\MSASCuiL.exe
-    AvastUI.exe    REG_SZ    "C:\Program Files\AVAST Software\Avast\AvLaunch.exe" /gui
-    RtHDVCpl    REG_SZ    C:\Program Files\Realtek\Audio\HDA\RAVCpl64.exe -s
-    '''
+    # User table
+    print('[+] Adding User records')
+    user_ids = {'admin': uuid.uuid4(), 'userone': uuid.uuid4(), 'usertwo': uuid.uuid4()}
+    user_data = [
+        {'id': user_ids['admin'], 'fname': 'Admin', 'lname': 'Admin', 'email': 'admin@thremulate.com',
+         'passwd': generate_password_hash('thremulate'), 'is_superuser': True, 'disabled': False},
+        {'id': user_ids['userone'], 'fname': 'UserOne', 'lname': 'UsOne', 'email': 'uone@thremulate.com',
+         'passwd': generate_password_hash('thremulate'), 'is_superuser': False, 'disabled': False},
+        {'id': user_ids['usertwo'], 'fname': 'UserTwo', 'lname': 'UsTwo', 'email': 'utwo@thremulate.com',
+         'passwd': generate_password_hash('thremulate'), 'is_superuser': False, 'disabled': False}
+    ]
+    User.insert_many(user_data).execute()
 
-    # AgentTechnique.create(technique_id=Technique.get_by_id(1124), agent_id=4, output=output1, result=1)
-    # AgentTechnique.create(technique_id=Technique.get_by_id(1012), agent_id=4, output=output2, result=1)
-    #
-    # Tactic.create(name='Persistence')
-    # Tactic.create(name='Discovery')
-    #
-    # TacticTechnique.create(tactic_id=1, technique_id=1012)
-    # TacticTechnique.create(tactic_id=2, technique_id=1012)
-
-    # data = get_all_techniques()
-    # Technique.insert_many(data).execute()
-
-    # data = [
-    #     {'id': 1, 'name': 'Initial Access'},
-    #     {'id': 2, 'name': 'Execution'},
-    #     {'id': 3, 'name': 'Persistence'},
-    #     {'id': 4, 'name': 'Privilege Escalation'},
-    #     {'id': 5, 'name': 'Defense Evasion'},
-    #     {'id': 6, 'name': 'Credential Access'},
-    #     {'id': 7, 'name': 'Discovery'},
-    #     {'id': 8, 'name': 'Lateral Movement'},
-    #     {'id': 9, 'name': 'Collection'},
-    #     {'id': 10, 'name': 'Exfiltration'},
-    #     {'id': 11, 'name': 'Command and Control'},
-    #     {'id': 40, 'name': 'Impact'},
-    # ]
-    # Tactic.insert_many(data).execute()
-
-    # ag = Agent.get(Agent.id == 5)
-    # print(ag.platform)
-
-    # db.connect()
-    # db.drop_tables([Permissions, UserPermissions])
-    db.create_tables([UserPermissions, Permissions])
-    # data_source1 = [
-    #     {'fname': 'Admin', 'lname': 'Ad', 'email': 'admin@stae.com',
-    #      'passwd': generate_password_hash('admin'), 'is_superuser': '1', 'disabled': '0'},
-    #     {'fname': 'Moderator', 'lname': 'Mo', 'email': 'moderator@stae.com',
-    #      'passwd': generate_password_hash('moderator'), 'is_superuser': '0', 'disabled': '0'},
-    #     {'fname': 'User', 'lname': 'Us', 'email': 'user@stae.com',
-    #      'passwd': generate_password_hash('user'), 'is_superuser': '0', 'disabled': '0'}
-    # ]
-
-    data_source2 = [
+    # Permissions table
+    print('[+] Adding Permissions records')
+    permission_data = [
         {'name': 'public'},
         {'name': 'protected'}
     ]
+    Permissions.insert_many(permission_data).execute()
 
-    data_source3 = [
-        {'user_id': 2, 'perm_id': 2},
-        {'user_id': 2, 'perm_id': 1},
-        {'user_id': 3, 'perm_id': 1}
+    # UserPermissions table
+    print('[+] Adding UserPermissions records')
+    user_permissions_data = [
+        {'user_id': user_ids['userone'], 'perm_id': Permissions.get(Permissions.name == 'public')},
+        {'user_id': user_ids['usertwo'], 'perm_id': Permissions.get(Permissions.name == 'public')},
     ]
 
-    # Permissions.insert_many(data_source2).execute()
-    # UserPermissions.insert_many(data_source3).execute()
-
-
-if __name__ == '__main__':
-    print('Main running')
-
-    # db.drop_tables([User])
-    # db.create_tables([User])
-
-    # data_source = [
-    #     {'id': uuid.uuid4(), 'fname': 'Admin', 'lname': 'Ad', 'email': 'admin@thremulate.com',
-    #      'passwd': generate_password_hash('admin'), 'is_superuser': '1', 'disabled': '0'},
-    #     {'id': uuid.uuid4(), 'fname': 'Moderator', 'lname': 'Mo', 'email': 'moderator@thremulate.com',
-    #      'passwd': generate_password_hash('moderator'), 'is_superuser': '0', 'disabled': '0'},
-    #     {'id': uuid.uuid4(), 'fname': 'User', 'lname': 'Us', 'email': 'user@thremulate.com',
-    #      'passwd': generate_password_hash('user'), 'is_superuser': '0', 'disabled': '0'}
-    # ]
-    # User.insert_many(data_source).execute()
-
-    # tech_table = techniques_for_db()
-    # for t in tech_table:
-    #     try:
-    #         tech = Technique.get(Technique.id == t['id'])
-    #         # print(tech.name)
-    #     except Technique.DoesNotExist:
-    #         Technique.create(id=t['id'], name=t['name'])
-    #         pass
+    UserPermissions.insert_many(user_permissions_data).execute()
+    print('[+] Finished setting up default database')
