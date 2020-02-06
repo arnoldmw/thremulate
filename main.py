@@ -2,7 +2,7 @@ import asyncio
 import logging
 import ssl
 from pathlib import Path
-
+import os
 import aiohttp_debugtoolbar
 import aiohttp_jinja2
 import jinja2
@@ -129,6 +129,9 @@ async def start_site_one():
 
 # adev runserver --livereload --debug-toolbar
 if __name__ == '__main__':
+    if not os.path.exists(path=THIS_DIR / 'logs'):
+        os.makedirs('logs')
+
     # Stops asyncio warnings because asycio implements its own exception handling. This throws many exceptions
     # that cannot be handled due to this being a development environment.
     logging.getLogger('asyncio').setLevel(logging.CRITICAL)
