@@ -14,7 +14,7 @@ python main.py
    ```
    https:\\localhost:8000
    username: admin@thremulate.com
-   password: password
+   password: admin
    ```
    ## NOTE: Invalid SSL certificate warnings.
    
@@ -34,8 +34,8 @@ If you pasted the commands into the terminal to get the agent, the agent was aut
 Otherwise run the agent via command line while passing the IP address of the Thremulate server. Navigate to the location of the agent.
 
    ```
-   win-agent.exe -s [SERVER_IP]
-   example: win-agent.exe -s localhost
+   agent.py -s [SERVER_IP]
+   example: agent.py -s localhost
    ```
 
 ## 5. Upon running the Agent, it said it has registered. I am ready to Thremulate. Great!!
