@@ -53,7 +53,7 @@ python main.py
 
 ## Getting Started
 
-* [Running Your First Adversary Emulation with Thremulate](docs/quick_start.md)
+* [Running Your First Adversary Emulation with Thremulate](docs/Quick_Start.md)
 * The Complete [list of all supported adversarial techniques](art/atomics/index.md) and the [ATT&CK Matrix](art/atomics/matrix.md)
   - Windows [Tests](art/atomics/windows-index.md) and [Matrix](art/atomics/windows-matrix.md)
   - MacOS [Tests](art/atomics/macos-index.md) and [Matrix](art/atomics/macos-matrix.md)
