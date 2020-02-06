@@ -11,19 +11,16 @@
                 </div>
                 <p class="card-category">
                 <p class="card-category">
-                    View or Modify values for this technique</p>
+                    View or Modify values</p>
                 <p class="card-category">
                     <a href="{{ url('assign_get', id=agent_id) }}">Back to Assigning Techniques</a>
                 </p>
             </div>
             <div class="card-body">
                 {% for test in tests %}
-                <h4> {{ loop.index }}. {% filter upper %} {{ test.at_test.name}} {% endfilter %}</h4>
+                <h4 class="font-weight-bold text-white">TEST {{ loop.index }}</h4>
                 <p>Description: {{ test.description}}</p>
                 <p>Elevation required: {{ test.at_test.elevation_required}}</p>
-                {% if test.at_test.command %}
-                <p>Command(s): <br> {{ test.at_test.command.replace('\n', '<br>') | safe }}</p>
-                {% endif %}
                 {% if test.at_test.steps %}
                 <p>Steps: <br> {{ test.at_test.steps.replace('\n', '<br>') | safe}}</p>
                 {% endif %}
@@ -35,7 +32,7 @@
                             <input type="hidden" name="test_id" value="{{ test.test_id }}">
                             {% for param in test.params %}
                             <div class="form-group">
-                                <label for="email2">{{ param.pname }}</label>
+                                <label>{{ param.pname }}</label>
                                 <input type="text" class="form-control form-control-sm" id="" name="{{ param.pname }}"
                                        value="{{ param.pvalue }}">
                             </div>
@@ -44,8 +41,6 @@
                             {% if test.at_test.command %}
                             <input type="button" class="btn btn-primary btn-round submit-tech" value="Assign"
                                    style="padding:.5rem 1.2rem;" name="submit">
-                            <input type="button" id="custom-done" class="btn btn-danger btn-round" value="Cancel"
-                                   style="padding:.5rem 1.2rem;" name="cancel">
                             {% endif %}
                         </form>
                     </div>
