@@ -26,8 +26,6 @@ from modules.adversary import *
 # noinspection PyUnresolvedReferences
 from modules.dashboard import *
 # noinspection PyUnresolvedReferences
-from modules.logger import *
-# noinspection PyUnresolvedReferences
 from modules.middleware import setup_middleware
 # noinspection PyUnresolvedReferences
 from modules.user_mgt import *
@@ -51,6 +49,25 @@ async def home(request):
     session = await get_session(request)
     current_user = session['current_user']
     return {'current_user': current_user, 'title': "Home"}
+
+
+def setup_logging():
+    if not os.path.exists(path=THIS_DIR / 'logs'):
+        os.makedirs('logs')
+
+    # Stops asyncio warnings because asycio implements its own exception handling. This throws many exceptions
+    # that cannot be handled due to this being a development environment.
+    logging.getLogger('asyncio').setLevel(logging.CRITICAL)
+
+    logging.getLogger('aiohttp.access').setLevel(logging.INFO)
+    logging.getLogger('peewee').setLevel(logging.CRITICAL)
+    logging.basicConfig(level=logging.INFO, filename=THIS_DIR / 'logs/thremulate.log')
+
+
+def setup_db():
+    if not os.path.exists(path=THIS_DIR / 'db/adversary.db'):
+        os.makedirs(THIS_DIR / 'db')
+        init_db()
 
 
 async def create_app():
@@ -98,7 +115,7 @@ async def start_site_two():
     message = """
 ======== Running on http://{0}:{1} ========
             (Press CTRL+C to quit)
-""" .format(server['host'], server['http'])
+""".format(server['host'], server['http'])
 
     await site.start()
     print(message)
@@ -124,17 +141,8 @@ async def start_site_one():
 
 
 if __name__ == '__main__':
-    if not os.path.exists(path=THIS_DIR / 'logs'):
-        os.makedirs('logs')
-    if not os.path.exists(path=THIS_DIR / 'db/adversary.db'):
-        os.makedirs(THIS_DIR / 'db')
-        init_db()
-
-    # Stops asyncio warnings because asycio implements its own exception handling. This throws many exceptions
-    # that cannot be handled due to this being a development environment.
-    logging.getLogger('asyncio').setLevel(logging.CRITICAL)
-    logging.basicConfig(level=logging.INFO, filename=THIS_DIR / 'logs/thremulate.log')
-
+    setup_logging()
+    setup_db()
     loop = asyncio.get_event_loop()
     loop.create_task(start_site_one())
     loop.create_task(start_site_two())

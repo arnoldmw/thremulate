@@ -30,5 +30,4 @@ class AccessLogger(AbstractAccessLogger):
                          # f'{request.headers["User-Agent"]} '
                          )
 
-        logging.getLogger('peewee').setLevel(logging.CRITICAL)
         logging.getLogger('aiohttp.access').setLevel(logging.INFO)
