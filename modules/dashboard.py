@@ -22,10 +22,13 @@ async def dashboard(request):
     user_count = User.select().count()
 
     # Percentage techniques assigned and executed
-    exec3 = AgentTechnique.select().where(AgentTechnique.executed.is_null(False))
-    exec4 = AgentTechnique.select().where(AgentTechnique.executed.is_null(True))
+    exec3 = AgentTechnique.select().where(AgentTechnique.executed.is_null(False)).count()
+    exec4 = AgentTechnique.select().where(AgentTechnique.executed.is_null(True)).count()
 
-    percent_tech_executed = int((exec3.count() / (exec4.count() + exec3.count())) * 100)
+    if exec3 != 0:
+        percent_tech_executed = int((exec3 / (exec4 + exec3)) * 100)
+    else:
+        percent_tech_executed = 0
 
     # Number of distinct or unique techniques executed
     unique_tech_execution_count = AgentTechnique.select(AgentTechnique.technique_id) \
