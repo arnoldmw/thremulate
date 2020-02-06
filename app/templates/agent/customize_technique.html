@@ -18,12 +18,9 @@
             </div>
             <div class="card-body">
                 {% for test in tests %}
-                <h4> {{ loop.index }}. {% filter upper %} {{ test.at_test.name}} {% endfilter %}</h4>
+                <h4>TEST {{ loop.index }}</h4>
                 <p>Description: {{ test.description}}</p>
                 <p>Elevation required: {{ test.at_test.elevation_required}}</p>
-                {% if test.at_test.command %}
-                <p>Command(s): <br> {{ test.at_test.command.replace('\n', '<br>') | safe }}</p>
-                {% endif %}
                 {% if test.at_test.steps %}
                 <p>Steps: <br> {{ test.at_test.steps.replace('\n', '<br>') | safe}}</p>
                 {% endif %}
@@ -35,7 +32,7 @@
                             <input type="hidden" name="test_id" value="{{ test.test_id }}">
                             {% for param in test.params %}
                             <div class="form-group">
-                                <label for="email2">{{ param.pname }}</label>
+                                <label>{{ param.pname }}</label>
                                 <input type="text" class="form-control form-control-sm" id="" name="{{ param.pname }}"
                                        value="{{ param.pvalue }}">
                             </div>
