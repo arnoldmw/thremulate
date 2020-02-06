@@ -27,7 +27,7 @@ The lead author created Thremulate to raise awareness about cyber threats out th
 1. Adversary emulation
 2. IT Security classes
 3. Forensics classes
-4. Red Team activities
+4. Red Team engagements
 ## Major requirement
 - Python 3.5.3 or later
 
