@@ -126,6 +126,9 @@ async def start_site_one():
 if __name__ == '__main__':
     if not os.path.exists(path=THIS_DIR / 'logs'):
         os.makedirs('logs')
+    if not os.path.exists(path=THIS_DIR / 'db/adversary.db'):
+        os.makedirs(THIS_DIR / 'db')
+        init_db()
 
     # Stops asyncio warnings because asycio implements its own exception handling. This throws many exceptions
     # that cannot be handled due to this being a development environment.
