@@ -30,7 +30,7 @@ atomic_tests:
     powershell_command:
       description: PowerShell command to encode
       type: String
-      default: Write-Host "Hey, Atomic!"
+      default: hostname
   executor:
     name: powershell
     elevation_required: false
@@ -40,7 +40,6 @@ atomic_tests:
       $EncodedCommand =[Convert]::ToBase64String($Bytes)
       $EncodedCommand
 
-      powershell.exe -EncodedCommand $EncodedCommand
 
 - name: Execute base64-encoded PowerShell from Windows Registry
   description: |
@@ -52,7 +51,7 @@ atomic_tests:
     powershell_command:
       description: PowerShell command to encode
       type: String
-      default: Write-Host "Hey, Atomic!"
+      default: hostname
     registry_key_storage:
       description: Windows Registry Key to store code
       type: String

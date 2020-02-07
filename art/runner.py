@@ -242,7 +242,7 @@ def convert_launcher(launcher):
 
     else:
         # This launcher is not known.  Returning it directly.
-        print("Warning: Launcher '{}' has no specific case! Returning as is.")
+        # print("Warning: Launcher '{}' has no specific case! Returning as is.")
         return launcher
 
 

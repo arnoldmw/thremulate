@@ -16,7 +16,6 @@ atomic_tests:
     command: |
       netstat
       net use
-      net sessions
 
 - name: System Network Connections Discovery with PowerShell
   description: |

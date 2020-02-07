@@ -5,7 +5,7 @@ display_name: Web Service
 atomic_tests:
 - name: Reach out to C2 Pointer URLs via command_prompt
   description: |
-    Download data from a public website using command line
+    Download data from a public website using command line (bitsadmin.exe)
   supported_platforms:
     - windows
   executor:
@@ -19,7 +19,7 @@ atomic_tests:
 
 - name: Reach out to C2 Pointer URLs via powershell
   description: |
-    Multiple download methods for files using powershell
+    Multiple download methods for files using powershell (Invoke-WebRequest, System.Net.WebClient)
   supported_platforms:
     - windows
   executor:
