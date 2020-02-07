@@ -16,14 +16,11 @@ atomic_tests:
     prereq_command: which gpg
     command: |
       mkdir /tmp/victim-files
-      cd /tmp/victim-files
-      touch a b c d e f g
-      echo "creating zip with password 'insert password here'"
-      zip --password "insert password here" ./victim-files.zip ./*
-      echo "encrypting file with gpg, you will need to provide a password"
-      gpg -c /tmp/victim-files/victim-filex.zip
-      #<enter passphrase and confirm>
-      ls -l
+      touch /tmp/victim-files/secrets.txt
+      zip --password "thremulate" tmp/victim-files.zip /tmp/victim-files/*
+    #      gpg -c /tmp/victim-files/victim-filex.zip
+    #      #<enter passphrase and confirm>
+    #      ls -l
     cleanup_command: |
       rm -Rf /tmp/victim-files
 
