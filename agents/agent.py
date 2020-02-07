@@ -283,7 +283,6 @@ def send_output():
             # time.sleep(4)
 
         except IndexError:
-            print('Index error for %d' % i)
             pass
         except MaxRetryError:
             print('[+] Agent failed to send T%s execution results to server after 3 retries' % str(agent_tech[i]))
