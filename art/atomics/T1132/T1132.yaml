@@ -15,7 +15,7 @@ atomic_tests:
     destination_url:
       description: Destination URL to post encoded data.
       type: string
-      default: redcanary.com
+      default: google.com
     base64_data:
       description: Encoded data to post using fake Social Security number 111-11-1111.
       type: string
