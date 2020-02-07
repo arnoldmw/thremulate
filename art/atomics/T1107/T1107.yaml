@@ -26,7 +26,7 @@ atomic_tests:
     folder_to_delete:
       description: Path of folder to delete
       type: Path
-      default: /tmp/victim-files
+      default: /tmp/
   executor:
     name: sh
     command: |
