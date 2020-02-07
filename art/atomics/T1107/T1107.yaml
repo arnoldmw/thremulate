@@ -34,7 +34,7 @@ atomic_tests:
 
 - name: Overwrite and delete a file with shred
   description: |
-    Use the `shred` command to overwrite the temporary file and then delete it
+    Use the `shred` command to overwrite a temporary file and then delete it
   supported_platforms:
     - linux
 
@@ -142,16 +142,7 @@ atomic_tests:
     command: |
       wbadmin delete catalog -quiet
 
-- name: Delete Filesystem - Linux
-  description: |
-    This test deletes the entire root filesystem of a Linux system. This technique was used by Amnesia IoT malware to avoid analysis. This test is dangerous and destructive, do NOT use on production equipment.
-  supported_platforms:
-    - linux
 
-  executor:
-    name: bash
-    command: |
-      rm -rf / --no-preserve-root > /dev/null 2> /dev/null
 
 - name: Delete-PrefetchFile
   description: |
