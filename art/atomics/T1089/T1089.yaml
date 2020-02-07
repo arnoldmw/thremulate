@@ -5,7 +5,7 @@ display_name: Disabling Security Tools
 atomic_tests:
 - name: Disable iptables firewall
   description: |
-    Disables the iptables firewall
+    Disables the iptables firewall (CentOS 6 and 7)
   supported_platforms:
     - linux
   executor:
@@ -24,7 +24,7 @@ atomic_tests:
 
 - name: Disable syslog
   description: |
-    Disables syslog collection
+    Disables syslog collection (CentOS 6 and 7)
   supported_platforms:
     - linux
   executor:
@@ -41,7 +41,7 @@ atomic_tests:
 
 - name: Disable Cb Response
   description: |
-    Disable the Cb Response service
+    Disable the Cb Response service (CentOS 6 and 7)
   supported_platforms:
     - linux
   executor:
