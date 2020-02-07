@@ -97,11 +97,17 @@ atomic_tests:
     - linux
     - macos
 
+  input_arguments:
+    three_network_octets:
+      description: First three octets of an IP address
+      type: String
+      default: 192.168.1
+
   executor:
     name: sh
     elevation_required: false
     command: |
-      for ip in $(seq 1 254); do ping -c 1 192.168.1.$ip; [ $? -eq 0 ] && echo "192.168.1.$ip UP" || : ; done
+      for ip in $(seq 1 254); do ping -c 1 #{three_network_octets}.$ip; [ $? -eq 0 ] && echo "192.168.1.$ip UP" || : ; done
       
 - name: Remote System Discovery - nslookup
   description: |

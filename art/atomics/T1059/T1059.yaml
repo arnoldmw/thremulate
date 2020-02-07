@@ -15,7 +15,7 @@ atomic_tests:
   input_arguments:
     input_url:
       description: URL of script to execute
-      type: Path
+      type: url
       default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1059/echo-art-fish.sh
 
   executor:
