@@ -316,8 +316,7 @@ def confirm_kill():
 
         if os.path.exists(path=THIS_DIR / 'config.ini'):
             os.remove(THIS_DIR / 'config.ini')
-        if os.path.exists(path=THIS_DIR / 'config.ini'):
-            os.remove(THIS_DIR / 'thremulate.crt')
+
         if VERBOSE:
             print('[+] Agent killed. RIP')
 
