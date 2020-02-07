@@ -9,12 +9,12 @@ Ready to run your first Thremulate adversary emulation? Thremulate agents can ru
 python main.py
 ```
 
-- Open your favorite browser and navigate to **https://localhost:8000**.  Login with **admin@thremulate.com** as the email and **password** as the password.
+- Open your favorite browser and navigate to **https://localhost:8000**.  Login with **admin@thremulate.com** as the email and **thremulate** as the password.
 
    ```
    https:\\localhost:8000
    username: admin@thremulate.com
-   password: admin
+   password: thremulate
    ```
    ## NOTE: Invalid SSL certificate warnings.
    
