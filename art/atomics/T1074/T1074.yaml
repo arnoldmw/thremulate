@@ -26,7 +26,7 @@ atomic_tests:
     -
   input_arguments:
     script_url:
-      description: Output folder containing copies of SSH private key files
+      description: URL of the script
       type: url
       default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1074/src/Discovery.sh
 
