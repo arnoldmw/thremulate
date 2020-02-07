@@ -65,8 +65,9 @@ def setup_logging():
 
 
 def setup_db():
-    if not os.path.exists(path=THIS_DIR / 'db/adversary.db'):
+    if not os.path.exists(path=THIS_DIR / 'db'):
         os.makedirs(THIS_DIR / 'db')
+    if not os.path.exists(path=THIS_DIR / 'db/adversary.db'):
         init_db()
 
 
