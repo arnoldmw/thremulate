@@ -10,13 +10,11 @@ atomic_tests:
   supported_platforms:
     - macos
     - linux
-  input_arguments:
-    file_to_pad:
-      description: Path of binary to be padded
-      type: Path
-      default: /tmp/evil-binary
+
   executor:
     name: sh
     elevation_required: false
     command: |
-      dd if=/dev/zero bs=1 count=1 >> #{file_to_pad}
+      touch /tmp/evil-binary
+      dd if=/dev/zero bs=1 count=1 >> /tmp/evil-binary
+      rm /tmp/evil-binary
