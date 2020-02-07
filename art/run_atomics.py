@@ -238,6 +238,7 @@ def agent_commands(technique_list, plat, params):
                 comm = comm + command + ';'
 
         if 'powershell' in executor.launcher:
+            comm = comm.replace('"', "\'")
             if '|' in comm:
                 comm = '\"& {}\"'.format(comm)
                 all_commands.append(executor.launcher + ' -Command ' + comm + '++')
