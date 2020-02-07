@@ -5,11 +5,11 @@ display_name: Network Sniffing
 atomic_tests:
 - name: Packet Capture Linux
   description: |
-    Perform a PCAP. Wireshark will be required for tshark. TCPdump may already be installed.
+    Perform a PCAP capture using tshark. Requires tshark to be already installed.
   supported_platforms:
     - linux
   input_arguments:
-    interface:
+    interface_to_sniff:
       description: Specify interface to perform PCAP on.
       type: String
       default: ens33
@@ -17,8 +17,23 @@ atomic_tests:
     name: bash
     elevation_required: true
     command: |
-      tcpdump -c 5 -nnni #{interface}
-      tshark -c 5 -i #{interface}
+      tshark -c 5 -i #{interface_to_sniff}
+
+- name: Packet Capture Linux
+  description: |
+    Perform a PCAP capture using TCPdump. Requires TCPdump to be already installed.
+  supported_platforms:
+    - linux
+  input_arguments:
+    interface_to_sniff:
+      description: Specify interface to perform PCAP on.
+      type: String
+      default: ens33
+  executor:
+    name: bash
+    elevation_required: true
+    command: |
+      tcpdump -c 5 -nnni #{interface_to_sniff}
 
 - name: Packet Capture MacOS
   description: |
