@@ -32,8 +32,10 @@ python main.py
 If you pasted the commands into the terminal to get the agent, the agent was automatically downloaded and started for you.
 
 Otherwise run the agent via command line while passing the IP address of the Thremulate server. Navigate to the location of the agent.
+Depending on the Agent you have, run it with the following commands.
 
    ```
+   win_agent.exe -s [SERVER_IP] OR 
    agent.py -s [SERVER_IP]
    example: agent.py -s localhost
    ```

@@ -148,14 +148,10 @@ def init_db():
 
     # User table
     print('[+] Adding User records')
-    user_ids = {'admin': uuid.uuid4(), 'userone': uuid.uuid4(), 'usertwo': uuid.uuid4()}
+    user_ids = {'admin': uuid.uuid4()}
     user_data = [
         {'id': user_ids['admin'], 'fname': 'Admin', 'lname': 'Admin', 'email': 'admin@thremulate.com',
-         'passwd': generate_password_hash('thremulate'), 'is_superuser': True, 'disabled': False},
-        {'id': user_ids['userone'], 'fname': 'UserOne', 'lname': 'UsOne', 'email': 'uone@thremulate.com',
-         'passwd': generate_password_hash('thremulate'), 'is_superuser': False, 'disabled': False},
-        {'id': user_ids['usertwo'], 'fname': 'UserTwo', 'lname': 'UsTwo', 'email': 'utwo@thremulate.com',
-         'passwd': generate_password_hash('thremulate'), 'is_superuser': False, 'disabled': False}
+         'passwd': generate_password_hash('thremulate'), 'is_superuser': True, 'disabled': False}
     ]
     User.insert_many(user_data).execute()
 
@@ -167,12 +163,4 @@ def init_db():
     ]
     Permissions.insert_many(permission_data).execute()
 
-    # UserPermissions table
-    print('[+] Adding UserPermissions records')
-    user_permissions_data = [
-        {'user_id': user_ids['userone'], 'perm_id': Permissions.get(Permissions.name == 'public')},
-        {'user_id': user_ids['usertwo'], 'perm_id': Permissions.get(Permissions.name == 'public')},
-    ]
-
-    UserPermissions.insert_many(user_permissions_data).execute()
     print('[+] Finished setting up default database')
