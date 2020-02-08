@@ -305,20 +305,21 @@ async def register_agent(request):
     data = await request.post()
 
     agent_name = ''.join(random.choice(string.ascii_lowercase) for _ in range(7))
-
     try:
-        Agent.create(id=data['id'], name=agent_name, hostname=data['hostname'], platform=data['platform'],
-                     plat_version=data['plat_version'], username=data['username'],
-                     adversary=Adversary.get(Adversary.name == 'Unknown'))
-        return web.Response(text='Agent has registered')
-    except IntegrityError:
-        return web.Response(text='Agent already registered')
-    except Adversary.DoesNotExist:
-        Adversary.create(name='Unknown')
-        Agent.create(id=data['id'], name=agent_name, hostname=data['hostname'], platform=data['platform'],
-                     plat_version=data['plat_version'], username=data['username'],
-                     adversary=Adversary.get(Adversary.name == 'Unknown'))
-        return web.Response(text='Agent has registered')
+        agt = Agent.get(Agent.hostname == data['hostname'])
+        return web.Response(text='Agent already registered.%s' % agt.id)
+    except Agent.DoesNotExist:
+        try:
+            Agent.create(id=data['id'], name=agent_name, hostname=data['hostname'], platform=data['platform'],
+                         plat_version=data['plat_version'], username=data['username'],
+                         adversary=Adversary.get(Adversary.name == 'Unknown'))
+            return web.Response(text='Agent has registered.%s' % data['id'])
+        except Adversary.DoesNotExist:
+            Adversary.create(name='Unknown')
+            Agent.create(id=data['id'], name=agent_name, hostname=data['hostname'], platform=data['platform'],
+                         plat_version=data['plat_version'], username=data['username'],
+                         adversary=Adversary.get(Adversary.name == 'Unknown'))
+            return web.Response(text='Agent has registered.%s' % data['id'])
 
 
 async def delete_tech_output(request):

