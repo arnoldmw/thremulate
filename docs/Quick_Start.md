@@ -6,7 +6,7 @@ Ready to run your first Thremulate adversary emulation? Thremulate agents can ru
 - Start the Thremulate server first.
 
 ```
-python main.py
+python server.py
 ```
 
 - Open your favorite browser and navigate to **https://localhost:8000**.  Login with **admin@thremulate.com** as the email and **thremulate** as the password.
