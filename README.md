@@ -71,7 +71,7 @@ This project is open to contributions. Guidelines for contributing can be found 
 ## Code of Conduct
 
 In order to have a more open and welcoming community,the maintainers of this repository adhere to a
-[code of conduct](CODE_OF_CONDUCT.md).
+[code of conduct](docs/CODE_OF_CONDUCT.md).
 
 ## Author
 

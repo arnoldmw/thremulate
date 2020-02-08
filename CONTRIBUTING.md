@@ -29,11 +29,11 @@ When contributing to this repository, please first discuss the change you wish t
 
 This project is currently supported. It will remain supported as long the maintainers exist.
 Anybody willing to contribute to this project as a maintainer or contributor is welcome to do so,
-as long as they have the requisite skills and adhere to this project's [code of conduct](CODE_OF_CONDUCT.md).
+as long as they have the requisite skills and adhere to this project's [code of conduct](docs/CODE_OF_CONDUCT.md).
 
 ## 2. Code of Conduct
 
-Please note we have code of [code of conduct](CODE_OF_CONDUCT.md). Kindly follow it in all your interactions with the project.
+Please note we have code of [code of conduct](docs/CODE_OF_CONDUCT.md). Kindly follow it in all your interactions with the project.
 
 ## 3. What should I know before I get started?
 
