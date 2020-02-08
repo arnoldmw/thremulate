@@ -170,11 +170,7 @@ def download_and_run_commands():
             for i, command in enumerate(agent_commands):
                 if command is '':
                     continue
-                # TODO Remove agent_id initialization
                 if i == 0:
-                    agent_id = int(agent_id)
-                    continue
-                if i == 1:
                     global kill_date_string
                     kill_date_string = command
                     continue
