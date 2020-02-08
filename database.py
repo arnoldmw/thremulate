@@ -25,7 +25,7 @@ class Adversary(BaseModel):
 class Agent(BaseModel):
     id = IntegerField(primary_key=True)
     name = CharField(unique=True, null=True)
-    hostname = CharField(max_length=30, null=True)
+    hostname = CharField(max_length=30, unique=True)
     username = CharField(max_length=30, null=True)
     platform = CharField(max_length=20, null=True)
     plat_version = CharField(max_length=20, null=True)
