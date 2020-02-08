@@ -43,7 +43,7 @@ def agent_arguments():
     parser.add_argument("-v", "--verbose", help="Increase Agent verbosity.", action="store_true")
     args = parser.parse_args()
 
-    SERVER_IP = 'localhost'
+    SERVER_IP = args.server
     INTERVAL = args.interval
 
     if SERVER_IP is None:
