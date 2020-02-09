@@ -273,6 +273,16 @@ class AgentRoutes(AioHTTPTestCase):
         self.assertTrue(resp_two.status == 200, msg="Failed to access /delete_tech_output. Received status code {0}"
                         .format(resp_two.status))
 
+    @unittest_run_loop
+    async def test_delete_tech_output(self):
+        resp = await self.client.request("POST", "/login_post", data=data)
+        self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
+                        .format(resp.status))
+        delete_tech = {'agent_id': agent_id, 'tech_id': 1002, 'test_num': 0}
+        resp_two = await self.client.request("POST", "/delete_tech_assignment", data=delete_tech)
+        self.assertTrue(resp_two.status == 200, msg="Failed to access /delete_tech_assignment. Received status code {0}"
+                        .format(resp_two.status))
+
 
 if __name__ == '__main__':
     unittest.main()
