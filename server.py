@@ -119,8 +119,8 @@ async def start_site_two():
 
     site = web.TCPSite(app_runner, host=server['host'], port=server['http'])
     message = """
-======== Running on http://{0}:{1}  (AGENT)===========
-""".format(server['host'], server['http'])
+======== Running on http://localhost:{0}  (AGENT)===========
+""".format(server['http'])
 
     await site.start()
     print(message)
@@ -138,8 +138,8 @@ async def start_site_one():
     site = web.TCPSite(runner=app_runner, host=server['host'], port=server['https'],
                        ssl_context=ssl_context)
     message = """
-======== Running on https://{0}:{1} (OPERATOR)========
-""".format(server['host'], server['https'])
+======== Running on https://localhost:{0} (OPERATOR)========
+""".format(server['https'])
 
     await site.start()
     print(message)
