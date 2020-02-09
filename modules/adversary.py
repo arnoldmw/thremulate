@@ -43,6 +43,7 @@ async def adversary_add(request):
         return web.Response(status=400)
     except Adversary.DoesNotExist:
         Adversary.create(name=data['addName'])
+        return web.Response(text='success')
 
 
 @aiohttp_jinja2.template('adversary/adversary_details.html')
