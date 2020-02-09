@@ -338,12 +338,16 @@ async def delete_tech_output(request):
 async def delete_tech_assignment(request):
     await check_authorized(request)
     data = await request.post()
+    try:
+        AgentTechnique.delete() \
+            .where((AgentTechnique.agent_id == data['agent_id']) & (AgentTechnique.technique_id == data['tech_id'])
+                   & (AgentTechnique.test_num == data['test_num'])).execute()
 
-    AgentTechnique.delete() \
-        .where((AgentTechnique.agent_id == data['agent_id']) & (AgentTechnique.technique_id == data['tech_id'])
-               & (AgentTechnique.test_num == data['test_num'])).execute()
-
-    return web.Response(text='success')
+        return web.Response(text='success')
+    except KeyError:
+        return web.Response(text='Invalid data', status=400)
+    except AgentTechnique.DoesNotExist:
+        return web.Response(text='Invalid data', status=400)
 
 
 def setup_agent_communication_routes(app):
