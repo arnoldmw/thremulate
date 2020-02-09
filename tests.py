@@ -7,6 +7,7 @@ from server import create_app
 from server import create_app_two
 
 data = {'email': 'admin@thremulate.com', 'password': 'thremulate'}
+agent_id = 44444
 
 
 class ThremulateTests(AioHTTPTestCase):
@@ -160,7 +161,7 @@ class AgentCommunicationLines(AioHTTPTestCase):
 
     @unittest_run_loop
     async def test_register(self):
-        agent_registration = {'id': 44444, 'hostname': 'DC01', 'platform': 'windows', 'plat_version': '10.10.10',
+        agent_registration = {'id': agent_id, 'hostname': 'DC01', 'platform': 'windows', 'plat_version': '10.10.10',
                               'username': 'Administrator'}
         resp = await self.client.request("POST", "register_agent", data=agent_registration)
         self.assertTrue(resp.status == 200, msg="Failed to access /register_agent. Received status code {0}"
@@ -172,7 +173,7 @@ class AgentCommunicationLines(AioHTTPTestCase):
     # TODO First add agent
     @unittest_run_loop
     async def test_agent_tasks(self):
-        resp = await self.client.request("GET", "/agent_tasks/44444")
+        resp = await self.client.request("GET", "/agent_tasks/%s" % agent_id)
         assert resp.status == 200
         text = await resp.text()
         assert "++" in text
@@ -186,7 +187,7 @@ class AgentCommunicationLines(AioHTTPTestCase):
     # TODO: First assign techniques to agent
     @unittest_run_loop
     async def test_agent_output(self):
-        agent_output = {'id': 44444, 'tech': '1002:1', 'executed': '%s'.format(datetime.datetime.now()),
+        agent_output = {'id': agent_id, 'tech': '1002:1', 'executed': '%s'.format(datetime.datetime.now()),
                         'output': 'Agent output'}
         resp = await self.client.request("POST", "register_agent", data=agent_output)
         self.assertTrue(resp.status == 200, msg="Failed to access /agent_output. Received status code {0}"
@@ -210,6 +211,17 @@ class AgentRoutes(AioHTTPTestCase):
                         .format(resp_two.status))
         text = await resp_two.text()
         assert "Agents" in text
+
+    @unittest_run_loop
+    async def test_agent_details(self):
+        resp = await self.client.request("POST", "/login_post", data=data)
+        self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
+                        .format(resp.status))
+        resp_two = await self.client.request("GET", "/agent_details/%s" % agent_id)
+        self.assertTrue(resp_two.status == 200, msg="Failed to access /agent_details. Received status code {0}"
+                        .format(resp_two.status))
+        text = await resp_two.text()
+        assert "Agent Details" in text
 
 
 if __name__ == '__main__':
