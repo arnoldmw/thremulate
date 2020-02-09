@@ -1,3 +1,4 @@
+import datetime
 import unittest
 from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop
 # noinspection PyUnresolvedReferences
@@ -176,8 +177,8 @@ class Agent(AioHTTPTestCase):
         self.assertTrue(resp.status == 200, msg="Failed to access /register_agent. Received status code {0}"
                         .format(resp.status))
         text = await resp.text()
-        self.assertTrue('Agent has registered' in text, msg="Server failed to register agent. "
-                                                            "Agent may already be registered")
+        self.assertTrue('Agent has registered' in text, msg="Server failed to register agent. Agent may already be "
+                                                            "registered")
 
     # TODO First add agent
     @unittest_run_loop
@@ -185,13 +186,24 @@ class Agent(AioHTTPTestCase):
         resp = await self.client.request("GET", "/agent_tasks/44444")
         assert resp.status == 200
         text = await resp.text()
-        assert "++" in text \
-               @ unittest_run_loop
+        assert "++" in text
 
     @unittest_run_loop
     async def test_agent_techniques(self):
         resp = await self.client.request("GET", "/agent_techniques/44444")
         assert resp.status == 200
+
+    @unittest.skip("TODO later")
+    # TODO: First assign techniques to agent
+    @unittest_run_loop
+    async def test_agent_output(self):
+        agent_output = {'id': 44444, 'tech': '1002:1', 'executed': '%s'.format(datetime.datetime.now()),
+                        'output': 'Agent output'}
+        resp = await self.client.request("POST", "register_agent", data=agent_output)
+        self.assertTrue(resp.status == 200, msg="Failed to access /agent_output. Received status code {0}"
+                        .format(resp.status))
+        text = await resp.text()
+        self.assertTrue('success' in text, msg="Server failed to store agent output.")
 
 
 if __name__ == '__main__':
