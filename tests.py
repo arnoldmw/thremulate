@@ -166,7 +166,7 @@ class AgentCommunicationLines(AioHTTPTestCase):
         self.assertTrue('Agent has registered' in text, msg="Server failed to register agent. Agent may already be "
                                                             "registered")
 
-    # TODO First add agent
+    # First add agent
     @unittest_run_loop
     async def test_agent_tasks(self):
         resp = await self.client.request("GET", "/agent_tasks/%s" % agent_id)
@@ -179,13 +179,13 @@ class AgentCommunicationLines(AioHTTPTestCase):
         resp = await self.client.request("GET", "/agent_techniques/44444")
         self.assertTrue(resp.status == 200, msg="Failed to access /agent_techniques/44444")
 
-    @unittest.skip("TODO later")
-    # TODO: First assign techniques to agent
+    # First assign techniques to agent. First run test_customize_technique_post.
     @unittest_run_loop
     async def test_agent_output(self):
-        agent_output = {'id': agent_id, 'tech': '1002:1', 'executed': '%s'.format(datetime.datetime.now()),
-                        'output': 'Agent output'}
-        resp = await self.client.request("POST", "register_agent", data=agent_output)
+        agent_output = {'id': agent_id, 'tech': '1002:0',
+                        'executed': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                        'output': 'Success--Agent output'}
+        resp = await self.client.request("POST", "agent_output", data=agent_output)
         self.assertTrue(resp.status == 200, msg="Failed to access /agent_output. Received status code {0}"
                         .format(resp.status))
         text = await resp.text()
