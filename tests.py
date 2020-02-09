@@ -82,17 +82,6 @@ class ThremulateTests(AioHTTPTestCase):
         text = await resp.text()
         assert "Dashboard" in text
 
-    @unittest_run_loop
-    async def test_agent_index(self):
-        resp = await self.client.request("POST", "/login_post", data=data)
-        self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
-                        .format(resp.status))
-        resp_two = await self.client.request("GET", "/agents")
-        self.assertTrue(resp_two.status == 200, msg="Failed to access /agents. Received status code {0}"
-                        .format(resp_two.status))
-        text = await resp_two.text()
-        assert "Agents" in text
-
 
 class UserManagement(AioHTTPTestCase):
     async def get_application(self):
@@ -164,7 +153,7 @@ class AdversaryTests(AioHTTPTestCase):
                         .format(resp_two.status))
 
 
-class Agent(AioHTTPTestCase):
+class AgentCommunicationLines(AioHTTPTestCase):
     async def get_application(self):
         app = await create_app_two()
         return app
@@ -204,6 +193,23 @@ class Agent(AioHTTPTestCase):
                         .format(resp.status))
         text = await resp.text()
         self.assertTrue('success' in text, msg="Server failed to store agent output.")
+
+
+class AgentRoutes(AioHTTPTestCase):
+    async def get_application(self):
+        app = await create_app()
+        return app
+
+    @unittest_run_loop
+    async def test_agent_index(self):
+        resp = await self.client.request("POST", "/login_post", data=data)
+        self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
+                        .format(resp.status))
+        resp_two = await self.client.request("GET", "/agents")
+        self.assertTrue(resp_two.status == 200, msg="Failed to access /agents. Received status code {0}"
+                        .format(resp_two.status))
+        text = await resp_two.text()
+        assert "Agents" in text
 
 
 if __name__ == '__main__':
