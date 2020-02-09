@@ -19,21 +19,20 @@ class ThremulateTests(AioHTTPTestCase):
     @unittest_run_loop
     async def test_index(self):
         resp = await self.client.request("GET", "/")
-        assert resp.status == 200
+        self.assertTrue(resp.status == 200, msg="Failed to access /")
         text = await resp.text()
-        assert "Thremulate" in text
+        self.assertTrue("Thremulate" in text, msg="Failed to access / template")
 
     @unittest_run_loop
     async def test_login_get(self):
         resp = await self.client.request("GET", "/login")
-        assert resp.status == 200
-        # text = await resp.text()
-        # assert "Hello, world" in text
+        self.assertTrue(resp.status == 200, msg="Failed to access /login")
+
 
     @unittest_run_loop
     async def test_login_post(self):
         resp = await self.client.request("POST", "/login_post", data=data)
-        assert resp.status == 200
+        self.assertTrue(resp.status == 200, msg="Failed to access /login_post")
 
     @unittest_run_loop
     async def test_logout(self):
@@ -69,8 +68,6 @@ class ThremulateTests(AioHTTPTestCase):
         resp_two = await self.client.request("GET", "/home")
         self.assertTrue(resp_two.status == 200, msg="Failed to access /home. Received status code {0}"
                         .format(resp_two.status))
-        # text = await resp.text()
-        # assert ";" in text
 
     @unittest_run_loop
     async def test_dashboard(self):
@@ -81,7 +78,7 @@ class ThremulateTests(AioHTTPTestCase):
         self.assertTrue(resp_two.status == 200, msg="Failed to access /dashboard. Received status code {0}"
                         .format(resp_two.status))
         text = await resp.text()
-        assert "Dashboard" in text
+        self.assertTrue("Dashboard" in text, msg="Failed to access /dashboard template")
 
 
 class UserManagement(AioHTTPTestCase):
@@ -174,14 +171,14 @@ class AgentCommunicationLines(AioHTTPTestCase):
     @unittest_run_loop
     async def test_agent_tasks(self):
         resp = await self.client.request("GET", "/agent_tasks/%s" % agent_id)
-        assert resp.status == 200
+        self.assertTrue(resp.status == 200, msg="Failed to access agent_tasks")
         text = await resp.text()
-        assert "++" in text
+        self.assertTrue("++" in text, msg="Failed to get techniques from server")
 
     @unittest_run_loop
     async def test_agent_techniques(self):
         resp = await self.client.request("GET", "/agent_techniques/44444")
-        assert resp.status == 200
+        self.assertTrue(resp.status == 200, msg="Failed to access /agent_techniques/44444")
 
     @unittest.skip("TODO later")
     # TODO: First assign techniques to agent
@@ -210,7 +207,7 @@ class AgentRoutes(AioHTTPTestCase):
         self.assertTrue(resp_two.status == 200, msg="Failed to access /agents. Received status code {0}"
                         .format(resp_two.status))
         text = await resp_two.text()
-        assert "Agents" in text
+        self.assertTrue("Agents" in text, msg="Failed to access /agents template")
 
     @unittest_run_loop
     async def test_agent_details(self):
@@ -221,7 +218,7 @@ class AgentRoutes(AioHTTPTestCase):
         self.assertTrue(resp_two.status == 200, msg="Failed to access /agent_details. Received status code {0}"
                         .format(resp_two.status))
         text = await resp_two.text()
-        assert "Agent Details" in text
+        self.assertTrue("Agent Details" in text, msg="Failed to access /agent_details template.")
 
     @unittest_run_loop
     async def test_agent_edit(self):
@@ -232,7 +229,7 @@ class AgentRoutes(AioHTTPTestCase):
         self.assertTrue(resp_two.status == 200, msg="Failed to access /agent_edit. Received status code {0}"
                         .format(resp_two.status))
         text = await resp_two.text()
-        assert "Update Agent" in text
+        self.assertTrue("Update Agent" in text, msg="Failed to access /agent_edit template")
 
 
 if __name__ == '__main__':
