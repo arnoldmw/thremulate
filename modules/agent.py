@@ -332,7 +332,7 @@ async def delete_tech_output(request):
 
         return web.Response(text='deleted')
     except KeyError:
-        web.Response(status=400)
+        web.Response(text='Invalid data', status=400)
 
 
 async def delete_tech_assignment(request):
