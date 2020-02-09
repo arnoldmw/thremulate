@@ -1,6 +1,8 @@
 # noinspection PyUnresolvedReferences
 # from runner import AtomicRunner
+from pathlib import Path
 
+import yaml
 from .runner import AtomicRunner
 
 matrix = {'persistence': [1156, 1015, 1182, 1103, 1138, 1131, 1067, 1176, 1042, 1136, 1038,
@@ -72,16 +74,16 @@ def get_all_techniques_and_params():
 
 
 def get_one_technique_and_params(key, platform):
-    executor = AtomicRunner()
-    tech = executor.techniques
+    tech_path = Path(__file__).parent / 'atomics/{0}/{1}.yaml'.format(key, key)
+    with open(tech_path) as f:
+        data = yaml.safe_load(f)
 
     parameters = []
     all_technique_tests = []
     description = ''
-    steps = ''
 
     # Looping through atomic tests
-    for index, test in enumerate(tech[key]['atomic_tests']):
+    for index, test in enumerate(data['atomic_tests']):
 
         # Checking for applicable tests for agent platform
         if platform in test['supported_platforms']:
@@ -102,7 +104,7 @@ def get_one_technique_and_params(key, platform):
         else:
             continue
 
-    return {'id': tech[key]['attack_technique'][1:], 'name': tech[key]['display_name'], 'description': description,
+    return {'id': data['attack_technique'][1:], 'name': data['display_name'], 'description': description,
             'tests': all_technique_tests}
 
 
@@ -269,4 +271,3 @@ def techniques_for_db():
 if __name__ == '__main__':
     print('run_atomic')
 
-    print(techniques_for_db())
