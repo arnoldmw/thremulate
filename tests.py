@@ -188,6 +188,11 @@ class Agent(AioHTTPTestCase):
         assert "++" in text \
                @ unittest_run_loop
 
+    @unittest_run_loop
+    async def test_agent_techniques(self):
+        resp = await self.client.request("GET", "/agent_techniques/44444")
+        assert resp.status == 200
+
 
 if __name__ == '__main__':
     unittest.main()
