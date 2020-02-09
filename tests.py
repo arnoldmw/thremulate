@@ -60,8 +60,6 @@ class ThremulateTests(AioHTTPTestCase):
         self.assertTrue(resp_two.status == 200, msg="Failed to access /force_reset_password. Received status code {0}"
                         .format(resp_two.status))
 
-
-
     @unittest_run_loop
     async def test_home(self):
         resp = await self.client.request("POST", "/login_post", data=data)
@@ -169,6 +167,17 @@ class Agent(AioHTTPTestCase):
     async def get_application(self):
         app = await create_app_two()
         return app
+
+    @unittest_run_loop
+    async def test_register(self):
+        agent_registration = {'id': 44444, 'hostname': 'DC01', 'platform': 'windows', 'plat_version': '10.10.10',
+                              'username': 'Administrator'}
+        resp = await self.client.request("POST", "register_agent", data=agent_registration)
+        self.assertTrue(resp.status == 200, msg="Failed to access /register_agent. Received status code {0}"
+                        .format(resp.status))
+        text = await resp.text()
+        self.assertTrue('Agent has registered' in text, msg="Server failed to register agent. "
+                                                            "Agent may already be registered")
 
     # TODO First add agent
     @unittest_run_loop
