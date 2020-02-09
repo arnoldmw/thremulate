@@ -134,7 +134,7 @@ async def agent_tasks(request):
             test_num = agent_techs.test_num
 
             techniques.append({'tech_id': tech_id, 'test_num': test_num})
-
+        # TODO: Handle exception not found
         ag = Agent.get(Agent.id == agent_id)
         agent_platform = ag.platform
 

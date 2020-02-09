@@ -150,7 +150,10 @@ class AdversaryTests(AioHTTPTestCase):
                         .format(resp_two.status))
 
 
-class AgentCommunicationLines(AioHTTPTestCase):
+# We need to assign Agent technique test before the Agent does anything. AgentAssignTechnique and AgentOutput
+# classes represent the edge case
+# It should run before other tests yet unittest run tests in alphabetical order hence the strange name.
+class AAgentInitialization(AioHTTPTestCase):
     async def get_application(self):
         app = await create_app_two()
         return app
@@ -166,7 +169,43 @@ class AgentCommunicationLines(AioHTTPTestCase):
         self.assertTrue('Agent has registered' in text, msg="Server failed to register agent. Agent may already be "
                                                             "registered")
 
-    # First add agent
+
+# We need to assign Agent technique test before the Agent does anything. AgentAssignTechnique and AgentOutput
+# classes represent the edge case
+class ABgentAssignTechnique(AioHTTPTestCase):
+    async def get_application(self):
+        app = await create_app()
+        return app
+
+    @unittest_run_loop
+    async def test_customize_technique(self):
+        resp = await self.client.request("POST", "/login_post", data=data)
+        self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
+                        .format(resp.status))
+        resp_two = await self.client.request("GET", "/customize_technique/?agent_id=%s&tech_id=1002" % agent_id)
+        self.assertTrue(resp_two.status == 200, msg="Failed to access /customize_technique. Received status code {0}"
+                        .format(resp_two.status))
+
+    @unittest_run_loop
+    async def test_customize_technique_post(self):
+        resp = await self.client.request("POST", "/login_post", data=data)
+        self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
+                        .format(resp.status))
+        custom_tech = {'agent_id': agent_id, 'tech_id': 1002, 'test_id': 0, 'input_path': '%USERPROFILE%',
+                       'output_file': '%USERPROFILE%\\data.rar'}
+        resp_two = await self.client.request("POST", "/customize_technique_post", data=custom_tech)
+        self.assertTrue(resp_two.status == 200,
+                        msg="Failed to access /customize_technique_post. Received status code {0}"
+                        .format(resp_two.status))
+        text = await resp_two.text()
+        self.assertTrue('Assigned' in text, msg="Failed to assign technique")
+
+
+class AgentCommunicationLines(AioHTTPTestCase):
+    async def get_application(self):
+        app = await create_app_two()
+        return app
+
     @unittest_run_loop
     async def test_agent_tasks(self):
         resp = await self.client.request("GET", "/agent_tasks/%s" % agent_id)
@@ -179,7 +218,6 @@ class AgentCommunicationLines(AioHTTPTestCase):
         resp = await self.client.request("GET", "/agent_techniques/44444")
         self.assertTrue(resp.status == 200, msg="Failed to access /agent_techniques/44444")
 
-    # First assign techniques to agent. First run test_customize_technique_post.
     @unittest_run_loop
     async def test_agent_output(self):
         agent_output = {'id': agent_id, 'tech': '1002:0',
@@ -239,29 +277,6 @@ class AgentRoutes(AioHTTPTestCase):
         resp_two = await self.client.request("POST", "/agent_edit_post", data=agent_edit)
         self.assertTrue(resp_two.status == 200, msg="Failed to access /agent_edit_post. Received status code {0}"
                         .format(resp_two.status))
-
-    @unittest_run_loop
-    async def test_customize_technique(self):
-        resp = await self.client.request("POST", "/login_post", data=data)
-        self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
-                        .format(resp.status))
-        resp_two = await self.client.request("GET", "/customize_technique/?agent_id=%s&tech_id=1002" % agent_id)
-        self.assertTrue(resp_two.status == 200, msg="Failed to access /customize_technique. Received status code {0}"
-                        .format(resp_two.status))
-
-    @unittest_run_loop
-    async def test_customize_technique_post(self):
-        resp = await self.client.request("POST", "/login_post", data=data)
-        self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
-                        .format(resp.status))
-        custom_tech = {'agent_id': agent_id, 'tech_id': 1002, 'test_id': 0, 'input_path': '%USERPROFILE%',
-                       'output_file': '%USERPROFILE%\\data.rar'}
-        resp_two = await self.client.request("POST", "/customize_technique_post", data=custom_tech)
-        self.assertTrue(resp_two.status == 200,
-                        msg="Failed to access /customize_technique_post. Received status code {0}"
-                        .format(resp_two.status))
-        text = await resp_two.text()
-        self.assertTrue('Assigned' in text, msg="Failed to assign technique")
 
     @unittest_run_loop
     async def test_delete_tech_output(self):
