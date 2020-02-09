@@ -2,6 +2,8 @@ import unittest
 from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop
 # noinspection PyUnresolvedReferences
 from server import create_app
+# noinspection PyUnresolvedReferences
+from server import create_app_two
 
 data = {'email': 'admin@thremulate.com', 'password': 'thremulate'}
 
@@ -58,13 +60,7 @@ class ThremulateTests(AioHTTPTestCase):
         self.assertTrue(resp_two.status == 200, msg="Failed to access /force_reset_password. Received status code {0}"
                         .format(resp_two.status))
 
-    # TODO First add agent
-    @unittest_run_loop
-    async def test_agent_tasks(self):
-        resp = await self.client.request("GET", "/agent_tasks/5")
-        assert resp.status == 200
-        text = await resp.text()
-        assert "++" in text
+
 
     @unittest_run_loop
     async def test_home(self):
@@ -158,6 +154,7 @@ class AdversaryTests(AioHTTPTestCase):
                         .format(resp_two.status))
 
     @unittest.skip("Need to handle exception")
+    # TODO: Do not attach an agent to it
     @unittest_run_loop
     async def test_adversary_delete(self):
         resp = await self.client.request("POST", "/login_post", data=data)
@@ -166,6 +163,20 @@ class AdversaryTests(AioHTTPTestCase):
         resp_two = await self.client.request("POST", "/adversary_delete", data={'id': 1})
         self.assertTrue(resp_two.status == 200, msg="Failed to access /adversary_delete. Received status code {0}"
                         .format(resp_two.status))
+
+
+class Agent(AioHTTPTestCase):
+    async def get_application(self):
+        app = await create_app_two()
+        return app
+
+    # TODO First add agent
+    @unittest_run_loop
+    async def test_agent_tasks(self):
+        resp = await self.client.request("GET", "/agent_tasks/5")
+        assert resp.status == 200
+        text = await resp.text()
+        assert "++" in text
 
 
 if __name__ == '__main__':

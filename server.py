@@ -101,12 +101,17 @@ async def create_app():
     return app
 
 
-async def start_site_two():
-    app_two = web.Application()
-    app_two.add_routes([
+async def create_app_two():
+    app = web.Application()
+    app.add_routes([
         web.static('/get_agent/', path=THIS_DIR / 'agents', show_index=True)
     ])
-    setup_agent_communication_routes(app_two)
+    setup_agent_communication_routes(app)
+    return app
+
+
+async def start_site_two():
+    app_two = await create_app_two()
 
     app_runner = web.AppRunner(app_two)
     runners.append(app_runner)
