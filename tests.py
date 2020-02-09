@@ -223,6 +223,17 @@ class AgentRoutes(AioHTTPTestCase):
         text = await resp_two.text()
         assert "Agent Details" in text
 
+    @unittest_run_loop
+    async def test_agent_edit(self):
+        resp = await self.client.request("POST", "/login_post", data=data)
+        self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
+                        .format(resp.status))
+        resp_two = await self.client.request("GET", "/agent_edit/%s" % agent_id)
+        self.assertTrue(resp_two.status == 200, msg="Failed to access /agent_edit. Received status code {0}"
+                        .format(resp_two.status))
+        text = await resp_two.text()
+        assert "Update Agent" in text
+
 
 if __name__ == '__main__':
     unittest.main()
