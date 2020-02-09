@@ -182,10 +182,11 @@ class Agent(AioHTTPTestCase):
     # TODO First add agent
     @unittest_run_loop
     async def test_agent_tasks(self):
-        resp = await self.client.request("GET", "/agent_tasks/5")
+        resp = await self.client.request("GET", "/agent_tasks/44444")
         assert resp.status == 200
         text = await resp.text()
-        assert "++" in text
+        assert "++" in text \
+               @ unittest_run_loop
 
 
 if __name__ == '__main__':
