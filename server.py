@@ -11,7 +11,7 @@ from aiohttp_security import (
     check_authorized,
 )
 from aiohttp_security import setup as setup_security
-from aiohttp_session import setup
+from aiohttp_session import setup, get_session
 from aiohttp_session.cookie_storage import EncryptedCookieStorage
 # noinspection PyUnresolvedReferences
 from database import *
@@ -119,8 +119,7 @@ async def start_site_two():
 
     site = web.TCPSite(app_runner, host=server['host'], port=server['http'])
     message = """
-======== Running on http://{0}:{1} ========
-            (Press CTRL+C to quit)
+======== Running on http://{0}:{1}  (AGENT)===========
 """.format(server['host'], server['http'])
 
     await site.start()
@@ -139,7 +138,7 @@ async def start_site_one():
     site = web.TCPSite(runner=app_runner, host=server['host'], port=server['https'],
                        ssl_context=ssl_context)
     message = """
-======== Running on https://{0}:{1} ========
+======== Running on https://{0}:{1} (OPERATOR)========
 """.format(server['host'], server['https'])
 
     await site.start()
