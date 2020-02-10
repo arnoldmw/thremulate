@@ -122,7 +122,7 @@ class UserManagement(AioHTTPTestCase):
                         .format(resp_two.status))
 
     @unittest_run_loop
-    async def test_change_password(self):
+    async def test_change_password_post(self):
         resp = await self.client.request("POST", "/login_post", data=data)
         self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
                         .format(resp.status))
@@ -130,6 +130,17 @@ class UserManagement(AioHTTPTestCase):
                        'old_password': data['password']}
         resp_two = await self.client.request("POST", "/change_password_post", data=change_pass)
         self.assertTrue(resp_two.status == 200, msg="Failed to access /change_password_post. Received status code {0}"
+                        .format(resp_two.status))
+
+    @unittest_run_loop
+    async def test_user_edit_post(self):
+        resp = await self.client.request("POST", "/login_post", data=data)
+        self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
+                        .format(resp.status))
+        change_pass = {'fname': 'Admin', 'lname': 'Admin',
+                       'email': data['email']}
+        resp_two = await self.client.request("POST", "/user_edit_post", data=change_pass)
+        self.assertTrue(resp_two.status == 200, msg="Failed to access /user_edit_post. Received status code {0}"
                         .format(resp_two.status))
 
 
