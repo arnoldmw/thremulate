@@ -14,8 +14,6 @@ atomic_tests:
   executor:
     name: sh
     command: |
-      # dscacheutil -q group
-      # dscl . -list /Groups
       groups
 
 - name: Basic Permission Groups Discovery Windows
