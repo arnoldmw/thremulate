@@ -121,6 +121,17 @@ class UserManagement(AioHTTPTestCase):
         self.assertTrue(resp_two.status == 200, msg="Failed to access /change_password. Received status code {0}"
                         .format(resp_two.status))
 
+    @unittest_run_loop
+    async def test_change_password(self):
+        resp = await self.client.request("POST", "/login_post", data=data)
+        self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
+                        .format(resp.status))
+        change_pass = {'password': data['password'], 'confirm_password': data['password'],
+                       'old_password': data['password']}
+        resp_two = await self.client.request("POST", "/change_password_post", data=change_pass)
+        self.assertTrue(resp_two.status == 200, msg="Failed to access /change_password_post. Received status code {0}"
+                        .format(resp_two.status))
+
 
 class AdversaryTests(AioHTTPTestCase):
     async def get_application(self):
