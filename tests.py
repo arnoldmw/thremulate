@@ -95,7 +95,7 @@ class UserManagement(AioHTTPTestCase):
                         .format(resp_two.status))
 
     @unittest_run_loop
-    async def test_user_index(self):
+    async def test_user_profile(self):
         resp = await self.client.request("POST", "/login_post", data=data)
         self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
                         .format(resp.status))
