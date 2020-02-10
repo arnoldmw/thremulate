@@ -157,6 +157,9 @@ def get_all_techniques(agent_platform):
                 if tech_id in matrix['lateral_movement']:
                     details_matrix['lateral_movement'].append({'id': tech_id, 'name': tech[key]['display_name']})
                     break
+                if tech_id in matrix['persistence']:
+                    details_matrix['persistence'].append({'id': tech_id, 'name': tech[key]['display_name']})
+                    break
 
     return details_matrix
 
