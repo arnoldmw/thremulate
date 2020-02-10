@@ -220,6 +220,8 @@ async def change_password_post(request):
             return web.Response(status=400)
     except KeyError:
         return web.Response(status=404)
+    except User.DoesNotExist:
+        return web.Response(text='Invalid data', status=400)
 
 
 @aiohttp_jinja2.template('user_mgt/user_edit.html')
