@@ -94,6 +94,15 @@ class UserManagement(AioHTTPTestCase):
         self.assertTrue(resp_two.status == 200, msg="Failed to access /users. Received status code {0}"
                         .format(resp_two.status))
 
+    @unittest_run_loop
+    async def test_user_index(self):
+        resp = await self.client.request("POST", "/login_post", data=data)
+        self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
+                        .format(resp.status))
+        resp_two = await self.client.request("GET", "/user_profile")
+        self.assertTrue(resp_two.status == 200, msg="Failed to access /user_profile. Received status code {0}"
+                        .format(resp_two.status))
+
 
 class AdversaryTests(AioHTTPTestCase):
     async def get_application(self):
