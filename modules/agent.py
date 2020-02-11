@@ -125,36 +125,37 @@ async def agent_techniques(request):
 async def agent_tasks(request):
     try:
         agent_id = request.match_info['id']
-
+        agent_assignments = ''
         techniques = []
         Agent.update(last_contact=datetime.datetime.now()).where(Agent.id == agent_id).execute()
-        for agent_techs in AgentTechnique.select() \
-                .where((AgentTechnique.agent_id == agent_id) & (AgentTechnique.executed.is_null(True))):
-            tech_id = ('T%s' % agent_techs.technique_id)
-            test_num = agent_techs.test_num
-
-            techniques.append({'tech_id': tech_id, 'test_num': test_num})
-        # TODO: Handle exception not found
+        assigned_techs = AgentTechnique.select() \
+            .where((AgentTechnique.agent_id == agent_id) & (AgentTechnique.executed.is_null(True)))
         ag = Agent.get(Agent.id == agent_id)
         agent_platform = ag.platform
+        if assigned_techs.count() != 0:
+            for agent_techs in assigned_techs:
+                tech_id = ('T%s' % agent_techs.technique_id)
+                test_num = agent_techs.test_num
 
-        # Formulating parameters
-        list_of_param_dict = []
-        for t in techniques:
-            params = Parameter.select().where(
-                Parameter.agent_id == agent_id and Parameter.technique_id == t['tech_id'][1:])
-            param_number = params.count()
+                techniques.append({'tech_id': tech_id, 'test_num': test_num})
 
-            if param_number != 0:
-                param_dict = {}
-                for p in params:
-                    param_dict.__setitem__(p.param_name, p.param_value)
+            # Formulating parameters
+            list_of_param_dict = []
+            for t in techniques:
+                params = Parameter.select().where(
+                    Parameter.agent_id == agent_id and Parameter.technique_id == t['tech_id'][1:])
+                param_number = params.count()
 
-                list_of_param_dict.append(param_dict)
-            else:
-                list_of_param_dict.append(None)
+                if param_number != 0:
+                    param_dict = {}
+                    for p in params:
+                        param_dict.__setitem__(p.param_name, p.param_value)
 
-        agent_assignments = assignments(techniques, agent_platform, list_of_param_dict)
+                    list_of_param_dict.append(param_dict)
+                else:
+                    list_of_param_dict.append(None)
+
+            agent_assignments = assignments(techniques, agent_platform, list_of_param_dict)
 
         commands = '{0}++{1}'.format(str(ag.kill_date), agent_assignments)
         return web.Response(text=commands)
