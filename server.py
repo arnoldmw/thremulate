@@ -104,7 +104,8 @@ async def create_app():
 async def create_app_two():
     app = web.Application()
     app.add_routes([
-        web.static('/get_agent/', path=THIS_DIR / 'agents', show_index=True)
+        web.static('/get_agent/', path=THIS_DIR / 'agents', show_index=True),
+        web.static('/atomics/', path=THIS_DIR / 'art/atomics', show_index=True)
     ])
     setup_agent_communication_routes(app)
     return app
