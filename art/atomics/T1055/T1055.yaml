@@ -51,7 +51,7 @@ atomic_tests:
 
 - name: Shared Library Injection via /etc/ld.so.preload
   description: |
-    This test adds a shared library to the `ld.so.preload` list to execute and intercept API calls. This technique was used by threat actor Rocke during the exploitation of Linux web servers. This requires the `glibc` package. 
+    This test adds a shared library to the `ld.so.preload` list to execute and intercept API calls. This technique was used by threat actor Rocke during the exploitation of Linux web servers. This requires the `glibc` package.
   supported_platforms:
     - linux
   input_arguments:
@@ -103,10 +103,11 @@ atomic_tests:
   executor:
     name: command_prompt
     command: |
-      .\bin\#{exe_binary}
+      /atomics/T1055/bin/T1055.exe
+      #{exe_binary}
 
 - name: svchost writing a file to a UNC path
-  description: | 
+  description: |
     svchost.exe writing a non-Microsoft Office file to a file with a UNC path.
     This works by copying cmd.exe to a file, naming it svchost.exe, then copying a file to the localhost\c$ folder.
   supported_platforms:

