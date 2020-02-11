@@ -342,7 +342,9 @@ async def delete_tech_assignment(request):
         AgentTechnique.delete() \
             .where((AgentTechnique.agent_id == data['agent_id']) & (AgentTechnique.technique_id == data['tech_id'])
                    & (AgentTechnique.test_num == data['test_num'])).execute()
-
+        Parameter.delete() \
+            .where((Parameter.agent_id == data['agent_id']) & (Parameter.technique_id == data['tech_id'])
+                   & (Parameter.test_num == data['test_num'])).execute()
         return web.Response(text='success')
     except KeyError:
         return web.Response(text='Invalid data', status=400)

@@ -229,8 +229,10 @@
                 var agent_id = $('#agent_id').val();
                 $.post("/delete_tech_assignment", { 'tech_id': tech_id, 'agent_id': agent_id, 'test_num': test_num },
                     function (data, status) {
+                    console.log(status);
+                    console.log(data);
                         if (status == 'success') {
-                            if (data == 'deleted') {
+                            if (data == 'success') {
                                 btn.parents('tr').remove();
                             }
                         }
