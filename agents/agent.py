@@ -177,7 +177,7 @@ def download_and_run_commands():
                     if ' & ' in command:
                         path_to_file = command.split(' & ')[0]
                         download(path_to_file)
-                        command = command.split(' & ')[1:]
+                        command = command.replace(path_to_file + ' & ', '')
                     else:
                         sm_colon = command.index(';')
                         fwd_slash = command.index('/')
