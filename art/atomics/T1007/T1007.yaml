@@ -12,7 +12,7 @@ atomic_tests:
 
   executor:
     name: command_prompt
-    elevation_required: true
+    elevation_required: False
     command: |
       tasklist.exe
       sc query
@@ -20,18 +20,12 @@ atomic_tests:
 
 - name: System Service Discovery - net.exe
   description: |
-    Enumerates started system services using net.exe and writes them to a file. This technique has been used by multiple threat actors.
+    Enumerates started system services using net.exe. This technique has been used by multiple threat actors.
   supported_platforms:
     - windows
-  input_arguments:
-    output_file:
-      description: Path of file to hold net.exe output
-      type: Path
-      default: C:\Windows\Temp\service-list.txt
+
   executor:
     name: command_prompt
     elevation_required: false
     command: |
-      net.exe start >> #{output_file}
-    cleanup_command: |
-      del #{output_file}
+      net.exe start
