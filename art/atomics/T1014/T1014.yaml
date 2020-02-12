@@ -40,7 +40,7 @@ atomic_tests:
 
 - name: Windows Signed Driver Rootkit Test
   description: |
-    This test exploits a signed driver to execute code in Kernel.
+    CAUTION!! This test exploits a signed driver to execute code in Kernel.
     SHA1 C1D5CF8C43E7679B782630E93F5E6420CA1749A7
     We leverage the work done here:
     https://zerosum0x0.blogspot.com/2017/07/puppet-strings-dirty-secret-for-free.html
@@ -61,4 +61,5 @@ atomic_tests:
   executor:
     name: command_prompt
     command: |
+      /atomics/T1014/bin/puppetstrings.exe
       puppetstrings #{driver_path}
