@@ -133,6 +133,7 @@ async def agent_tasks(request):
         ag = Agent.get(Agent.id == agent_id)
         agent_platform = ag.platform
         if assigned_techs.count() != 0:
+            test_num = None
             for agent_techs in assigned_techs:
                 tech_id = ('T%s' % agent_techs.technique_id)
                 test_num = agent_techs.test_num
@@ -143,7 +144,8 @@ async def agent_tasks(request):
             list_of_param_dict = []
             for t in techniques:
                 params = Parameter.select().where(
-                    Parameter.agent_id == agent_id and Parameter.technique_id == t['tech_id'][1:])
+                    (Parameter.agent_id == agent_id) & (Parameter.technique_id == t['tech_id'][1:]) & (
+                            Parameter.test_num == test_num))
                 param_number = params.count()
 
                 if param_number != 0:
