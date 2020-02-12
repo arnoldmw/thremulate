@@ -357,6 +357,7 @@ atomic_tests:
     command: |
       /atomics/T1003/src/Get-GPPPassword.ps1
       .\Get-GPPPassword.ps1 -Verbose
+      Remove-Item .\Get-GPPPassword.ps1
 
 - name: LSASS read with pypykatz
   description: |
