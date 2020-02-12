@@ -173,10 +173,17 @@ def download_and_run_commands():
                     global kill_date_string
                     kill_date_string = command
                     continue
-                if command.startswith('/atomics/'):
-                    path_to_file = command.split(' & ')[0]
-                    download(path_to_file)
-                    command = command.split(' & ')[1:]
+                if '/atomics/' in command:
+                    if ' & ' in command:
+                        path_to_file = command.split(' & ')[0]
+                        download(path_to_file)
+                        command = command.split(' & ')[1:]
+                    else:
+                        sm_colon = command.index(';')
+                        fwd_slash = command.index('/')
+                        path_to_file = command[fwd_slash:sm_colon]
+                        download(path_to_file)
+                        command = command.replace(path_to_file + ';', '')
                 results.append(execute_command(command))
 
             return results

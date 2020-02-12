@@ -329,7 +329,7 @@ atomic_tests:
     gpp_script_path:
       description: Path to the Get-GPPPassword PowerShell Script
       type: Path
-      default: PathToAtomicsFolder\T1003\src\Get-GPPPassword.ps1
+      default: Get-GPPPassword.ps1
     gpp_script_url:
       description: URL of the Get-GPPPassword PowerShell Script
       type: url
@@ -355,8 +355,8 @@ atomic_tests:
     name: powershell
     elevation_required: false
     command: |
-      . #{gpp_script_path}
-      Get-GPPPassword -Verbose
+      /atomics/T1003/src/Get-GPPPassword.ps1
+      .\Get-GPPPassword.ps1 -Verbose
 
 - name: LSASS read with pypykatz
   description: |
