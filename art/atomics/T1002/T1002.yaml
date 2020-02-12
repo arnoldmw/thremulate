@@ -12,7 +12,7 @@ atomic_tests:
     input_file:
       description: Path that should be compressed into our output file
       type: Path
-      default: $env:USERPROFILE
+      default: C:\test
     output_file:
       description: Path where resulting compressed data should be placed
       type: Path
@@ -22,6 +22,7 @@ atomic_tests:
     elevation_required: false
     command: |
       dir #{input_file} -Recurse | Compress-Archive -Force -DestinationPath #{output_file}
+      Remove-Item -path #{output_file}
     cleanup_command: |
       Remove-Item -path #{output_file}
 
@@ -34,7 +35,7 @@ atomic_tests:
     input_path:
       description: Path that should be compressed into our output file
       type: Path
-      default: '%USERPROFILE%'
+      default: 'C:\test'
     file_extension:
       description: Extension of files to compress
       type: String
@@ -43,25 +44,25 @@ atomic_tests:
       description: Path where resulting compressed data should be placed
       type: Path
       default: '%USERPROFILE%\data.rar'
-    rar_installer:
-      description: Winrar installer
-      type: Path
-      default: '%TEMP%\winrar.exe'
+    #    rar_installer:
+    #      description: Winrar installer
+    #      type: Path
+    #      default: '%TEMP%\winrar.exe'
     rar_exe:
       description: The RAR executable from Winrar
       type: Path
       default: "%programfiles%/WinRAR/Rar.exe"
 
-  dependencies:
-    - description: |
-        Rar tool must be installed at specified location (#{rar_exe})
-      prereq_command: |
-        if not exist "#{rar_exe}" (exit /b 1)
-      get_prereq_command: |
-        echo Downloading Winrar installer
-        bitsadmin /transfer myDownloadJob /download /priority normal "https://www.win-rar.com/fileadmin/winrar-versions/winrar/th/winrar-x64-580.exe" #{rar_installer}
-        echo Follow the installer prompts to install Winrar
-        #{rar_installer}
+  #  dependencies:
+  #    - description: |
+  #        Rar tool must be installed at specified location (#{rar_exe})
+  #      prereq_command: |
+  #        if not exist "#{rar_exe}" (exit /b 1)
+  #      get_prereq_command: |
+  #        echo Downloading Winrar installer
+  #        bitsadmin /transfer myDownloadJob /download /priority normal "https://www.win-rar.com/fileadmin/winrar-versions/winrar/th/winrar-x64-580.exe" #{rar_installer}
+  #        echo Follow the installer prompts to install Winrar
+  #        #{rar_installer}
 
   executor:
     name: command_prompt
