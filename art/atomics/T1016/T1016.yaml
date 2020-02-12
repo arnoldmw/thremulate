@@ -15,7 +15,6 @@ atomic_tests:
     elevation_required: false
     command: |
       ipconfig /all
-      netsh interface show
       arp -a
       nbtstat -n
       net config
