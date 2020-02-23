@@ -56,11 +56,17 @@ atomic_tests:
   supported_platforms:
     - windows
 
+  input_arguments:
+    three_network_octets:
+      description: First three octets of an IP address
+      type: String
+      default: 192.168.1
+
   executor:
     name: command_prompt
     elevation_required: false
     command: |
-      for /l %i in (1,1,254) do ping -n 1 -w 100 192.168.1.%i
+      for /l %i in (1,1,254) do ping -n 1 -w 100 #{three_network_octets}.%i
 
 - name: Remote System Discovery - arp
   description: |
