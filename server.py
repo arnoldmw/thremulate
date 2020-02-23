@@ -9,13 +9,13 @@ from aiohttp_security import setup as setup_security
 from aiohttp_session import setup
 from aiohttp_session.cookie_storage import EncryptedCookieStorage
 
-from stae.config.settings import config as server
-from stae.modules.adversary import *
-from stae.modules.agent import *
-from stae.modules.auth import *
-from stae.modules.dashboard import *
-from stae.modules.middleware import setup_middleware
-from stae.modules.user_mgt import *
+from thremulate.config.settings import config as server
+from thremulate.modules.adversary import *
+from thremulate.modules.agent import *
+from thremulate.modules.auth import *
+from thremulate.modules.dashboard import *
+from thremulate.modules.middleware import setup_middleware
+from thremulate.modules.user_mgt import *
 
 THIS_DIR = Path(__file__).parent
 secret_key = b'\xd0\x04)E\x14\x98\xa1~\xecE\xae>(\x1d6\xec\xbfQ\xa4\x19\x0e\xbcre,\xf8\x8f\x84WV.\x8d'

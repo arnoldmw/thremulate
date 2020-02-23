@@ -3,7 +3,7 @@ from aiohttp import web
 from aiohttp_security import check_authorized
 from aiohttp_session import get_session
 
-from stae.db.database import *
+from thremulate.db.database import *
 
 
 @aiohttp_jinja2.template('dashboard/dashboard.html')

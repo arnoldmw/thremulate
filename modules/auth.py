@@ -6,7 +6,7 @@ from aiohttp_security import (
 )
 from aiohttp_session import new_session, get_session
 
-from stae.db.db_auth import *
+from thremulate.db.db_auth import *
 
 
 @aiohttp_jinja2.template('auth/login.html')

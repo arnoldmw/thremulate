@@ -4,7 +4,7 @@ from pathlib import Path
 
 import bcrypt
 # noinspection PyUnresolvedReferences
-from stae.art.run_atomics import techniques_for_db
+from thremulate.art.run_atomics import techniques_for_db
 from playhouse.migrate import *
 
 THIS_DIR = Path(__file__).parent.parent

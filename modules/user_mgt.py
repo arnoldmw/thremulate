@@ -4,8 +4,8 @@ from aiohttp_security import (
     check_permission, check_authorized,
 )
 from aiohttp_session import get_session
-from stae.db.database import *
-from stae.db.db_auth import check_password_hash, generate_password_hash
+from thremulate.db.database import *
+from thremulate.db.db_auth import check_password_hash, generate_password_hash
 
 
 @aiohttp_jinja2.template('user_mgt/users_index.html')

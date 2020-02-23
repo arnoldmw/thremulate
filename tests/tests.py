@@ -1,8 +1,8 @@
 import datetime
 import unittest
 from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop
-from stae.server import create_app
-from stae.server import create_app_two
+from thremulate.server import create_app
+from thremulate.server import create_app_two
 
 data = {'email': 'admin@thremulate.com', 'password': 'thremulate'}
 agent_id = 44444
