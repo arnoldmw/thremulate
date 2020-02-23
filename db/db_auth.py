@@ -1,6 +1,6 @@
 from aiohttp_security.abc import AbstractAuthorizationPolicy
 
-from stae.database import *
+from stae.db.database import *
 
 
 class DBAuthorizationPolicy(AbstractAuthorizationPolicy):

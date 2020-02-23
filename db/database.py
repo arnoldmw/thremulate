@@ -7,7 +7,7 @@ import bcrypt
 from stae.art.run_atomics import techniques_for_db
 from playhouse.migrate import *
 
-THIS_DIR = Path(__file__).parent
+THIS_DIR = Path(__file__).parent.parent
 db = SqliteDatabase(THIS_DIR / 'db/adversary.db', pragmas={'foreign_keys': 1})
 
 

@@ -1,4 +1,3 @@
-import datetime
 import random
 import string
 
@@ -16,7 +15,7 @@ from stae.art.run_atomics import get_all_techniques, get_one_technique_and_param
 from stae.art.run_atomics import get_all_techniques_and_params
 # noinspection PyUnresolvedReferences
 from stae.art.run_atomics import get_commands
-from stae.database import *
+from stae.db.database import *
 from peewee import IntegrityError
 
 
