@@ -1,6 +1,6 @@
-import bcrypt
-from stae.database import *
 from aiohttp_security.abc import AbstractAuthorizationPolicy
+
+from stae.database import *
 
 
 class DBAuthorizationPolicy(AbstractAuthorizationPolicy):
