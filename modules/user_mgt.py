@@ -5,7 +5,6 @@ from aiohttp_security import (
 )
 from aiohttp_session import get_session
 from stae.database import *
-# noinspection PyUnresolvedReferences
 from stae.db_auth import check_password_hash, generate_password_hash
 
 
