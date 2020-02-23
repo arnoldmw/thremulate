@@ -44,6 +44,6 @@ atomic_tests:
     name: powershell
     elevation_required: false
     command: |
-      Compress-Archive -Force -Path ‪C:\test -DestinationPath $env:TEMP\Folder_to_zip.zip
+      Compress-Archive -Force -Path ‪C:\test -DestinationPath $env:TEMP\T1074.zip
     cleanup_command: |
-      Remove-Item -Path $env:TEMP\Folder_to_zip.zip
+      Remove-Item -Path $env:TEMP\T1074.zip
