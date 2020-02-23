@@ -2,7 +2,6 @@ import datetime
 import unittest
 from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop
 from stae.server import create_app
-# noinspection PyUnresolvedReferences
 from stae.server import create_app_two
 
 data = {'email': 'admin@thremulate.com', 'password': 'thremulate'}

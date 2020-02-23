@@ -1,37 +1,21 @@
 import asyncio
 import logging
-import ssl
-from pathlib import Path
 import os
-import aiohttp_jinja2
+import ssl
+
 import jinja2
-from aiohttp import web
 from aiohttp_security import SessionIdentityPolicy
-from aiohttp_security import (
-    check_authorized,
-)
 from aiohttp_security import setup as setup_security
 from aiohttp_session import setup
-from aiohttp_session import get_session
 from aiohttp_session.cookie_storage import EncryptedCookieStorage
-# noinspection PyUnresolvedReferences
-from stae.database import *
-# noinspection PyUnresolvedReferences
-from stae.db_auth import DBAuthorizationPolicy
-# noinspection PyUnresolvedReferences
-from stae.modules.agent import *
-# noinspection PyUnresolvedReferences
-from stae.modules.auth import *
-# noinspection PyUnresolvedReferences
-from stae.modules.adversary import *
-# noinspection PyUnresolvedReferences
-from stae.modules.dashboard import *
-# noinspection PyUnresolvedReferences
-from stae.modules.middleware import setup_middleware
-# noinspection PyUnresolvedReferences
-from stae.modules.user_mgt import *
-# noinspection PyUnresolvedReferences
+
 from stae.config.settings import config as server
+from stae.modules.adversary import *
+from stae.modules.agent import *
+from stae.modules.auth import *
+from stae.modules.dashboard import *
+from stae.modules.middleware import setup_middleware
+from stae.modules.user_mgt import *
 
 THIS_DIR = Path(__file__).parent
 secret_key = b'\xd0\x04)E\x14\x98\xa1~\xecE\xae>(\x1d6\xec\xbfQ\xa4\x19\x0e\xbcre,\xf8\x8f\x84WV.\x8d'
