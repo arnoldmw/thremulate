@@ -11,26 +11,27 @@ from aiohttp_security import (
     check_authorized,
 )
 from aiohttp_security import setup as setup_security
-from aiohttp_session import setup, get_session
+from aiohttp_session import setup
+from aiohttp_session import get_session
 from aiohttp_session.cookie_storage import EncryptedCookieStorage
 # noinspection PyUnresolvedReferences
-from database import *
+from stae.database import *
 # noinspection PyUnresolvedReferences
-from db_auth import DBAuthorizationPolicy
+from stae.db_auth import DBAuthorizationPolicy
 # noinspection PyUnresolvedReferences
-from modules.agent import *
+from stae.modules.agent import *
 # noinspection PyUnresolvedReferences
-from modules.auth import *
+from stae.modules.auth import *
 # noinspection PyUnresolvedReferences
-from modules.adversary import *
+from stae.modules.adversary import *
 # noinspection PyUnresolvedReferences
-from modules.dashboard import *
+from stae.modules.dashboard import *
 # noinspection PyUnresolvedReferences
-from modules.middleware import setup_middleware
+from stae.modules.middleware import setup_middleware
 # noinspection PyUnresolvedReferences
-from modules.user_mgt import *
+from stae.modules.user_mgt import *
 # noinspection PyUnresolvedReferences
-from config.settings import config as server
+from stae.config.settings import config as server
 
 THIS_DIR = Path(__file__).parent
 secret_key = b'\xd0\x04)E\x14\x98\xa1~\xecE\xae>(\x1d6\xec\xbfQ\xa4\x19\x0e\xbcre,\xf8\x8f\x84WV.\x8d'

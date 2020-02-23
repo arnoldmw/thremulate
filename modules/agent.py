@@ -9,14 +9,14 @@ from aiohttp_security import (
 )
 from aiohttp_session import get_session
 # noinspection PyUnresolvedReferences
-from art.run_atomics import agent_commands
+from stae.art.run_atomics import agent_commands
 # noinspection PyUnresolvedReferences
-from art.run_atomics import get_all_techniques, get_one_technique_and_params
+from stae.art.run_atomics import get_all_techniques, get_one_technique_and_params
 # noinspection PyUnresolvedReferences
-from art.run_atomics import get_all_techniques_and_params
+from stae.art.run_atomics import get_all_techniques_and_params
 # noinspection PyUnresolvedReferences
-from art.run_atomics import get_commands
-from database import *
+from stae.art.run_atomics import get_commands
+from stae.database import *
 from peewee import IntegrityError
 
 

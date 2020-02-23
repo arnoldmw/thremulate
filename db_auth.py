@@ -1,5 +1,5 @@
 import bcrypt
-from database import *
+from stae.database import *
 from aiohttp_security.abc import AbstractAuthorizationPolicy
 
 

@@ -3,7 +3,7 @@ from aiohttp import web
 from aiohttp_security import check_authorized
 from aiohttp_session import get_session
 # noinspection PyUnresolvedReferences
-from database import Adversary, Agent
+from stae.database import Adversary, Agent
 from peewee import IntegrityError
 
 

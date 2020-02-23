@@ -2,10 +2,10 @@ import uuid
 
 from aiohttp import web
 from aiohttp_session import new_session, get_session
-from database import *
+from stae.database import *
 import aiohttp_jinja2
 from peewee import IntegrityError
-from db_auth import *
+from stae.db_auth import *
 from aiohttp_security import (
     remember, forget, authorized_userid,
     check_permission, check_authorized,
