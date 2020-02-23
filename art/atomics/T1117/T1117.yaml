@@ -27,7 +27,7 @@ atomic_tests:
    url:
     description: URL to hosted sct file
     type: Url
-    default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1117/RegSvr32.sct
+    default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1117/RegSvr32.sct
   executor:
    name: command_prompt
    elevation_required: false

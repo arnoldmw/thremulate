@@ -33,7 +33,7 @@ atomic_tests:
     remote_chm_file:
       description: Remote .chm payload
       type: url
-      default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1223/src/T1223.chm
+      default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1223/src/T1223.chm
 
   executor:
     name: command_prompt

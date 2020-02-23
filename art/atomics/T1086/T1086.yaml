@@ -111,7 +111,7 @@ atomic_tests:
     url:
       description: url of payload to execute
       type: url
-      default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1086/payloads/test.ps1
+      default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1086/payloads/test.ps1
   executor:
     name: command_prompt
     elevation_required: false
@@ -129,7 +129,7 @@ atomic_tests:
     url:
       description: url of payload to execute
       type: url
-      default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1086/payloads/test.ps1
+      default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1086/payloads/test.ps1
   executor:
     name: command_prompt
     elevation_required: false
@@ -146,7 +146,7 @@ atomic_tests:
     url:
       description: url of payload to execute
       type: url
-      default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1086/payloads/test.xml
+      default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1086/payloads/test.xml
   executor:
     name: command_prompt
     elevation_required: false
@@ -163,7 +163,7 @@ atomic_tests:
     url:
       description: url of payload to execute
       type: url
-      default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1086/payloads/mshta.sct
+      default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1086/payloads/mshta.sct
   executor:
     name: powershell
     elevation_required: false

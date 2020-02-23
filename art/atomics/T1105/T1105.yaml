@@ -179,7 +179,7 @@ atomic_tests:
     remote_file:
       description: URL of file to copy
       type: Url
-      default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/LICENSE.txt
+      default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/LICENSE.txt
     local_path:
       description: Local path to place file
       type: Path
@@ -198,7 +198,7 @@ atomic_tests:
     remote_file:
       description: URL of file to copy
       type: Url
-      default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/LICENSE.txt
+      default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/LICENSE.txt
     local_path:
       description: Local path to place file
       type: Path
@@ -227,7 +227,7 @@ atomic_tests:
     remote_file:
       description: URL of file to copy
       type: Url
-      default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/LICENSE.txt
+      default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/LICENSE.txt
     local_path:
       description: Local path to place file
       type: Path
@@ -247,7 +247,7 @@ atomic_tests:
     remote_file:
       description: URL of file to copy
       type: Url
-      default: https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/LICENSE.txt
+      default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/LICENSE.txt
     local_path:
       description: Local path to place file
       type: Path

