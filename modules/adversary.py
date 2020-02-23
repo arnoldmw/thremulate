@@ -2,9 +2,7 @@ import aiohttp_jinja2
 from aiohttp import web
 from aiohttp_security import check_authorized
 from aiohttp_session import get_session
-# noinspection PyUnresolvedReferences
-from stae.database import Adversary, Agent
-from peewee import IntegrityError
+from stae.database import Adversary
 
 
 @aiohttp_jinja2.template('adversary/adversary_index.html')
