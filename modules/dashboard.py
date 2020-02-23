@@ -1,9 +1,8 @@
-import datetime
-
 import aiohttp_jinja2
 from aiohttp import web
 from aiohttp_security import check_authorized
 from aiohttp_session import get_session
+
 from stae.database import *
 
 
