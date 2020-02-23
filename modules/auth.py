@@ -1,15 +1,12 @@
-import uuid
-
-from aiohttp import web
-from aiohttp_session import new_session, get_session
-from stae.database import *
 import aiohttp_jinja2
-from peewee import IntegrityError
-from stae.db_auth import *
+from aiohttp import web
 from aiohttp_security import (
     remember, forget, authorized_userid,
     check_permission, check_authorized,
 )
+from aiohttp_session import new_session, get_session
+
+from stae.db_auth import *
 
 
 @aiohttp_jinja2.template('auth/login.html')
