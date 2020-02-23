@@ -77,7 +77,7 @@ atomic_tests:
     portfile_url:
       description: URL to top-128.txt
       type: Url
-      default: https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1016/src/top-128.txt
+      default: https://github.com/arnoldmw/raw/master/art/atomics/T1016/src/top-128.txt
     output_file:
       description: Path of file to write port scan results
       type: Path
