@@ -72,6 +72,6 @@ atomic_tests:
     elevation_required: false
     command: |
       mkdir .\T1022\victim-files
-      echo "This file will be encrypted" > .\T1022\victim-files\encrypted_file.txt
-      7z a archive.7z -pblue .\T1022\victim-files\encrypted_file.txt
+      echo "This file will be encrypted" > .\T1022\victim-files\file_to_encrypt.txt
+      7z a archive.7z -pblue .\T1022\victim-files\file_to_encrypt.txt
       dir .\T1022\victim-files\
