@@ -35,10 +35,8 @@ atomic_tests:
     elevation_required: false
     command: |
       mkdir .\tmp\victim-files
-      cd .\tmp\victim-files
-      echo "This file will be encrypted" > .\encrypted_file.txt
-      rar a -hp"blue" hello.rar
-      dir
+      echo "This file will be encrypted" > .\tmp\victim-files\encrypted_file.txt
+      "%ProgramFiles%\WinRAR\Rar.exe" a -hp"blue" hello.rar .\tmp\victim-files\encrypted_file.txt
 
 - name: Compress Data and lock with password for Exfiltration with winzip
   description: |
