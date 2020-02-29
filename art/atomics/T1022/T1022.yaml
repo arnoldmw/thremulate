@@ -35,8 +35,9 @@ atomic_tests:
     elevation_required: false
     command: |
       mkdir .\tmp\victim-files
-      echo "This file will be encrypted" > .\tmp\victim-files\encrypted_file.txt
-      "%ProgramFiles%\WinRAR\Rar.exe" a -hp"blue" hello.rar .\tmp\victim-files\encrypted_file.txt
+      echo "This file will be encrypted" > .\tmp\victim-files\file_to_encrypt.txt
+      "%ProgramFiles%\WinRAR\Rar.exe" a -hp"blue" .\tmp\victim-files\hello.rar .\tmp\victim-files\file_to_encrypt.txt
+      dir .\tmp\victim-files\
 
 - name: Compress Data and lock with password for Exfiltration with winzip
   description: |
@@ -57,10 +58,9 @@ atomic_tests:
     command: |
       path=%path%;"C:\Program Files (x86)\winzip"
       mkdir .\tmp\victim-files
-      cd .\tmp\victim-files
-      echo "This file will be encrypted" > .\encrypted_file.txt
-      "#{winzip_exe}" -min -a -s"hello" archive.zip *
-      dir
+      echo "This file will be encrypted" > .\tmp\victim-files\file_to_encrypt.txt
+      "#{winzip_exe}" -min -a -s"hello" .\tmp\victim-files\archive.zip .\tmp\victim-files\file_to_encrypt.txt
+      dir .\tmp\victim-files\
 
 - name: Compress Data and lock with password for Exfiltration with 7zip
   description: |
