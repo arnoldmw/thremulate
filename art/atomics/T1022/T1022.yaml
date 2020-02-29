@@ -74,3 +74,4 @@ atomic_tests:
       mkdir .\T1022\victim-files
       echo "This file will be encrypted" > .\T1022\victim-files\encrypted_file.txt
       7z a archive.7z -pblue .\T1022\victim-files\encrypted_file.txt
+      dir .\T1022\victim-files\
