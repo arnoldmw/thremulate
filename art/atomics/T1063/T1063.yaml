@@ -14,7 +14,6 @@ atomic_tests:
     name: command_prompt
     elevation_required: false
     command: |
-      netsh.exe advfirewall firewall show allprofiles
       tasklist.exe
       tasklist.exe | findstr /i virus
       tasklist.exe | findstr /i cb
