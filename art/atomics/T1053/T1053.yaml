@@ -39,7 +39,7 @@ atomic_tests:
 
 - name: Scheduled task Remote
   description: |
-      Create a task on a remote system
+    Create a scheduled task on a remote system
   supported_platforms:
     - windows
   input_arguments:
