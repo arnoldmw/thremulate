@@ -33,6 +33,7 @@ atomic_tests:
     elevation_required: true
     command: |
       SCHTASKS /Create /SC ONCE /TN spawn /TR #{task_command} /ST #{time}
+      SCHTASKS /Delete /TN spawn /F
     cleanup_command: |
       SCHTASKS /Delete /TN spawn /F
 
@@ -49,7 +50,7 @@ atomic_tests:
     time:
       description: What time 24 Hour
       type: String
-      default: 20:10
+      default: 23:59
     target:
       description: Target
       type: String
