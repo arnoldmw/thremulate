@@ -26,6 +26,7 @@ atomic_tests:
       /atomics/T1055/src/Win32/T1055.dll
       $mypid = #{process_id}
       mavinject $mypid /INJECTRUNNING #{dll_payload}
+      del T1055.dll
 
 - name: Shared Library Injection via /etc/ld.so.preload
   description: |
@@ -83,6 +84,7 @@ atomic_tests:
     command: |
       /atomics/T1055/bin/T1055.exe
       #{exe_binary}
+      del #{exe_binary}
 
 
       
