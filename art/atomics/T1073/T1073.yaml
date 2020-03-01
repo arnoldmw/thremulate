@@ -20,6 +20,9 @@ atomic_tests:
     name: command_prompt
     elevation_required: false
     command: |
-      $PathToAtomicsFolder\T1073\bin\GUP.exe
-    cleanup_command: | 
+      /atomics/T1073/bin/GUP.exe
+      /atomics/T1073/bin/libcurl.dll
+      GUP.exe
       taskkill /F /IM #{process_name}
+      del GUP.exe
+      del libcurl.dll
