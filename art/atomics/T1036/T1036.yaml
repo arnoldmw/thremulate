@@ -98,6 +98,8 @@ atomic_tests:
     command: |
       copy C:\Windows\System32\cmd.exe %temp%\lsm.exe
       %temp%\lsm.exe /c echo T1036 > %temp%\T1036.txt
+      del %temp%\T1036.txt
+      del %temp%\lsm.exe
     cleanup_command: |
       del C:\T1036.txt
       del C:\lsm.exe
