@@ -43,7 +43,7 @@ atomic_tests:
     node:
       description: Ip Address
       type: String
-      default: 192.168.0.1
+      default: localhost
     service_search_string:
       description: Name Of Service
       type: String
@@ -81,7 +81,7 @@ atomic_tests:
     node:
       description: Ip Address
       type: String
-      default: 192.168.0.1
+      default: localhost
     process_to_execute:
       description: Name or path of process to execute.
       type: String
