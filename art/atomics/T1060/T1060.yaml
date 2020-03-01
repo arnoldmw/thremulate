@@ -12,13 +12,13 @@ atomic_tests:
     command_to_execute:
       description: Thing to Run
       type: Path
-      default: C:\Path\AtomicRedTeam.exe
+      default: C:\Windows\System32\calc.exe
   executor:
     name: command_prompt
     command: |
-      REG ADD "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /V "Atomic Red Team" /t REG_SZ /F /D "#{command_to_execute}"
+      REG ADD "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /V "Thremulate" /t REG_SZ /F /D "#{command_to_execute}"
     cleanup_command: |
-      REG DELETE "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /V "Atomic Red Team" /f
+      REG DELETE "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /V "Thremulate" /f
 
 - name: Reg Key RunOnce
   description: |
