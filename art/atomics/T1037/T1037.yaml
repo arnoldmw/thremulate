@@ -18,7 +18,7 @@ atomic_tests:
     script_command:
       description: Command To Execute
       type: String
-      default: echo Art "Logon Script" atomic test was successful. >> %USERPROFILE%\desktop\T1037-log.txt
+      default: echo Thremulate Logon Script test was successful. >> %USERPROFILE%\desktop\T1037-log.txt
 
   executor:
     name: command_prompt
