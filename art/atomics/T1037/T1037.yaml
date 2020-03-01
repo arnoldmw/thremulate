@@ -44,11 +44,7 @@ atomic_tests:
     user_command:
       description: Path to .bat file
       type: String
-      default: echo Art `"Startup Folder Script`" atomic test for $env:USERNAME was successful. >> $env:USERPROFILE\desktop\T1037-log.txt
-    system_command:
-      description: Command To Execute
-      type: String
-      default: echo Art `"Startup Folder Script`" atomic test for $env:COMPUTERNAME was successful. >> $env:USERPROFILE\desktop\T1037-log.txt
+      default: hostname
 
   executor:
     name: powershell
@@ -56,12 +52,7 @@ atomic_tests:
     command: |
       New-Item "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\T1037.bat" -force
       Set-Content "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\T1037.bat" "cmd /c #{user_command}"
-      New-Item "$env:ProgramData\Microsoft\Windows\Start Menu\Programs\Startup\T1037.bat" -force
-      Set-Content "$env:ProgramData\Microsoft\Windows\Start Menu\Programs\Startup\T1037.bat" "cmd /c #{system_command}"
-    cleanup_command: |
       Remove-Item "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\T1037.bat" -ErrorAction Ignore
-      Remove-Item "$env:ProgramData\Microsoft\Windows\Start Menu\Programs\Startup\T1037.bat" -ErrorAction Ignore
-      Remove-Item "$env:USERPROFILE\desktop\T1037-log.txt" -ErrorAction Ignore
 
 - name: Scheduled Task Startup Script
   description: |
