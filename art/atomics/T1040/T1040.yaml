@@ -68,11 +68,10 @@ atomic_tests:
     elevation_required: true
     command: |
       "c:\Program Files\Wireshark\tshark.exe" -i #{interface} -c 5
-      c:\windump.exe
 
 - name: Packet Capture PowerShell
   description: |
-    Perform a packet capture using PowerShell with windump or tshark. This will require a host that has Wireshark/Tshark
+    Perform a packet capture using PowerShell with tshark. This will require a host that has Wireshark/Tshark
     installed, along with WinPCAP. Windump will require the windump executable.
   supported_platforms:
     - windows
@@ -86,4 +85,3 @@ atomic_tests:
     elevation_required: true
     command: |
       & "c:\Program Files\Wireshark\tshark.exe" -i #{interface} -c 5
-      & c:\windump.exe
