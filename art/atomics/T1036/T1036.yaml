@@ -62,10 +62,11 @@ atomic_tests:
     name: command_prompt
     elevation_required: false
     command: |
-      copy %SystemRoot%\System32\wscript.exe C:\test\svchost.exe /Y
-      cmd.exe /c C:\test\svchost.exe /B
+      copy %SystemRoot%\System32\wscript.exe %temp%\svchost.exe /Y
+      cmd.exe /c %temp%\svchost.exe /B
+      del /Q /F %temp%\svchost.exe
     cleanup_command: |
-      del /Q /F C:\test\svchost.exe
+      del /Q /F %temp%\svchost.exe
 
 - name: Masquerading - powershell.exe running as taskhostw.exe
   description: |
