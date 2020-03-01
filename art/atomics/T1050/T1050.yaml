@@ -39,17 +39,16 @@ atomic_tests:
     binary_path:
       description: Name of the service binary, include path.
       type: Path
-      default: PathToAtomicsFolder\T1050\bin\AtomicService.exe
+      default: C:\Windows\System32\calc.exe
     service_name:
       description: Name of the Service
       type: String
-      default: AtomicTestService
+      default: ThremulateTestService
   executor:
     name: powershell
     elevation_required: true
     command: |
       New-Service -Name "#{service_name}" -BinaryPathName "#{binary_path}"
       Start-Service -Name "#{service_name}"
-    cleanup_command: |
       Stop-Service -Name "#{service_name}"
       (Get-WmiObject Win32_Service -filter "name='#{service_name}'").Delete()
