@@ -45,10 +45,11 @@ atomic_tests:
     name: command_prompt
     elevation_required: false
     command: |
-      copy %SystemRoot%\System32\cscript.exe C:\test\notepad.exe /Y
-      cmd.exe /c C:\test\notepad.exe /B
+      copy %SystemRoot%\System32\cscript.exe %temp%\notepad.exe /Y
+      cmd.exe /c %temp%\notepad.exe /B
+      del /Q /F %temp%\notepad.exe
     cleanup_command: |
-      del /Q /F %APPDATA%\notepad.exe
+      del /Q /F %temp%\notepad.exe
 
 - name: Masquerading - wscript.exe running as svchost.exe
   description: |
