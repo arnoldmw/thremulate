@@ -14,10 +14,11 @@ atomic_tests:
     name: command_prompt
     elevation_required: false
     command: |
-      cmd.exe /c copy %SystemRoot%\System32\cmd.exe C:\test\lsass.exe
-      cmd.exe /c C:\test\lsass.exe /C hostname
+      cmd.exe /c copy %SystemRoot%\System32\cmd.exe %temp%\lsass.exe
+      cmd.exe /c %temp%\lsass.exe /C hostname
+      del /Q /F %temp%\lsass.exe
     cleanup_command: |
-      del /Q /F C:\test\lsass.exe
+      del /Q /F %temp%\lsass.exe
 
 - name: Masquerading as Linux crond process.
   description: |
