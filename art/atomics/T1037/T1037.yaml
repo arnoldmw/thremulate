@@ -14,7 +14,7 @@ atomic_tests:
     script_path:
       description: Path to .bat file
       type: String
-      default: $env:SystemRoot\Temp\art.bat
+      default: %windir%\Temp\art.bat
     script_command:
       description: Command To Execute
       type: String
