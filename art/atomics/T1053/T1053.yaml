@@ -68,7 +68,6 @@ atomic_tests:
     elevation_required: true
     command: |
       SCHTASKS /Create /S #{target} /RU #{user_name} /RP #{password} /TN "Atomic task" /TR "#{task_command}" /SC daily /ST #{time}
-    cleanup_command: |
       SCHTASKS /Delete /TN "Atomic task" /F
 
 - name: Powershell Cmdlet Scheduled Task
