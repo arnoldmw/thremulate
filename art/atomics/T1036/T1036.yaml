@@ -79,10 +79,11 @@ atomic_tests:
     name: command_prompt
     elevation_required: false
     command: |
-      copy %windir%\System32\windowspowershell\v1.0\powershell.exe C:\test\taskhostw.exe /Y
-      cmd.exe /K %APPDATA%\taskhostw.exe
+      copy %windir%\System32\windowspowershell\v1.0\powershell.exe %temp%\taskhostw.exe /Y
+      cmd.exe /K %temp%\taskhostw.exe hostname
+      del /Q /F %temp%\taskhostw.exe
     cleanup_command: |
-      del /Q /F C:\test\taskhostw.exe
+      del /Q /F %temp%\taskhostw.exe
 
 - name: Masquerading - non-windows exe running as windows exe
   description: |
