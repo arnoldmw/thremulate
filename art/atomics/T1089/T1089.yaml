@@ -260,7 +260,6 @@ atomic_tests:
       sc stop WinDefend
       sc config WinDefend start=disabled
       sc query WinDefend
-    cleanup_command: |
       sc start WinDefend
       sc config WinDefend start=enabled
 
