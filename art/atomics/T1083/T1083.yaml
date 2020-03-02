@@ -14,14 +14,9 @@ atomic_tests:
     name: command_prompt
     elevation_required: false
     command: |
-      dir /s c:\ >> %temp%\download.txt
-      dir /s "c:\Documents and Settings" >> %temp%\download.txt
-      dir /s "c:\Program Files\" >> %temp%\download.txt
-      dir /s d:\ >> %temp%\download.txt
-      dir "%systemdrive%\Users\*.*" >> %temp%\download.txt
-      dir "%userprofile%\AppData\Roaming\Microsoft\Windows\Recent\*.*" >> %temp%\download.txt
-      dir "%userprofile%\Desktop\*.*" >> %temp%\download.txt
-      tree /F >> %temp%\download.txt
+      dir "c:\Program Files\"
+      dir "%userprofile%\AppData\Roaming\Microsoft\Windows\Recent\*.*"
+      dir "%userprofile%\Desktop\*.*"
 
 - name: File and Directory Discovery
   description: |
