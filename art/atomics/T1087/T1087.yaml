@@ -137,8 +137,6 @@ atomic_tests:
       get-localgroupmember -group Users
       cmdkey.exe /list
       ls C:/Users
-      get-childitem C:\Users\
-      dir C:\Users\
       get-aduser -filter *
       get-localgroup
       net localgroup
