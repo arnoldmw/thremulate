@@ -141,6 +141,7 @@ atomic_tests:
 
   executor:
     name: powershell
+    elevation_required: true
     prereq_command: |
       if(Test-Path C:\Windows\System32\inetsrv\appcmd.exe) {exit 0} else {exit 1}
     command: |
