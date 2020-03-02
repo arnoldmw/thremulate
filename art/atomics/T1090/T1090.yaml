@@ -59,5 +59,6 @@ atomic_tests:
   executor:
     name: powershell
     elevation_required: true
-    command: netsh interface portproxy add v4tov4 listenport=#{listenport} connectport=#{connectport} connectaddress=#{connectaddress}
-    cleanup_command: netsh interface portproxy delete v4tov4 listenport=#{listenport}      
+    command: |
+      netsh interface portproxy add v4tov4 listenport=#{listenport} connectport=#{connectport} connectaddress=#{connectaddress}
+      netsh interface portproxy delete v4tov4 listenport=#{listenport}
