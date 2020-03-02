@@ -274,5 +274,4 @@ atomic_tests:
     elevation_required: true
     command: |
       Set-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" -Name DisableAntiSpyware -Value 1
-    cleanup_command: |
       Set-ItemProperty "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" -Name DisableAntiSpyware -Value 0
