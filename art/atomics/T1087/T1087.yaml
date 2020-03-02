@@ -132,12 +132,10 @@ atomic_tests:
     elevation_required: false
     command: |
       net user
-      net user /domain
       get-localuser
       get-localgroupmember -group Users
       cmdkey.exe /list
       ls C:/Users
-      get-aduser -filter *
       get-localgroup
       net localgroup
 
