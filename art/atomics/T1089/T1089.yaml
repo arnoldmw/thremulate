@@ -98,7 +98,7 @@ atomic_tests:
 
 - name: Unload Sysmon Filter Driver
   description: |
-    Unloads the Sysinternals Sysmon filter driver without stopping the Sysmon service.
+    Unloads the Sysinternals Sysmon filter driver without stopping the Sysmon service. Sysmon64 required.
   supported_platforms:
     - windows
   input_arguments:
@@ -122,10 +122,9 @@ atomic_tests:
       fltmc.exe filters | findstr #{sysmon_driver}
     command: |
       fltmc.exe unload #{sysmon_driver}
-    cleanup_command: |
-      sc stop sysmon
+      sc stop sysmon64
       fltmc.exe load #{sysmon_driver}
-      sc start sysmon
+      sc start sysmon64
 
 - name: Disable Windows IIS HTTP Logging
   description: |
