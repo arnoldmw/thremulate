@@ -225,6 +225,15 @@ class ABgentAssignTechnique(AioHTTPTestCase):
         return app
 
     @unittest_run_loop
+    async def test_assign_tasks(self):
+        resp = await self.client.request("POST", "/login_post", data=data)
+        self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
+                        .format(resp.status))
+        resp_two = await self.client.request("GET", "/assign_tasks/%s" % agent_id)
+        self.assertTrue(resp_two.status == 200, msg="Failed to access /assign_tasks/{0}. Received status code {1}"
+                        .format(agent_id, resp_two.status))
+
+    @unittest_run_loop
     async def test_customize_technique(self):
         resp = await self.client.request("POST", "/login_post", data=data)
         self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
