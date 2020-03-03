@@ -100,11 +100,11 @@ atomic_tests:
       type: String
       default: '2020-02-16 10:35:04'
   executor:
-    name: command_prompt
+    name: powershell
     elevation_required: false
     command: |
       New-Item T1099.txt
-      powershell.exe Get-ChildItem #{file_path} | % { $_.CreationTime = #{target_date_time} }
+      Get-ChildItem #{file_path} | % { $_.CreationTime = #{target_date_time} }
 
 - name: Windows - Modify file last modified timestamp with PowerShell
   description: |
@@ -124,11 +124,11 @@ atomic_tests:
       type: String
       default: '2020-02-16 10:35:04'
   executor:
-    name: command_prompt
+    name: powershell
     elevation_required: false
     command: |
       New-Item T1099.txt
-      powershell.exe Get-ChildItem #{file_path} | % { $_.LastWriteTime = #{target_date_time} }
+      Get-ChildItem #{file_path} | % { $_.LastWriteTime = #{target_date_time} }
 
 - name: Windows - Modify file last access timestamp with PowerShell
   description: |
@@ -148,8 +148,8 @@ atomic_tests:
       type: String
       default: '2020-02-16 10:35:04'
   executor:
-    name: command_prompt
+    name: powershell
     elevation_required: false
     command: |
       New-Item T1099.txt
-      powershell.exe Get-ChildItem #{file_path} | % { $_.LastAccessTime = #{target_date_time} }
+      Get-ChildItem #{file_path} | % { $_.LastAccessTime = #{target_date_time} }
