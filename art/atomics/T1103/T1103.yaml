@@ -19,4 +19,5 @@ atomic_tests:
     name: command_prompt
     elevation_required: true
     command: |
+      /atomics/T1103/T1103.reg
       reg.exe import #{registry_file}
