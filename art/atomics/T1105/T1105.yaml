@@ -179,7 +179,7 @@ atomic_tests:
     remote_file:
       description: URL of file to copy
       type: Url
-      default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/LICENSE.txt
+      default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/LICENSE.txt
     local_path:
       description: Local path to place file
       type: Path
@@ -189,6 +189,7 @@ atomic_tests:
     elevation_required: false
     command: |
       cmd /c certutil -urlcache -split -f #{remote_file} #{local_path}
+
 - name: certutil download (verifyctl)
   description: |
     Use certutil -verifyctl argument to download a file from the web. Note - /verifyctl also works!
@@ -198,7 +199,7 @@ atomic_tests:
     remote_file:
       description: URL of file to copy
       type: Url
-      default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/LICENSE.txt
+      default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/LICENSE.txt
     local_path:
       description: Local path to place file
       type: Path
@@ -231,7 +232,7 @@ atomic_tests:
     local_path:
       description: Local path to place file
       type: Path
-      default: Atomic-license.txt
+      default: license.txt
   executor:
     name: command_prompt
     command: |
@@ -247,7 +248,7 @@ atomic_tests:
     remote_file:
       description: URL of file to copy
       type: Url
-      default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/LICENSE.txt
+      default: https://raw.githubusercontent.com/arnoldmw/thremulate/master/LICENSE.txt
     local_path:
       description: Local path to place file
       type: Path
