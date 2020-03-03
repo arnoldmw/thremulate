@@ -98,7 +98,7 @@ atomic_tests:
     target_date_time:
       description: Date/time to replace original timestamps with
       type: String
-      default: '1970-01-01 00:00:00'
+      default: '2020-02-16 10:35:04'
   executor:
     name: command_prompt
     elevation_required: false
@@ -122,7 +122,7 @@ atomic_tests:
     target_date_time:
       description: Date/time to replace original timestamps with
       type: String
-      default: '1970-01-01 00:00:00'
+      default: '2020-02-16 10:35:04'
   executor:
     name: command_prompt
     elevation_required: false
@@ -146,7 +146,7 @@ atomic_tests:
     target_date_time:
       description: Date/time to replace original timestamps with
       type: String
-      default: '1970-01-01 00:00:00'
+      default: '2020-02-16 10:35:04'
   executor:
     name: command_prompt
     elevation_required: false
