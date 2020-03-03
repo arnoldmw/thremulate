@@ -68,5 +68,4 @@ atomic_tests:
       else {0}
     command: |
       Start-Process -FilePath "$env:comspec" -ArgumentList "/c,type,#{payload_path},>,`"#{ads_file_path}:#{ads_name}`""
-    cleanup_command: |
-      Remove-Item -Path "#{ads_file_path}" -Stream "#{ads_name}"
+      Remove-Item -Path "#{ads_file_path}"
