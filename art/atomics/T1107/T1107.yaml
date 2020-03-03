@@ -53,7 +53,7 @@ atomic_tests:
     name: command_prompt
     elevation_required: false
     command: |
-      echo "T1107" > %temp%\T1107.txt
+      echo T1107 > %temp%\T1107.txt
       del /f  %temp%\T1107.txt
 
 - name: Delete an entire folder - Windows cmd
