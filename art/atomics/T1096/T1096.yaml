@@ -50,7 +50,7 @@ atomic_tests:
     ads_file_path:
       description: Path of file to create an ADS under
       type: path
-      default: C:\Users\Public\Libraries\yanki\desktop.ini
+      default: desktop.ini
     ads_name:
       description: Name of ADS
       type: string
