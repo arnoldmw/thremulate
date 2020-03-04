@@ -13,7 +13,6 @@ atomic_tests:
     elevation_required: true
     command: |
       reg add HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced /t REG_DWORD /v HideFileExt /d 1 /f
-    cleanup_command: |
       reg delete HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced /v HideFileExt /f
 
 - name: Modify Registry of Local Machine - cmd
@@ -27,7 +26,6 @@ atomic_tests:
     elevation_required: true
     command: |
       reg add HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run /t REG_EXPAND_SZ /v SecurityHealth /d {some_other_executable} /f
-    cleanup_command: |
       reg delete HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run /v SecurityHealth /f
 
 - name: Modify Registry of Another User Profile
@@ -102,7 +100,6 @@ atomic_tests:
       elevation_required: true
       command: |
         reg add HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest /v UseLogonCredential /t REG_DWORD /d 1 /f
-      cleanup_command: |
         reg add HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest /v UseLogonCredential /t REG_DWORD /d 0 /f
 
 - name: Modify registry to store PowerShell code
@@ -132,7 +129,6 @@ atomic_tests:
       $EncodedCommand =[Convert]::ToBase64String($Bytes)
       $EncodedCommand
       Set-ItemProperty -Force -Path #{registry_key_storage} -Name #{registry_entry_storage} -Value $EncodedCommand
-    cleanup_command: |
       Remove-ItemProperty -Force -Path -Path #{registry_key_storage} -Name #{registry_entry_storage}
 
 - name: Add domain to Trusted sites Zone
@@ -152,8 +148,6 @@ atomic_tests:
       new-itemproperty $key$name -Name https -Value 2 -Type DWORD;
       new-itemproperty $key$name -Name http  -Value 2 -Type DWORD;
       new-itemproperty $key$name -Name *     -Value 2 -Type DWORD;
-
-    cleanup_command: |
       $key = "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\ZoneMap\Domains\bad-domain.com\"
       Remove-item  $key -Recurse
 
@@ -167,5 +161,4 @@ atomic_tests:
     elevation_required: false
     command: |
       New-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings" -Name T1112 -Value "<script>"
-    cleanup_command: |
       Remove-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings" -Name T1112
