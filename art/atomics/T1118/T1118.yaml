@@ -35,4 +35,4 @@ atomic_tests:
     elevation_required: false
     command: |
       /atomics/T1118/T1118.dll
-      C:\Windows\Microsoft.NET\Framework\v4.0.30319\InstallUtil.exe /? #{filename}
+      C:\Windows\Microsoft.NET\Framework\v4.0.30319\InstallUtil.exe #{filename}
