@@ -40,7 +40,6 @@ atomic_tests:
       Get-Service > $env:TEMP\T1119_1.txt
       Get-ChildItem Env: > $env:TEMP\T1119_2.txt
       Get-Process > $env:TEMP\T1119_3.txt
-    cleanup_command: |
       Remove-Item $env:TEMP\T1119_1.txt
       Remove-Item $env:TEMP\T1119_2.txt
       Remove-Item $env:TEMP\T1119_3.txt
