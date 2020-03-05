@@ -7,11 +7,6 @@ atomic_tests:
     Regsvr32.exe is a command-line program used to register and unregister OLE controls
   supported_platforms:
   - windows
-  input_arguments:
-   filename:
-    description: Name of the local file, include path.
-    type: Path
-    default: PathToAtomicsFolder\T1117\RegSvr32.sct
   executor:
    name: command_prompt
    elevation_required: false
