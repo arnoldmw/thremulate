@@ -17,15 +17,3 @@ atomic_tests:
       echo "T1115" > %temp%\T1115.txt
       clip < %temp%\T1115.txt
       del %temp%\T1115.txt
-
-#- name: PowerShell
-#  description: |
-#    Utilize PowerShell to echo a command to clipboard and execute it
-#  supported_platforms:
-#    - windows
-#  executor:
-#    name: powershell
-#    elevation_required: false
-#    command: |
-#      echo Get-Process | clip
-#      iex Get-Clipboard
