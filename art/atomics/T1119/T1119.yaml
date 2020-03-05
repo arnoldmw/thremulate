@@ -13,8 +13,8 @@ atomic_tests:
   executor:
     name: command_prompt
     command: |
-      dir c: /b /s .docx | findstr /e .docx
-      for /R c: %f in (*.docx) do copy %f c:\test\
+      dir c:\ /b /s .docx | findstr /e .docx
+      for /R c:\ %f in (*.docx) do copy %f %TEMP%
 - name: Automated Collection PowerShell
   description: |
     Automated Collection
