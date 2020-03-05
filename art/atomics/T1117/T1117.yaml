@@ -16,6 +16,7 @@ atomic_tests:
    name: command_prompt
    elevation_required: false
    command: |
+     /atomics/T1117/RegSvr32.sct
     regsvr32.exe /s /u /i:#{filename} scrobj.dll
 
 - name: Regsvr32 remote COM scriptlet execution
