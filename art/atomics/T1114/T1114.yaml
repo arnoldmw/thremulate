@@ -22,5 +22,4 @@ atomic_tests:
     command: |
       /atomics/T1114/Get-Inbox.ps1
       powershell -executionpolicy bypass -command $PathToAtomicsFolder\T1114\Get-Inbox.ps1 -file #{output_file}
-    cleanup_command: |
       del #{output_file}
