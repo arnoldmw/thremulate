@@ -111,7 +111,7 @@ atomic_tests:
       powershell_command:
         description: PowerShell command to encode
         type: String
-        default: Write-Host "Hey, Atomic!"
+        default: Write-Host "Hey, Thremulate!"
       registry_key_storage:
         description: Windows Registry Key to store code
         type: String
@@ -127,7 +127,6 @@ atomic_tests:
       $OriginalCommand = '#{powershell_command}'
       $Bytes = [System.Text.Encoding]::Unicode.GetBytes($OriginalCommand)
       $EncodedCommand =[Convert]::ToBase64String($Bytes)
-      $EncodedCommand
       Set-ItemProperty -Force -Path #{registry_key_storage} -Name #{registry_entry_storage} -Value $EncodedCommand
       Remove-ItemProperty -Force -Path -Path #{registry_key_storage} -Name #{registry_entry_storage}
 
