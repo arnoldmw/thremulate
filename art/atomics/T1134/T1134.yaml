@@ -18,11 +18,9 @@ atomic_tests:
     name: powershell
     elevation_required: true
     command: |
-      #list processes by user,
+      /atomics/T1134/src/T1134.ps1
       $owners = @{}
       gwmi win32_process |% {$owners[$_.handle] = $_.getowner().user}
       get-process | select processname,Id,@{l="Owner";e={$owners[$_.id.tostring()]}}
-
-      #Steal Token
       Set-Location $PathToAtomicsFolder
-      .\T1134\src\T1134.ps1
+      T1134.ps1
