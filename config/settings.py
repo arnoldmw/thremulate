@@ -11,4 +11,4 @@ def get_config(path):
     return data
 
 
-config = get_config(config_path)
+configuration = get_config(config_path)

@@ -9,7 +9,7 @@ from aiohttp_security import setup as setup_security
 from aiohttp_session import setup
 from aiohttp_session.cookie_storage import EncryptedCookieStorage
 
-from thremulate.config.settings import config as server
+from thremulate.config.settings import configuration as server
 from thremulate.modules.adversary import *
 from thremulate.modules.agent import *
 from thremulate.modules.auth import *
