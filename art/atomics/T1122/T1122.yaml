@@ -11,8 +11,10 @@ atomic_tests:
       - windows
     executor:
       name: command_prompt
+      elevation_required: false
       command: |
+        /atomics/T1122/src/COMHijack.reg
+        /atomics/T1122/src/COMHijackCleanup.reg
         reg import ..\src\COMHijack.reg
         certutil.exe -CAInfo
-      cleanup_command: |
-        reg import ..\src\COMHijackCleanup.reg
+        reg import COMHijackCleanup.reg
