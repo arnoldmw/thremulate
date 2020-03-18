@@ -40,6 +40,7 @@ atomic_tests:
       Copy-Item T1138CompatDatabase.sdb C:\Windows\apppatch\Custom\Custom64\T1138CompatDatabase.sdb
       Remove-Item C:\Windows\apppatch\Custom\T1138CompatDatabase.sdb
       Remove-Item C:\Windows\apppatch\Custom\Custom64\T1138CompatDatabase.sdb
+      Remove-Item T1138CompatDatabase.sdb
 
 - name: Registry key creation and/or modification events for SDB
   description: |
