@@ -17,11 +17,12 @@ atomic_tests:
     file_path:
       description: Path to the shim databaase file
       type: String
-      default: PathToAtomicsFolder\T1138\src\AtomicShimx86.sdb
+      default: T1138CompatDatabase.sdb
   executor:
     name: command_prompt
     elevation_required: true
     command: |
+      /atomics/T1138/bin/T1138CompatDatabase.sdb
       sdbinst.exe #{file_path}
       sdbinst.exe -u #{file_path}
 
