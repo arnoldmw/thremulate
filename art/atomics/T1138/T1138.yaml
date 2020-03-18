@@ -38,7 +38,6 @@ atomic_tests:
       /atomics/T1138/bin/T1138CompatDatabase.sdb
       Copy-Item T1138CompatDatabase.sdb C:\Windows\apppatch\Custom\T1138CompatDatabase.sdb
       Copy-Item T1138CompatDatabase.sdb C:\Windows\apppatch\Custom\Custom64\T1138CompatDatabase.sdb
-    cleanup_command: |
       Remove-Item C:\Windows\apppatch\Custom\T1138CompatDatabase.sdb
       Remove-Item C:\Windows\apppatch\Custom\Custom64\T1138CompatDatabase.sdb
 
@@ -53,6 +52,5 @@ atomic_tests:
     command: |
       New-ItemProperty -Path HKLM:"\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Custom" -Name "AtomicRedTeamT1138" -Value "AtomicRedTeamT1138"
       New-ItemProperty -Path HKLM:"\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\InstalledSDB" -Name "AtomicRedTeamT1138" -Value "AtomicRedTeamT1138"
-    cleanup_command: |
       Remove-ItemProperty -Path HKLM:"\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Custom" -Name "AtomicRedTeamT1138"
       Remove-ItemProperty -Path HKLM:"\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\InstalledSDB" -Name "AtomicRedTeamT1138"
