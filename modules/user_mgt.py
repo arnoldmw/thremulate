@@ -4,8 +4,9 @@ from aiohttp_security import (
     check_permission, check_authorized,
 )
 from aiohttp_session import get_session
-from thremulate.db.database import *
-from thremulate.db.db_auth import check_password_hash, generate_password_hash
+from db.database import *
+# noinspection PyUnresolvedReferences
+from db.db_auth import check_password_hash, generate_password_hash
 
 
 @aiohttp_jinja2.template('user_mgt/users_index.html')

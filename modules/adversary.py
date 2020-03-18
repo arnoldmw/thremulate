@@ -2,7 +2,9 @@ import aiohttp_jinja2
 from aiohttp import web
 from aiohttp_security import check_authorized
 from aiohttp_session import get_session
-from thremulate.db.database import Adversary
+# noinspection PyUnresolvedReferences
+from db.database import Adversary, Agent
+from peewee import IntegrityError
 
 
 @aiohttp_jinja2.template('adversary/adversary_index.html')

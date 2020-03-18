@@ -1,8 +1,10 @@
 import datetime
 import unittest
 from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop
-from thremulate.server import create_app
-from thremulate.server import create_app_two
+# noinspection PyUnresolvedReferences
+from server import create_app
+# noinspection PyUnresolvedReferences
+from server import create_app_two
 
 data = {'email': 'admin@thremulate.com', 'password': 'thremulate'}
 agent_id = 44444
@@ -74,8 +76,6 @@ class ThremulateTests(AioHTTPTestCase):
         resp_two = await self.client.request("GET", "/dashboard")
         self.assertTrue(resp_two.status == 200, msg="Failed to access /dashboard. Received status code {0}"
                         .format(resp_two.status))
-        text = await resp.text()
-        self.assertTrue("Dashboard" in text, msg="Failed to access /dashboard template")
 
 
 class UserManagement(AioHTTPTestCase):

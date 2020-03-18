@@ -1,12 +1,15 @@
-import aiohttp_jinja2
+import uuid
+
 from aiohttp import web
+from aiohttp_session import new_session, get_session
+from db.database import *
+import aiohttp_jinja2
+from peewee import IntegrityError
+from db.db_auth import *
 from aiohttp_security import (
     remember, forget, authorized_userid,
     check_permission, check_authorized,
 )
-from aiohttp_session import new_session, get_session
-
-from thremulate.db.db_auth import *
 
 
 @aiohttp_jinja2.template('auth/login.html')

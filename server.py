@@ -1,21 +1,37 @@
 import asyncio
+import aiohttp_debugtoolbar
 import logging
-import os
 import ssl
-
+from pathlib import Path
+import os
+import aiohttp_jinja2
 import jinja2
+from aiohttp import web
 from aiohttp_security import SessionIdentityPolicy
+from aiohttp_security import (
+    check_authorized,
+)
 from aiohttp_security import setup as setup_security
-from aiohttp_session import setup
+from aiohttp_session import setup, get_session
 from aiohttp_session.cookie_storage import EncryptedCookieStorage
-
-from thremulate.config.settings import configuration as server
-from thremulate.modules.adversary import *
-from thremulate.modules.agent import *
-from thremulate.modules.auth import *
-from thremulate.modules.dashboard import *
-from thremulate.modules.middleware import setup_middleware
-from thremulate.modules.user_mgt import *
+# noinspection PyUnresolvedReferences
+from db.database import *
+# noinspection PyUnresolvedReferences
+from db.db_auth import DBAuthorizationPolicy
+# noinspection PyUnresolvedReferences
+from modules.agent import *
+# noinspection PyUnresolvedReferences
+from modules.auth import *
+# noinspection PyUnresolvedReferences
+from modules.adversary import *
+# noinspection PyUnresolvedReferences
+from modules.dashboard import *
+# noinspection PyUnresolvedReferences
+from modules.middleware import setup_middleware
+# noinspection PyUnresolvedReferences
+from modules.user_mgt import *
+# noinspection PyUnresolvedReferences
+from config.settings import config as server
 
 THIS_DIR = Path(__file__).parent
 secret_key = b'\xd0\x04)E\x14\x98\xa1~\xecE\xae>(\x1d6\xec\xbfQ\xa4\x19\x0e\xbcre,\xf8\x8f\x84WV.\x8d'
@@ -82,7 +98,7 @@ async def create_app():
 
     # Setting authentication and authorization
     setup_security(app, SessionIdentityPolicy(), DBAuthorizationPolicy())
-
+    aiohttp_debugtoolbar.setup(app)
     return app
 
 

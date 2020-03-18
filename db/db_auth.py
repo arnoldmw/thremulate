@@ -1,6 +1,6 @@
 from aiohttp_security.abc import AbstractAuthorizationPolicy
 
-from thremulate.db.database import *
+from db.database import *
 
 
 class DBAuthorizationPolicy(AbstractAuthorizationPolicy):

@@ -1,3 +1,4 @@
+import datetime
 import random
 import string
 
@@ -8,14 +9,14 @@ from aiohttp_security import (
 )
 from aiohttp_session import get_session
 # noinspection PyUnresolvedReferences
-from thremulate.art.run_atomics import agent_commands
+from art.run_atomics import agent_commands
 # noinspection PyUnresolvedReferences
-from thremulate.art.run_atomics import get_all_techniques, get_one_technique_and_params
+from art.run_atomics import get_all_techniques, get_one_technique_and_params
 # noinspection PyUnresolvedReferences
-from thremulate.art.run_atomics import get_all_techniques_and_params
+from art.run_atomics import get_all_techniques_and_params
 # noinspection PyUnresolvedReferences
-from thremulate.art.run_atomics import get_commands
-from thremulate.db.database import *
+from art.run_atomics import get_commands
+from db.database import *
 from peewee import IntegrityError
 
 
