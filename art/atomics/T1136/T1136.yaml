@@ -67,7 +67,6 @@ atomic_tests:
     elevation_required: true
     command: |
       net user /add "#{username}"
-    cleanup_command: |
       net user /del "#{username}"
 
 - name: Create a new user in PowerShell
@@ -85,7 +84,6 @@ atomic_tests:
     elevation_required: true
     command: |
       New-LocalUser -Name "#{username}" -NoPassword
-    cleanup_command: |
       Remove-LocalUser -Name "#{username}"
 
 
