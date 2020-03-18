@@ -35,8 +35,9 @@ atomic_tests:
     name: powershell
     elevation_required: true
     command: |
-      Copy-Item $PathToAtomicsFolder\T1138\bin\T1138CompatDatabase.sdb C:\Windows\apppatch\Custom\T1138CompatDatabase.sdb
-      Copy-Item $PathToAtomicsFolder\T1138\bin\T1138CompatDatabase.sdb C:\Windows\apppatch\Custom\Custom64\T1138CompatDatabase.sdb
+      /atomics/T1138/bin/T1138CompatDatabase.sdb
+      Copy-Item T1138CompatDatabase.sdb C:\Windows\apppatch\Custom\T1138CompatDatabase.sdb
+      Copy-Item T1138CompatDatabase.sdb C:\Windows\apppatch\Custom\Custom64\T1138CompatDatabase.sdb
     cleanup_command: |
       Remove-Item C:\Windows\apppatch\Custom\T1138CompatDatabase.sdb
       Remove-Item C:\Windows\apppatch\Custom\Custom64\T1138CompatDatabase.sdb
