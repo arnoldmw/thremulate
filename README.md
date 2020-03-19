@@ -5,7 +5,7 @@ Thremulate's server and agent are totally platform independent. Therefore, you c
 
 > Thremulate is currently undergoing quality assurance to fix bugs. 
 Therefore not all adversary techniques will work as expected and the database deployment is yet to be implemented. 
-It will soon be production ready in a week or less :ok_hand:. Keep checking for its v1.0.0 release.
+It will soon be production ready :ok_hand:. Keep checking for its v1.0.0 release.
 
 
 ## Why should I use Thremulate?
