@@ -107,7 +107,7 @@ atomic_tests:
     file_name:
       description: File name of file to create ADS on.
       type: string
-      default: test.txt
+      default: %temp%\test.txt
     ads_filename:
       description: Name of ADS file.
       type: string
