@@ -41,3 +41,4 @@ atomic_tests:
       %temp%\tcm.tmp -decode %temp%\T1140.txt %temp%T1140_calc_decoded.exe
       del %temp%\tcm.tmp
       del %temp%\T1140.txt
+      del %temp%T1140_calc_decoded.exe
