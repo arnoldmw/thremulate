@@ -40,7 +40,6 @@ atomic_tests:
     command: |
       echo T1158 > %TEMP%\T1158.txt
       attrib.exe +s %TEMP%\T1158.txt
-    cleanup_command: |
       del /A:S %TEMP%\T1158.txt
 
 - name: Create Windows Hidden File with Attrib
