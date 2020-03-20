@@ -34,4 +34,5 @@ atomic_tests:
     name: command_prompt
     elevation_required: false
     command: |
-      start $PathToAtomicsFolder\T1173\bin\DDE_Document.docx
+      /atomics/T1173/bin/DDE_Document.docx
+      start DDE_Document.docx
