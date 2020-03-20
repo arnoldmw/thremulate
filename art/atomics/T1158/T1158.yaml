@@ -130,7 +130,7 @@ atomic_tests:
     file_name:
       description: File name of file to create ADS on.
       type: string
-      default: test.txt
+      default: $env:temp\test.txt
     ads_filename:
       description: Name of ADS file.
       type: string
@@ -142,5 +142,5 @@ atomic_tests:
       echo "test" > #{file_name} | set-content -path test.txt -stream #{ads_filename} -value "test"
       set-content -path #{file_name} -stream #{ads_filename} -value "test2"
       set-content -path . -stream #{ads_filename} -value "test3"
-      ls -Recurse | %{ gi $_.Fullname -stream *} | where stream -ne ':$Data' | Select-Object pschildname
+      ls -Recurse $env:temp\test.txt | %{ gi $_.Fullname -stream *} | where stream -ne ':$Data' | Select-Object pschildname
       Remove-Item -Path #{file_name}
