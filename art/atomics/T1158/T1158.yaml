@@ -107,7 +107,7 @@ atomic_tests:
     file_name:
       description: File name of file to create ADS on.
       type: string
-      default: %temp%\test.txt
+      default: test.txt
     ads_filename:
       description: Name of ADS file.
       type: string
@@ -116,10 +116,10 @@ atomic_tests:
     name: command_prompt
     elevation_required: false
     command: |
-      echo "Normal Text." > #{file_name}
+      echo "Normal Text." > %temp%\#{file_name}
       echo cmd /c echo "Shell code execution."> #{file_name}:#{ads_filename}
       for /f "usebackq delims=φ" %i in (#{file_name}:#{ads_filename}) do %i
-      del #{file_name}
+      del %temp%\#{file_name}
 
 - name: Create ADS PowerShell
   description: |
