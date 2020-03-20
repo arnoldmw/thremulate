@@ -14,8 +14,7 @@ atomic_tests:
     elevation_required: true
     command: |
       dir c:\ /b /s .key | findstr /e .key
-    cleanup_command: |
-      del c:\Windows\cert.key
+
 
 - name: Discover Private SSH Keys
   description: |
