@@ -13,7 +13,6 @@ atomic_tests:
     name: command_prompt
     elevation_required: true
     command: |
-      echo "ATOMICREDTEAM" > %windir%\cert.key
       dir c:\ /b /s .key | findstr /e .key
     cleanup_command: |
       del c:\Windows\cert.key
