@@ -53,7 +53,6 @@ atomic_tests:
     command: |
       echo T1158_hidden > %TEMP%\T1158_hidden.txt
       attrib.exe +h %TEMP%\T1158_hidden.txt
-    cleanup_command: |
       del /A:H %TEMP%\T1158_hidden.txt
 
 - name: Hidden files
@@ -120,7 +119,6 @@ atomic_tests:
       echo "Normal Text." > #{file_name}
       echo cmd /c echo "Shell code execution."> #{file_name}:#{ads_filename}
       for /f "usebackq delims=φ" %i in (#{file_name}:#{ads_filename}) do %i
-    cleanup_command: |
       del #{file_name}
 
 - name: Create ADS PowerShell
@@ -145,5 +143,4 @@ atomic_tests:
       set-content -path #{file_name} -stream #{ads_filename} -value "test2"
       set-content -path . -stream #{ads_filename} -value "test3"
       ls -Recurse | %{ gi $_.Fullname -stream *} | where stream -ne ':$Data' | Select-Object pschildname
-    cleanup_command: |
       Remove-Item -Path #{file_name}
