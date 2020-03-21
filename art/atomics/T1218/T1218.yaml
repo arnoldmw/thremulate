@@ -58,6 +58,7 @@ atomic_tests:
   executor:
     name: command_prompt
     command: |
+     /atomics/T1218/src/Win32/T1218-2.dll
      C:\Windows\SysWow64\Register-CimProvider.exe -Path #{dll_payload}
 
 - name: Msiexec.exe - Execute Local MSI file
