@@ -22,6 +22,5 @@ atomic_tests:
         New-Item -Type File -Force -Path $fileName | out-null
         $wc = New-Object System.Net.WebClient
         $wc.Encoding = [System.Text.Encoding]::UTF8
-        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
         ($wc.DownloadString("$url")) | Out-File $fileName
       }
