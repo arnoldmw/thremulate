@@ -14,7 +14,7 @@ atomic_tests:
     dll_payload:
       description: DLL to inject
       type: Path
-      default: PathToAtomicsFolder\T1218\src\x64\T1218.dll
+      default: T1218.dll
     process_id:
       description: PID of process receiving injection
       type: string
@@ -23,6 +23,7 @@ atomic_tests:
     name: command_prompt
     elevation_required: true
     command: |
+      /atomics/T1218/src/x64/T1218.dll
       mavinject.exe #{process_id} /INJECTRUNNING #{dll_payload}
 
 - name: SyncAppvPublishingServer - Execute arbitrary PowerShell code
