@@ -12,7 +12,7 @@ atomic_tests:
     cpl_file_path:
       description: path to cpl file
       type: path
-      default: PathToAtomicsFolder\T1196\bin\calc.cpl
+      default: calc.cpl
   executor:
     name: command_prompt
     elevation_required: false
