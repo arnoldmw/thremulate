@@ -123,10 +123,11 @@ atomic_tests:
     dll_payload:
       description: DLL to execute
       type: Path
-      default: PathToAtomicsFolder\T1218\src\Win32\T1218-2.dll
+      default: T1218-2.dll
   executor:
     name: command_prompt
     command: |
+     /atomics/T1218/src/x64/T1218.dll
      odbcconf.exe /S /A {REGSVR "#{dll_payload}"}
 
 - name: InfDefaultInstall.exe .inf Execution
@@ -139,7 +140,7 @@ atomic_tests:
     inf_to_execute:
       description: Local location of inf file
       type: string
-      default: PathToAtomicsFolder\T1218\src\Infdefaultinstall.inf
+      default: Infdefaultinstall.inf
   executor:
     name: command_prompt
     elevation_required: false
