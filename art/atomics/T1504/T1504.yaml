@@ -24,11 +24,7 @@ atomic_tests:
     name: powershell
     elevation_required: false
     command: | 
-      if(Test-Path #{ps_profile}){
-      }
-      else{
-        New-Item -Path #{ps_profile} -Type File -Force
-      }
+      if(Test-Path #{ps_profile}){}else{New-Item -Path #{ps_profile} -Type File -Force}
       $malicious = "Start-Process #{exe_path}"
       Add-Content #{ps_profile} -Value $malicious
       powershell -command exit
