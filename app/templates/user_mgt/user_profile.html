@@ -46,6 +46,7 @@
                         {% endif %}
                     </div>
                 </div>
+                {% if user.user_perms == None %}
                 <div class="row">
                     <div class="col-md-1">Permission:</div>
                     <div class="col-md-5">
@@ -54,8 +55,10 @@
                         {{ loop.index }}. {{ perm.perm_name}} <br>
 
                         {% endfor %}
+
                     </div>
                 </div>
+                {% endif %}
                 <div class="row">
                     <div class="col-md-1">Actions:</div>
                 </div>

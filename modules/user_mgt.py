@@ -171,7 +171,9 @@ async def user_profile(request):
                     break
                 perms.__setitem__(i, {'perm_id': p.perm_id.id, 'perm_name': p.perm_id.name})
 
-        user_selected.__setitem__('user_perms', perms)
+            user_selected.__setitem__('user_perms', perms)
+        else:
+            user_selected.__setitem__('user_perms', None)
 
         session = await get_session(request)
         current_user = session['current_user']
