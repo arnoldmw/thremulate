@@ -40,7 +40,6 @@ atomic_tests:
       Install-TransportAgent -Name #{transport_agent_identity} -TransportAgentFactory #{class_factory} -AssemblyPath "#{dll_path}"
       Enable-TransportAgent #{transport_agent_identity}
       Get-TransportAgent | Format-List Name,Enabled
-    cleanup_command: | # you can remove the cleanup_command section if there are no cleanup commands
       Disable-TransportAgent #{transport_agent_identity}
       Uninstall-TransportAgent #{transport_agent_identity}
       Get-TransportAgent
