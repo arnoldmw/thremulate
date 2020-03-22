@@ -19,7 +19,7 @@ atomic_tests:
     dll_path:
       description: Path of the dll to inject
       type: string
-      default: $PathToAtomicsFolder\T1502\bin\calc.dll
+      default: calc.dll
     dll_process_name:
       description:  Name of the created process from the injected dll
       type: string
@@ -37,7 +37,9 @@ atomic_tests:
     name: powershell
     elevation_required: false
     command: |
-      . $PathToAtomicsFolder\T1502\src\PPID-Spoof.ps1
+      /atomics/T1502/bin/calc.dll
+      /atomics/T1502/src/PPID-Spoof.ps1
+      . PPID-Spoof.ps1
       $ppid=Get-Process #{parent_process_name} | select -expand id
       PPID-Spoof -ppid $ppid -spawnto "#{spawnto_process_path}" -dllpath "#{dll_path}"
     cleanup_command: |
