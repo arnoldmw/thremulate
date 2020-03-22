@@ -106,10 +106,11 @@ atomic_tests:
     dll_payload:
       description: DLL to execute
       type: Path
-      default: PathToAtomicsFolder\T1218\src\Win32\T1218-2.dll
+      default: T1218.dll
   executor:
     name: command_prompt
     command: |
+     /atomics/T1218/src/x64/T1218.dll
      msiexec.exe /y "#{dll_payload}"
 
 - name: Odbcconf.exe - Execute Arbitrary DLL
