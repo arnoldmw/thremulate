@@ -37,7 +37,7 @@ atomic_tests:
     name: powershell
     elevation_required: true # indicates whether command must be run with admin privileges. If the elevation_required attribute is not defined, the value is assumed to be false
     command: | # these are the actaul attack commands, at least one command must be provided
-      Install-TransportAgent -Name #{transport_agent_identity} -TransportAgentFactory #{class_factory} -AssemblyPath #{dll_path}
+      Install-TransportAgent -Name #{transport_agent_identity} -TransportAgentFactory #{class_factory} -AssemblyPath "#{dll_path}"
       Enable-TransportAgent #{transport_agent_identity}
       Get-TransportAgent | Format-List Name,Enabled
     cleanup_command: | # you can remove the cleanup_command section if there are no cleanup commands
