@@ -131,8 +131,7 @@ atomic_tests:
 
 - name: InfDefaultInstall.exe .inf Execution
   description: |
-    Test execution of a .inf using InfDefaultInstall.exe
-
+    Test execution of a .inf using InfDefaultInstall.exe.
     Reference: https://github.com/LOLBAS-Project/LOLBAS/blob/master/yml/OSBinaries/Infdefaultinstall.yml
   supported_platforms:
     - windows
@@ -145,4 +144,5 @@ atomic_tests:
     name: command_prompt
     elevation_required: false
     command: |
+      /atomics/T1218/src/Infdefaultinstall.inf
       InfDefaultInstall.exe #{inf_to_execute}
