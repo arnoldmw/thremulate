@@ -61,6 +61,6 @@ atomic_tests:
 
   executor:
     name: command_prompt
-    elevation_required: false
+    elevation_required: true
     command: |
       taskkill.exe /f /im #{process_name}
