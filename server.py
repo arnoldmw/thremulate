@@ -8,9 +8,7 @@ import aiohttp_jinja2
 import jinja2
 from aiohttp import web
 from aiohttp_security import SessionIdentityPolicy
-from aiohttp_security import (
-    check_authorized,
-)
+from aiohttp_security import check_authorized
 from aiohttp_security import setup as setup_security
 from aiohttp_session import setup, get_session
 from aiohttp_session.cookie_storage import EncryptedCookieStorage
