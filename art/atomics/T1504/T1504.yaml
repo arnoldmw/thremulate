@@ -13,7 +13,7 @@ atomic_tests:
     exe_path:
       description: Path the malicious executable
       type: Path
-      default: calc.exe
+      default: C:\Windows\System32\calc.exe
 
     ps_profile:
       description: Powershell profile to use
