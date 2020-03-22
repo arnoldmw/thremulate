@@ -37,8 +37,8 @@ atomic_tests:
 
   executor:
     name: command_prompt
-    elevation_required: true # indicates whether command must be run with admin privileges. If the elevation_required attribute is not defined, the value is assumed to be false
-    command: | # these are the actaul attack commands, at least one command must be provided
+    elevation_required: true 
+    command: |
       shutdown /r /t #{timeout}
 
 - name: Restart System via `shutdown` - macOS/Linux
@@ -57,8 +57,8 @@ atomic_tests:
 
   executor:
     name: bash
-    elevation_required: true # indicates whether command must be run with admin privileges. If the elevation_required attribute is not defined, the value is assumed to be false
-    command: | # these are the actual attack commands, at least one command must be provided
+    elevation_required: true 
+    command: | 
       shutdown -r #{timeout}
 
 - name: Shutdown System via `shutdown` - macOS/Linux
@@ -77,8 +77,8 @@ atomic_tests:
 
   executor:
     name: bash
-    elevation_required: true # indicates whether command must be run with admin privileges. If the elevation_required attribute is not defined, the value is assumed to be false
-    command: | # these are the actual attack commands, at least one command must be provided
+    elevation_required: true 
+    command: | 
       shutdown -h #{timeout}
       
 
@@ -92,8 +92,8 @@ atomic_tests:
 
   executor:
     name: bash
-    elevation_required: true # indicates whether command must be run with admin privileges. If the elevation_required attribute is not defined, the value is assumed to be false
-    command: | # these are the actual attack commands, at least one command must be provided
+    elevation_required: true 
+    command: | 
       reboot
 
 - name: Shutdown System via `halt` - Linux
@@ -105,8 +105,8 @@ atomic_tests:
 
   executor:
     name: bash
-    elevation_required: true # indicates whether command must be run with admin privileges. If the elevation_required attribute is not defined, the value is assumed to be false
-    command: | # these are the actual attack commands, at least one command must be provided
+    elevation_required: true 
+    command: | 
       halt -p      
 
 - name: Reboot System via `halt` - Linux
@@ -118,8 +118,8 @@ atomic_tests:
 
   executor:
     name: bash
-    elevation_required: true # indicates whether command must be run with admin privileges. If the elevation_required attribute is not defined, the value is assumed to be false
-    command: | # these are the actual attack commands, at least one command must be provided
+    elevation_required: true 
+    command: | 
       halt --reboot      
 
 - name: Shutdown System via `poweroff` - Linux
@@ -131,8 +131,8 @@ atomic_tests:
 
   executor:
     name: bash
-    elevation_required: true # indicates whether command must be run with admin privileges. If the elevation_required attribute is not defined, the value is assumed to be false
-    command: | # these are the actual attack commands, at least one command must be provided
+    elevation_required: true 
+    command: | 
       poweroff      
 
 - name: Reboot System via `poweroff` - Linux
@@ -144,6 +144,6 @@ atomic_tests:
 
   executor:
     name: bash
-    elevation_required: true # indicates whether command must be run with admin privileges. If the elevation_required attribute is not defined, the value is assumed to be false
-    command: | # these are the actual attack commands, at least one command must be provided
+    elevation_required: true 
+    command: | 
       poweroff --reboot  
