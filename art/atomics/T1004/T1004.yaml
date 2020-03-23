@@ -43,23 +43,3 @@ atomic_tests:
       Set-ItemProperty "HKCU:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\" "Userinit" "Userinit.exe, #{binary_to_execute}" -Force
       Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\" -Name "Userinit" -Force
 
-#- name: Winlogon Notify Key Logon Persistence - PowerShell
-#  description: |
-#    PowerShell code to set Winlogon Notify key to execute a notification package DLL at logon.
-#
-#  supported_platforms:
-#    - windows
-#
-#  input_arguments:
-#    binary_to_execute:
-#      description: Path of notification package to execute
-#      type: Path
-#      default: C:\Windows\Temp\atomicNotificationPackage.dll
-#
-#  executor:
-#    name: powershell
-#    elevation_required: false
-#    command: |
-#      New-Item "HKCU:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\Notify" -Force
-#      Set-ItemProperty "HKCU:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\Notify" "logon" "#{binary_to_execute}" -Force
-#      Remove-Item "HKCU:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\Notify" -Force
