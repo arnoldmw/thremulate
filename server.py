@@ -47,7 +47,7 @@ async def home(request):
     await check_authorized(request)
     session = await get_session(request)
     current_user = session['current_user']
-    return {'current_user': current_user, 'title': ""}
+    return {'current_user': current_user, 'title': 'Home'}
 
 
 def setup_logging():
