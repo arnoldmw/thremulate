@@ -1,5 +1,5 @@
 import asyncio
-import aiohttp_debugtoolbar
+# import aiohttp_debugtoolbar
 import logging
 import ssl
 from pathlib import Path
@@ -96,7 +96,7 @@ async def create_app():
 
     # Setting authentication and authorization
     setup_security(app, SessionIdentityPolicy(), DBAuthorizationPolicy())
-    aiohttp_debugtoolbar.setup(app)
+    # aiohttp_debugtoolbar.setup(app)
     return app
 
 
