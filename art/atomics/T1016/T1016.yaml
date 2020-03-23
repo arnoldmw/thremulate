@@ -59,7 +59,6 @@ atomic_tests:
     command: |
       ipconfig /all
       net config workstation
-      net view /all /domain
 
 - name: List Open Egress Ports
   description: |
