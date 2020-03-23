@@ -60,7 +60,6 @@ atomic_tests:
       ipconfig /all
       net config workstation
       net view /all /domain
-      nltest /domain_trusts
 
 - name: List Open Egress Ports
   description: |
