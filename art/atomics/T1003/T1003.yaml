@@ -128,7 +128,7 @@ atomic_tests:
   description: |
     The Active Directory database NTDS.dit may be dumped using NTDSUtil for offline credential theft attacks. This capability
     uses the "IFM" or "Install From Media" backup functionality that allows Active Directory restoration or installation of
-    subsequent domain controllers without the need of network-based replication.
+    subsequent domain controllers without the need of network-based replication. Target must be a Domain Controller
   supported_platforms:
     - windows
 
