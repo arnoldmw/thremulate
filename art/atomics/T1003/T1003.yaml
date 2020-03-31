@@ -205,7 +205,8 @@ atomic_tests:
 
 - name: GPP Passwords (findstr)
   description: |
-    Look for the encrypted cpassword value within Group Policy Preference files on the Domain Controller. This value can be decrypted with gpp-decrypt on Kali Linux.
+    Look for the encrypted cpassword value within Group Policy Preference files on the Domain Controller.
+    This value can be decrypted with gpp-decrypt on Kali Linux. Computer must be domain joined.
 
   supported_platforms:
     - windows
