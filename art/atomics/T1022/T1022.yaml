@@ -18,9 +18,6 @@ atomic_tests:
       mkdir /tmp/victim-files
       touch /tmp/victim-files/secrets.txt
       zip --password "thremulate" tmp/victim-files.zip /tmp/victim-files/*
-    #      gpg -c /tmp/victim-files/victim-filex.zip
-    #      #<enter passphrase and confirm>
-    #      ls -l
     cleanup_command: |
       rm -Rf /tmp/victim-files
 
