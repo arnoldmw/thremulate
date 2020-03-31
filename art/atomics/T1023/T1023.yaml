@@ -39,6 +39,4 @@ atomic_tests:
       $ShortCut.WindowStyle = 1;
       $ShortCut.Description = "T1023.";
       $ShortCut.Save()
-
-    cleanup_command: |
       Remove-Item "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\T1023.lnk"
