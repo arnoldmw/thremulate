@@ -131,7 +131,7 @@ atomic_tests:
     name: powershell
     elevation_required: false
     command: |
-      Set-Location $PathToAtomicsFolder
+      /atomics/T1071/T1071-dns-beacon.ps1
       .\T1071\src\T1071-dns-beacon.ps1 -Domain #{domain} -Subdomain #{subdomain} -QueryType #{query_type} -C2Interval #{c2_interval} -C2Jitter #{c2_jitter} -RunTime #{runtime}
 
 - name: DNS Long Domain Query
