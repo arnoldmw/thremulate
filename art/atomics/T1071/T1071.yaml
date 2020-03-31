@@ -158,5 +158,5 @@ atomic_tests:
     name: powershell
     elevation_required: false
     command: |
-      Set-Location $PathToAtomicsFolder
+      /atomics/T1071/T1071-dns-domain-length.ps1
       .\T1071\src\T1071-dns-domain-length.ps1 -Domain #{domain} -Subdomain #{subdomain} -QueryType #{query_type}
