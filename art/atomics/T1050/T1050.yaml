@@ -23,7 +23,7 @@ atomic_tests:
     elevation_required: true
     command: |
       /atomics/T1050/bin/ThremulateService.exe
-      .exe create #{service_name} binPath= #{binary_path}
+      sc.exe create #{service_name} binPath= #{binary_path}
       sc.exe start #{service_name}
     cleanup_command: |
       sc.exe stop #{service_name}
