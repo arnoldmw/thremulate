@@ -27,8 +27,7 @@ atomic_tests:
 
 - name: Use PsExec to execute a command on a remote host
   description: |
-    Requires having Sysinternals installed, path to sysinternals is one of the input input_arguments
-    Will run a command on a remote host
+    Run a command on a remote host using Sysinternalssuite PsExec.
   supported_platforms:
     - windows
   input_arguments:
