@@ -238,8 +238,8 @@ atomic_tests:
   executor:
     name: command_prompt
     command: |
-      C:\Windows\System32\bitsadmin.exe /transfer #{bits_job_name} /Priority HIGH #{remote_file} #{local_path}
-      Remove-Item #{local_path}
+      C:\Windows\System32\bitsadmin.exe /transfer #{bits_job_name} /download /Priority HIGH #{remote_file} #{local_path}
+      del #{local_path}
 
 - name: Windows - PowerShell Download
   description: |
