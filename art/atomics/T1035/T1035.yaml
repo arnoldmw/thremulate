@@ -55,4 +55,5 @@ atomic_tests:
     name: powershell
     elevation_required: false
     command: |
+      /atomics/T1035/bin/PsExec64.exe
       #{psexec_exe} -accepteula \\#{remote_host} "C:\Windows\System32\calc.exe"
