@@ -31,10 +31,6 @@ atomic_tests:
   supported_platforms:
     - windows
   input_arguments:
-    psexec_exe:
-      description: Path to PsExec
-      type: string
-      default: "C:\\PSTools\\PsExec.exe"
     remote_host:
       description: Remote hostname or IP address
       type: string
@@ -56,4 +52,4 @@ atomic_tests:
     elevation_required: false
     command: |
       /atomics/T1035/bin/PsExec64.exe
-      #{psexec_exe} -accepteula \\#{remote_host} "C:\Windows\System32\calc.exe"
+      PsExec64.exe -accepteula \\#{remote_host} "C:\Windows\System32\calc.exe"
