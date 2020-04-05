@@ -27,7 +27,7 @@ atomic_tests:
 
 - name: Use PsExec to execute a command on a remote host
   description: |
-    Run a command on a remote host using Sysinternalssuite PsExec.
+    Execute a command on a remote host as a service using Sysinternalssuite PsExec.
   supported_platforms:
     - windows
   input_arguments:
@@ -52,4 +52,4 @@ atomic_tests:
     elevation_required: false
     command: |
       /atomics/T1035/bin/PsExec64.exe
-      PsExec64.exe -accepteula \\#{remote_host} "C:\Windows\System32\calc.exe"
+      PsExec64.exe -accepteula -s \\#{remote_host} "C:\Windows\System32\ipconfig.exe"
