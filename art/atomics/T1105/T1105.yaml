@@ -189,6 +189,7 @@ atomic_tests:
     elevation_required: false
     command: |
       cmd /c certutil -urlcache -split -f #{remote_file} #{local_path}
+      del #{local_path}
 
 - name: certutil download (verifyctl)
   description: |
@@ -213,6 +214,7 @@ atomic_tests:
       Set-Location $datePath
       certutil -verifyctl -split -f #{remote_file}
       Get-ChildItem | Where-Object {$_.Name -notlike "*.txt"} | Foreach-Object { Move-Item $_.Name -Destination #{local_path} }
+      Remove-Item #{local_path}
 
 - name: Windows - BITSAdmin BITS Download
   description: |
@@ -237,6 +239,7 @@ atomic_tests:
     name: command_prompt
     command: |
       C:\Windows\System32\bitsadmin.exe /transfer #{bits_job_name} /Priority HIGH #{remote_file} #{local_path}
+      Remove-Item #{local_path}
 
 - name: Windows - PowerShell Download
   description: |
@@ -257,3 +260,4 @@ atomic_tests:
     name: command_prompt
     command: |
       (New-Object System.Net.WebClient).DownloadFile("#{remote_file}", "#{local_path}")
+      Remove-Item #{local_path}
