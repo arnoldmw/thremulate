@@ -299,8 +299,8 @@ def download(file_path):
     url = 'http://{0}:8080{1}'.format(SERVER_IP, file_path)
     req = http.request('GET', url, headers=headers)
     payload = file_path.split("/")[-1]
-    with open(payload, "wb") as file:
-        file.write(req.data)
+    with open(payload, "wb") as file_download:
+        file_download.write(req.data)
 
 
 if __name__ == '__main__':
