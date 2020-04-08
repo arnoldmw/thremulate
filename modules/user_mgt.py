@@ -4,6 +4,7 @@ from aiohttp_security import (
     check_permission, check_authorized,
 )
 from aiohttp_session import get_session
+# noinspection PyUnresolvedReferences
 from db.database import *
 # noinspection PyUnresolvedReferences
 from db.db_auth import check_password_hash, generate_password_hash
@@ -218,8 +219,14 @@ async def change_password_post(request):
             except User.DoesNotExist:
                 return web.Response(status=400)
         else:
-            # TODO: Return passwords do not match
-            return web.Response(status=400)
+            session = await get_session(request)
+            current_user = session['current_user']
+            context = {'error': '*New and Confirm New password did not match', 'title': 'Reset Password',
+                       'current_user': current_user}
+            response = aiohttp_jinja2.render_template('user_mgt/change_password.html',
+                                                      request,
+                                                      context)
+            return response
     except KeyError:
         return web.Response(status=404)
     except User.DoesNotExist:

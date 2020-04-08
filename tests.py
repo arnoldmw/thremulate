@@ -130,6 +130,15 @@ class UserManagement(AioHTTPTestCase):
         self.assertTrue(resp_two.status == 200, msg="Failed to access /change_password_post. Received status code {0}"
                         .format(resp_two.status))
 
+        change_pass_two = {'password': 'thremulatethremulate', 'confirm_password': data['password'],
+                           'old_password': data['password']}
+        resp_three = await self.client.request("POST", "/change_password_post", data=change_pass_two)
+        text = await resp_three.text()
+        self.assertTrue(resp_three.status == 200, msg="Failed to access /change_password_post. Received status code {0}"
+                        .format(resp_three.status))
+        self.assertTrue('New and Confirm New password did not match' in text,
+                        msg="Passwords did not match message not shown")
+
     @unittest_run_loop
     async def test_user_edit_post(self):
         resp = await self.client.request("POST", "/login_post", data=data)
