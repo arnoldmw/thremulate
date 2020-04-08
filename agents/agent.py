@@ -253,7 +253,7 @@ def confirm_kill():
         print('[+] Checking kill datetime')
     global kill_date_string
 
-    if kill_date_string == 'None':
+    if kill_date_string == 'None' or kill_date_string == '':
         return
 
     try:
