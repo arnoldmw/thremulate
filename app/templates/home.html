@@ -24,15 +24,15 @@
                         <!-- <h2 class="font-weight-bold text-center card-category"> Windows</h2> -->
                         <h3 class="font-weight-bold text-center mb-4">Windows</h3>
                         <p>Powershell (All Versions):</p>
-                        <kbd>mkdir C:\test;(New-Object System.Net.WebClient).DownloadFile("http://<span
+                        <kbd>(New-Object System.Net.WebClient).DownloadFile("http://<span
                                 class="address"></span>:8080/get_agent/win_agent.exe",
-                            "C:\test\win_agent.exe");
-                            C:\test\win_agent.exe --server localhost;</kbd>
+                            "C:\Users\Public\Documents\win_agent.exe");
+                            C:\Users\Public\Documents\win_agent.exe --server localhost;</kbd>
                         <p class="mt-3" >Powershell v3, v4 & v5 :</p>
-                        <kbd>mkdir C:\test;Invoke-WebRequest -Uri "http://<span
+                        <kbd>Invoke-WebRequest -Uri "http://<span
                                 class="address"></span>:8080/get_agent/win_agent.exe"
-                            -OutFile "C:\test\win_agent.exe";
-                            C:\test\win_agent.exe --server localhost;
+                            -OutFile "C:\Users\Public\Documents\win_agent.exe";
+                            C:\Users\Public\Documents\win_agent.exe --server localhost;
                         </kbd>
                     </div>
                     <div class="col-md-4">
