@@ -179,8 +179,7 @@ async def register_post(request):
             UserPermissions.create(user_id=user.id, perm_id=Permissions.get(Permissions.name == 'public'))
             raise web.HTTPFound('/users')
         else:
-            # TODO:  Return passwords do not match message to user
-            print('passwords do not match')
+            web.Response(text='Passwords do not match', status=400)
 
     except KeyError:
         return web.Response(status=400)
