@@ -42,6 +42,10 @@ async def index(request):
     return {}
 
 
+async def index_app_two(request):
+    return web.Response(text='AGENT SERVER')
+
+
 @aiohttp_jinja2.template('home.html')
 async def home(request):
     await check_authorized(request)
@@ -103,6 +107,7 @@ async def create_app():
 async def create_app_two():
     app = web.Application()
     app.add_routes([
+        web.get('/', index_app_two),
         web.static('/get_agent/', path=THIS_DIR / 'agents', show_index=True),
         web.static('/atomics/', path=THIS_DIR / 'art/atomics', show_index=True)
     ])
