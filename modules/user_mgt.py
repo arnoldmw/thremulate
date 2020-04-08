@@ -193,7 +193,7 @@ async def change_password(request):
     await check_authorized(request)
     session = await get_session(request)
     current_user = session['current_user']
-    return {'current_user': current_user, 'title': 'Reset Password'}
+    return {'current_user': current_user, 'title': 'Change Password'}
 
 
 async def change_password_post(request):
@@ -221,7 +221,7 @@ async def change_password_post(request):
         else:
             session = await get_session(request)
             current_user = session['current_user']
-            context = {'error': '*New and Confirm New password did not match', 'title': 'Reset Password',
+            context = {'error': '*New and Confirm New password did not match', 'title': 'Change Password',
                        'current_user': current_user}
             response = aiohttp_jinja2.render_template('user_mgt/change_password.html',
                                                       request,
