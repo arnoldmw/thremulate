@@ -38,20 +38,21 @@
                     </div>
                     <form id="regform" method="POST" action="{{ url('register_post') }}">
                         <div class="card-body">
+                            <p class="text-danger">{{ error }}</p>
                             <div class="form-group">
                                 <div class="form-row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <input id="firstname" name="firstname" type="text"
                                                    class="form-control " required="" minlength="5"
-                                                   placeholder="First Name">
+                                                   placeholder="First Name" value="{{ fname }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group ">
                                             <input id="lastname" name="lastname" type="text"
                                                    class="form-control " required="" minlength="5"
-                                                   placeholder="Last Name">
+                                                   placeholder="Last Name" value="{{ lname }}">
                                         </div>
                                     </div>
                                 </div>
@@ -68,14 +69,14 @@
                                         <div class="form-group ">
                                             <input id="password" name="password" type="password"
                                                    class="form-control " required="" minlength="5"
-                                                   placeholder="Password">
+                                                   placeholder="Password" value="{{ password }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <input id="confirm_password" name="confirm_password" type="password"
                                                    class="form-control " required="" minlength="5"
-                                                   placeholder="Confirm Password">
+                                                   placeholder="Confirm Password" value="{{ password }}">
                                         </div>
                                     </div>
                                 </div>

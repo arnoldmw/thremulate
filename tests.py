@@ -52,6 +52,27 @@ class ThremulateTests(AioHTTPTestCase):
                         .format(resp_two.status))
 
     @unittest_run_loop
+    async def test_register_post(self):
+        resp = await self.client.request("POST", "/login_post", data=data)
+        self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
+                        .format(resp.status))
+        register_one = {'firstname': 'Operator', 'lastname': 'One', 'email': 'opone@thremulate.com',
+                        'password': data['password'], 'confirm_password': data['password'],
+                        'old_password': data['password']}
+        resp_two = await self.client.request("POST", "/register_post", data=register_one)
+        self.assertTrue(resp_two.status == 200,
+                        msg="Failed to access /change_password_post. Received status code {0}"
+                        .format(resp_two.status))
+
+        resp_three = await self.client.request("POST", "/register_post", data=register_one)
+        text = await resp_three.text()
+        self.assertTrue(resp_three.status == 200,
+                        msg="Failed to access /change_password_post. Received status code {0}"
+                        .format(resp_three.status))
+        self.assertTrue('Email already in use' in text,
+                        msg="Email already in use message not shown")
+
+    @unittest_run_loop
     async def test_force_reset_password(self):
         resp = await self.client.request("POST", "/login_post", data=data)
         self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"

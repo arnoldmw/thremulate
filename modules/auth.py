@@ -184,11 +184,18 @@ async def register_post(request):
     except KeyError:
         return web.Response(status=400)
     except IntegrityError as error:
-        # TODO: Return error message to user
         if 'id' in error.__context__.__str__():
-            print('id constraint failed')
+            return web.Response(text='User id already in use', status=500)
         if 'email' in error.__context__.__str__():
-            print('email constraint failed')
+            session = await get_session(request)
+            current_user = session['current_user']
+            context = {'error': '*Email already in use', 'title': 'Register',
+                       'current_user': current_user, 'fname': data['firstname'], 'lname': data['lastname'],
+                       'password': data['password']}
+            response = aiohttp_jinja2.render_template('auth/register.html',
+                                                      request,
+                                                      context)
+            return response
 
 
 @aiohttp_jinja2.template('auth/reset_password.html')
