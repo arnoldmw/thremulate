@@ -70,7 +70,7 @@ async def login_post(request):
 
         user.lockout_count = user.lockout_count + 1
         user.save()
-        context = {'error': '*Incorrect login'}
+        context = {'error': '*Incorrect login', 'title': 'Login'}
         response = aiohttp_jinja2.render_template('auth/login.html',
                                                   request,
                                                   context)
