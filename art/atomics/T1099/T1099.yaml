@@ -13,10 +13,11 @@ atomic_tests:
     target_filename:
       description: Path of file that we are going to stomp on last access time
       type: Path
-      default: /opt/filename
+      default: /tmp/T1099.txt
   executor:
     name: sh
     command: |
+      echo "Test file" > /tmp/T1099.txt
       touch -a -t 197001010000.00 #{target_filename}
 
 - name: Set a file's modification timestamp
@@ -29,10 +30,11 @@ atomic_tests:
     target_filename:
       description: Path of file that we are going to stomp on last access time
       type: Path
-      default: /opt/filename
+      default: /tmp/T1099.txt
   executor:
     name: sh
     command: |
+      echo "Test file" > /tmp/T1099.txt
       touch -m -t 197001010000.00 #{target_filename}
 
 - name: Modify file timestamps using reference file
@@ -52,10 +54,11 @@ atomic_tests:
     target_file_path:
       description: Path of file to modify timestamps of
       type: Path
-      default: /opt/filename
+      default: /tmp/T1099.txt
   executor:
     name: sh
     command: |
+      echo "Test file" > /tmp/T1099.txt
       touch -acmr #{reference_file_path} {target_file_path}
 
 - name: Windows - Modify file creation timestamp with PowerShell
