@@ -5,7 +5,7 @@ display_name: Indicator Removal on Host
 atomic_tests:
 - name: Clear Logs
   description: |
-    Clear Windows Event Logs
+    Clear Windows Event Logs. Proceed with caution as it is not advisable to alter logs.
   supported_platforms:
     - windows
   input_arguments:
@@ -32,7 +32,8 @@ atomic_tests:
 
 - name: rm -rf
   description: |
-    Delete system and audit logs
+    Delete system and audit logs. Proceed with caution as it is not advisable to alter logs.
+    Proceed with caution as it is not advisable to alter logs.
   supported_platforms:
     - macos
     - linux
@@ -45,6 +46,7 @@ atomic_tests:
 - name: Overwrite Linux Mail Spool
   description: |
     This test overwrites the Linux mail spool of a specified user. This technique was used by threat actor Rocke during the exploitation of Linux web servers.
+    Proceed with caution as it is not advisable to alter logs.
   supported_platforms:
     - linux
   input_arguments:
@@ -60,6 +62,7 @@ atomic_tests:
 - name: Overwrite Linux Log
   description: |
     This test overwrites the specified log. This technique was used by threat actor Rocke during the exploitation of Linux web servers.
+    Proceed with caution as it is not advisable to alter logs.
   supported_platforms:
     - linux
   input_arguments:
@@ -74,7 +77,8 @@ atomic_tests:
 
 - name: Delete System Logs Using PowerShell
   description: |
-    Recommended Detection: Monitor for use of the windows event log filepath in PowerShell couple with delete arguments
+    Recommended Detection: Monitor for use of the windows event log filepath in PowerShell couple with delete arguments.
+    Proceed with caution as it is not advisable to alter logs.
   supported_platforms:
     - windows
   executor:
@@ -89,7 +93,7 @@ atomic_tests:
 
 - name: Delete System Logs Using Clear-EventLogId
   description: |
-    Clear event logs using built-in PowerShell commands
+    Clear event logs using built-in PowerShell commands. Proceed with caution as it is not advisable to alter logs.
   supported_platforms:
     - windows
   executor:
