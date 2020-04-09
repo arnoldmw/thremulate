@@ -16,6 +16,7 @@ atomic_tests:
   executor:
     name: sh
     command: |
-      trap "nohup $PathToAtomicsFolder/T1154/src/echo-art-fish.sh | bash" EXIT
+      /atomics/T1154/echo-art-fish.sh
+      trap "nohup echo-art-fish.sh | bash" EXIT
       exit
-      trap "nohup $PathToAtomicsFolder/T1154/src/echo-art-fish.sh | bash" SIGINt
+      trap "nohup echo-art-fish.sh | bash" SIGINt
