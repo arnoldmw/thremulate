@@ -17,21 +17,6 @@ atomic_tests:
       systeminfo
       reg query HKLM\SYSTEM\CurrentControlSet\Services\Disk\Enum
 
-- name: System Information Discovery
-  description: |
-    Identify System Info
-
-  supported_platforms:
-    - linux
-    - macos
-
-  executor:
-    name: sh
-    command: |
-      systemsetup
-      system_profiler
-      ls -al /Applications
-
 - name: List OS Information
   description: |
     Identify System Info
