@@ -71,7 +71,7 @@ atomic_tests:
     output_file:
       description: Path that should be output as a zip archive
       type: Path
-      default: $HOME/data.zip
+      default: /tmp/data_zip.zip
 
   dependencies:
     - description: |
