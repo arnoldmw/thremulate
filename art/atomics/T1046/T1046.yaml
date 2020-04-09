@@ -71,4 +71,27 @@ atomic_tests:
     executor:
       name: sh
       command: |
-        # telnet #{host} #{port}
+        telnet #{host} #{port}
+
+  - name: Port Scan with Netcat
+    description: |
+      Scan ports to check for listening ports with Netcat.
+
+    supported_platforms:
+      - linux
+      - macos
+
+    input_arguments:
+      port:
+        description: Ports to scan.
+        type: string
+        default: 80
+        host:
+          description: Host to scan.
+          type: string
+          default: 192.168.1.1
+
+    executor:
+      name: sh
+      command: |
+        nc -nv #{host} #{port}
