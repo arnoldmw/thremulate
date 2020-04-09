@@ -28,11 +28,9 @@ atomic_tests:
   executor:
     name: sh
     command: |
-      uname -a >> /tmp/loot.txt
-      cat /etc/lsb-release >> /tmp/loot.txt
-      cat /etc/redhat-release >> /tmp/loot.txt
-      uptime >> /tmp/loot.txt
-      cat /etc/issue >> /tmp/loot.txt
+      uname -a
+      uptime
+      cat /etc/issue
 
 - name: Linux VM Check via Hardware
   description: |
