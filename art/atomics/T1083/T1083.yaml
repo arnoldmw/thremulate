@@ -48,9 +48,9 @@ atomic_tests:
   executor:
     name: sh
     command: |
-      ls -a > allcontents.txt
-      ls -la /Library/Preferences/ > detailedprefsinfo.txt
-      file */* *>> ../files.txt
+      ls -a
+      ls -la /Library/Preferences/
+      file */* *
       find . -type f
       ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'
       locate *
@@ -68,7 +68,7 @@ atomic_tests:
   executor:
     name: sh
     command: |
-      cd $HOME && find . -print | sed -e 's;[^/]*/;|__;g;s;__|; |;g' > /tmp/loot.txt
-      cat /etc/mtab > /tmp/loot.txt
-      find . -type f -iname *.pdf > /tmp/loot.txt
+      cd $HOME && find . -print | sed -e 's;[^/]*/;|__;g;s;__|; |;g'
+      cat /etc/mtab
+      find . -type f -iname *.pdf
       find . -type f -name ".*"
