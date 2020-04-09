@@ -100,7 +100,7 @@ atomic_tests:
     input_file:
       description: Path that should be compressed
       type: Path
-      default: $HOME/victim-gzip.txt
+      default: /tmp/gzip.txt
     input_content:
       description: contents of compressed files if file does not already exist. default contains test credit card and social security number
       type: String
