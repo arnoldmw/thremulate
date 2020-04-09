@@ -88,7 +88,6 @@ atomic_tests:
       ls #{input_files} > /dev/null
     command: |
       zip #{output_file} #{input_files}
-    cleanup_command: |
       rm -f #{output_file}
 
 - name: Data Compressed - nix - gzip Single File
@@ -111,7 +110,6 @@ atomic_tests:
     elevation_required: false
     command: |
       test -e #{input_file} && gzip -k #{input_file} || (echo '#{input_content}' >> #{input_file}; gzip -k #{input_file})
-    cleanup_command: |
       rm -f #{input_file}.gz
 
 - name: Data Compressed - nix - tar Folder or File
@@ -143,5 +141,4 @@ atomic_tests:
     elevation_required: false
     command: |
       tar -cvzf #{output_file} #{input_file_folder}
-    cleanup_command: |
       rm -f #{output_file}
