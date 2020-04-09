@@ -13,7 +13,7 @@ atomic_tests:
     command_to_add:
       description: Command to add to the .bash_profile file
       type: string
-      default: /path/to/script.py
+      default: cat /etc/passwd
   executor:
     name: sh
     command: |
@@ -29,7 +29,7 @@ atomic_tests:
     command_to_add:
       description: Command to add to the .bashrc file
       type: string
-      default: /path/to/script.py
+      default: cat /etc/shadow
   executor:
     name: sh
     command: |
