@@ -17,7 +17,7 @@ atomic_tests:
   executor:
     name: sh
     command: |
-      cat /etc/passwd > #{output_file}
+      cat /etc/passwd
 
 - name: View sudoers access
   description: |
@@ -33,7 +33,7 @@ atomic_tests:
   executor:
     name: sh
     command: |
-      cat /etc/sudoers > #{output_file}
+      cat /etc/sudoers
 
 - name: View accounts with UID 0
   description: |
@@ -49,7 +49,7 @@ atomic_tests:
   executor:
     name: sh
     command: |
-      grep 'x:0:' /etc/passwd > #{output_file}
+      grep 'x:0:' /etc/passwd
 
 - name: List opened files by user
   description: |
@@ -76,7 +76,7 @@ atomic_tests:
   executor:
     name: sh
     command: |
-      lastlog > #{output_file}
+      lastlog
 
 - name: Enumerate users and groups
   description: |
