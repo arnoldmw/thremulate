@@ -12,7 +12,7 @@ atomic_tests:
     output_file:
       description: Output file path
       type: Path
-      default: desktop.png
+      default: /tmp/desktop.png
   executor:
     name: bash
     elevation_required: false
@@ -27,7 +27,7 @@ atomic_tests:
     output_file:
       description: Output file path
       type: Path
-      default: desktop.png
+      default: /tmp/desktop.png
   executor:
     name: bash
     elevation_required: false
@@ -42,7 +42,7 @@ atomic_tests:
     output_file:
       description: Output file path
       type: Path
-      default: desktop.xwd
+      default: /tmp/desktop.xwd
   executor:
     name: bash
     command: |
@@ -58,7 +58,7 @@ atomic_tests:
     output_file:
       description: Output file path
       type: Path
-      default: desktop.png
+      default: /tmp/desktop.png
   executor:
     name: bash
     command: |
