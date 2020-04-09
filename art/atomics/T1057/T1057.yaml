@@ -11,18 +11,12 @@ atomic_tests:
     - macos
     - linux
 
-  input_arguments:
-    output_file:
-      description: path of output file
-      type: path
-      default: /tmp/loot.txt
-
   executor:
     name: sh
     elevation_required: false
     command: |
-      ps >> #{output_file}
-      ps aux >> #{output_file}
+      ps
+      ps aux
 
 - name: Process Discovery - tasklist
   description: |
