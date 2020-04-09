@@ -18,7 +18,9 @@ atomic_tests:
     name: sh
     command: |
       echo "Test file" > /tmp/T1099.txt
+      ls -l /tmp/T1099.txt
       touch -a -t 197001010000.00 #{target_filename}
+      ls -l /tmp/T1099.txt
 
 - name: Set a file's modification timestamp
   description: |
@@ -35,7 +37,9 @@ atomic_tests:
     name: sh
     command: |
       echo "Test file" > /tmp/T1099.txt
+      ls -l /tmp/T1099.txt
       touch -m -t 197001010000.00 #{target_filename}
+      ls -l /tmp/T1099.txt
 
 - name: Modify file timestamps using reference file
   description: |
@@ -59,7 +63,9 @@ atomic_tests:
     name: sh
     command: |
       echo "Test file" > /tmp/T1099.txt
+      ls -l /tmp/T1099.txt
       touch -acmr #{reference_file_path} {target_file_path}
+      ls -l /tmp/T1099.txt
 
 - name: Windows - Modify file creation timestamp with PowerShell
   description: |
