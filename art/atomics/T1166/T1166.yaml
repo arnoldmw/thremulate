@@ -28,7 +28,6 @@ atomic_tests:
       sudo chown root hello
       sudo chmod u+s hello
       ./hello
-    cleanup_command: |
       sudo rm ./hello
       sudo rm /tmp/hello.c
 
@@ -51,7 +50,6 @@ atomic_tests:
       sudo touch #{file_to_setuid}
       sudo chown root #{file_to_setuid}
       sudo chmod u+s #{file_to_setuid}
-    cleanup_command: |
       sudo rm #{file_to_setuid}
 
 - name: Set a SetGID flag on file
@@ -73,5 +71,4 @@ atomic_tests:
       sudo touch #{file_to_setuid}
       sudo chown root #{file_to_setuid}
       sudo chmod g+s #{file_to_setuid}
-    cleanup_command: |
       sudo rm #{file_to_setuid}
