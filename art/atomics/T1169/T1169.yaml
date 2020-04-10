@@ -17,4 +17,3 @@ atomic_tests:
       sudo -l
       sudo su
       cat /etc/sudoers
-      vim /etc/sudoers
