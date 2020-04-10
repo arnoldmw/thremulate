@@ -4,7 +4,6 @@ from aiohttp_security import check_authorized
 from aiohttp_session import get_session
 # noinspection PyUnresolvedReferences
 from db.database import Adversary, Agent
-from peewee import IntegrityError
 
 
 @aiohttp_jinja2.template('adversary/adversary_index.html')
@@ -92,7 +91,7 @@ async def adversary_update(request):
         raise web.HTTPFound('/adversaries')
     except KeyError:
         return web.Response(status=400)
-    except IntegrityError:
+    except Adversary.DoesNotExist:
         raise web.HTTPFound('/adversaries')
 
 
@@ -109,7 +108,7 @@ async def adversary_delete(request):
         raise web.HTTPFound('/adversaries')
     except KeyError:
         return web.Response(status=400)
-    except IntegrityError:
+    except Adversary.DoesNotExist:
         raise web.HTTPFound('/adversaries')
 
 
