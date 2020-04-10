@@ -244,6 +244,8 @@ async def agent_edit_post(request):
         raise web.HTTPFound('/agent_details/%s' % agent_id)
     except KeyError:
         return web.Response(status=400)
+    except Agent.DoesNotExist:
+        return web.Response(status=400)
 
 
 @aiohttp_jinja2.template('agent/customize_technique.html')
