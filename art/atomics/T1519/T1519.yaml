@@ -22,6 +22,5 @@ atomic_tests:
     command: |
       sudo cp "#{plist}" /etc/emond.d/rules/T1519_emond.plist
       sudo touch /private/var/db/emondClients/T1519
-    cleanup_command: |
       sudo rm /etc/emond.d/rules/T1519_emond.plist
       sudo rm /private/var/db/emondClients/T1519
