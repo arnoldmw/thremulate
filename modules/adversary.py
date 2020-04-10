@@ -109,6 +109,8 @@ async def adversary_delete(request):
         raise web.HTTPFound('/adversaries')
     except KeyError:
         return web.Response(status=400)
+    except IntegrityError:
+        raise web.HTTPFound('/adversaries')
 
 
 def setup_campaign_routes(app):
