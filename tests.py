@@ -5,6 +5,8 @@ from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop
 from server import create_app
 # noinspection PyUnresolvedReferences
 from server import create_app_two
+# noinspection PyUnresolvedReferences
+from db.database import Adversary
 
 data = {'email': 'admin@thremulate.com', 'password': 'thremulate'}
 agent_id = 44444
@@ -211,18 +213,20 @@ class AdversaryTests(AioHTTPTestCase):
         resp = await self.client.request("POST", "/login_post", data=data)
         self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
                         .format(resp.status))
-        resp_two = await self.client.request("POST", "/adversary_update", data={'id': 1, 'name': 'APT4444'})
+        adv_id = Adversary.get(Adversary.name == 'Unknown')
+        print(adv_id.id)
+        resp_two = await self.client.request("POST", "/adversary_update", data={'id': adv_id, 'name': 'Unknown'})
         self.assertTrue(resp_two.status == 200, msg="Failed to access /adversary_update. Received status code {0}"
                         .format(resp_two.status))
 
-    @unittest.skip("Need to handle exception")
-    # TODO: Do not attach an agent to it
+    # TODO: Compare body in response from server
     @unittest_run_loop
     async def test_adversary_delete(self):
         resp = await self.client.request("POST", "/login_post", data=data)
         self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
                         .format(resp.status))
-        resp_two = await self.client.request("POST", "/adversary_delete", data={'id': 1})
+        adv_id = Adversary.get(Adversary.name == 'APT4000')
+        resp_two = await self.client.request("POST", "/adversary_delete", data={'id': adv_id})
         self.assertTrue(resp_two.status == 200, msg="Failed to access /adversary_delete. Received status code {0}"
                         .format(resp_two.status))
 
