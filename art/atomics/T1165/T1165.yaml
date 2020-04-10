@@ -16,5 +16,6 @@ atomic_tests:
     name: sh
     elevation_required: true
     command: |
-      sudo touch /Library/StartupItems/EvilStartup.plist
+      /atomics/T1165/T1165_emond.plist
+      sudo cp /tmp/T1165_emond.plist /Library/StartupItems/T1165_emond.plist
       sudo rm /Library/StartupItems/EvilStartup.plist
