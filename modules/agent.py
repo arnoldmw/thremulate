@@ -23,6 +23,11 @@ from peewee import IntegrityError
 
 @aiohttp_jinja2.template('agent/agent_index.html')
 async def agent_index(request):
+    """
+    Retrieves all the agents in the database
+    :param request:
+    :return: Template with all agents if successful otherwise an exception
+    """
     await check_authorized(request)
     agents = []
 
@@ -40,6 +45,11 @@ async def agent_index(request):
 
 @aiohttp_jinja2.template('agent/assign_tasks.html')
 async def assign_tasks(request):
+    """
+    Retrieves template with techniques available for assignment to an agent
+    :param request:
+    :return: Template with agent techniques available
+    """
     await check_authorized(request)
 
     try:
@@ -59,8 +69,12 @@ async def assign_tasks(request):
         raise web.HTTPFound('/agents')
 
 
-# AGENT SENDS RESULTS BACK TO C2
 async def agent_output(request):
+    """
+    Updates the database with the agent's result of a technique
+    :param request:
+    :return: 'success' if successful otherwise an exception
+    """
     data = await request.post()
     try:
         agent_id = data['id']
@@ -95,8 +109,12 @@ async def agent_output(request):
         web.Response(text='failed', status=400)
 
 
-# TECHNIQUES ASSIGNED TO AN AGENT
 async def agent_techniques(request):
+    """
+    Retrieves the MITRE ATT&CK IDs of techniques assigned to an agent
+    :param request:
+    :return: MITRE ATT&CK IDs of techniques assigned to an agent
+    """
     try:
         agent_id = request.match_info['id']
         tech_id = ''
@@ -112,8 +130,12 @@ async def agent_techniques(request):
         web.Response(text='Agent not assigned')
 
 
-# SENDS AGENT COMMANDS TO RUN, MAKE IT A POST METHOD
 async def agent_tasks(request):
+    """
+    Retrieves instructions for the agent
+    :param request:
+    :return: Agent instruction in text format
+    """
     try:
         agent_id = request.match_info['id']
         agent_assignments = ''
@@ -163,6 +185,13 @@ async def agent_tasks(request):
 
 
 def assignments(tech_list, plat, parameters):
+    """
+    Retrieves the instructions from the run_atomics module
+    :param tech_list: List of techniques assigned to the agent
+    :param plat: Platform of the agent
+    :param parameters: Parameters for execution of the technique
+    :return: string_commands string
+    """
     command_list = agent_commands(tech_list, plat, parameters)
 
     string_commands = ''
@@ -175,6 +204,11 @@ def assignments(tech_list, plat, parameters):
 
 @aiohttp_jinja2.template('agent/agent_details.html')
 async def agent_details(request):
+    """
+    Retrieves the details of an agent
+    :param request:
+    :return: '/agent_details' template if successful otherwise an exception
+    """
     await check_authorized(request)
     try:
         agent_id = request.match_info['id']
@@ -205,6 +239,11 @@ async def agent_details(request):
 
 @aiohttp_jinja2.template('agent/agent_edit.html')
 async def agent_edit(request):
+    """
+    Template with a form for editing an agent's details
+    :param request:
+    :return: Template with the agent edit form if successful otherwise an exception
+    """
     await check_authorized(request)
     try:
         agent_id = request.match_info['id']
@@ -227,6 +266,11 @@ async def agent_edit(request):
 
 
 async def agent_edit_post(request):
+    """
+    Updates the details of an agent in the database
+    :param request:
+    :return: 'agent_details' if successful otherwise an exception
+    """
     await check_authorized(request)
     data = await request.post()
     try:
@@ -250,6 +294,11 @@ async def agent_edit_post(request):
 
 @aiohttp_jinja2.template('agent/customize_technique.html')
 async def customize_technique(request):
+    """
+    Retrieves the template with the available techniques for an agent
+    :param request:
+    :return: customize_technique.html template
+    """
     await check_authorized(request)
     try:
         tech_id = 'T' + request.query['tech_id']
@@ -272,6 +321,11 @@ async def customize_technique(request):
 
 
 async def customize_technique_post(request):
+    """
+    Adds the assigned technique to an agent in the database
+    :param request:
+    :return: 'Assigned' if successful otherwise an exception
+    """
     await check_authorized(request)
     data = await request.post()
 
@@ -313,6 +367,11 @@ async def customize_technique_post(request):
 
 
 async def register_agent(request):
+    """
+    Registers an agent's details when it beacons to the server
+    :param request:
+    :return: 'Agent has registered' if successful otherwise an exception
+    """
     data = await request.post()
 
     agent_name = ''.join(random.choice(string.ascii_lowercase) for _ in range(7))
@@ -336,6 +395,11 @@ async def register_agent(request):
 
 
 async def delete_tech_output(request):
+    """
+    Deletes the results of a technique in the database
+    :param request:
+    :return: 'deleted' if successful otherwise an exception
+    """
     await check_authorized(request)
     data = await request.post()
     try:
@@ -353,6 +417,11 @@ async def delete_tech_output(request):
 
 
 async def delete_tech_assignment(request):
+    """
+    Deletes a technique assigned to an agent
+    :param request:
+    :return: 'success' if successful otherwise an exception
+    """
     await check_authorized(request)
     data = await request.post()
     try:
@@ -370,6 +439,11 @@ async def delete_tech_assignment(request):
 
 
 def setup_agent_communication_routes(app):
+    """
+    Add agent communication routes to the application
+    :param app:
+    :return:
+    """
     app.add_routes([
         web.get('/agent_techniques/{id}', agent_techniques),
         web.get('/agent_tasks/{id}', agent_tasks),
@@ -380,7 +454,7 @@ def setup_agent_communication_routes(app):
 
 def setup_agent_routes(app):
     """
-    Adds agent routes to the application.
+    Adds operator-agent routes to the application.
     :param app:
     :return: None
     """
