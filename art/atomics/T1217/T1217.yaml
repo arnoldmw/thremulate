@@ -14,6 +14,7 @@ atomic_tests:
     name: sh
     command: |
       find / -path "*.mozilla/firefox/*/places.sqlite" -exec echo {} >> /tmp/firefox-bookmarks.txt \;
+      rm /tmp/firefox-bookmarks.txt
 
 - name: List Mozilla Firefox Bookmark Database Files on macOS
   description: |
@@ -26,6 +27,7 @@ atomic_tests:
     name: sh
     command: |
       find / -path "*/Firefox/Profiles/*/places.sqlite" -exec echo {} >> /tmp/firefox-bookmarks.txt \;
+      rm /tmp/firefox-bookmarks.txt
 
 - name: List Google Chrome Bookmark JSON Files on macOS
   description: |
@@ -38,6 +40,7 @@ atomic_tests:
     name: sh
     command: |
       find / -path "*/Google/Chrome/*/Bookmarks" -exec echo {} >> /tmp/chrome-bookmarks.txt \;
+      rm /tmp/chrome-bookmarks.txt
 
 - name: List Google Chrome Bookmarks on Windows with powershell
   description: |
