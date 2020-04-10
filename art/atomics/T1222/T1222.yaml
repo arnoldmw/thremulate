@@ -157,7 +157,7 @@ atomic_tests:
     file_or_folder:
       description: Path of the file or folder
       type: path
-      default: /tmp/AtomicRedTeam/atomics/T1222
+      default: /tmp/T1222.txt
     numeric_mode:
       description: Specified numeric mode value
       type: string
@@ -166,6 +166,7 @@ atomic_tests:
   executor:
     name: bash
     command: |
+      echo Test files >> #{file_or_folder}
       chmod #{numeric_mode} #{file_or_folder}
 
 - name: chmod - Change file or folder mode (symbolic mode)
@@ -180,7 +181,7 @@ atomic_tests:
     file_or_folder:
       description: Path of the file or folder
       type: path
-      default: /tmp/AtomicRedTeam/atomics/T1222
+      default: /tmp/T1222.txt
     symbolic_mode:
       description: Specified symbolic mode value
       type: string
@@ -189,6 +190,7 @@ atomic_tests:
   executor:
     name: bash
     command: |
+      echo Test file > #{file_or_folder}
       chmod #{symbolic_mode} #{file_or_folder}
 
 - name: chmod - Change file or folder mode (numeric mode) recursively
@@ -203,7 +205,7 @@ atomic_tests:
     file_or_folder:
       description: Path of the file or folder
       type: path
-      default: /tmp/AtomicRedTeam/atomics/T1222
+      default: /tmp/T1222.txt
     numeric_mode:
       description: Specified numeric mode value
       type: string
@@ -212,6 +214,7 @@ atomic_tests:
   executor:
     name: bash
     command: |
+      echo Test file > #{file_or_folder}
       chmod #{numeric_mode} #{file_or_folder} -R
 
 - name: chmod - Change file or folder mode (symbolic mode) recursively
@@ -226,7 +229,7 @@ atomic_tests:
     file_or_folder:
       description: Path of the file or folder
       type: path
-      default: /tmp/AtomicRedTeam/atomics/T1222
+      default: /tmp/T1222.txt
     symbolic_mode:
       description: Specified symbolic mode value
       type: string
@@ -235,6 +238,7 @@ atomic_tests:
   executor:
     name: bash
     command: |
+      echo Test file > #{file_or_folder}
       chmod #{symbolic_mode} #{file_or_folder} -R
 
 - name: chown - Change file or folder ownership and group
@@ -249,7 +253,7 @@ atomic_tests:
     file_or_folder:
       description: Path of the file or folder
       type: path
-      default: /tmp/AtomicRedTeam/atomics/T1222/T1222.yaml
+      default: /tmp/T1222.txt
     owner:
       description: Username of desired owner
       type: string
@@ -262,6 +266,7 @@ atomic_tests:
   executor:
     name: bash
     command: |
+      echo Test file > #{file_or_folder}
       chown #{owner}:#{group} #{file_or_folder}
 
 - name: chown - Change file or folder ownership and group recursively
@@ -275,7 +280,7 @@ atomic_tests:
     file_or_folder:
       description: Path of the file or folder
       type: path
-      default: /tmp/AtomicRedTeam/atomics/T1222
+      default: /tmp/T1222.txt
     owner:
       description: Username of desired owner
       type: string
@@ -288,6 +293,7 @@ atomic_tests:
   executor:
     name: bash
     command: |
+      echo Test file > #{file_or_folder}
       chown #{owner}:#{group} #{file_or_folder} -R
 
 - name: chown - Change file or folder mode ownership only
@@ -302,7 +308,7 @@ atomic_tests:
     file_or_folder:
       description: Path of the file or folder
       type: path
-      default: /tmp/AtomicRedTeam/atomics/T1222/T1222.yaml
+      default: #{file_or_folder}
     owner:
       description: Username of desired owner
       type: string
@@ -311,6 +317,7 @@ atomic_tests:
   executor:
     name: bash
     command: |
+      echo Test file > #{file_or_folder}
       chown #{owner} #{file_or_folder}
 
 - name: chown - Change file or folder ownership recursively
@@ -324,7 +331,7 @@ atomic_tests:
     file_or_folder:
       description: Path of the file or folder
       type: path
-      default: /tmp/AtomicRedTeam/atomics/T1222
+      default: /tmp/T1222.txt
     owner:
       description: Username of desired owner
       type: string
@@ -333,6 +340,7 @@ atomic_tests:
   executor:
     name: bash
     command: |
+      echo Test file > #{file_or_folder}
       chown #{owner} #{file_or_folder} -R
 
 - name: chattr - Remove immutable file attribute
