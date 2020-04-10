@@ -59,26 +59,6 @@ async def assign_tasks(request):
         raise web.HTTPFound('/agents')
 
 
-async def assign_tasks_post(request):
-    await check_authorized(request)
-    data = await request.post()
-
-    agent_id = data['agent_id']
-    rec_data = []
-
-    for key in data.keys():
-        if data[key] is not '':
-            rec_data.append(data[key])
-
-    data_len = rec_data.__len__()
-    rec_data = rec_data[1:data_len - 1]
-
-    for data in rec_data:
-        AgentTechnique.create(technique_id=data, agent_id=agent_id)
-
-    raise web.HTTPFound('/agents')
-
-
 # AGENT SENDS RESULTS BACK TO C2
 async def agent_output(request):
     data = await request.post()
@@ -381,7 +361,6 @@ def setup_agent_routes(app):
         web.get('/customize_technique/', customize_technique, name='customize_technique'),
         web.post('/customize_technique_post', customize_technique_post, name='customize_technique_post'),
         web.get('/assign_tasks/{id}', assign_tasks, name='assign_get'),
-        web.post('/assign_tasks_post', assign_tasks_post, name='assign_post'),
         web.post('/delete_tech_output', delete_tech_output),
         web.post('/delete_tech_assignment', delete_tech_assignment),
         web.get('/agents', agent_index, name='agents'),
