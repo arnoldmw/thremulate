@@ -92,6 +92,8 @@ async def adversary_update(request):
         raise web.HTTPFound('/adversaries')
     except KeyError:
         return web.Response(status=400)
+    except IntegrityError:
+        raise web.HTTPFound('/adversaries')
 
 
 async def adversary_delete(request):

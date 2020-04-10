@@ -219,7 +219,6 @@ class AdversaryTests(AioHTTPTestCase):
         self.assertTrue(resp_two.status == 200, msg="Failed to access /adversary_update. Received status code {0}"
                         .format(resp_two.status))
 
-    # TODO: Compare body in response from server
     @unittest_run_loop
     async def test_adversary_delete(self):
         resp = await self.client.request("POST", "/login_post", data=data)
