@@ -17,5 +17,4 @@ atomic_tests:
     elevation_required: true
     command: |
       sudo touch /Library/StartupItems/EvilStartup.plist
-    cleanup_command: |
       sudo rm /Library/StartupItems/EvilStartup.plist
