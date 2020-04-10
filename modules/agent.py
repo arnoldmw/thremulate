@@ -88,7 +88,11 @@ async def agent_output(request):
         Agent.update(last_contact=executed).where(Agent.id == agent_id).execute()
         return web.Response(text='success')
     except KeyError:
-        web.Response(text='failed')  # Wrong parameters
+        web.Response(text='failed', status=400)
+    except Agent.DoesNotExist:
+        web.Response(text='failed', status=400)
+    except Agent.AgentTechnique:
+        web.Response(text='failed', status=400)
 
 
 # TECHNIQUES ASSIGNED TO AN AGENT
