@@ -20,7 +20,11 @@
                 {% for test in tests %}
                 <h4 class="font-weight-bold text-white">TEST {{ loop.index }}</h4>
                 <p>Description: {{ test.description}}</p>
+                {% if test.at_test.elevation_required %}
                 <p>Elevation required: {{ test.at_test.elevation_required}}</p>
+                {% else %}
+                <p>Elevation required: False</p>
+                {% endif %}
                 {% if test.at_test.steps %}
                 <p>Steps: <br> {{ test.at_test.steps.replace('\n', '<br>') | safe}}</p>
                 {% endif %}
@@ -74,6 +78,7 @@
             });
         });
     });
+
 
 </script>
 {% endblock %}
