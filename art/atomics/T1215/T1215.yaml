@@ -25,5 +25,4 @@ atomic_tests:
     elevation_required: true # indicates whether command must be run with admin privileges. If the elevation_required attribute is not defined, the value is assumed to be false
     command: | # these are the actaul attack commands, at least one command must be provided
       insmod #{kernel_module_file}
-    cleanup_command: | # you can remove the cleanup_command section if there are no cleanup commands
       rmmod #{module_name}
