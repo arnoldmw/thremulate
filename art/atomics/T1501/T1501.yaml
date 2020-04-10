@@ -64,7 +64,6 @@ atomic_tests:
       systemctl daemon-reload
       systemctl enable #{systemd_service_file}
       systemctl start #{systemd_service_file}
-    cleanup_command: |
       systemctl stop #{systemd_service_file}
       systemctl disable #{systemd_service_file}
       rm -rf #{systemd_service_path}/#{systemd_service_file}
