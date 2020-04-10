@@ -251,19 +251,24 @@ async def agent_edit_post(request):
 @aiohttp_jinja2.template('agent/customize_technique.html')
 async def customize_technique(request):
     await check_authorized(request)
-    tech_id = 'T' + request.query['tech_id']
-    agent_id = request.query['agent_id']
-    agent_platform = Agent.get(Agent.id == agent_id).platform
+    try:
+        tech_id = 'T' + request.query['tech_id']
+        agent_id = request.query['agent_id']
+        agent_platform = Agent.get(Agent.id == agent_id).platform
 
-    session = await get_session(request)
-    current_user = session['current_user']
+        session = await get_session(request)
+        current_user = session['current_user']
 
-    tech = get_one_technique_and_params(tech_id, agent_platform)
-    tech.__setitem__('agent_id', agent_id)
-    tech.__setitem__('title', 'Techniques')
-    tech.__setitem__('current_user', current_user)
+        tech = get_one_technique_and_params(tech_id, agent_platform)
+        tech.__setitem__('agent_id', agent_id)
+        tech.__setitem__('title', 'Techniques')
+        tech.__setitem__('current_user', current_user)
 
-    return tech
+        return tech
+    except KeyError:
+        return web.Response(status=400)
+    except Agent.DoesNotExist:
+        return web.Response(status=400)
 
 
 async def customize_technique_post(request):
