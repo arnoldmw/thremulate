@@ -344,6 +344,10 @@ async def delete_tech_output(request):
         return web.Response(text='deleted')
     except KeyError:
         web.Response(text='Invalid data', status=400)
+    except AgentTechnique.DoesNotExist:
+        return web.Response(text='Invalid data', status=400)
+    except AgentTechnique.IntegrityError:
+        return web.Response(text='Invalid data', status=400)
 
 
 async def delete_tech_assignment(request):
