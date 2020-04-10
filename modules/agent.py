@@ -16,6 +16,7 @@ from art.run_atomics import get_all_techniques, get_one_technique_and_params
 from art.run_atomics import get_all_techniques_and_params
 # noinspection PyUnresolvedReferences
 from art.run_atomics import get_commands
+# noinspection PyUnresolvedReferences
 from db.database import *
 from peewee import IntegrityError
 
@@ -40,16 +41,22 @@ async def agent_index(request):
 @aiohttp_jinja2.template('agent/assign_tasks.html')
 async def assign_tasks(request):
     await check_authorized(request)
-    agent_id = request.match_info['id']
 
-    ag = Agent.get(Agent.id == agent_id)
-    agent_platform = ag.platform
+    try:
+        agent_id = request.match_info['id']
 
-    tech_matrix = get_all_techniques(agent_platform)
+        ag = Agent.get(Agent.id == agent_id)
+        agent_platform = ag.platform
 
-    session = await get_session(request)
-    current_user = session['current_user']
-    return {'current_user': current_user, 'matrix': tech_matrix, 'agent_id': agent_id, 'title': 'Techniques'}
+        tech_matrix = get_all_techniques(agent_platform)
+
+        session = await get_session(request)
+        current_user = session['current_user']
+        return {'current_user': current_user, 'matrix': tech_matrix, 'agent_id': agent_id, 'title': 'Techniques'}
+    except KeyError:
+        return web.Response(text='Missing agent id', status=400)
+    except Agent.DoesNotExist:
+        raise web.HTTPFound('/agents')
 
 
 async def assign_tasks_post(request):
