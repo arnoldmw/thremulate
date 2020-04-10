@@ -331,6 +331,8 @@ async def register_agent(request):
                          plat_version=data['plat_version'], username=data['username'],
                          adversary=Adversary.get(Adversary.name == 'Unknown'))
             return web.Response(text='Agent has registered.%s' % data['id'])
+    except KeyError:
+        web.Response(text='Invalid registration data', status=400)
 
 
 async def delete_tech_output(request):
