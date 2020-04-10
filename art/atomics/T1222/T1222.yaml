@@ -168,6 +168,8 @@ atomic_tests:
     command: |
       echo Test files >> #{file_or_folder}
       chmod #{numeric_mode} #{file_or_folder}
+      ls -l #{file_or_folder}
+      rm #{file_or_folder}
 
 - name: chmod - Change file or folder mode (symbolic mode)
   description: |
@@ -192,6 +194,8 @@ atomic_tests:
     command: |
       echo Test file > #{file_or_folder}
       chmod #{symbolic_mode} #{file_or_folder}
+      ls -l #{file_or_folder}
+      rm #{file_or_folder}
 
 - name: chmod - Change file or folder mode (numeric mode) recursively
   description: |
@@ -240,6 +244,8 @@ atomic_tests:
     command: |
       echo Test file > #{file_or_folder}
       chmod #{symbolic_mode} #{file_or_folder} -R
+      ls -l #{file_or_folder}
+      rm #{file_or_folder}
 
 - name: chown - Change file or folder ownership and group
   description: |
@@ -268,6 +274,8 @@ atomic_tests:
     command: |
       echo Test file > #{file_or_folder}
       chown #{owner}:#{group} #{file_or_folder}
+      ls -l #{file_or_folder}
+      rm #{file_or_folder}
 
 - name: chown - Change file or folder ownership and group recursively
   description: |
@@ -295,6 +303,8 @@ atomic_tests:
     command: |
       echo Test file > #{file_or_folder}
       chown #{owner}:#{group} #{file_or_folder} -R
+      ls -l #{file_or_folder}
+      rm #{file_or_folder}
 
 - name: chown - Change file or folder mode ownership only
   description: |
@@ -319,6 +329,8 @@ atomic_tests:
     command: |
       echo Test file > #{file_or_folder}
       chown #{owner} #{file_or_folder}
+      ls -l #{file_or_folder}
+      rm #{file_or_folder}
 
 - name: chown - Change file or folder ownership recursively
   description: |
@@ -342,6 +354,8 @@ atomic_tests:
     command: |
       echo Test file > #{file_or_folder}
       chown #{owner} #{file_or_folder} -R
+      ls -l #{file_or_folder}
+      rm #{file_or_folder}
 
 - name: chattr - Remove immutable file attribute
   description: |
