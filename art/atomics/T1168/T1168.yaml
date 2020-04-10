@@ -15,7 +15,7 @@ atomic_tests:
     command:
       description: Command to execute
       type: string
-      default: /tmp/evil.sh
+      default: ifconfig
     tmp_cron:
       description: Temporary reference file to hold evil cron schedule
       type: path
