@@ -107,7 +107,7 @@ async def agent_techniques(request):
 
         return web.Response(text=tech_id)
     except KeyError:
-        web.Response(text='failed')  # Wrong parameters
+        web.Response(text='failed', status=400)  # Wrong parameters
     except AgentTechnique.DoesNotExist:
         web.Response(text='Agent not assigned')
 
