@@ -305,7 +305,11 @@ async def customize_technique_post(request):
         return web.Response(text='Assigned')
 
     except KeyError:
-        return web.Response(text='Invalid data')
+        return web.Response(status=400)
+    except AgentTechnique.DoesNotExist:
+        return web.Response(status=400)
+    except AgentTechnique.IntegrityError:
+        return web.Response(status=400)
 
 
 async def register_agent(request):

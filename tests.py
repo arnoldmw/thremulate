@@ -9,7 +9,7 @@ from server import create_app_two
 from db.database import Adversary
 
 data = {'email': 'admin@thremulate.com', 'password': 'thremulate'}
-agent_id = 44444
+agent_id = 4000
 
 
 class ThremulateTests(AioHTTPTestCase):
@@ -280,7 +280,7 @@ class ABgentAssignTechnique(AioHTTPTestCase):
         resp = await self.client.request("POST", "/login_post", data=data)
         self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
                         .format(resp.status))
-        custom_tech = {'agent_id': agent_id, 'tech_id': 1002, 'test_id': 0, 'input_path': '%USERPROFILE%',
+        custom_tech = {'agent_id': 44444, 'tech_id': 1002, 'test_id': 0, 'input_path': '%USERPROFILE%',
                        'output_file': '%USERPROFILE%\\data.rar'}
         resp_two = await self.client.request("POST", "/customize_technique_post", data=custom_tech)
         self.assertTrue(resp_two.status == 200,
