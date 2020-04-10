@@ -154,6 +154,12 @@ async def agent_tasks(request):
         return web.Response(text=commands)
     except KeyError:
         web.Response(text='failed')  # Wrong parameters
+    except Agent.DoesNotExist:
+        web.Response(text='failed', status=400)
+    except AgentTechnique.DoesNotExist:
+        web.Response(text='failed', status=400)
+    except Parameter.DoesNotExist:
+        web.Response(text='failed', status=400)
 
 
 def assignments(tech_list, plat, parameters):
