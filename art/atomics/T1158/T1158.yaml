@@ -13,9 +13,9 @@ atomic_tests:
     name: sh
     elevation_required: false
     command: |
-      mkdir /var/tmp/.hidden-directory
-      echo "T1158" > /var/tmp/.hidden-directory/.hidden-file
-      rm -rf /var/tmp/.hidden-directory/
+      mkdir /tmp/.hidden-directory
+      echo "T1158" > /tmp/.hidden-directory/.hidden-file
+      rm -rf /tmp/.hidden-directory/
 
 - name: Mac Hidden file
   description: |
@@ -79,9 +79,9 @@ atomic_tests:
     name: sh
     elevation_required: false
     command: |
-      touch /var/tmp/T1158_mac.txt
-      chflags hidden /var/tmp/T1158_mac.txt
-      rm /var/tmp/T1158_mac.txt
+      touch /tmp/T1158_mac.txt
+      chflags hidden /tmp/T1158_mac.txt
+      rm /tmp/T1158_mac.txt
 
 - name: Show all hidden files
   description: |
