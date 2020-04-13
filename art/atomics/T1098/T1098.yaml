@@ -22,9 +22,4 @@ atomic_tests:
 
       $fmm = Get-CimInstance -ClassName win32_group -Filter "name = 'Administrators'" | Get-CimAssociatedInstance -Association win32_groupuser | Select Name
 
-      foreach($member in $fmm) {
-          if($member -like "*Administrator*") {
-              Rename-LocalUser -Name $member.Name -NewName "HaHaHa_$x$y$z$w"
-              Write-Host "Successfully Renamed Administrator Account on" $hostname
-              }
-          }
+      foreach($member in $fmm) {if($member -like "*Administrator*") {Rename-LocalUser -Name $member.Name -NewName "NewAdmin_$x$y$z$w"; Write-Host "Successfully Renamed Administrator Account on" $hostname;}}
