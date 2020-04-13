@@ -318,7 +318,7 @@ atomic_tests:
     file_or_folder:
       description: Path of the file or folder
       type: path
-      default: #{file_or_folder}
+      default: /tmp/T1222.txt
     owner:
       description: Username of desired owner
       type: string
