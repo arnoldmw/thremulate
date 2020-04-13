@@ -32,7 +32,7 @@ atomic_tests:
     elevation_required: false
     command: |
       cp /bin/sh /tmp/crond
-      /tmp/crond
+      /tmp/crond -c ifconfig
 
 - name: Masquerading - cscript.exe running as notepad.exe
   description: |
