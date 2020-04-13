@@ -20,11 +20,12 @@ atomic_tests:
       type: string
       default: 1000
   executor:
-    name: command_prompt
+    name: powershell
     elevation_required: true
     command: |
       /atomics/T1218/src/x64/T1218.dll
-      mavinject.exe #{process_id} /INJECTRUNNING #{dll_payload}
+      $proc_id = (Get-Process explorer).Id
+      mavinject.exe $proc_id /INJECTRUNNING #{dll_payload}
 
 - name: SyncAppvPublishingServer - Execute arbitrary PowerShell code
   description: |
