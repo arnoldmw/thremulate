@@ -15,7 +15,6 @@ atomic_tests:
     command: |
       mkdir /var/tmp/.hidden-directory
       echo "T1158" > /var/tmp/.hidden-directory/.hidden-file
-    cleanup_command: |
       rm -rf /var/tmp/.hidden-directory/
 
 - name: Mac Hidden file
@@ -82,7 +81,6 @@ atomic_tests:
     command: |
       touch /var/tmp/T1158_mac.txt
       chflags hidden /var/tmp/T1158_mac.txt
-    cleanup_command: |
       rm /var/tmp/T1158_mac.txt
 
 - name: Show all hidden files
@@ -95,7 +93,6 @@ atomic_tests:
     elevation_required: false
     command: |
       defaults write com.apple.finder AppleShowAllFiles YES
-    cleanup_command: |
       defaults write com.apple.finder AppleShowAllFiles NO
 
 - name: Create ADS command prompt
