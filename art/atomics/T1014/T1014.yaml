@@ -14,12 +14,14 @@ atomic_tests:
     rootkit_file:
       description: Path To Module
       type: String
-      default: Module.ko
+      default: /tmp/module.ko
 
   executor:
     name: sh
     command: |
+      /atomics/T1014/bin/module.ko
       sudo insmod #{rootkit_file}
+
 - name: Loadable Kernel Module based Rootkit
   description: |
     Loadable Kernel Module based Rootkit
@@ -31,11 +33,12 @@ atomic_tests:
     rootkit_file:
       description: Path To Module
       type: String
-      default: Module.ko
+      default: /tmp/module.ko
 
   executor:
     name: sh
     command: |
+      /atomics/T1014/bin/module.ko
       sudo modprobe #{rootkit_file}
 
 - name: Windows Signed Driver Rootkit Test
