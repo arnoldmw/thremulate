@@ -78,7 +78,7 @@ atomic_tests:
       description: Password
       type: String
       default: P@ssw0rd1
-    computer_name:
+    remote_host:
       description: Target Computer Name
       type: String
       default: Target
@@ -86,7 +86,8 @@ atomic_tests:
   executor:
     name: command_prompt
     command: |
-      psexec \\host -u domain\user -p password -s cmd.exe
+      /atomics/T1028/bin/PsExec64.exe
+      PsExec64.exe -accepteula -s \\#{remote_host} "C:\Windows\System32\ipconfig.exe"
 
 - name: Invoke-Command
   description: |
