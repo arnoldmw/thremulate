@@ -24,3 +24,4 @@ atomic_tests:
       get-process | select processname,Id,@{l="Owner";e={$owners[$_.id.tostring()]}}
       Set-Location $PathToAtomicsFolder
       T1134.ps1
+      [MyProcess]::CreateProcessFromParent((Get-Process explorer).Id,"cmd.exe")
