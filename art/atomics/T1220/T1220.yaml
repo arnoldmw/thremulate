@@ -22,7 +22,7 @@ atomic_tests:
       command: |
         /atomics/T1220/src/msxslxmlfile.xml
         /atomics/T1220/src/msxslscript.xsl
-        C:\Windows\Temp\msxsl.exe #{xmlfile} #{xslfile}
+        msxsl.exe #{xmlfile} #{xslfile}
 
   - name: MSXSL Bypass using remote files
     description: |
@@ -41,7 +41,7 @@ atomic_tests:
     executor:
       name: command_prompt
       command: |
-        C:\Windows\Temp\msxsl.exe #{xmlfile} #{xslfile}
+        msxsl.exe #{xmlfile} #{xslfile}
 
   - name: WMIC bypass using local XSL file
     description: |
@@ -56,7 +56,7 @@ atomic_tests:
       local_xsl_file:
         description: Location of the test XSL script file on the local filesystem.
         type: path
-        default: PathToAtomicsFolder\T1220\src\wmicscript.xsl
+        default: wmicscript.xsl
     executor:
       name: command_prompt
       command: |
