@@ -60,6 +60,7 @@ atomic_tests:
     executor:
       name: command_prompt
       command: |
+        /atomics/T1220/src/wmicscript.xsl
         wmic.exe #{wmic_command} /FORMAT:#{local_xsl_file}
 
   - name: WMIC bypass using remote XSL file
