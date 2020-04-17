@@ -14,11 +14,12 @@ atomic_tests:
     file_folder_to_own:
       description: Path of the file or folder for takeown to take ownership.
       type: path
-      default: PathToAtomicsFolder\T1222\T1222.yaml
+      default: T1222.txt
 
   executor:
     name: command_prompt
     command: |
+      echo Test file > T1222.txt
       takeown.exe /f #{file_folder_to_own}
 
 - name: Take ownership recursively using takeown utility
