@@ -22,6 +22,7 @@ atomic_tests:
       command: |
         /atomics/T1220/src/msxslxmlfile.xml
         /atomics/T1220/src/msxslscript.xsl
+        /atomics/T1220/bin/msxsl.exe
         msxsl.exe #{xmlfile} #{xslfile}
 
   - name: MSXSL Bypass using remote files
