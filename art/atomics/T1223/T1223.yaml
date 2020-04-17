@@ -14,12 +14,13 @@ atomic_tests:
     local_chm_file:
       description: Local .chm payload
       type: path
-      default: PathToAtomicsFolder\T1223\src\T1223.chm
+      default: T1223.chm
 
   executor:
     name: command_prompt
     elevation_required: false
     command: |
+      /atomics/T1223/src/T1223.chm
       hh.exe #{local_chm_file}
 
 - name: Compiled HTML Help Remote Payload
