@@ -38,6 +38,7 @@ atomic_tests:
   executor:
     name: command_prompt
     command: |
+      mkdir T1212
       takeown.exe /f #{folder_to_own} /r
 
 - name: cacls - Grant permission to specified user or group
