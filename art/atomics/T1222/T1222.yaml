@@ -10,19 +10,13 @@ atomic_tests:
   supported_platforms:
     - windows
 
-  input_arguments:
-    file_folder_to_own:
-      description: Path of the file or folder for takeown to take ownership.
-      type: path
-      default: T1222.txt
-
   executor:
     name: command_prompt
     command: |
       echo Test file > T1222.txt
-      takeown.exe /f #{file_folder_to_own}
-      dir /q #{file_or_folder}
-      del #{file_or_folder}
+      takeown.exe /f T1222.txt
+      dir /q T1222.txt
+      del T1222.txt
 
 - name: Take ownership recursively using takeown utility
   description: |
@@ -30,12 +24,6 @@ atomic_tests:
 
   supported_platforms:
     - windows
-
-  input_arguments:
-    folder_to_own:
-      description: Path of the folder for takeown to take ownership.
-      type: path
-      default: PathToAtomicsFolder\T1222
 
   executor:
     name: command_prompt
@@ -51,10 +39,6 @@ atomic_tests:
     - windows
 
   input_arguments:
-    file_or_folder:
-      description: Path of the file or folder to change permissions.
-      type: path
-      default: T1212.txt
     user_or_group:
       description: User or group to allow full control
       type: string
@@ -63,10 +47,10 @@ atomic_tests:
   executor:
     name: command_prompt
     command: |
-      echo Test file > #{file_or_folder}
-      Icacls.exe #{file_or_folder} /grant #{user_or_group}:(F)
-      dir /q #{file_or_folder}
-      del #{file_or_folder}
+      echo Test file > T1222.txt
+      Icacls.exe T1222.txt /grant #{user_or_group}:(F)
+      dir /q T1222.txt
+      del T1222.txt
 
 - name: cacls - Grant permission to specified user or group recursively
   description: |
@@ -76,10 +60,6 @@ atomic_tests:
     - windows
 
   input_arguments:
-    file_or_folder:
-      description: Path of the file or folder to change permissions.
-      type: path
-      default: PathToAtomicsFolder\T1222
     user_or_group:
       description: User or group to allow full control
       type: string
@@ -88,10 +68,10 @@ atomic_tests:
   executor:
     name: command_prompt
     command: |
-      echo Test file > #{file_or_folder}
-      cacls.exe #{file_or_folder} /grant #{user_or_group}:F /t
-      dir /q #{file_or_folder}
-      del #{file_or_folder}
+      echo Test file > T1222.txt
+      cacls.exe T1222.txt /grant #{user_or_group}:F /t
+      dir /q T1222.txt
+      del T1222.txt
 
 - name: icacls - Grant permission to specified user or group
   description: |
@@ -101,10 +81,6 @@ atomic_tests:
     - windows
 
   input_arguments:
-    file_or_folder:
-      description: Path of the file or folder to change permissions.
-      type: path
-      default: PathToAtomicsFolder\T1222\T1222.yaml
     user_or_group:
       description: User or group to allow full control
       type: string
@@ -113,10 +89,10 @@ atomic_tests:
   executor:
     name: command_prompt
     command: |
-      echo Test file > #{file_or_folder}
-      icacls.exe #{file_or_folder} /grant #{user_or_group}:F
-      dir /q #{file_or_folder}
-      del #{file_or_folder}
+      echo Test file > T1222.txt
+      icacls.exe T1222.txt /grant #{user_or_group}:F
+      dir /q T1222.txt
+      del T1222.txt
 
 - name: icacls - Grant permission to specified user or group recursively
   description: |
@@ -126,10 +102,6 @@ atomic_tests:
     - windows
 
   input_arguments:
-    file_or_folder:
-      description: Path of the file or folder to change permissions.
-      type: path
-      default: PathToAtomicsFolder\T1222
     user_or_group:
       description: User or group to allow full control
       type: string
@@ -138,10 +110,10 @@ atomic_tests:
   executor:
     name: command_prompt
     command: |
-      echo Test file > #{file_or_folder}
-      icacls.exe #{file_or_folder} /grant #{user_or_group}:F /t
-      dir /q #{file_or_folder}
-      del #{file_or_folder}
+      echo Test file > T1222.txt
+      icacls.exe T1222.txt /grant #{user_or_group}:F /t
+      dir /q T1222.txt
+      del T1222.txt
 
 - name: attrib - Remove read-only attribute
   description: |
@@ -150,19 +122,13 @@ atomic_tests:
   supported_platforms:
     - windows
 
-  input_arguments:
-    file_or_folder:
-      description: Path of the file or folder remove attribute.
-      type: path
-      default: PathToAtomicsFolder\T1222
-
   executor:
     name: command_prompt
     command: |
-      echo Test file > #{file_or_folder}
-      attrib.exe -r #{file_or_folder}
-      dir /q #{file_or_folder}
-      del #{file_or_folder}
+      echo Test file > T1222.txt
+      attrib.exe -r T1222.txt
+      dir /q T1222.txt
+      del T1222.txt
 
 - name: chmod - Change file or folder mode (numeric mode)
   description: |
