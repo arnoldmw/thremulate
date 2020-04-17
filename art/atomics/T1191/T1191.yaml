@@ -12,7 +12,7 @@ atomic_tests:
     inf_file_path:
       description: Path to the INF file
       type: path
-      default: PathToAtomicsFolder\T1191\src\T1191.inf
+      default: T1191.inf
   executor:
     name: command_prompt
     elevation_required: false
@@ -29,9 +29,10 @@ atomic_tests:
     inf_file_uac:
       description: Path to the INF file
       type: path
-      default: PathToAtomicsFolder\T1191\src\T1191_uacbypass.inf
+      default: T1191_uacbypass.inf
   executor:
     name: command_prompt
     elevation_required: false
     command: |
+      /atomics/T1191/T1191_uacbypass.inf
       cmstp.exe /s #{inf_file_uac} /au
