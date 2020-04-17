@@ -84,6 +84,7 @@ atomic_tests:
   executor:
     name: command_prompt
     command: |
+      echo Test file > #{file_or_folder}
       cacls.exe #{file_or_folder} /grant #{user_or_group}:F /t
 
 - name: icacls - Grant permission to specified user or group
@@ -106,6 +107,7 @@ atomic_tests:
   executor:
     name: command_prompt
     command: |
+      echo Test file > #{file_or_folder}
       icacls.exe #{file_or_folder} /grant #{user_or_group}:F
 
 - name: icacls - Grant permission to specified user or group recursively
@@ -128,6 +130,7 @@ atomic_tests:
   executor:
     name: command_prompt
     command: |
+      echo Test file > #{file_or_folder}
       icacls.exe #{file_or_folder} /grant #{user_or_group}:F /t
 
 - name: attrib - Remove read-only attribute
@@ -146,6 +149,7 @@ atomic_tests:
   executor:
     name: command_prompt
     command: |
+      echo Test file > #{file_or_folder}
       attrib.exe -r #{file_or_folder}
 
 - name: chmod - Change file or folder mode (numeric mode)
