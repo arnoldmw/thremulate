@@ -51,7 +51,7 @@ atomic_tests:
     file_or_folder:
       description: Path of the file or folder to change permissions.
       type: path
-      default: PathToAtomicsFolder\T1222\T1222.yaml
+      default: T1212.txt
     user_or_group:
       description: User or group to allow full control
       type: string
@@ -60,7 +60,8 @@ atomic_tests:
   executor:
     name: command_prompt
     command: |
-      cacls.exe #{file_or_folder} /grant #{user_or_group}:F
+      echo Test file > #{file_or_folder}
+      Icacls.exe #{file_or_folder} /grant #{user_or_group}:(F)
 
 - name: cacls - Grant permission to specified user or group recursively
   description: |
