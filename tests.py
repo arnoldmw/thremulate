@@ -12,7 +12,6 @@ from db.database import *
 
 data = {'email': 'admin@thremulate.com', 'password': 'thremulate'}
 agent_id = 4000
-adversary_name = 'APT4000'
 
 
 class ThremulateTests(AioHTTPTestCase):
@@ -205,30 +204,34 @@ class AdversaryTests(AioHTTPTestCase):
         resp = await self.client.request("POST", "/login_post", data=data)
         self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
                         .format(resp.status))
-        adv_name = ''.join(random.choice(string.ascii_lowercase) for _ in range(7))
-        resp_two = await self.client.request("POST", "/adversary_add", data={'addName': adv_name})
+        adversary_name = ''.join(random.choice(string.ascii_lowercase) for _ in range(7))
+        resp_two = await self.client.request("POST", "/adversary_add", data={'addName': adversary_name})
         self.assertTrue(resp_two.status == 200, msg="Failed to access /adversary_add. Received status code {0}"
                         .format(resp_two.status))
         text = await resp_two.text()
         self.assertTrue(text != 'exists', msg="Adversary already exists")
-        Adversary.delete().where(Adversary.name == adv_name).execute()
+        Adversary.delete().where(Adversary.name == adversary_name).execute()
 
     @unittest_run_loop
     async def test_adversary_update(self):
         resp = await self.client.request("POST", "/login_post", data=data)
         self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
                         .format(resp.status))
-        adv_id = Adversary.get(Adversary.name == 'Unknown')
-        resp_two = await self.client.request("POST", "/adversary_update", data={'id': adv_id, 'name': 'Unknown'})
+        adversary_name = ''.join(random.choice(string.ascii_lowercase) for _ in range(7))
+        adv_id = Adversary.create(name=adversary_name)
+        resp_two = await self.client.request("POST", "/adversary_update", data={'id': adv_id, 'name': adversary_name})
         self.assertTrue(resp_two.status == 200, msg="Failed to access /adversary_update. Received status code {0}"
                         .format(resp_two.status))
+        Adversary.delete().where(Adversary.name == adversary_name).execute()
 
     @unittest_run_loop
     async def test_adversary_delete(self):
         resp = await self.client.request("POST", "/login_post", data=data)
         self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
                         .format(resp.status))
-        adv_id = Adversary.get(Adversary.name == 'APT4000')
+        adversary_name = ''.join(random.choice(string.ascii_lowercase) for _ in range(7))
+        adv_id = Adversary.create(name=adversary_name)
+        print(adv_id)
         resp_two = await self.client.request("POST", "/adversary_delete", data={'id': adv_id})
         self.assertTrue(resp_two.status == 200, msg="Failed to access /adversary_delete. Received status code {0}"
                         .format(resp_two.status))
