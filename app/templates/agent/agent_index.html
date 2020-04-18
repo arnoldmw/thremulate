@@ -57,33 +57,33 @@
                             <td>{{ agent_tasks.last_contact.strftime("%d-%b-%Y %H:%M:%S") }}</td>
                             <td>{{ agent_tasks.adversary }}</td>
                             <td>
-<!--                                <div class="form-button-action">-->
+                                <div class="form-button-action">
                                 <button type="button" class="btn btn-link btn-danger" data-toggle="modal"
-                                        data-original-title="Remove">
+                                        data-original-title="Remove" >
                                     <a href="{{ url('assign_get', id=agent_tasks.id) }}">
                                         <i class="fa fa-play" data-toggle="tooltip" title="Assign techniques"
-                                           style="font-size: 18px;"> </i>
+                                           style="font-size: 18px;"></i>
                                     </a>
                                 </button>
                                 <button type="button" class="btn btn-link btn-danger">
                                     <a href="{{ url('agent_details', id=agent_tasks.id) }}">
                                         <i class="fas fa-info-circle" data-toggle="tooltip" title="More information"
-                                           style="font-size: 20px;"> </i>
+                                           style="font-size: 20px;"></i>
                                     </a>
                                 </button>
                                 <button type="button" class="btn btn-link btn-danger">
                                     <a href="{{ url('agent_edit', id=agent_tasks.id) }}">
                                         <i class="fa fa-edit" data-toggle="tooltip" title="Update Agent"
-                                           style="font-size: 18px;"> </i>
+                                           style="font-size: 18px;"></i>
                                     </a>
                                 </button>
                                 <button type="button" class="btn btn-link btn-danger js-delete"
                                         data-toggle="modal" data-target="#agentDeleteModal" 
                                         data-agt-id="{{ agent_tasks.id }}">
                                     <i class="fa fa-times" data-toggle="tooltip" title="Delete!"
-                                       style="font-size: 20px;"> </i>
+                                       style="font-size: 20px;"></i>
                                 </button>
-<!--                                </div>-->
+                                </div>
                             </td>
                         </tr>
                         {% endfor %}
