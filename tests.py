@@ -280,7 +280,7 @@ class ABgentAssignTechnique(AioHTTPTestCase):
         resp = await self.client.request("POST", "/login_post", data=data)
         self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
                         .format(resp.status))
-        custom_tech = {'agent_id': 44444, 'tech_id': 1002, 'test_id': 0, 'input_path': '%USERPROFILE%',
+        custom_tech = {'agent_id': agent_id, 'tech_id': 1002, 'test_id': 0, 'input_path': '%USERPROFILE%',
                        'output_file': '%USERPROFILE%\\data.rar'}
         resp_two = await self.client.request("POST", "/customize_technique_post", data=custom_tech)
         self.assertTrue(resp_two.status == 200,
@@ -304,8 +304,8 @@ class AgentCommunicationLines(AioHTTPTestCase):
 
     @unittest_run_loop
     async def test_agent_techniques(self):
-        resp = await self.client.request("GET", "/agent_techniques/44444")
-        self.assertTrue(resp.status == 200, msg="Failed to access /agent_techniques/44444")
+        resp = await self.client.request("GET", "/agent_techniques/{0}".format(agent_id))
+        self.assertTrue(resp.status == 200, msg="Failed to access /agent_techniques/{0}".format(agent_id))
 
     @unittest_run_loop
     async def test_agent_output(self):
