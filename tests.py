@@ -1,4 +1,6 @@
 import datetime
+import random
+import string
 import unittest
 from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop
 # noinspection PyUnresolvedReferences
@@ -6,10 +8,11 @@ from server import create_app
 # noinspection PyUnresolvedReferences
 from server import create_app_two
 # noinspection PyUnresolvedReferences
-from db.database import Adversary
+from db.database import *
 
 data = {'email': 'admin@thremulate.com', 'password': 'thremulate'}
 agent_id = 4000
+adversary_name = 'APT4000'
 
 
 class ThremulateTests(AioHTTPTestCase):
@@ -202,11 +205,13 @@ class AdversaryTests(AioHTTPTestCase):
         resp = await self.client.request("POST", "/login_post", data=data)
         self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
                         .format(resp.status))
-        resp_two = await self.client.request("POST", "/adversary_add", data={'addName': 'APT4000'})
+        adv_name = ''.join(random.choice(string.ascii_lowercase) for _ in range(7))
+        resp_two = await self.client.request("POST", "/adversary_add", data={'addName': adv_name})
         self.assertTrue(resp_two.status == 200, msg="Failed to access /adversary_add. Received status code {0}"
                         .format(resp_two.status))
         text = await resp_two.text()
         self.assertTrue(text != 'exists', msg="Adversary already exists")
+        Adversary.delete().where(Adversary.name == adv_name).execute()
 
     @unittest_run_loop
     async def test_adversary_update(self):
@@ -214,7 +219,6 @@ class AdversaryTests(AioHTTPTestCase):
         self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
                         .format(resp.status))
         adv_id = Adversary.get(Adversary.name == 'Unknown')
-        print(adv_id.id)
         resp_two = await self.client.request("POST", "/adversary_update", data={'id': adv_id, 'name': 'Unknown'})
         self.assertTrue(resp_two.status == 200, msg="Failed to access /adversary_update. Received status code {0}"
                         .format(resp_two.status))
