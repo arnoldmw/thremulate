@@ -13,6 +13,27 @@
                     All agents</p>
             </div>
             <div class="card-body">
+                <!-- Modal for deleting agent-->
+                <div class="modal fade" id="agentDeleteModal" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true" style="color: #575962;">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Delete Agent</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                This Agent will be deleted.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                <button id="deleteAgent" type="button" class="btn btn-danger">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- Table -->
                 <div class="table-responsive">
                     <table id="agents" class="table display  table-striped table-hover cell-border text-center"
@@ -36,6 +57,7 @@
                             <td>{{ agent_tasks.last_contact.strftime("%d-%b-%Y %H:%M:%S") }}</td>
                             <td>{{ agent_tasks.adversary }}</td>
                             <td>
+<!--                                <div class="form-button-action">-->
                                 <button type="button" class="btn btn-link btn-danger" data-toggle="modal"
                                         data-original-title="Remove">
                                     <a href="{{ url('assign_get', id=agent_tasks.id) }}">
@@ -55,6 +77,13 @@
                                            style="font-size: 18px;"> </i>
                                     </a>
                                 </button>
+                                <button type="button" class="btn btn-link btn-danger js-delete"
+                                        data-toggle="modal" data-target="#agentDeleteModal" 
+                                        data-adv-id="{{ agent_tasks.id }}">
+                                    <i class="fa fa-times" data-toggle="tooltip" title="Remove!"
+                                       style="font-size: 20px;"> </i>
+                                </button>
+<!--                                </div>-->
                             </td>
                         </tr>
                         {% endfor %}
@@ -70,6 +99,8 @@
     $(document).ready(function () {
         $("#agents").DataTable();
     });
+
+
 
 </script>
 {% endblock %}

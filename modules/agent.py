@@ -293,6 +293,11 @@ async def agent_edit_post(request):
 
 
 async def agent_delete_post(request):
+    """
+    Deletes an agent.
+    :param request:
+    :return: 'success if successful otherwise an exception is raised.
+    """
     await check_authorized(request)
     data = await request.post()
 
