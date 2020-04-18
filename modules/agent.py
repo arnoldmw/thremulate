@@ -292,6 +292,26 @@ async def agent_edit_post(request):
         return web.Response(status=400)
 
 
+async def agent_delete_post(request):
+    await check_authorized(request)
+    data = await request.post()
+
+    try:
+        agent_id = data['agent_id']
+        Parameter.delete().where(Parameter.agent_id == agent_id).execute()
+        AgentTechnique.delete().where(AgentTechnique.agent_id == agent_id).execute()
+        Agent.delete().where(Agent.id == agent_id).execute()
+        return web.Response(text='success', status=200)
+    except KeyError:
+        return web.Response(text='error', status=400)
+    except Parameter.DoesNotExist:
+        pass
+    except AgentTechnique.DoesNotExist:
+        pass
+    except Agent.DoesNotExist:
+        return web.Response(text='error', status=400)
+
+
 @aiohttp_jinja2.template('agent/customize_technique.html')
 async def customize_technique(request):
     """
@@ -468,5 +488,6 @@ def setup_agent_routes(app):
         web.get('/agent_details/{id}', agent_details, name='agent_details'),
         web.get('/agent_edit/{id}', agent_edit, name='agent_edit'),
         web.post('/agent_edit_post', agent_edit_post, name='agent_edit_post'),
+        web.post('/agent_delete_post', agent_delete_post, name='agent_delete_post'),
 
     ])
