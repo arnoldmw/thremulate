@@ -12,6 +12,11 @@ from db.database import *
 
 data = {'email': 'admin@thremulate.com', 'password': 'thremulate'}
 agent_id = 4000
+agent_registration = {'id': random.randrange(10000, 99999),
+                      'hostname': ''.join(random.choice(string.ascii_lowercase) for _ in range(7)),
+                      'platform': 'windows',
+                      'plat_version': '10.10.10',
+                      'username': 'Administrator'}
 
 
 class ThremulateTests(AioHTTPTestCase):
@@ -246,9 +251,7 @@ class AAgentInitialization(AioHTTPTestCase):
         return app
 
     @unittest_run_loop
-    async def test_register(self):
-        agent_registration = {'id': agent_id, 'hostname': 'DC01', 'platform': 'windows', 'plat_version': '10.10.10',
-                              'username': 'Administrator'}
+    async def test_agent_register(self):
         resp = await self.client.request("POST", "register_agent", data=agent_registration)
         self.assertTrue(resp.status == 200, msg="Failed to access /register_agent. Received status code {0}"
                         .format(resp.status))
