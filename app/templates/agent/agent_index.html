@@ -79,8 +79,8 @@
                                 </button>
                                 <button type="button" class="btn btn-link btn-danger js-delete"
                                         data-toggle="modal" data-target="#agentDeleteModal" 
-                                        data-adv-id="{{ agent_tasks.id }}">
-                                    <i class="fa fa-times" data-toggle="tooltip" title="Remove!"
+                                        data-agt-id="{{ agent_tasks.id }}">
+                                    <i class="fa fa-times" data-toggle="tooltip" title="Delete!"
                                        style="font-size: 20px;"> </i>
                                 </button>
 <!--                                </div>-->
@@ -98,6 +98,17 @@
 <script>
     $(document).ready(function () {
         $("#agents").DataTable();
+
+        // Delete Agent
+        $("#agents .js-delete").on("click", function () {
+            var cid = $(this).attr("data-agt-id");
+            $("#deleteAgent").click(function () {
+                $.post("/agent_delete_post", { 'agent_id': cid });
+                $('#agentDeleteModal').modal('hide');
+                // Try to force reload
+                location.reload(true);
+            });
+        });
     });
 
 
