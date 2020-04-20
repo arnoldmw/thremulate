@@ -391,21 +391,25 @@ class AgentRoutes(AioHTTPTestCase):
         resp = await self.client.request("POST", "/login_post", data=data)
         self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
                         .format(resp.status))
+        add_agent_to_db()
         resp_two = await self.client.request("GET", "/agent_edit/%s" % agent_id)
         self.assertTrue(resp_two.status == 200, msg="Failed to access /agent_edit. Received status code {0}"
                         .format(resp_two.status))
         text = await resp_two.text()
         self.assertTrue("Update Agent" in text, msg="Failed to access /agent_edit template")
+        delete_agent_from_db()
 
     @unittest_run_loop
     async def test_agent_edit_post(self):
         resp = await self.client.request("POST", "/login_post", data=data)
         self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
                         .format(resp.status))
+        add_agent_to_db()
         agent_edit = {'agent_id': agent_id, 'name': 'Disk kill', 'adversary': 1, 'kill_date': ''}
         resp_two = await self.client.request("POST", "/agent_edit_post", data=agent_edit)
         self.assertTrue(resp_two.status == 200, msg="Failed to access /agent_edit_post. Received status code {0}"
                         .format(resp_two.status))
+        delete_agent_from_db()
 
     @unittest_run_loop
     async def test_delete_tech_output(self):
