@@ -12,6 +12,8 @@ from db.database import *
 
 data = {'email': 'admin@thremulate.com', 'password': 'thremulate'}
 agent_id = random.randrange(10000, 99999)
+tech_id = 1002
+test_num = 0
 hostname = ''.join(random.choice(string.ascii_lowercase) for _ in range(7))
 agent_name = ''.join(random.choice(string.ascii_lowercase) for _ in range(7))
 agent_adv_id = Adversary.get(Adversary.name == 'Unknown')
@@ -298,7 +300,8 @@ class ABgentAssignTechnique(AioHTTPTestCase):
         self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
                         .format(resp.status))
         add_agent_to_db()
-        resp_two = await self.client.request("GET", "/customize_technique/?agent_id=%s&tech_id=1002" % agent_id)
+        resp_two = await self.client.request("GET",
+                                             "/customize_technique/?agent_id={0}&tech_id={1}".format(agent_id, tech_id))
         self.assertTrue(resp_two.status == 200, msg="Failed to access /customize_technique. Received status code {0}"
                         .format(resp_two.status))
         delete_agent_from_db()
@@ -309,7 +312,7 @@ class ABgentAssignTechnique(AioHTTPTestCase):
         self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
                         .format(resp.status))
         add_agent_to_db()
-        custom_tech = {'agent_id': agent_id, 'tech_id': 1002, 'test_id': 0, 'input_path': '%USERPROFILE%',
+        custom_tech = {'agent_id': agent_id, 'tech_id': tech_id, 'test_id': 0, 'input_path': '%USERPROFILE%',
                        'output_file': '%USERPROFILE%\\data.rar'}
         resp_two = await self.client.request("POST", "/customize_technique_post", data=custom_tech)
         self.assertTrue(resp_two.status == 200,
@@ -346,11 +349,9 @@ class AgentCommunicationLines(AioHTTPTestCase):
     @unittest_run_loop
     async def test_agent_output(self):
         add_agent_to_db()
-        agent_output = {'id': agent_id, 'tech': '1002:0',
+        agent_output = {'id': agent_id, 'tech': '{0}:{1}'.format(tech_id, test_num),
                         'executed': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                         'output': 'Success--Agent output'}
-        tech_id = 1002
-        test_num = 0
         AgentTechnique.create(technique_id=tech_id, agent_id=agent_id, test_num=test_num)
         resp = await self.client.request("POST", "agent_output", data=agent_output)
         self.assertTrue(resp.status == 200, msg="Failed to access /agent_output. Received status code {0}"
@@ -418,16 +419,27 @@ class AgentRoutes(AioHTTPTestCase):
         delete_agent_from_db()
 
     @unittest_run_loop
+    async def test_delete_agent(self):
+        resp = await self.client.request("POST", "/login_post", data=data)
+        self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
+                        .format(resp.status))
+        delete_agent = {'agent_id': agent_id}
+        resp_two = await self.client.request("POST", "/agent_delete_post", data=delete_agent)
+        self.assertTrue(resp_two.status == 200, msg="Failed to access /agent_delete_post. Received status code {0}"
+                        .format(resp_two.status))
+        text = await resp_two.text()
+        self.assertTrue("success" in text, msg="Failed to delete agent")
+
+    @unittest_run_loop
     async def test_delete_tech_output(self):
         resp = await self.client.request("POST", "/login_post", data=data)
         self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
                         .format(resp.status))
         add_agent_to_db()
-        tech_id = 1002
-        test_num = 0
+
         AgentTechnique.create(technique_id=tech_id, agent_id=agent_id, test_num=test_num, output='Agent output',
                               result=False, executed=datetime.datetime.now())
-        delete_tech_output = {'agent_id': agent_id, 'tech_id': 1002, 'test_num': 0}
+        delete_tech_output = {'agent_id': agent_id, 'tech_id': tech_id, 'test_num': test_num}
         resp_two = await self.client.request("POST", "/delete_tech_output", data=delete_tech_output)
         self.assertTrue(resp_two.status == 200, msg="Failed to access /delete_tech_output. Received status code {0}"
                         .format(resp_two.status))
@@ -439,22 +451,13 @@ class AgentRoutes(AioHTTPTestCase):
         resp = await self.client.request("POST", "/login_post", data=data)
         self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
                         .format(resp.status))
-        delete_tech = {'agent_id': agent_id, 'tech_id': 1002, 'test_num': 0}
+        add_agent_to_db()
+        AgentTechnique.create(technique_id=tech_id, agent_id=agent_id, test_num=test_num)
+        delete_tech = {'agent_id': agent_id, 'tech_id': tech_id, 'test_num': test_num}
         resp_two = await self.client.request("POST", "/delete_tech_assignment", data=delete_tech)
         self.assertTrue(resp_two.status == 200, msg="Failed to access /delete_tech_assignment. Received status code {0}"
                         .format(resp_two.status))
-
-    @unittest_run_loop
-    async def test_delete_agent(self):
-        resp = await self.client.request("POST", "/login_post", data=data)
-        self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
-                        .format(resp.status))
-        delete_agent = {'agent_id': agent_id}
-        resp_two = await self.client.request("POST", "/agent_delete_post", data=delete_agent)
-        self.assertTrue(resp_two.status == 200, msg="Failed to access /agent_delete_post. Received status code {0}"
-                        .format(resp_two.status))
-        text = await resp_two.text()
-        self.assertTrue("success" in text, msg="Failed to delete agent")
+        delete_agent_from_db()
 
 
 if __name__ == '__main__':
