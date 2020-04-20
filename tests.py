@@ -257,10 +257,7 @@ class AdversaryTests(AioHTTPTestCase):
                         .format(resp_two.status))
 
 
-# We need to assign Agent technique test before the Agent does anything. AgentAssignTechnique and AgentOutput
-# classes represent the edge case
-# It should run before other tests yet unittest run tests in alphabetical order hence the strange name.
-class AAgentInitialization(AioHTTPTestCase):
+class AgentCommunicationLines(AioHTTPTestCase):
     async def get_application(self):
         app = await create_app_two()
         return app
@@ -274,61 +271,6 @@ class AAgentInitialization(AioHTTPTestCase):
         self.assertTrue('Agent has registered' in text, msg="Server failed to register agent. Agent may already be "
                                                             "registered")
         Agent.delete().where(Agent.id == agent_id).execute()
-
-
-# We need to assign Agent technique test before the Agent does anything. AgentAssignTechnique and AgentOutput
-# classes represent the edge case
-class ABgentAssignTechnique(AioHTTPTestCase):
-    async def get_application(self):
-        app = await create_app()
-        return app
-
-    @unittest_run_loop
-    async def test_assign_tasks(self):
-        resp = await self.client.request("POST", "/login_post", data=data)
-        self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
-                        .format(resp.status))
-        add_agent_to_db()
-        resp_two = await self.client.request("GET", "/assign_tasks/%s" % agent_id)
-        self.assertTrue(resp_two.status == 200, msg="Failed to access /assign_tasks/{0}. Received status code {1}"
-                        .format(agent_id, resp_two.status))
-        delete_agent_from_db()
-
-    @unittest_run_loop
-    async def test_customize_technique(self):
-        resp = await self.client.request("POST", "/login_post", data=data)
-        self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
-                        .format(resp.status))
-        add_agent_to_db()
-        resp_two = await self.client.request("GET",
-                                             "/customize_technique/?agent_id={0}&tech_id={1}".format(agent_id, tech_id))
-        self.assertTrue(resp_two.status == 200, msg="Failed to access /customize_technique. Received status code {0}"
-                        .format(resp_two.status))
-        delete_agent_from_db()
-
-    @unittest_run_loop
-    async def test_customize_technique_post(self):
-        resp = await self.client.request("POST", "/login_post", data=data)
-        self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
-                        .format(resp.status))
-        add_agent_to_db()
-        custom_tech = {'agent_id': agent_id, 'tech_id': tech_id, 'test_id': 0, 'input_path': '%USERPROFILE%',
-                       'output_file': '%USERPROFILE%\\data.rar'}
-        resp_two = await self.client.request("POST", "/customize_technique_post", data=custom_tech)
-        self.assertTrue(resp_two.status == 200,
-                        msg="Failed to access /customize_technique_post. Received status code {0}"
-                        .format(resp_two.status))
-        text = await resp_two.text()
-        self.assertTrue('Assigned' in text, msg="Failed to assign technique")
-        Parameter.delete().where(Parameter.agent_id == agent_id).execute()
-        AgentTechnique.delete().where(AgentTechnique.agent_id == agent_id).execute()
-        delete_agent_from_db()
-
-
-class AgentCommunicationLines(AioHTTPTestCase):
-    async def get_application(self):
-        app = await create_app_two()
-        return app
 
     @unittest_run_loop
     async def test_agent_tasks(self):
@@ -429,6 +371,47 @@ class AgentRoutes(AioHTTPTestCase):
                         .format(resp_two.status))
         text = await resp_two.text()
         self.assertTrue("success" in text, msg="Failed to delete agent")
+
+    @unittest_run_loop
+    async def test_assign_tasks(self):
+        resp = await self.client.request("POST", "/login_post", data=data)
+        self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
+                        .format(resp.status))
+        add_agent_to_db()
+        resp_two = await self.client.request("GET", "/assign_tasks/%s" % agent_id)
+        self.assertTrue(resp_two.status == 200, msg="Failed to access /assign_tasks/{0}. Received status code {1}"
+                        .format(agent_id, resp_two.status))
+        delete_agent_from_db()
+
+    @unittest_run_loop
+    async def test_customize_technique(self):
+        resp = await self.client.request("POST", "/login_post", data=data)
+        self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
+                        .format(resp.status))
+        add_agent_to_db()
+        resp_two = await self.client.request("GET",
+                                             "/customize_technique/?agent_id={0}&tech_id={1}".format(agent_id, tech_id))
+        self.assertTrue(resp_two.status == 200, msg="Failed to access /customize_technique. Received status code {0}"
+                        .format(resp_two.status))
+        delete_agent_from_db()
+
+    @unittest_run_loop
+    async def test_customize_technique_post(self):
+        resp = await self.client.request("POST", "/login_post", data=data)
+        self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
+                        .format(resp.status))
+        add_agent_to_db()
+        custom_tech = {'agent_id': agent_id, 'tech_id': tech_id, 'test_id': 0, 'input_path': '%USERPROFILE%',
+                       'output_file': '%USERPROFILE%\\data.rar'}
+        resp_two = await self.client.request("POST", "/customize_technique_post", data=custom_tech)
+        self.assertTrue(resp_two.status == 200,
+                        msg="Failed to access /customize_technique_post. Received status code {0}"
+                        .format(resp_two.status))
+        text = await resp_two.text()
+        self.assertTrue('Assigned' in text, msg="Failed to assign technique")
+        Parameter.delete().where(Parameter.agent_id == agent_id).execute()
+        AgentTechnique.delete().where(AgentTechnique.agent_id == agent_id).execute()
+        delete_agent_from_db()
 
     @unittest_run_loop
     async def test_delete_tech_output(self):
