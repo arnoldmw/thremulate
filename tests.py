@@ -329,18 +329,23 @@ class AgentCommunicationLines(AioHTTPTestCase):
 
     @unittest_run_loop
     async def test_agent_tasks(self):
+        add_agent_to_db()
         resp = await self.client.request("GET", "/agent_tasks/%s" % agent_id)
         self.assertTrue(resp.status == 200, msg="Failed to access agent_tasks")
         text = await resp.text()
         self.assertTrue("++" in text, msg="Failed to get techniques from server")
+        delete_agent_from_db()
 
     @unittest_run_loop
     async def test_agent_techniques(self):
+        add_agent_to_db()
         resp = await self.client.request("GET", "/agent_techniques/{0}".format(agent_id))
         self.assertTrue(resp.status == 200, msg="Failed to access /agent_techniques/{0}".format(agent_id))
+        delete_agent_from_db()
 
     @unittest_run_loop
     async def test_agent_output(self):
+        add_agent_to_db()
         agent_output = {'id': agent_id, 'tech': '1002:0',
                         'executed': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                         'output': 'Success--Agent output'}
@@ -349,6 +354,7 @@ class AgentCommunicationLines(AioHTTPTestCase):
                         .format(resp.status))
         text = await resp.text()
         self.assertTrue('success' in text, msg="Server failed to store agent output.")
+        delete_agent_from_db()
 
 
 class AgentRoutes(AioHTTPTestCase):
