@@ -349,11 +349,17 @@ class AgentCommunicationLines(AioHTTPTestCase):
         agent_output = {'id': agent_id, 'tech': '1002:0',
                         'executed': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                         'output': 'Success--Agent output'}
+        tech_id = 1002
+        test_num = 0
+        AgentTechnique.create(technique_id=tech_id, agent_id=agent_id, test_num=test_num)
         resp = await self.client.request("POST", "agent_output", data=agent_output)
         self.assertTrue(resp.status == 200, msg="Failed to access /agent_output. Received status code {0}"
                         .format(resp.status))
         text = await resp.text()
         self.assertTrue('success' in text, msg="Server failed to store agent output.")
+        AgentTechnique.delete() \
+            .where((AgentTechnique.agent_id == agent_id) & (AgentTechnique.technique_id == tech_id)
+                   & (AgentTechnique.test_num == test_num)).execute()
         delete_agent_from_db()
 
 
