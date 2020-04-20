@@ -11,9 +11,10 @@ from server import create_app_two
 from db.database import *
 
 data = {'email': 'admin@thremulate.com', 'password': 'thremulate'}
-agent_id = 4000
-agent_registration = {'id': random.randrange(10000, 99999),
-                      'hostname': ''.join(random.choice(string.ascii_lowercase) for _ in range(7)),
+agent_id = random.randrange(10000, 99999)
+hostname = ''.join(random.choice(string.ascii_lowercase) for _ in range(7))
+agent_registration = {'id': agent_id,
+                      'hostname': hostname,
                       'platform': 'windows',
                       'plat_version': '10.10.10',
                       'username': 'Administrator'}
@@ -258,6 +259,7 @@ class AAgentInitialization(AioHTTPTestCase):
         text = await resp.text()
         self.assertTrue('Agent has registered' in text, msg="Server failed to register agent. Agent may already be "
                                                             "registered")
+        Agent.delete().where(Agent.id == agent_id).execute()
 
 
 # We need to assign Agent technique test before the Agent does anything. AgentAssignTechnique and AgentOutput
