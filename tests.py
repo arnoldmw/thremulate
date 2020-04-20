@@ -289,9 +289,13 @@ class ABgentAssignTechnique(AioHTTPTestCase):
         resp = await self.client.request("POST", "/login_post", data=data)
         self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
                         .format(resp.status))
+        agent_registration.__setitem__('adversary', agent_adv_id)
+        agent_registration.__setitem__('name', agent_name)
+        Agent.insert_many(agent_registration).execute()
         resp_two = await self.client.request("GET", "/customize_technique/?agent_id=%s&tech_id=1002" % agent_id)
         self.assertTrue(resp_two.status == 200, msg="Failed to access /customize_technique. Received status code {0}"
                         .format(resp_two.status))
+        Agent.delete().where(Agent.id == agent_id).execute()
 
     @unittest_run_loop
     async def test_customize_technique_post(self):
