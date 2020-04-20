@@ -13,6 +13,8 @@ from db.database import *
 data = {'email': 'admin@thremulate.com', 'password': 'thremulate'}
 agent_id = random.randrange(10000, 99999)
 hostname = ''.join(random.choice(string.ascii_lowercase) for _ in range(7))
+agent_name = ''.join(random.choice(string.ascii_lowercase) for _ in range(7))
+agent_adv_id = Adversary.get(Adversary.name == 'Unknown')
 agent_registration = {'id': agent_id,
                       'hostname': hostname,
                       'platform': 'windows',
@@ -274,9 +276,13 @@ class ABgentAssignTechnique(AioHTTPTestCase):
         resp = await self.client.request("POST", "/login_post", data=data)
         self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
                         .format(resp.status))
+        agent_registration.__setitem__('adversary', agent_adv_id)
+        agent_registration.__setitem__('name', agent_name)
+        Agent.insert_many(agent_registration).execute()
         resp_two = await self.client.request("GET", "/assign_tasks/%s" % agent_id)
         self.assertTrue(resp_two.status == 200, msg="Failed to access /assign_tasks/{0}. Received status code {1}"
                         .format(agent_id, resp_two.status))
+        Agent.delete().where(Agent.id == agent_id).execute()
 
     @unittest_run_loop
     async def test_customize_technique(self):
