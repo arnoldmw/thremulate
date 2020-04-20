@@ -286,26 +286,22 @@ class ABgentAssignTechnique(AioHTTPTestCase):
         resp = await self.client.request("POST", "/login_post", data=data)
         self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
                         .format(resp.status))
-        agent_registration.__setitem__('adversary', agent_adv_id)
-        agent_registration.__setitem__('name', agent_name)
-        Agent.insert_many(agent_registration).execute()
+        add_agent_to_db()
         resp_two = await self.client.request("GET", "/assign_tasks/%s" % agent_id)
         self.assertTrue(resp_two.status == 200, msg="Failed to access /assign_tasks/{0}. Received status code {1}"
                         .format(agent_id, resp_two.status))
-        Agent.delete().where(Agent.id == agent_id).execute()
+        delete_agent_from_db()
 
     @unittest_run_loop
     async def test_customize_technique(self):
         resp = await self.client.request("POST", "/login_post", data=data)
         self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
                         .format(resp.status))
-        agent_registration.__setitem__('adversary', agent_adv_id)
-        agent_registration.__setitem__('name', agent_name)
-        Agent.insert_many(agent_registration).execute()
+        add_agent_to_db()
         resp_two = await self.client.request("GET", "/customize_technique/?agent_id=%s&tech_id=1002" % agent_id)
         self.assertTrue(resp_two.status == 200, msg="Failed to access /customize_technique. Received status code {0}"
                         .format(resp_two.status))
-        Agent.delete().where(Agent.id == agent_id).execute()
+        delete_agent_from_db()
 
     @unittest_run_loop
     async def test_customize_technique_post(self):
