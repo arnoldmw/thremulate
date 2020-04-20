@@ -89,8 +89,6 @@
                 <p class="card-category"><a href="{{ url('agents') }}">Back to Agents</a></p>
             </div>
             <input type="hidden" id="agent_id" name="agent_id" value="{{ agent.id }}">
-            <form action="{{ url('assign_post') }}" method="post" accept-charset="utf-8"
-                  enctype="application/x-www-form-urlencoded">
                 <div class="card-body">
 
                     <!-- Table -->
@@ -185,7 +183,6 @@
                     </table>
                 </div>
         </div>
-        </form>
     </div>
 </div>
 </div>
