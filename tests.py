@@ -378,11 +378,13 @@ class AgentRoutes(AioHTTPTestCase):
         resp = await self.client.request("POST", "/login_post", data=data)
         self.assertTrue(resp.status == 200, msg="Failed to access /login. Received status code {0}"
                         .format(resp.status))
+        add_agent_to_db()
         resp_two = await self.client.request("GET", "/agent_details/%s" % agent_id)
         self.assertTrue(resp_two.status == 200, msg="Failed to access /agent_details. Received status code {0}"
                         .format(resp_two.status))
         text = await resp_two.text()
         self.assertTrue("Agent Details" in text, msg="Failed to access /agent_details template.")
+        delete_agent_from_db()
 
     @unittest_run_loop
     async def test_agent_edit(self):
