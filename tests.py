@@ -22,6 +22,16 @@ agent_registration = {'id': agent_id,
                       'username': 'Administrator'}
 
 
+def add_agent_to_db():
+    agent_registration.__setitem__('adversary', agent_adv_id)
+    agent_registration.__setitem__('name', agent_name)
+    Agent.insert_many(agent_registration).execute()
+
+
+def delete_agent_from_db():
+    Agent.delete().where(Agent.id == agent_id).execute()
+
+
 class ThremulateTests(AioHTTPTestCase):
 
     async def get_application(self):
