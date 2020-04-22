@@ -57,6 +57,7 @@ atomic_tests:
 - name: WMI Execute Local Process
   description: |
     This test uses wmic.exe to execute a process on the local host.
+    Shows that it failed although it executed successfully.
 
   supported_platforms:
     - windows
@@ -74,6 +75,7 @@ atomic_tests:
 - name: WMI Execute Remote Process
   description: |
     This test uses wmic.exe to execute a process on a remote host.
+    Shows that it failed although it executed successfully.
 
   supported_platforms:
     - windows
