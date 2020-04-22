@@ -25,6 +25,8 @@ from server import create_app
 from server import create_app_two
 # noinspection PyUnresolvedReferences
 from db.database import *
+# noinspection PyUnresolvedReferences
+from modules.agent import symmetric_cipher
 
 data = {'email': 'admin@thremulate.com', 'password': 'thremulate'}
 agent_id = random.randrange(10000, 99999)
@@ -294,6 +296,7 @@ class AgentCommunicationLines(AioHTTPTestCase):
         resp = await self.client.request("GET", "/agent_tasks/%s" % agent_id)
         self.assertTrue(resp.status == 200, msg="Failed to access agent_tasks")
         text = await resp.text()
+        text = symmetric_cipher(text, encrypt=False)
         self.assertTrue("++" in text, msg="Failed to get techniques from server")
         delete_agent_from_db()
 

