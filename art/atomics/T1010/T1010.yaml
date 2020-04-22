@@ -14,11 +14,11 @@ atomic_tests:
     input_source_code:
       description: Path to source of C# code
       type: path
-      default: C:\test\T1010.cs
+      default: C:\Users\Public\Documents\T1010.cs
     output_file_name:
       description: Name of output binary
       type: string
-      default: C:\test\T1010.exe
+      default: C:\Users\Public\Documents\T1010.exe
 
 
   executor:
