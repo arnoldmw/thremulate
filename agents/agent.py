@@ -232,7 +232,10 @@ def send_output():
     # result or output after executing that technique
     for i, res in enumerate(agent_tech):
         try:
+            # Encrypt output
+            std_out[i] = symmetric_cipher(std_out[i])
 
+            # Post data to the server
             req = http.request('POST', url, fields={'id': agent_id, 'tech': agent_tech[i], 'output': std_out[i],
                                                     'executed': ('%s' % executed[i])}, headers=headers)
 
