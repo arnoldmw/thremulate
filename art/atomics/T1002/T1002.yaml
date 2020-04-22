@@ -12,7 +12,7 @@ atomic_tests:
     input_file:
       description: Path that should be compressed into our output file
       type: Path
-      default: C:\test
+      default: C:\Users\Public\Documents
     output_file:
       description: Path where resulting compressed data should be placed
       type: Path
@@ -22,7 +22,6 @@ atomic_tests:
     elevation_required: false
     command: |
       dir #{input_file} -Recurse | Compress-Archive -Force -DestinationPath #{output_file}
-      Remove-Item -path #{output_file}
       Remove-Item -path #{output_file}
 
 - name: Compress Data for Exfiltration With Rar
@@ -34,7 +33,7 @@ atomic_tests:
     input_path:
       description: Path that should be compressed into our output file
       type: Path
-      default: 'C:\test'
+      default: 'C:\Users\Public\Documents'
     file_extension:
       description: Extension of files to compress
       type: String
