@@ -38,17 +38,11 @@ atomic_tests:
         description: Ports to scan.
         type: string
         default: 80
-      # host:
-      #   description: Host to scan.
-      #   type: string
-      #   default: 192.168.1.1
 
     executor:
       name: sh
       command: |
         nmap -sS #{network_range} -p #{port}
-        # telnet #{host} #{port}
-        # nc -nv #{host} #{port}
 
   - name: Port Scan Telnet
     description: |
