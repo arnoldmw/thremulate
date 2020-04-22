@@ -87,7 +87,7 @@ atomic_tests:
     name: command_prompt
     command: |
       /atomics/T1028/bin/PsExec64.exe
-      PsExec64.exe -accepteula -s \\#{remote_host} "cmd.exe /C C:\Windows\System32\ipconfig.exe"
+      PsExec64.exe -accepteula -s \\#{remote_host} "C:\Windows\System32\ipconfig.exe"
       del PsExec64.exe
 
 - name: Invoke-Command

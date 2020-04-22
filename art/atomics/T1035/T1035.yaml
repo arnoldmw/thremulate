@@ -26,8 +26,9 @@ atomic_tests:
         Copy-Item $env:TEMP\PsTools\PsExec.exe "#{psexec_exe}" -Force
 
   executor:
-    name: powershell
+    name: command_prompt
     elevation_required: false
     command: |
       /atomics/T1035/bin/PsExec64.exe
       PsExec64.exe -accepteula -s \\#{remote_host} "C:\Windows\System32\ipconfig.exe"
+      del PsExec64.exe
