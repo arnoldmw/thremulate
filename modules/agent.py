@@ -31,6 +31,7 @@ from art.run_atomics import get_all_techniques, get_one_technique_and_params
 # noinspection PyUnresolvedReferences
 from db.database import *
 from peewee import IntegrityError
+from cryptography.fernet import Fernet
 
 
 @aiohttp_jinja2.template('agent/agent_index.html')
@@ -185,6 +186,7 @@ async def agent_tasks(request):
             agent_assignments = assignments(techniques, agent_platform, list_of_param_dict)
 
         commands = '{0}++{1}'.format(str(ag.kill_date), agent_assignments)
+        commands = symmetric_cipher(commands)
         return web.Response(text=commands)
     except KeyError:
         web.Response(text='failed')  # Wrong parameters
@@ -212,6 +214,17 @@ def assignments(tech_list, plat, parameters):
         string_commands = string_commands + com
 
     return string_commands
+
+
+def symmetric_cipher(text, encrypt=True):
+    cipher_key = b'2ITm7dWcIz5BcGWVsyovqh8PHkIGKZaXWV1nr5AT834='
+    f = Fernet(cipher_key)
+    if encrypt:
+        cipher_text = f.encrypt(text.encode('utf-8'))
+        return cipher_text.decode('utf-8')
+    else:
+        plaint_text = f.decrypt(text.encode('utf-8'))
+        return plaint_text.decode('utf-8')
 
 
 @aiohttp_jinja2.template('agent/agent_details.html')
