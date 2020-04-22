@@ -134,22 +134,22 @@ def init_db():
     Adversary.insert_many(adversary_data).execute()
 
     # Tactics table
-    print('[+] Adding Tactics records')
-    tactics_data = [
-        {'id': 1, 'name': 'Initial Access'},
-        {'id': 2, 'name': 'Execution'},
-        {'id': 3, 'name': 'Persistence'},
-        {'id': 4, 'name': 'Privilege Escalation'},
-        {'id': 5, 'name': 'Defense Evasion'},
-        {'id': 6, 'name': 'Credential Access'},
-        {'id': 7, 'name': 'Discovery'},
-        {'id': 8, 'name': 'Lateral Movement'},
-        {'id': 9, 'name': 'Collection'},
-        {'id': 10, 'name': 'Exfiltration'},
-        {'id': 11, 'name': 'Command and Control'},
-        {'id': 40, 'name': 'Impact'},
-    ]
-    Tactic.insert_many(tactics_data).execute()
+    # print('[+] Adding Tactics records')
+    # tactics_data = [
+    #     {'id': 1, 'name': 'Initial Access'},
+    #     {'id': 2, 'name': 'Execution'},
+    #     {'id': 3, 'name': 'Persistence'},
+    #     {'id': 4, 'name': 'Privilege Escalation'},
+    #     {'id': 5, 'name': 'Defense Evasion'},
+    #     {'id': 6, 'name': 'Credential Access'},
+    #     {'id': 7, 'name': 'Discovery'},
+    #     {'id': 8, 'name': 'Lateral Movement'},
+    #     {'id': 9, 'name': 'Collection'},
+    #     {'id': 10, 'name': 'Exfiltration'},
+    #     {'id': 11, 'name': 'Command and Control'},
+    #     {'id': 40, 'name': 'Impact'},
+    # ]
+    # Tactic.insert_many(tactics_data).execute()
 
     # Technique table
     tech_table = techniques_for_db()
@@ -159,8 +159,6 @@ def init_db():
         except Technique.DoesNotExist:
             Technique.create(id=t['id'], name=t['name'])
             pass
-
-    # TODO: TacticTechnique table
 
     # User table
     print('[+] Adding User records')
