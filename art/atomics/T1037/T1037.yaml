@@ -61,7 +61,6 @@ atomic_tests:
     command: |
       schtasks /create /tn "T1037_OnLogon" /sc onlogon /tr "cmd.exe /c calc.exe"
       schtasks /create /tn "T1037_OnStartup" /sc onstart /ru system /tr "cmd.exe /c calc.exe"
-    cleanup_command: |
       schtasks /delete /tn "T1037_OnLogon" /f
       schtasks /delete /tn "T1037_OnStartup" /f
 
