@@ -96,7 +96,8 @@ async def agent_output(request):
         test_num = data['tech'].split(':')[1]
         executed = data['executed']
 
-        raw_output = data['output']
+        # Decrypt agent output
+        raw_output = symmetric_cipher(data['output'], encrypt=False)
 
         status = ''.join(raw_output.split('--')[:1])
         if 'Success' == status:

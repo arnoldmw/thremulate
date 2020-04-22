@@ -310,9 +310,10 @@ class AgentCommunicationLines(AioHTTPTestCase):
     @unittest_run_loop
     async def test_agent_output(self):
         add_agent_to_db()
+        output = symmetric_cipher('Success--Agent output')
         agent_output = {'id': agent_id, 'tech': '{0}:{1}'.format(tech_id, test_num),
                         'executed': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-                        'output': 'Success--Agent output'}
+                        'output': output}
         AgentTechnique.create(technique_id=tech_id, agent_id=agent_id, test_num=test_num)
         resp = await self.client.request("POST", "agent_output", data=agent_output)
         self.assertTrue(resp.status == 200, msg="Failed to access /agent_output. Received status code {0}"
