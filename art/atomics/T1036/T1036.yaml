@@ -14,10 +14,8 @@ atomic_tests:
     name: command_prompt
     elevation_required: false
     command: |
-      cmd.exe /c copy %SystemRoot%\System32\cmd.exe %temp%\lsass.exe
-      cmd.exe /c %temp%\lsass.exe /C hostname
-      del /Q /F %temp%\lsass.exe
-    cleanup_command: |
+      copy %SystemRoot%\System32\cmd.exe %temp%\lsass.exe
+      %temp%\lsass.exe /C hostname
       del /Q /F %temp%\lsass.exe
 
 - name: Masquerading as Linux crond process.
@@ -46,9 +44,7 @@ atomic_tests:
     elevation_required: false
     command: |
       copy %SystemRoot%\System32\cscript.exe %temp%\notepad.exe /Y
-      cmd.exe /c %temp%\notepad.exe /B
-      del /Q /F %temp%\notepad.exe
-    cleanup_command: |
+      %temp%\notepad.exe /B
       del /Q /F %temp%\notepad.exe
 
 - name: Masquerading - wscript.exe running as svchost.exe
@@ -63,9 +59,7 @@ atomic_tests:
     elevation_required: false
     command: |
       copy %SystemRoot%\System32\wscript.exe %temp%\svchost.exe /Y
-      cmd.exe /c %temp%\svchost.exe /B
-      del /Q /F %temp%\svchost.exe
-    cleanup_command: |
+      %temp%\svchost.exe /B
       del /Q /F %temp%\svchost.exe
 
 - name: Masquerading - powershell.exe running as taskhostw.exe
@@ -82,8 +76,6 @@ atomic_tests:
       copy %windir%\System32\windowspowershell\v1.0\powershell.exe %temp%\taskhostw.exe /Y
       cmd.exe /K %temp%\taskhostw.exe hostname
       del /Q /F %temp%\taskhostw.exe
-    cleanup_command: |
-      del /Q /F %temp%\taskhostw.exe
 
 - name: Malicious process Masquerading as LSM.exe
   description: |
@@ -97,9 +89,7 @@ atomic_tests:
     elevation_required: false
     command: |
       copy C:\Windows\System32\cmd.exe %temp%\lsm.exe
-      %temp%\lsm.exe /c echo T1036 > %temp%\T1036.txt
+      %temp%\lsm.exe /c echo T1036 sample text > %temp%\T1036.txt
+      type %temp%\T1036.txt
       del %temp%\T1036.txt
       del %temp%\lsm.exe
-    cleanup_command: |
-      del C:\T1036.txt
-      del C:\lsm.exe
