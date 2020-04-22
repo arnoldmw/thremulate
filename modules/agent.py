@@ -217,6 +217,12 @@ def assignments(tech_list, plat, parameters):
 
 
 def symmetric_cipher(text, encrypt=True):
+    """
+    Encrypts or Decrypts a string using AES symmetric cipher.
+    :param text:
+    :param encrypt:
+    :return: cipher or plaintext string
+    """
     cipher_key = b'2ITm7dWcIz5BcGWVsyovqh8PHkIGKZaXWV1nr5AT834='
     f = Fernet(cipher_key)
     if encrypt:
