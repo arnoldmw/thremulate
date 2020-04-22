@@ -29,10 +29,6 @@ from art.run_atomics import agent_commands
 # noinspection PyUnresolvedReferences
 from art.run_atomics import get_all_techniques, get_one_technique_and_params
 # noinspection PyUnresolvedReferences
-from art.run_atomics import get_all_techniques_and_params
-# noinspection PyUnresolvedReferences
-from art.run_atomics import get_commands
-# noinspection PyUnresolvedReferences
 from db.database import *
 from peewee import IntegrityError
 

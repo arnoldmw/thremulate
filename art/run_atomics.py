@@ -52,41 +52,6 @@ matrix = {'persistence': [1156, 1015, 1182, 1103, 1138, 1131, 1067, 1176, 1042, 
                               1216, 1045, 1151, 1221, 1099, 1127, 1078, 1497, 1220]}
 
 
-def get_all_techniques_and_params():
-    executor = AtomicRunner()
-    tech = executor.techniques
-
-    tech_list = []
-    parameters = []
-    default_params = []
-    commands = []
-
-    for key in tech:
-        if 'input_arguments' in tech[key]['atomic_tests'][0]:
-            for p in tech[key]['atomic_tests'][0]['input_arguments'].keys():
-                if p is not '':
-                    parameters.append(p)
-
-            for ig in tech[key]['atomic_tests'][0]['input_arguments'].keys():
-                dp = tech[key]['atomic_tests'][0]['input_arguments'][ig]['default']
-                default_params.append(dp)
-                # print(tech[key]['atomic_tests'][0]['input_arguments'][ig]['default'])
-
-        for comm in tech[key]['atomic_tests'][0]['executor']['command'].split('\n'):
-            if comm is not '':
-                commands.append(comm)
-
-        tech_list.append(
-            {'id': tech[key]['attack_technique'][1:], 'name': tech[key]['display_name'], 'params': parameters,
-             'def_params': default_params, 'commands': commands}
-        )
-        parameters = []
-        default_params = []
-        commands = []
-
-    return tech_list
-
-
 def get_one_technique_and_params(key, platform):
     """
     Retrieves the tests and test parameters in a technique.
@@ -189,63 +154,6 @@ def get_all_techniques(agent_platform):
     return details_matrix
 
 
-def get_techniques_details():
-    executor = AtomicRunner()
-
-    tech = executor.techniques
-
-    tech_list = []
-
-    for key in tech:
-        tech_list.append({'id': tech[key]['attack_technique'][1:], 'name': tech[key]['display_name']})
-
-    return tech_list
-
-
-def get_commands(list_of_techs):
-    executor = AtomicRunner()
-
-    tech = executor.techniques
-
-    # print(tech)
-
-    commands_list = []
-
-    print('---------------------------------------------')
-    for key in list_of_techs:
-        print(tech[key]['attack_technique'])
-        for at in tech[key]['atomic_tests']:
-            platforms = at['supported_platforms']
-
-            if 'input_arguments' in at.keys():
-                params = at['input_arguments']
-                # default_param = at['input_arguments']
-
-                for p in params.keys():
-                    default_params = params[p]['default']
-
-            launcher_name = at['executor']['name']
-            # elevation_required = at['executor']['elevation_required']
-            default_command = at['executor']['command']
-
-            launcher = ''
-
-            if launcher_name == 'command_prompt':
-                launcher = 'C:\\Windows\\System32\\cmd.exe /C '
-
-            if launcher_name == 'powershell':
-                launcher = 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe '
-
-            for com in default_command.split('\n'):
-                if com == "":
-                    continue
-
-                commands_list.append(launcher + com)
-        commands_list.append('++')
-
-    return commands_list
-
-
 def agent_commands(technique_list, plat, params):
     """
     Retrieves agent instructions and passes them to a route.
@@ -306,4 +214,3 @@ def techniques_for_db():
 
 if __name__ == '__main__':
     print('run_atomic')
-
