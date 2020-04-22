@@ -81,9 +81,10 @@ def get_one_technique_and_params(key, platform):
                         'pvalue': test['input_arguments'][p]['default']})
 
             # Adding executor and parameter names with default values dictionary
-            all_technique_tests.append({'test_id': index, 'test_name': test['name'], 'description': test['description'], 'params': parameters,
-                                        'at_test': test['executor']
-                                        })
+            all_technique_tests.append(
+                {'test_id': index, 'test_name': test['name'], 'description': test['description'], 'params': parameters,
+                 'at_test': test['executor']
+                 })
 
             parameters = []
         else:
