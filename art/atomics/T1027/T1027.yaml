@@ -43,7 +43,8 @@ atomic_tests:
 
 - name: Execute base64-encoded PowerShell from Windows Registry
   description: |
-    Stores base64-encoded PowerShell code in the Windows Registry and deobfuscates it for execution. This is used by numerous adversaries and malicious tools.
+    Stores base64-encoded PowerShell code in the Windows Registry and deobfuscates it for execution.
+    This is used by numerous adversaries and malicious tools.
 
   supported_platforms:
     - windows
@@ -68,9 +69,6 @@ atomic_tests:
       $Bytes = [System.Text.Encoding]::Unicode.GetBytes($OriginalCommand)
       $EncodedCommand =[Convert]::ToBase64String($Bytes)
       $EncodedCommand
-
       Set-ItemProperty -Force -Path #{registry_key_storage} -Name #{registry_entry_storage} -Value $EncodedCommand
       IEX ([Text.Encoding]::UNICODE.GetString([Convert]::FromBase64String((gp #{registry_key_storage} #{registry_entry_storage}).#{registry_entry_storage})))
       Remove-ItemProperty -Force -Path #{registry_key_storage} -Name #{registry_entry_storage}
-    cleanup_command: |
-      Remove-ItemProperty -Force -Path -Path #{registry_key_storage} -Name #{registry_entry_storage}
