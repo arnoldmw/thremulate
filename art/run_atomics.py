@@ -56,8 +56,6 @@ def get_all_techniques_and_params():
     executor = AtomicRunner()
     tech = executor.techniques
 
-    # key = 'T1002'
-
     tech_list = []
     parameters = []
     default_params = []
@@ -90,6 +88,12 @@ def get_all_techniques_and_params():
 
 
 def get_one_technique_and_params(key, platform):
+    """
+    Retrieves the tests and test parameters in a technique.
+    :param key: ID of the technique whose tests will be retrieved.
+    :param platform: Platform the agent is running on.
+    :return: Dictionary with details and tests of a technique.
+    """
     tech_path = Path(__file__).parent / 'atomics/{0}/{1}.yaml'.format(key, key)
     with open(tech_path) as f:
         data = yaml.safe_load(f)
@@ -125,6 +129,11 @@ def get_one_technique_and_params(key, platform):
 
 
 def get_all_techniques(agent_platform):
+    """
+    Retrieves all the techniques available and groups them basing on their tactic.
+    :param agent_platform: Platform the agent is running on.
+    :return: List of dictionaries with 'tactics' and their respective 'techniques'
+    """
     executor = AtomicRunner()
 
     tech = executor.techniques
@@ -238,11 +247,15 @@ def get_commands(list_of_techs):
 
 
 def agent_commands(technique_list, plat, params):
+    """
+    Retrieves agent instructions and passes them to a route.
+    :param technique_list: List of techniques assigned to an agent.
+    :param plat: Platform the agent is running on.
+    :param params: Parameters for test's execution.
+    :return: String of agent instructions.
+    """
     executor = AtomicRunner()
     executor.platform = plat
-    # def execute(self, technique_name, position=0, parameters=None):
-    # {'input_file'}
-    # {'input_file'}
 
     all_commands = []
     for index, tech in enumerate(technique_list):
@@ -277,6 +290,10 @@ def agent_commands(technique_list, plat, params):
 
 
 def techniques_for_db():
+    """
+    Retrieves IDs and Names for techniques from the yaml files.
+    :return: A list of dictionaries containing the 'id' and 'name' of a technique.
+    """
     executor = AtomicRunner()
     tech = executor.techniques
 
