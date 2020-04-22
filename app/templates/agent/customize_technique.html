@@ -37,7 +37,7 @@
             <div class="card-body">
                 {% for test in tests %}
                 <h4 class=" text-white">Test {{ loop.index }}: {{ test.test_name }}</h4>
-                <p>Description: {{ test.description}}</p>
+                <p>{{ test.description}}</p>
                 {% if test.at_test.elevation_required %}
                 <p>Elevation required: {{ test.at_test.elevation_required}}</p>
                 {% else %}
