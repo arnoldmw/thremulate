@@ -34,8 +34,6 @@ atomic_tests:
     command: |
       SCHTASKS /Create /SC ONCE /TN spawn /TR #{task_command} /ST #{time}
       SCHTASKS /Delete /TN spawn /F
-    cleanup_command: |
-      SCHTASKS /Delete /TN spawn /F
 
 - name: Scheduled task Remote
   description: |
