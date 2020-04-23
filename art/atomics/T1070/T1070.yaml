@@ -88,7 +88,6 @@ atomic_tests:
       $eventLogId = Get-WmiObject -Class Win32_Service -Filter "Name LIKE 'EventLog'" | Select-Object -ExpandProperty ProcessId
       Stop-Process -Id $eventLogId -Force
       Remove-Item C:\Windows\System32\winevt\Logs\Security.evtx
-    cleanup_command: |
       Start-Service -Name EventLog
 
 - name: Delete System Logs Using Clear-EventLogId
