@@ -1,6 +1,6 @@
 ﻿param(
     [string]$Domain = "example.com",
-    [string]$Subdomain = "atomicredteamatomicredteamatomicredteamatomicredteamatomicredte",
+    [string]$Subdomain = "atomicredteam",
     [string]$QueryType = "TXT",
 	[int]$C2Interval = 10,
 	[int]$C2Jitter = 20,
