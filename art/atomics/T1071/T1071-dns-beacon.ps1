@@ -1,10 +1,10 @@
 ﻿param(
     [string]$Domain = "example.com",
-    [string]$Subdomain = "atomicredteam",
+    [string]$Subdomain = "atomicredteamatomicredteamatomicredteamatomicredteamatomicredte",
     [string]$QueryType = "TXT",
-	[int]$C2Interval = 30,
+	[int]$C2Interval = 10,
 	[int]$C2Jitter = 20,
-	[int]$RunTime = 30
+	[int]$RunTime = 1
 )
 
 $RunStart = Get-Date
