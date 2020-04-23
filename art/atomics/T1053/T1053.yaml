@@ -27,7 +27,7 @@ atomic_tests:
     time:
       description: What time 24 Hour
       type: String
-      default: 23:59
+      default: '23:59'
   executor:
     name: command_prompt
     elevation_required: true
@@ -48,7 +48,7 @@ atomic_tests:
     time:
       description: What time 24 Hour
       type: String
-      default: 23:59
+      default: '23:59'
     target:
       description: Target
       type: String
