@@ -14,6 +14,8 @@ atomic_tests:
     name: command_prompt
     command: |
       for /R %userprofile%\Documents\ %f in (*.docx) do copy %f %TEMP%
+      del %TEMP%\*.docx
+
 - name: Automated Collection PowerShell
   description: |
     Automated Collection
