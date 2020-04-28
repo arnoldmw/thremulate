@@ -5,7 +5,7 @@ display_name: Pass the Hash
 atomic_tests:
 - name: Use PsExec to Pass the Hash. PsExec will execute a command on a remote host without authentication.
   description: |
-    Run a command on a remote host using Sysinternalssuite PsExec.
+    Run a command on a remote host using Sysinternalssuite PsExec. Executes successfully but shows that it failed.
   supported_platforms:
     - windows
   input_arguments:
@@ -26,8 +26,9 @@ atomic_tests:
         Copy-Item $env:TEMP\PsTools\PsExec.exe "#{psexec_exe}" -Force
 
   executor:
-    name: powershell
+    name: command_prompt
     elevation_required: false
     command: |
       /atomics/T1035/bin/PsExec64.exe
       PsExec64.exe -accepteula \\#{remote_host} "C:\Windows\System32\ipconfig.exe"
+      del PsExec64.exe
