@@ -24,6 +24,7 @@ atomic_tests:
         /atomics/T1220/src/msxslscript.xsl
         /atomics/T1220/bin/msxsl.exe
         msxsl.exe #{xmlfile} #{xslfile}
+        del msxslxmlfile.xml msxslscript.xsl msxsl.exe
 
   - name: MSXSL Bypass using remote files
     description: |
@@ -63,6 +64,7 @@ atomic_tests:
       command: |
         /atomics/T1220/src/wmicscript.xsl
         wmic.exe #{wmic_command} /FORMAT:#{local_xsl_file}
+        del wmicscript.xsl
 
   - name: WMIC bypass using remote XSL file
     description: |
