@@ -14,14 +14,18 @@ atomic_tests:
     share_name:
       description: Share to add.
       type: string
-      default: \\test\share
+      default: Thremulate
+    folder_path:
+      description: Share to add.
+      type: string
+      default: C:\Users\Public\Documents
 
   executor:
     name: command_prompt
     elevation_required: false
     command: |
-      net use c: #{share_name}
-      net share test=#{share_name} /REMARK:"test share" /CACHE:No
+      net share #{share_name}=#{folder_path} /REMARK:"Thremulate share" /CACHE:No /grant:everyone,FULL
+      net share #{share_name} /delete
 
 - name: Remove Network Share
   description: |
