@@ -10,18 +10,12 @@ atomic_tests:
   supported_platforms:
     - windows
 
-  input_arguments:
-    local_chm_file:
-      description: Local .chm payload
-      type: path
-      default: T1223.chm
-
   executor:
     name: command_prompt
     elevation_required: false
     command: |
       /atomics/T1223/src/T1223.chm
-      hh.exe #{local_chm_file}
+      hh.exe T1223.chm
 
 - name: Compiled HTML Help Remote Payload
   description: |
