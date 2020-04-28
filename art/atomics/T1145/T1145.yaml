@@ -13,7 +13,7 @@ atomic_tests:
     name: command_prompt
     elevation_required: true
     command: |
-      dir c:\ /b /s .key | findstr /e .key
+      dir %userprofile%\Documents\ /b /s .key | findstr /e .key
 
 
 - name: Discover Private SSH Keys
