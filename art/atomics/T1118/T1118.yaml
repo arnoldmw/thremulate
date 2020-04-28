@@ -12,13 +12,15 @@ atomic_tests:
     filename:
       description: location of the payload
       type: Path
-      default: T1118.dll
+      default: T1118.cs
   executor:
     name: command_prompt
     elevation_required: false
     command: |
-      /atomics/T1118/T1118.dll
-      C:\Windows\Microsoft.NET\Framework\v4.0.30319\InstallUtil.exe /logfile= /LogToConsole=false /U #{filename}
+      /atomics/T1118/src/T1118.cs
+      C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe /target:library #{filename}
+      C:\Windows\Microsoft.NET\Framework\v4.0.30319\InstallUtil.exe /logfile= /LogToConsole=false /U T1118.dll
+      del #{filename} T1118.dll
 
 - name: InstallUtil GetHelp method call
   description: |
