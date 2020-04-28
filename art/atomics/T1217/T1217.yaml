@@ -44,7 +44,7 @@ atomic_tests:
 
 - name: List Google Chrome Bookmarks on Windows with powershell
   description: |
-    Searches for Google Chromes's Bookmarks file (on Windows distributions) that contains bookmarks.
+    Searches for Google Chromes's Bookmarks file (on Windows distributions) that contains bookmarks. Will take a while to finish.
 
   supported_platforms:
     - windows
@@ -56,7 +56,7 @@ atomic_tests:
 
 - name: List Google Chrome Bookmarks on Windows with command prompt
   description: |
-    Searches for Google Chromes's Bookmarks file (on Windows distributions) that contains bookmarks.
+    Searches for Google Chromes's Bookmarks file (on Windows distributions) that contains bookmarks. Will take a while to finish.
 
   supported_platforms:
     - windows
