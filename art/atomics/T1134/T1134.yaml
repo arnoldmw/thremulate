@@ -19,9 +19,6 @@ atomic_tests:
     elevation_required: true
     command: |
       /atomics/T1134/src/T1134.ps1
-      $owners = @{}
-      gwmi win32_process |% {$owners[$_.handle] = $_.getowner().user}
-      get-process | select processname,Id,@{l="Owner";e={$owners[$_.id.tostring()]}}
-      Set-Location $PathToAtomicsFolder
-      T1134.ps1
+      .\T1134.ps1
       [MyProcess]::CreateProcessFromParent((Get-Process explorer).Id,"cmd.exe")
+      Remove-Item .\T1134.ps1
