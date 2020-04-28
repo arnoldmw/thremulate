@@ -27,6 +27,7 @@ atomic_tests:
     elevation_required: false
     command: |
       Get-ChildItem -Recurse -Include *.doc | % {Copy-Item $_.FullName -destination $env:TEMP}
+      Remove-Item $env:TEMP\*doc
 
 - name: Recon information for export with PowerShell
   description: |
