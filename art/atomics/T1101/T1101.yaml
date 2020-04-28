@@ -17,7 +17,7 @@ atomic_tests:
     name: powershell
     elevation_required: true
     command: |
-      $SecurityPackages = Get-ItemProperty HKLM:\System\CurrentControlSet\Control\Lsa -Name 'Security Packages' | Select-Object -ExpandProperty 'Security Packages'
+      {$SecurityPackages = Get-ItemProperty HKLM:\System\CurrentControlSet\Control\Lsa -Name 'Security Packages' | Select-Object -ExpandProperty 'Security Packages'}
       $SecurityPackagesUpdated = $SecurityPackages
       $SecurityPackagesUpdated += "#{fake_ssp_dll}"
       Set-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Control\Lsa -Name 'Security Packages' -Value $SecurityPackagesUpdated
