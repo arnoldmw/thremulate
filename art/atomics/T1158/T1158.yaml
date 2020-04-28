@@ -95,29 +95,6 @@ atomic_tests:
       defaults write com.apple.finder AppleShowAllFiles YES
       defaults write com.apple.finder AppleShowAllFiles NO
 
-- name: Create ADS command prompt
-  description: |
-    Create an Alternate Data Stream with the command prompt. Write access is required.
-  supported_platforms:
-    - windows
-  input_arguments:
-    file_name:
-      description: File name of file to create ADS on.
-      type: string
-      default: test.txt
-    ads_filename:
-      description: Name of ADS file.
-      type: string
-      default: adstest.txt
-  executor:
-    name: command_prompt
-    elevation_required: false
-    command: |
-      echo "Normal Text." > %temp%\#{file_name}
-      echo cmd /c echo "Shell code execution."> #{file_name}:#{ads_filename}
-      for /f "usebackq delims=φ" %i in (#{file_name}:#{ads_filename}) do %i
-      del %temp%\#{file_name}
-
 - name: Create ADS PowerShell
   description: |
     Create an Alternate Data Stream with PowerShell. Write access is required.
