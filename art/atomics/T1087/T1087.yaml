@@ -116,7 +116,6 @@ atomic_tests:
     elevation_required: false
     command: |
       net user
-      net user /domain
       dir c:\Users\
       cmdkey.exe /list
       net localgroup "Users"
