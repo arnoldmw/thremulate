@@ -24,7 +24,6 @@ atomic_tests:
       /atomics/T1121/src/T1121.cs
       C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe /r:System.EnterpriseServices.dll /target:library #{source_file}
       C:\Windows\Microsoft.NET\Framework\v4.0.30319\regasm.exe /U #{file_name}
-    cleanup_command: |
       del #{file_name}
 
 - name: Regsvs Uninstall Method Call Test
@@ -51,6 +50,5 @@ atomic_tests:
       Set-Content key.snk -Value $Content -Encoding Byte
       C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe /r:System.EnterpriseServices.dll /target:library /keyfile:key.snk #{source_file}
       C:\Windows\Microsoft.NET\Framework\v4.0.30319\regsvcs.exe #{file_name}
-    cleanup_command: |
       del #{file_name}
       del key.snk
