@@ -64,4 +64,3 @@ atomic_tests:
     elevation_required: false
     command: |
       Remove-SmbShare -Name #{share_name}
-      Remove-FileShare -Name #{share_name}
