@@ -21,7 +21,6 @@ atomic_tests:
     elevation_required: true
     command: |
       sc.exe stop #{service_name}
-    cleanup_command: |
       sc.exe start #{service_name}
 
 - name: Windows - Stop service using net.exe
@@ -42,7 +41,6 @@ atomic_tests:
     elevation_required: true
     command: |
       net.exe stop #{service_name}
-    cleanup_command: |
       net.exe start #{service_name}
 
 - name: Windows - Stop service by killing process
