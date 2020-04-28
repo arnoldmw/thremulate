@@ -16,7 +16,7 @@ atomic_tests:
     command: |
       dir "c:\Program Files\"
       dir "%userprofile%\AppData\Roaming\Microsoft\Windows\Recent\*.*"
-      dir "%userprofile%\Desktop\*.*"
+      dir "%userprofile%\Documents\*.*"
 
 - name: File and Directory Discovery
   description: |
