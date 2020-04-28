@@ -271,7 +271,7 @@ def build_command(launcher, command, parameters):
         if matchobj.group(1) in parameters:
             val = parameters[matchobj.group(1)]
         else:
-            print("Warning: no match found while building the replacement string.")
+            # No match found while building the replacement string.
             val = None
 
         return val
