@@ -89,7 +89,7 @@ atomic_tests:
     elevation_required: false
     command: |
       New-Item -Force T1099.txt
-      Get-ChildItem #{file_path} | % { $_.CreationTime = #{target_date_time} }
+      Get-ChildItem #{file_path} | % { $_.CreationTime = '#{target_date_time}' }
       Remove-Item #{file_path}
 
 - name: Windows - Modify file last modified timestamp with PowerShell
@@ -114,7 +114,7 @@ atomic_tests:
     elevation_required: false
     command: |
       New-Item -Force T1099.txt
-      Get-ChildItem #{file_path} | % { $_.LastWriteTime = #{target_date_time} }
+      Get-ChildItem #{file_path} | % { $_.LastWriteTime = '#{target_date_time}' }
       Remove-Item #{file_path}
 
 - name: Windows - Modify file last access timestamp with PowerShell
@@ -139,5 +139,5 @@ atomic_tests:
     elevation_required: false
     command: |
       New-Item -Force T1099.txt
-      Get-ChildItem #{file_path} | % { $_.LastAccessTime = #{target_date_time} }
+      Get-ChildItem #{file_path} | % { $_.LastAccessTime = '#{target_date_time}' }
       Remove-Item #{file_path}
