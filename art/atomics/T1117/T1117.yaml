@@ -4,7 +4,8 @@ display_name: Regsvr32
 atomic_tests:
 - name: Regsvr32 local COM scriptlet execution
   description: |
-    Regsvr32.exe is a command-line program used to register and unregister OLE controls
+    Regsvr32.exe is a command-line program used to register and unregister OLE controls.
+    This test executes the payload successfully but shows that it failed.
   supported_platforms:
   - windows
   executor:
@@ -12,7 +13,8 @@ atomic_tests:
    elevation_required: false
    command: |
     /atomics/T1117/RegSvr32.sct
-    regsvr32.exe /s /u /i:#{filename} scrobj.dll
+    regsvr32.exe /s /u /i:RegSvr32.sct scrobj.dll
+    del #{filename}
 
 - name: Regsvr32 remote COM scriptlet execution
   description: |
