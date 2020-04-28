@@ -3,19 +3,15 @@ attack_technique: T1193
 display_name: Spearphishing Attachment
 
 atomic_tests:
-- name: Download Phishing Attachment - VBScript
+- name: Phishing Attachment - VBScript
   description: |
     The macro-enabled Excel file contains VBScript which opens your default web browser and opens it to [google.com](http://google.com).
-    The below will successfully download the macro-enabled Excel file to the current location.
   supported_platforms:
     - windows
   executor:
-    name: powershell
+    name: command_prompt
     elevation_required: false
     command: |
-        $url = 'https://github.com/arnoldmw/thremulate/blob/master/atomics/T1193/bin/PhishingAttachment.xlsm'
-        $fileName = 'PhishingAttachment.xlsm'
-        New-Item -Type File -Force -Path $fileName | out-null
-        $wc = New-Object System.Net.WebClient
-        $wc.Encoding = [System.Text.Encoding]::UTF8
-        ($wc.DownloadString("$url")) | Out-File $fileName
+      /atomics/T1193/bin/PhishingAttachment.xlsm
+      start PhishingAttachment.xlsm
+
