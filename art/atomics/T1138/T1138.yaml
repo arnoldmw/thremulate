@@ -25,6 +25,7 @@ atomic_tests:
       /atomics/T1138/bin/T1138CompatDatabase.sdb
       sdbinst.exe #{file_path}
       sdbinst.exe -u #{file_path}
+      del T1138CompatDatabase.sdb
 
 - name: New shim database files created in the default shim database directory
   description: |
