@@ -72,3 +72,4 @@ atomic_tests:
       echo "This file will be encrypted" > .\T1022\victim-files\file_to_encrypt.txt
       7z a archive.7z -pblue .\T1022\victim-files\file_to_encrypt.txt
       dir .\T1022\victim-files\
+      rmdir .\T1022\victim-files
