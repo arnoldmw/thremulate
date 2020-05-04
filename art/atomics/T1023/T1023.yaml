@@ -22,6 +22,8 @@ atomic_tests:
     elevation_required: false
     command: |
       echo [InternetShortcut] > test.url && echo URL=C:\windows\system32\calc.exe >> #{shortcut_file_path} && #{shortcut_file_path}
+      dir
+      del #{shortcut_file_path}
 
 - name: Create shortcut to cmd in startup folders
   description: |
