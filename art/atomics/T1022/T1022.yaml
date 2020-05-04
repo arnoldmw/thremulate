@@ -35,6 +35,7 @@ atomic_tests:
       echo "This file will be encrypted" > .\tmp\victim-files\file_to_encrypt.txt
       "%ProgramFiles%\WinRAR\Rar.exe" a -hp"blue" .\tmp\victim-files\hello.rar .\tmp\victim-files\file_to_encrypt.txt
       dir .\tmp\victim-files\
+      rmdir .\tmp\victim-files\
 
 - name: Compress Data and lock with password for Exfiltration with winzip
   description: |
