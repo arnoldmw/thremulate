@@ -39,7 +39,7 @@ atomic_tests:
     name: command_prompt
     elevation_required: false
     command: |
-      C:\windows\system32\SyncAppvPublishingServer.vbs “\n;#{command_to_execute}”
+      C:\windows\system32\SyncAppvPublishingServer.vbs "\n;#{command_to_execute}"
 
 - name: manage-bde.wsf Signed Script Command Execution
   description: |
