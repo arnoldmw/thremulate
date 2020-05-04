@@ -58,6 +58,7 @@ atomic_tests:
       echo "This file will be encrypted" > .\tmp\victim-files\file_to_encrypt.txt
       "#{winzip_exe}" -min -a -s"hello" .\tmp\victim-files\archive.zip .\tmp\victim-files\file_to_encrypt.txt
       dir .\tmp\victim-files\
+      rmdir .\tmp\victim-files\
 
 - name: Compress Data and lock with password for Exfiltration with 7zip
   description: |
