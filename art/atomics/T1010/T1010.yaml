@@ -28,4 +28,5 @@ atomic_tests:
       /atomics/T1010/src/T1010.cs
       C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe -out:#{output_file_name} #{input_source_code}
       #{output_file_name}
+      del #{output_file_name} T1010.cs
 
