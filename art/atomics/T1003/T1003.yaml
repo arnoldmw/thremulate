@@ -243,3 +243,4 @@ atomic_tests:
     command: |
       /atomics/T1003/bin/pypykatz.exe
       pypykatz live registry
+      del pypykatz.exe
