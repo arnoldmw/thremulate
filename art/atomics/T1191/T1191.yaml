@@ -19,6 +19,7 @@ atomic_tests:
     command: |
       /atomics/T1191/T1191.inf
       cmstp.exe /s #{inf_file_path}
+      del T1191.inf
 
 - name: CMSTP Executing UAC Bypass
   description: |
@@ -36,3 +37,4 @@ atomic_tests:
     command: |
       /atomics/T1191/T1191_uacbypass.inf
       cmstp.exe /s #{inf_file_uac} /au
+      del T1191_uacbypass.inf
