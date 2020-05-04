@@ -19,3 +19,4 @@ atomic_tests:
     command: |
       /atomics/T1196/bin/calc.cpl
       control.exe #{cpl_file_path}
+      del #{cpl_file_path}
