@@ -18,23 +18,3 @@ atomic_tests:
       echo Hidden text > normal.txt:hidden.txt
       del normal.txt
 
-- name: Store file in Alternate Data Stream (ADS)
-  description: |
-    Storing files in Alternate Data Stream (ADS) similar to Astaroth malware.
-
-  supported_platforms:
-    - windows
-
-  input_arguments:
-    payload_path:
-      description: Path of file to hide in ADS
-      type: path
-      default: c:\windows\system32\cmd.exe
-
-  executor:
-    name: powershell
-    elevation_required: false
-    command: |
-      echo Normal text > T1096.txt
-      Start-Process -FilePath "$env:comspec" -ArgumentList "/c,type,#{payload_path},>,`" T1096.txt:ADSName`""
-      Remove-Item -Path T1096.txt
