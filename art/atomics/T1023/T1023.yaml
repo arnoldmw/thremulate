@@ -5,7 +5,7 @@ display_name: Shortcut Modification
 atomic_tests:
 - name: Shortcut Modification
   description: |
-    This test to simulate shortcut modification and then execute. This test uses *.url shortcut.
+    This test to modifies a shortcut modification and then executes it. It uses a *.url shortcut.
 
   supported_platforms:
     - windows
@@ -22,7 +22,7 @@ atomic_tests:
 
 - name: Create shortcut to cmd in startup folders
   description: |
-    LNK file to launch CMD placed in startup folder
+    Adds *.lnk file to the startup folder in order to launch ipconfig with CMD . This test uses a *.lnk shortcut.
   supported_platforms:
     - windows
   executor:
