@@ -35,7 +35,7 @@ atomic_tests:
       $ShortCut.WorkingDirectory = "C:\Windows\System32"
       $ShortCut.WindowStyle = 1
       $ShortCut.Description = "T1023";
-      $ShortCut.Arguement = "/c ipconfig"
+      $ShortCut.Arguments = "/c ipconfig"
       $ShortCut.Save()
       start "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\T1023.lnk"
       Remove-Item "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\T1023.lnk"
