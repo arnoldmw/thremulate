@@ -269,7 +269,6 @@ class AdversaryTests(AioHTTPTestCase):
                         .format(resp.status))
         adversary_name = ''.join(random.choice(string.ascii_lowercase) for _ in range(7))
         adv_id = Adversary.create(name=adversary_name)
-        print(adv_id)
         resp_two = await self.client.request("POST", "/adversary_delete", data={'id': adv_id})
         self.assertTrue(resp_two.status == 200, msg="Failed to access /adversary_delete. Received status code {0}"
                         .format(resp_two.status))
