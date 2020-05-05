@@ -37,8 +37,10 @@ atomic_tests:
       $Shell = New-Object -ComObject ("WScript.Shell")
       $ShortCut = $Shell.CreateShortcut("$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\T1023.lnk")
       $ShortCut.TargetPath="cmd.exe"
-      $ShortCut.WorkingDirectory = "C:\Windows\System32";
-      $ShortCut.WindowStyle = 1;
-      $ShortCut.Description = "T1023.";
+      $ShortCut.WorkingDirectory = "C:\Windows\System32"
+      $ShortCut.WindowStyle = 1
+      $ShortCut.Description = "T1023";
+      $ShortCut.Arguement = "/c ipconfig"
       $ShortCut.Save()
+      start "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\T1023.lnk"
       Remove-Item "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\T1023.lnk"
