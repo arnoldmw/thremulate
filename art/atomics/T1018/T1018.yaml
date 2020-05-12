@@ -113,7 +113,7 @@ atomic_tests:
     name: sh
     elevation_required: false
     command: |
-      for ip in $(seq 1 254); do ping -c 1 #{three_network_octets}.$ip; [ $? -eq 0 ] && echo "#{three_network_octets}.$ip UP" || : ; done
+      for ip in $(seq 1 254); do ping -c 1 #{three_network_octets}.$ip; [ $? -eq 0 ] && echo '#{three_network_octets}.$ip UP' || : ; done
       
 - name: Remote System Discovery - nslookup
   description: |
