@@ -29,13 +29,14 @@ atomic_tests:
     name: powershell
     elevation_required: true
     command: |
-      $Shell = New-Object -ComObject ("WScript.Shell")
-      $ShortCut = $Shell.CreateShortcut("$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\T1023.lnk")
-      $ShortCut.TargetPath="cmd.exe"
-      $ShortCut.WorkingDirectory = "C:\Windows\System32"
+      $T1023 = $env:APPDATA + '\Microsoft\Windows\Start Menu\Programs\Startup\T1023.lnk'
+      $Shell = New-Object -ComObject ('WScript.Shell')
+      $ShortCut = $Shell.CreateShortcut($T1023)
+      $ShortCut.TargetPath='cmd.exe'
+      $ShortCut.WorkingDirectory = 'C:\Windows\System32'
       $ShortCut.WindowStyle = 1
-      $ShortCut.Description = "T1023";
-      $ShortCut.Arguments = "/c ipconfig"
+      $ShortCut.Description = 'T1023';
+      $ShortCut.Arguments = '/c ipconfig'
       $ShortCut.Save()
-      start "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\T1023.lnk"
-      Remove-Item "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\T1023.lnk"
+      start $T1023
+      Remove-Item $T1023
