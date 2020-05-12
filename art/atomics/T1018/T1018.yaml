@@ -117,11 +117,11 @@ atomic_tests:
       
 - name: Remote System Discovery - nslookup
   description: |
-    Powershell script that runs nslookup on cmd.exe against the local /24 network of the first network adaptor listed in ipconfig
+    Powershell script that runs nslookup on cmd.exe against the first 10 IP addresses of the local network of the first network adaptor listed in ipconfig
   supported_platforms:
     - windows
   executor:
     name: powershell
     elevation_required: true
     command: |
-      {$localip = ((ipconfig | findstr [0-9].\.)[0]).Split()[-1];$pieces = $localip.split('.');$firstOctet = $pieces[0];$secondOctet = $pieces[1];$thirdOctet = $pieces[2];foreach ($ip in 1..255 | % { '$firstOctet.$secondOctet.$thirdOctet.$_' } ) {cmd.exe /c nslookup $ip}}
+      {$localip = ((ipconfig | findstr [0-9].\.)[0]).Split()[-1];$pieces = $localip.split('.');foreach ($ip in 1..5 | % { $pieces[0] +'.'+ $pieces[1]+'.'+$pieces[2]+'.'+ $_ } ) {cmd.exe /c nslookup $ip}}
