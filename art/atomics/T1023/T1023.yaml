@@ -27,7 +27,7 @@ atomic_tests:
     - windows
   executor:
     name: powershell
-    elevation_required: true
+    elevation_required: false
     command: |
       $T1023 = $env:APPDATA + '\Microsoft\Windows\Start Menu\Programs\Startup\T1023.lnk'
       $Shell = New-Object -ComObject ('WScript.Shell')
