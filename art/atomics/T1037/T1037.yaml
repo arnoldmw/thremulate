@@ -32,7 +32,7 @@ atomic_tests:
 
 - name: Startup Folder Script
   description: |
-    A batch file created to run on startup when placed in the start menu folder
+    A batch file created to run on startup when placed in the start menu folder. ("%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\)
   supported_platforms:
     - windows
 
@@ -47,11 +47,12 @@ atomic_tests:
     elevation_required: false
     command: |
       echo cmd /C #{user_command} > "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\T1037.bat"
+      "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\T1037.bat"
       del "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\T1037.bat"
 
 - name: Scheduled Task Startup Script
   description: |
-    Run an exe on user logon or system startup
+    Run an executable (calc.exe) on user logon or system startup
   supported_platforms:
     - windows
   executor:
@@ -91,14 +92,12 @@ atomic_tests:
 
 - name: File Ending with .jse in Startup Folder
   description: |
-    Malware can create .jse files in the startup folder to establish persistence
+    Malware can create .jse files in the startup folder to establish persistence [C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp]
   supported_platforms:
     - windows
   executor:
-    name: powershell
-    elevation_required: true
+    name: command_prompt
+    elevation_required: false
     command: |
-      New-Item "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\T1165globalstartup.jse"
-      New-Item "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\T1165userstartup.jse"
-      Remove-Item "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\T1165globalstartup.jse"
-      Remove-Item "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\T1165userstartup.jse"
+      echo " " > "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\T1165globalstartup.jse"
+      del "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\T1165globalstartup.jse"
