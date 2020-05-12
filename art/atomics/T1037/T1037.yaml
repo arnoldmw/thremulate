@@ -43,12 +43,11 @@ atomic_tests:
       default: hostname
 
   executor:
-    name: powershell
-    elevation_required: true
+    name: command_prompt
+    elevation_required: false
     command: |
-      New-Item "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\T1037.bat" -force
-      Set-Content "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\T1037.bat" "cmd /c #{user_command}"
-      Remove-Item "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\T1037.bat" -ErrorAction Ignore
+      echo cmd /C #{user_command} > "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\T1037.bat"
+      del "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\T1037.bat"
 
 - name: Scheduled Task Startup Script
   description: |
