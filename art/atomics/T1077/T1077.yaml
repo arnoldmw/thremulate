@@ -70,7 +70,7 @@ atomic_tests:
     command_path:
       description: File to copy and execute
       type: Path
-      default: C:\Windows\System32\cmd.exe
+      default: C:\Windows\System32\cmd.exe /c hostname
   executor:
     name: command_prompt
     elevation_required: true
