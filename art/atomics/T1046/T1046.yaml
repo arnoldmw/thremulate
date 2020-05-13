@@ -19,7 +19,7 @@ atomic_tests:
       name: sh
       elevation_required: false
       command: |
-        for port in {1..65535};do echo >/dev/tcp/#{host}/$port && echo "port $port is open" || echo "port $port is closed" : ;done
+        for port in {1..150};do echo >/dev/tcp/#{host}/$port && echo "port $port is open" || echo "port $port is closed" : ;done
 
   - name: Port Scan Nmap
     description: |
