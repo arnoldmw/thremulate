@@ -51,16 +51,16 @@ atomic_tests:
     command: |
       grep 'x:0:' /etc/passwd
 
-- name: List opened files by user
+- name: List files opened  by user
   description: |
-    List opened files by user
+    List  files opened by user
   supported_platforms:
     - linux
     - macos
   executor:
     name: sh
     command: |
-      username=$(echo $HOME | awk -F'/' '{print $3}') && lsof -u $username
+      username=$(echo $HOME | awk -F'/' '{print $3}')
 
 - name: Show if a user account has ever logger in remotely
   description: |
