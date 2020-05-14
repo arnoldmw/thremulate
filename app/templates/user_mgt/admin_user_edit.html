@@ -39,12 +39,12 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <input type="hidden" name="user_id" value="{{ user.id }}">
-                                <label for="">First Name</label>
+                                <label for="fname">First Name</label>
                                 <input type="text" class="form-control" id="fname" name="fname"
                                        value="{{ user.fname }}">
                             </div>
                             <div class="form-group">
-                                <label for="">Last Name</label>
+                                <label for="lname">Last Name</label>
                                 <input type="text" class="form-control" id="lname" name="lname"
                                        value="{{ user.lname }}">
                             </div>
@@ -154,7 +154,7 @@
             </form>
             <hr>
             <div class="form-group">
-                <label for="">Lockout Count</label><br>
+                <label for="reset-lockout">Lockout Count</label><br>
                 <button class="btn btn-primary btn-link" id="reset-lockout" data-user-id="{{ user.id }}"><span
                         class="btn-label"><i class="fas fa-lock-open"></i></span>
                     Reset Lockout Count
@@ -162,7 +162,7 @@
 
             </div>
             <div class="form-group">
-                <label for="">Password</label><br>
+                <label>Password</label><br>
                 <button class="btn btn-primary btn-link"><span class="btn-label"><i class="fas fa-key"></i></span>
                     <a href="{{ url('reset_password', id=user.id | string) }}">Reset Password</a>
                 </button>
