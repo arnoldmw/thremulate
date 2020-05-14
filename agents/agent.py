@@ -75,7 +75,7 @@ def execute_command(command_issued):
     success = success.decode("utf-8")
     error = error.decode("utf-8")
 
-    if error is not '':
+    if error != '':
         return 'Error--' + error
 
     if success == '' or success != '':
@@ -138,7 +138,7 @@ def get_techniques():
             result = []
 
             for res in response:
-                if res is not '':
+                if res != '':
                     result.append(res)
 
             return result
