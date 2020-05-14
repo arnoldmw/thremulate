@@ -18,7 +18,7 @@ atomic_tests:
     name: sh
     command: |
       export HISTCONTROL=ignoreboth
-      ls #{evil_command}
+      #{evil_command}
 
 - name: Mac HISTCONTROL
   description: |
