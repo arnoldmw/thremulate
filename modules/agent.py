@@ -251,7 +251,7 @@ async def agent_details(request):
         agt = Agent.select(Agent, Adversary.name).join(Adversary).where(Agent.id == agent_id)
 
         for ag in agt:
-            agent = {'id': ag.id, 'name': ag.name, 'adversary': ag.adversary.name, 'domain': ag.domain,
+            agent = {'id': ag.id, 'name': ag.name, 'adversary': ag.adversary.name,
                      'platform': ag.platform, 'hostname': ag.hostname,
                      'username': ag.username, 'plat_version': ag.plat_version, 'kill_date': ag.kill_date,
                      'initial_contact': ag.initial_contact, 'last_contact': ag.last_contact}

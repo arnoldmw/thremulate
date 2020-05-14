@@ -40,16 +40,15 @@ class Adversary(BaseModel):
 
 class Agent(BaseModel):
     id = IntegerField(primary_key=True)
-    name = CharField(unique=True, null=True)
+    name = CharField(unique=True)
     hostname = CharField(max_length=30, unique=True)
-    username = CharField(max_length=30, null=True)
-    platform = CharField(max_length=20, null=True)
-    plat_version = CharField(max_length=20, null=True)
-    domain = CharField(max_length=30, null=True)
-    initial_contact = DateTimeField(default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), null=True)
+    username = CharField(max_length=30)
+    platform = CharField(max_length=20)
+    plat_version = CharField(max_length=20)
+    initial_contact = DateTimeField(default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     kill_date = DateTimeField(null=True)
-    last_contact = DateTimeField(default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), null=True)
-    adversary = ForeignKeyField(Adversary, backref='agents', null=True)
+    last_contact = DateTimeField(default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    adversary = ForeignKeyField(Adversary, backref='agents')
 
 
 class Technique(BaseModel):
