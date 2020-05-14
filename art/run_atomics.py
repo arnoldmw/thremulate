@@ -184,10 +184,10 @@ def agent_commands(technique_list, plat, params):
             comm = comm.replace('"', "\'")
             if '|' in comm:
                 comm = '\"& {}\"'.format(comm)
-                all_commands.append('powershell' + ' -Command ' + comm + '++')
+                all_commands.append('powershell.exe' + ' -ExecutionPolicy Bypass -Command ' + comm + '++')
             else:
                 comm = '\"{}\"'.format(comm)
-                all_commands.append('powershell' + ' -Command ' + comm + '++')
+                all_commands.append('powershell.exe' + ' -ExecutionPolicy Bypass -Command ' + comm + '++')
 
         elif 'cmd' in executor.launcher:
             all_commands.append(comm + '++')
