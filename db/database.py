@@ -46,9 +46,9 @@ class Agent(BaseModel):
     platform = CharField(max_length=20, null=True)
     plat_version = CharField(max_length=20, null=True)
     domain = CharField(max_length=30, null=True)
-    initial_contact = DateTimeField(default=datetime.datetime.now, null=True)
+    initial_contact = DateTimeField(default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), null=True)
     kill_date = DateTimeField(null=True)
-    last_contact = DateTimeField(default=datetime.datetime.now, null=True)
+    last_contact = DateTimeField(default=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), null=True)
     adversary = ForeignKeyField(Adversary, backref='agents', null=True)
 
 
