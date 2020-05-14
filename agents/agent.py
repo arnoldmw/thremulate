@@ -65,7 +65,7 @@ def execute_command(command_issued):
     """
     cmd = subprocess.Popen(command_issued, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                            stdin=subprocess.PIPE)
-    executed.append(datetime.datetime.now())
+    executed.append(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     try:
         success, error = cmd.communicate(timeout=TIMEOUT)
     except subprocess.TimeoutExpired:
