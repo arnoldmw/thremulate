@@ -5,7 +5,7 @@ display_name: Data Transfer Size Limits
 atomic_tests:
 - name: Data Transfer Size Limits
   description: |
-    Take a file/directory, split it into 5Mb chunks
+    Take a file/directory, split it into 5Mb chunks. (This test will execute succefully but it will show that it failed)
 
   supported_platforms:
     - macos
@@ -15,8 +15,7 @@ atomic_tests:
     name: sh
     elevation_required: false
     command: |
-      cd /tmp/
       dd if=/dev/urandom of=/tmp/victim-whole-file bs=25M count=1
       split -b 5000000 /tmp/victim-whole-file
-      ls -l
+      ls -lh
       rm /tmp/xa* /tmp/victim-whole-file
