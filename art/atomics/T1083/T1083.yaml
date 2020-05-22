@@ -66,5 +66,4 @@ atomic_tests:
     command: |
       cd $HOME && find . -print | sed -e 's;[^/]*/;|__;g;s;__|; |;g'
       cat /etc/mtab
-      find . -type f -iname *.pdf
-      find . -type f -name ".*"
+      find / -type f -iname *.pdf | head -n 3
