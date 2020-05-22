@@ -22,7 +22,7 @@ atomic_tests:
     file_path:
       description: Path to search
       type: String
-      default: /
+      default: /$HOME
   supported_platforms:
     - macos
     - linux
