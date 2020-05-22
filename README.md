@@ -1,20 +1,20 @@
 # Thremulate
 
 Thremulate is a light weight adversary emulation application grounded on the MITRE [ATT&CK™](https://attack.mitre.org/) framework.
-Thremulate's server and agent are totally platform independent. Therefore, you can execute over 157 adversarial techniques on Windows, Linux and MacOS operating systems without a hitch.
+Thremulate's server and agent are totally platform independent. Therefore, you can execute over 140 adversarial techniques on Windows, Linux and MacOS operating systems without a hitch.
 
 > Thremulate is currently undergoing quality assurance to fix bugs. 
-Therefore not all adversary techniques will work as expected and the database deployment is yet to be implemented. 
+Therefore not all adversary techniques will work as expected. 
 It will soon be production ready :ok_hand:. Keep checking for its v1.0.0 release.
 
 
 ## Why should I use Thremulate?
 - **Security Assessments for All:** 
-Organizations that may not have full time red team personnel or IT security budget constraints or irregular security assessments can leverage the power of this software to test their defenses.
+Organizations that may not have full time red team personnel or a substantial IT security budget can leverage the power of this software to test their defenses.
 - **Security Monitoring Effectiveness:**
-Security personnel should validate their continuous and/or network security monitoring measures effectiveness at preventing and/or detecting adversarial behavior on the end-points or network. Thremulate helps you do this with utmost ease. Run an adversarial technique and confirm if it is prevented or detected as malicious.
+Security personnel should validate their continuous and network security monitoring measure's effectiveness at preventing and detecting adversarial presence on the end-points or network. Thremulate helps you do this with utmost ease. Run an adversarial technique and confirm if its execution is prevented or detected as malicious.
 - **Raise Information Security Awareness:**
-The lead author created Thremulate to raise awareness about cyber threats out there in the wild (unknown) inclined on compromising and/or destroying digital infrastructure. Thremulate is a spot-on example of how we can use Cyber Threat Intelligence (CTI) to reinforce our defenses. 
+The lead author created Thremulate to raise awareness about cyber threats out there in the wild inclined on compromising and/or destroying digital infrastructure. Thremulate is a spot-on example of how we can use Cyber Threat Intelligence (CTI) to reinforce our defenses. 
 
 ## Features
 1. Responsive Web GUI
@@ -30,7 +30,7 @@ The lead author created Thremulate to raise awareness about cyber threats out th
 1. Adversary emulation
 2. IT Security classes
 3. Forensics classes
-4. Red Team engagements
+4. Purple Team engagements
 ## Major requirement
 - Python 3.5.3 or later
 
@@ -45,23 +45,19 @@ Start by cloning this repository.
 ```
 git clone https://github.com/arnoldmw/thremulate.git 
 ```
-Install the requirements for the project. It is recommended to create a virtual environment for every project.
+Install the requirements for the project. It is recommended to create a new virtual environment for every project.
 ```python
 pip install -r requirements.txt
 ```
 Start the sever
 ```python
-python main.py
+python server.py
 ```
 
 ## Getting Started
 
 * [Running Your First Adversary Emulation with Thremulate](docs/Quick_Start.md)
-* The Complete [list of all supported adversarial techniques](art/atomics/index.md) and the [ATT&CK Matrix](art/atomics/matrix.md)
-  - Windows [Tests](art/atomics/windows-index.md) and [Matrix](art/atomics/windows-matrix.md)
-  - MacOS [Tests](art/atomics/macos-index.md) and [Matrix](art/atomics/macos-matrix.md)
-  - Linux [Tests](art/atomics/linux-index.md) and [Matrix](art/atomics/linux-matrix.md)
-* Do you prefer the ATT&CK Navigator? This is our [coverage layer](art/atomics/art_navigator_layer.json).
+
 
 ## Contributing
 
@@ -85,7 +81,7 @@ See the [LICENSE](LICENSE.txt) file for more details.
 
 - [ATT&CK](https://attack.mitre.org/)
 - [Atomic Red Team](https://github.com/redcanaryco/atomic-red-team)
-- All the threat actors whose techniques I used, I am (un)grateful.
+- All the threat actors whose techniques I have implemented, I am (un)grateful.
 
 ## Support
 
