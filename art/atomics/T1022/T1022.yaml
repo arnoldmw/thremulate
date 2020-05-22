@@ -17,8 +17,9 @@ atomic_tests:
     command: |
       mkdir /tmp/victim-files
       touch /tmp/victim-files/secrets.txt
-      zip --password "thremulate" tmp/victim-files.zip /tmp/victim-files/*
-      rm -Rf /tmp/victim-files
+      zip --password "thremulate" /tmp/victim-files.zip /tmp/victim-files/*
+      rm -Rf /tmp/victim-files 
+      rm /tmp/victim-files.zip
 
 - name: Compress Data and lock with password for Exfiltration with winrar
   description: |
