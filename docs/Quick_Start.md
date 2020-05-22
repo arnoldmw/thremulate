@@ -24,8 +24,8 @@ python server.py
 
    These are some of the ways of getting the agent to the target computer.
 
-   - The Home page of an authenticated user has platform specific commands that download an agent to a target computer that executes them. Copy and paste them in the bash or command prompt or powershell terminal. For best results use a terminal or console with Administrative privileges on the target computer. Ensure the Thremulate server IP is the correct one in the deployment commands otherwise correct it as you paste the commands.
-   - Transfer the Agent for the corresponding test platform using external storage media or FTP or any other viable means. The Agent lives in the **agents** folder found in the Thremulate root. Windows Agents are labelled win_agent.exe, Linux Agents are labelled lin_agent.exe. and MacOS Agents are labelled mac_agent.exe.
+   - The Home page of an authenticated user has platform specific commands that download an agent to a target computer that executes them. Copy and paste them in the bash or command prompt or powershell terminal. For best results use a terminal or console with Administrative or root privileges on the target computer. Ensure the Thremulate server IP is correct.
+   - Transfer the Agent for the corresponding target platform using external storage media or FTP or any other viable means. The Agent lives in the **agents** folder found in the Thremulate root. Windows Agents are labelled win_agent.exe, Linux Agents are labelled lin_agent.exe. and MacOS Agents are labelled mac_agent.exe.
 
 ## 3. The Agent is on the test computer. What next?
 
@@ -42,7 +42,7 @@ Depending on the Agent you have, run it with the following commands.
 
 ## 5. Upon running the Agent, it said it has registered. I am ready to Thremulate. Great!!
 
-- In the browser navigate to the https://localhost:8000/agents. This leads you to a page which shows all the agents that have registered with the server.
+- In the browser navigate to the https://localhost:8000/agents. This leads you to a page which shows all the agents that have registered with the server. If you get Error 404, navigate to https://localhost:8000/login and login. 
 
 - A random name was given to your Agent. You can change it later by clicking on the Edit button with the 'Update Agent' tooltip. Access tooltips by hovering over the buttons. To assign an agent techniques to execute, click on the 'Play' button with the 'Assign techniques' tooltip. 
 
@@ -52,17 +52,17 @@ Depending on the Agent you have, run it with the following commands.
 
 - You can view or modify the execution parameters of the technique before assigning it an agent.
 
-  >**NOTE: A technique may multiple tests for better coverage. A win for you :smiley:.**
+  >**NOTE: A technique may have multiple tests for better coverage.**
 
 ![Assign Technique](../screenshots/assign_technique.png)
 
-- Wait for the agent to execute the assigned techniques. The Agent by default checks for new techniques assignments every 5 seconds. This can later be changed to any value when starting the Agent.
+- Wait for the agent to execute the assigned techniques. The Agent by default checks for new tasks every 5 seconds. This can later be changed to any value when starting the Agent.
 
 
 
 ## 6. Agent says it executed TXXXX:X. How do I know that the agent really executed TXXXX:X ?
 
-- Navigate to https://localhost:8000/agents. Click on the Information button with the 'More information' tooltip.
+- Navigate to https://localhost:8000/agents. In the row that your agent is, click on the Information button with the 'More information' tooltip.
 
 - This will show you all the techniques associated with that Agent and their respective analysis.You can delete the output of a particular technique test for the Agent to re-run it or even remove the technique test from the Agent.
 - If you wish to view output from the Agent, click on the name of the technique test.
@@ -72,8 +72,6 @@ Depending on the Agent you have, run it with the following commands.
 
 ## 7. And that is your first adversary emulation with Thremulate. Congratulations!!
 
-Have a peek at your insightful dashboard to view your progress and run more techniques if the charts are not putting a smile on your face. Happy Thremulating.
-
-I'd appreciate a sentence or two of feedback. Thanks in advance.
+Have a peek at your insightful dashboard to view your progress and run more techniques if the charts are flat. Happy Thremulating.
 
 ![Dashboard](../screenshots/dashboard.png)
