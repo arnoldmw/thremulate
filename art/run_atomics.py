@@ -1,4 +1,4 @@
-#      Thremulate executes Network Adversary Post Compromise Activities.
+#      Thremulate executes Network Adversary Post Compromise Behavior.
 #      Copyright (C) 2020  Mwesigwa Arnold
 #
 #      This program is free software: you can redistribute it and/or modify

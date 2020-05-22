@@ -12,7 +12,7 @@ Changes made:
 Script that was built in order to automate the execution of ART.
 """
 
-#      Thremulate executes Network Adversary Post Compromise Activities.
+#      Thremulate executes Network Adversary Post Compromise Behavior.
 #      Copyright (C) 2020  Mwesigwa Arnold
 #
 #      This program is free software: you can redistribute it and/or modify
