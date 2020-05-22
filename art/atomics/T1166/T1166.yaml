@@ -19,6 +19,7 @@ atomic_tests:
     name: sh
     elevation_required: true
     command: |
+      touch #{file_to_setuid}
       sudo touch #{file_to_setuid}
       ls -l #{file_to_setuid}
       sudo chown root #{file_to_setuid}
@@ -43,6 +44,7 @@ atomic_tests:
     name: sh
     elevation_required: true
     command: |
+      touch #{file_to_setuid}
       sudo touch #{file_to_setuid}
       ls -l #{file_to_setuid}
       sudo chown root #{file_to_setuid}
