@@ -26,10 +26,11 @@ atomic_tests:
     folder_to_delete:
       description: Path of folder to delete
       type: Path
-      default: /tmp/
+      default: /tmp/a/b
   executor:
     name: sh
     command: |
+      mkdir -p #{folder_to_delete}
       rm -rf #{folder_to_delete}
 
 - name: Overwrite and delete a file with shred
