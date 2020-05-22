@@ -57,10 +57,10 @@ atomic_tests:
         description: Ports to scan.
         type: string
         default: 80
-        host:
-          description: Host to scan.
-          type: string
-          default: 192.168.1.1
+      host:
+        description: Host to scan.
+        type: string
+        default: 192.168.1.1
 
     executor:
       name: sh
@@ -80,10 +80,10 @@ atomic_tests:
         description: Ports to scan.
         type: string
         default: 80
-        host:
-          description: Host to scan.
-          type: string
-          default: 192.168.1.1
+      host:
+        description: Host to scan.
+        type: string
+        default: 192.168.1.1
 
     executor:
       name: sh
