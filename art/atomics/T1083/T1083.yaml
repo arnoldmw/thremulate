@@ -49,11 +49,7 @@ atomic_tests:
     name: sh
     command: |
       ls -a
-      ls -la /Library/Preferences/
-      file */* *
-      find . -type f
-      ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'
-      locate *
+      locate $HOME/*.txt
       which sh
 
 
