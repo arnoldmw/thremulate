@@ -41,23 +41,3 @@ atomic_tests:
     command: |
       C:\windows\system32\SyncAppvPublishingServer.vbs "\n;#{command_to_execute}"
 
-- name: manage-bde.wsf Signed Script Command Execution
-  description: |
-    Executes the signed manage-bde.wsf script with options to execute an arbitrary command.
-
-  supported_platforms:
-    - windows
-
-  input_arguments:
-    command_to_execute:
-      description: A command to execute.
-      type: Path
-      default: C:\Windows\System32\calc.exe
-
-  executor:
-    name: command_prompt
-    elevation_required: false
-    command: | # these are the actaul attack commands, at least one command must be provided
-      set comspec=#{command_to_execute}
-      cscript manage-bde.wsf
-      set comspec=C:\Windows\System32\cmd.exe
