@@ -111,33 +111,3 @@ atomic_tests:
       test -e #{input_file} && gzip -k #{input_file} || (echo '#{input_content}' >> #{input_file}; gzip -k #{input_file})
       rm -f #{input_file}.gz
 
-- name: Data Compressed - nix - tar Folder or File
-  description: |
-    An adversary may compress data (e.g., sensitive documents) that is collected prior to exfiltration. This test uses standard tar compression. (Executes succefully but it shows that it failed.)
-  supported_platforms:
-    - linux
-    - macos
-  input_arguments:
-    input_file_folder:
-      description: Path that should be compressed
-      type: Path
-      default: '$HOME/*.txt'
-    output_file:
-      description: File that should be output
-      type: Path
-      default: '/tmp/data.tar.gz'
-  
-  dependencies:
-    - description: |
-        Folder to zip must exist (#{input_file_folder})
-      prereq_command: |
-        test -e #{input_file_folder}
-      get_prereq_command: |
-        echo Please set input_file_folder argument to a folder that exists
-
-  executor:
-    name: sh
-    elevation_required: false
-    command: |
-      tar -cvzf #{output_file} #{input_file_folder}
-      rm -f #{output_file}
