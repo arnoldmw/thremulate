@@ -13,7 +13,7 @@ atomic_tests:
   executor:
     name: sh
     command: |
-      find / -path "*.mozilla/firefox/*/places.sqlite" -exec echo {} >> /tmp/firefox-bookmarks.txt \;
+      find / -path "*.mozilla/firefox/*/places.sqlite" -exec echo {} >> /tmp/firefox-bookmarks.txt \ | head -n 3
       rm /tmp/firefox-bookmarks.txt
 
 - name: List Mozilla Firefox Bookmark Database Files on macOS
