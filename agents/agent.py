@@ -110,6 +110,10 @@ def set_user_agent():
         headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux i686; rv:60.0) Gecko/20100101 Firefox/60.0'}
         return
 
+    if agent_platform == 'macos':
+        headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/11.1.2 Safari/605.1.15'}
+        return
+
 
 def register():
     """
