@@ -24,7 +24,8 @@ async def response_headers(request, handler):
     # response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains; preload'
     response.headers['X-XSS-Protection'] = '1; mode=block'
     response.headers['X-Frame-Options'] = 'DENY'
-    response.headers['X-Content-Type-Options'] = 'nosniff'
+    # no-sniff disables execution of JavaScript files
+    # response.headers['X-Content-Type-Options'] = 'nosniff'
     response.headers['Server'] = 'Apache 2.4.41'
     # Content-Security-Policy blocks inline styles and inline javascript
     # response.headers['Content-Security-Policy'] = "default-src 'self'"
