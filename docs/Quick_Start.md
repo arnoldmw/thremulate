@@ -1,6 +1,6 @@
 ## Quick Start
 
-Ready to run your first Thremulate adversary emulation? Thremulate agents can run locally or remotely. This example runs locally. To run this example using a remote Thremulate server, replace localhost with the IP address of the remote Thremulate server.
+Ready to run your first Thremulate adversary emulation? Thremulate agents can run both locally and remotely. This Quick Start example runs locally. To run this example using a remote Thremulate server, replace localhost with the IP address of the remote Thremulate server.
 ## 1. What should I start with?
 
 - Start the Thremulate server first.
@@ -9,7 +9,7 @@ Ready to run your first Thremulate adversary emulation? Thremulate agents can ru
 python server.py
 ```
 
-- Open your favorite browser and navigate to **https://localhost:8000**.  Login with **admin@thremulate.com** as the email and **thremulate** as the password.
+- Using your favorite browser, navigate to **https://localhost:8000**.  Login with **admin@thremulate.com** as the username and **thremulate** as the password.
 
    ```
    https:\\localhost:8000
@@ -18,33 +18,34 @@ python server.py
    ```
    ## NOTE: Invalid SSL certificate warnings.
    
-   Thremulate's SSL certificate is self signed and is therefore not in the trusted root certificates. Browsers will warn you that 'Your connection is not private' or a similar message.The script that created the Thremulate's SSL certificate is in the certificate folder. You are free to generate your own certificate. Otherwise add Thremulate's default certificate as an exception in Firefox and Safari or click 'Advanced' and then click 'Proceed to localhost (unsafe)' for the Google Chrome browser.
+   Thremulate's SSL certificate is self signed and is therefore not among the trusted root certificates on your device. Browsers will warn you that 'Your connection is not private' or present any other similar message.The script that created the Thremulate's SSL certificate is in the certificate folder. You are free to generate your own certificate. Otherwise, simply add Thremulate's default certificate as an exception in Firefox and Safari. For the Google Chrome browser, click 'Advanced' and then click 'Proceed to localhost (unsafe)'.
 
-## 2. I have logged into the Thremulate server. How can I get the Agent to the target computer?
+## 2. I have logged into the Thremulate server. How can I deploy the Agent to the target computer?
 
-   These are some of the ways of getting the agent to the target computer.
+   These are some of the ways you can deploy the agent to a target computer.
 
-   - The Home page of an authenticated user has platform specific commands that download an agent to a target computer that executes them. Copy and paste them in the bash or command prompt or powershell terminal. For best results use a terminal or console with Administrative or root privileges on the target computer. Ensure the Thremulate server IP is correct.
-   - Transfer the Agent for the corresponding target platform using external storage media or FTP or any other viable means. The Agent lives in the **agents** folder found in the Thremulate root. Windows Agents are labelled win_agent.exe, Linux Agents are labelled lin_agent.exe. and MacOS Agents are labelled mac_agent.exe.
+   - The Home page (https://localhost:8000/home) of an authenticated Thremulate user has platform specific commands that will deploy an agent to a target computer that executes them. Copy and paste them in the bash or command prompt or powershell terminal of the target computer. Run the commands on the target computer. For best results, use a terminal or console with Administrative or root privileges on the target computer while deploying the Agent to it. Ensure the Thremulate server instance IP in the commands is correct.
+   - Transfer the Agent for the corresponding target platform using external storage media or FTP or any other viable means. The platform specific Agent lives in the **agents** folder found in the Thremulate root. Windows Agents are labelled win_agent.exe, Linux Agents are labelled lin_agent.exe. and MacOS Agents are labelled mac_agent.exe.
 
-## 3. The Agent is on the test computer. What next?
+## 3. The Agent is on the target computer. What is next?
 
-If you pasted the commands into the terminal to get the agent, the agent was automatically downloaded and started for you.
+If you successfully pasted and ran the commands into the terminal or shell of the target computer when deploying the agent, then the Agent was deployed and automatically started for you.
 
-Otherwise run the agent via command line while passing the IP address of the Thremulate server. Navigate to the location of the agent.
-Depending on the Agent you have, run it with the following commands.
+If you used different means to deploy the Agent other than pasting the commands to the target's terminal, then you will have to navigate to the location of the Agent, and start the Agent on the target computer via the terminal or shell while passing the IP address of the Thremulate server.
+Depending on the Agent you have, run it with the following commands. Replace **[THREMULATE_SERVER_IP]** with the actual IP of your Thremulate server instance.
 
    ```
-   win_agent.exe -s [SERVER_IP] OR 
-   agent.py -s [SERVER_IP]
-   example: agent.py -s localhost
+   win_agent.exe -s [THREMULATE_SERVER_IP] OR 
+   lin_agent -s [THREMULATE_SERVER_IP]
+   agent.py -s [THREMULATE_SERVER_IP]
+   Examples: agent.py -s localhost and win_agent -s 127.0.0.1
    ```
 
-## 5. Upon running the Agent, it said it has registered. I am ready to Thremulate. Great!!
+## 5. After the Agent started, it said it has or had registered. Great!! You are now ready to do adversary emulation with Thremulate.
 
-- In the browser navigate to the https://localhost:8000/agents. This leads you to a page which shows all the agents that have registered with the server. If you get Error 404, navigate to https://localhost:8000/login and login. 
+- In the browser navigate to the https://localhost:8000/agents. This leads you to a page which shows all the agents that have registered with the Thremulate server. If you get Error 404, navigate to https://localhost:8000/login and login. 
 
-- A random name was given to your Agent. You can change it later by clicking on the Edit button with the 'Update Agent' tooltip. Access tooltips by hovering over the buttons. To assign an agent techniques to execute, click on the 'Play' button with the 'Assign techniques' tooltip. 
+- A random name was assigned to your Agent. You can change it later by clicking on the Edit button that shows the 'Update Agent' tooltip. Access tooltips by hovering over the buttons. To assign an agent techniques to execute, click on the 'Play' button with the 'Assign techniques' tooltip. 
 
 - The ATT&CK Matrix with all the techniques for appropriate for that agent is presented. To assign an agent a technique, click on the technique.
 
