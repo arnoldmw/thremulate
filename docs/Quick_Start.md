@@ -41,37 +41,34 @@ Depending on the Agent you have, run it with the following commands. Replace **[
    Examples: agent.py -s localhost and win_agent -s 127.0.0.1
    ```
 
-## 5. After the Agent started, it said it has or had registered. Great!! You are now ready to do adversary emulation with Thremulate.
+## 4. After the Agent started, it said it has or had registered. Great!! You are now ready to do adversary emulation with Thremulate.
 
 - In the browser navigate to the https://localhost:8000/agents. This leads you to a page which shows all the agents that have registered with the Thremulate server. If you get Error 404, navigate to https://localhost:8000/login and login. 
 
 - A random name was assigned to your Agent. You can change it later by clicking on the Edit button that shows the 'Update Agent' tooltip. Access tooltips by hovering over the buttons. To assign an agent techniques to execute, click on the 'Play' button with the 'Assign techniques' tooltip. 
 
-- The ATT&CK Matrix with all the techniques for appropriate for that agent is presented. To assign an agent a technique, click on the technique.
+- Clicking on the 'Play' button will lead to an ATT&CK Matrix showing all the ATT&CK techniques available for execution by that Agent. To assign that Agent a technique to execute, click on a Technique you would like to execute.
 
 ![Attack Matrix](../screenshots/matrix.png)
 
 - You can view or modify the execution parameters of the technique before assigning it an agent.
 
-  >**NOTE: A technique may have multiple tests for better coverage.**
+  >**NOTE: A technique may have multiple tests or implementations in order to have better coverage.**
 
 ![Assign Technique](../screenshots/assign_technique.png)
 
-- Wait for the agent to execute the assigned techniques. The Agent by default checks for new tasks every 5 seconds. This can later be changed to any value when starting the Agent.
+- Wait for at least 6 seconds for the Agent to execute the assigned techniques. The Agent by default checks for new tasks every 5 seconds. This can later be changed to any value by using the -i or --interval flag when starting the Agent via the terminal or shell.
 
+## 5. Agent says it executed TXXXX:X. How do I view the results of the techniques the Agent executed?
 
+- Navigate to https://localhost:8000/agents. In the row with your Agent's unique number or name, click on the 'Information' button with the 'More information' tooltip.
 
-## 6. Agent says it executed TXXXX:X. How do I know that the agent really executed TXXXX:X ?
-
-- Navigate to https://localhost:8000/agents. In the row that your agent is, click on the Information button with the 'More information' tooltip.
-
-- This will show you all the techniques associated with that Agent and their respective analysis.You can delete the output of a particular technique test for the Agent to re-run it or even remove the technique test from the Agent.
-- If you wish to view output from the Agent, click on the name of the technique test.
+- This will show you all the techniques associated with that Agent and their respective analysis.You can delete the output of a particular technique implementation in order for the Agent to re-run it or even remove the technique implementation from the Agent.
+- If you wish to view output from the Agent, click on the name of the technique implementation. The accordion will expand to show  the raw output received from the Agent.
 
 ![Agent Details](../screenshots/agent_details.png)
 
-
-## 7. And that is your first adversary emulation with Thremulate. Congratulations!!
+## 6. And that is your first adversary emulation with Thremulate. Congratulations!!
 
 Have a peek at your insightful dashboard to view your progress and run more techniques if the charts are flat. Happy Thremulating.
 
