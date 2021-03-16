@@ -1,38 +1,66 @@
 # Thremulate
 
 Thremulate is a light weight adversary emulation application grounded on the MITRE [ATT&CK™](https://attack.mitre.org/) framework.
-Thremulate's server and agent are totally platform independent. Therefore, you can execute over 140 adversarial techniques on Windows, Linux and MacOS operating systems without a hitch.
+Thremulate's server and agent are platform independent. Therefore, you can execute over 140 adversarial techniques on Windows, Linux and MacOS operating systems. 
 
-> Thremulate is currently undergoing quality assurance to fix bugs. 
-Therefore not all adversary techniques will work as expected. 
-It will soon be production ready :ok_hand:. Keep checking for its v1.0.0 release.
+> Thremulate is currently in the quality assurance (QA) stage to identify and fix elusive bugs. This QA stage is still in progress and has so far been done on Windows and Linux systems only. MacOS will soon join the process. Therefore not all adversary techniques will work as expected. 
+
+We promise, it will soon be production ready :ok_hand:. 
 
 
 ## Why should I use Thremulate?
-- **Security Assessments for All:** 
-Organizations that may not have full time red team personnel or a substantial IT security budget can leverage the power of this software to test their defenses.
+- **Know Your Gaps in Detection:** 
+
+  Security Administrators that desire to identify their organisation's gaps in detecting adversarial presence, can ably  use Thremulate to do so.
+
+  **Security Assessments for All:** 
+  Organizations that may not have a substantial IT security budget that supports regular red team engagements are able to leverage the power of Thremulate to test their defenses.
+
 - **Security Monitoring Effectiveness:**
-Security personnel should validate their continuous and network security monitoring measure's effectiveness at preventing and detecting adversarial presence on the end-points or network. Thremulate helps you do this with utmost ease. Run an adversarial technique and confirm if its execution is prevented or detected as malicious.
+  Security personnel should validate their security monitoring effectiveness at preventing and identifying adversarial presence on the network. Thremulate helps you do this with utmost ease. Run an adversarial technique and confirm that its execution is stopped or detected as malicious.
+
 - **Raise Information Security Awareness:**
-The lead author created Thremulate to raise awareness about cyber threats out there in the wild inclined on compromising and/or destroying digital infrastructure. Thremulate is a spot-on example of how we can use Cyber Threat Intelligence (CTI) to reinforce our defenses. 
+The lead author created Thremulate to raise awareness about cyber threats out there in the wild inclined on compromising and/or destroying digital infrastructure. Thremulate is a spot-on example of how we can use Cyber Threat Intelligence (CTI) to validate and reinforce our defenses. 
 
 ## Features
-1. Responsive Web GUI
-2. Authentication and Authorization
-3. Multi-user for team collaboration
-4. Analytics dashboard
+
+1. ATT&CK Matrix of Available Techniques
+
+![Dashboard](screenshots/matrix.png)
+
+2. Graphical View of Adversary Emulation Results
+
+![Dashboard](screenshots/agent_details.png)
+
+3. Analytics Dashboard
+
 ![Dashboard](screenshots/dashboard.png)
-5. Living Off the Land techniques.
-6. Fileless attack techniques.
-7. Modular design and easily extendable application and many other features.
+
+4. Multi-User for Team Collaboration
+
+![Dashboard](screenshots/users.png)
+
+5. Authentication and Authorization
+
+
+6. Living Off the Land techniques.
+
+7. Fileless Tttack Techniques.
+
+8. Responsive Web Interface
+
+9. Easily Extensible Modular Design
+
+10. And Many Other Features
 ## Use Cases
 
-1. Adversary emulation
-2. IT Security classes
-3. Forensics classes
+1. Adversary Emulation
+2. Cyber Threat Intelligence (CTI)
+3. IT Security Classes
 4. Purple Team engagements
 ## Major requirement
-- Python 3.5.3 or later
+
+- Python 3.5.3+
 
 ## Rule of Engagement
 
@@ -45,7 +73,7 @@ Start by cloning this repository.
 ```
 git clone https://github.com/arnoldmw/thremulate.git 
 ```
-Install the requirements for the project. It is recommended to create a new virtual environment for every project.
+Install the requirements for the project. It is recommended to create a new virtual environment for every new project.
 ```python
 pip install -r requirements.txt
 ```
@@ -62,7 +90,7 @@ python server.py
 Checkout the [ list of tests](art/atomics/index.md) supported and the [ATT&CK Matrix](art/atomics/matrix.md)
 
 - Windows [Tests](art/atomics/windows-index.md) and [Matrix](art/atomics/windows-matrix.md)
-- macOS [Tests](art/atomics/macos-index.md) and [Matrix](art/atomics/macos-matrix.md)
+- MacOS [Tests](art/atomics/macos-index.md) and [Matrix](art/atomics/macos-matrix.md)
 - Linux [Tests](art/atomics/linux-index.md) and [Matrix](art/atomics/linux-matrix.md)
 
 ## Contributing
