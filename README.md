@@ -42,7 +42,6 @@ The lead author created Thremulate to raise awareness about cyber threats out th
 
 5. Authentication and Authorization
 
-
 6. Living Off the Land techniques.
 
 7. Fileless Tttack Techniques.
