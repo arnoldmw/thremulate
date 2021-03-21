@@ -18,13 +18,13 @@ python server.py
    ```
    ## NOTE: Invalid SSL certificate warnings.
    
-   Thremulate's SSL certificate is self signed and is therefore not among the trusted root certificates on your device. Browsers will warn you that 'Your connection is not private' or present any other similar message.The script that created the Thremulate's SSL certificate is in the certificate folder. You are free to generate your own certificate. Otherwise, simply add Thremulate's default certificate as an exception in Firefox and Safari. For the Google Chrome browser, click 'Advanced' and then click 'Proceed to localhost (unsafe)'.
+   Thremulate's SSL certificate is self signed and is therefore not among the trusted root certificates on your device. Browsers will warn you that 'Your connection is not private' or present any other similar message. The script that created the Thremulate's SSL certificate is in the certificate folder. You are free to generate your own certificate. Otherwise, simply add Thremulate's default certificate as an exception in Firefox and Safari. For the Google Chrome browser, click 'Advanced' and then click 'Proceed to localhost (unsafe)'.
 
 ## 2. I have logged into the Thremulate server. How can I deploy the Agent to the target computer?
 
    These are some of the ways you can deploy the agent to a target computer.
 
-   - The Home page (https://localhost:8000/home) of an authenticated Thremulate user has platform specific commands that will deploy an agent to a target computer that executes them. Copy and paste them in the bash or command prompt or powershell terminal of the target computer. Run the commands on the target computer. For best results, use a terminal or console with Administrative or root privileges on the target computer while deploying the Agent to it. Ensure the Thremulate server instance IP in the commands is correct.
+   - The Home page (https://localhost:8000/home) of an authenticated Thremulate user has platform specific commands that will deploy an agent to a target computer that executes them. Copy and paste them in the bash or command prompt or PowerShell terminal of the target computer. Run the commands on the target computer. For best results, use a terminal or console with Administrative or root privileges on the target computer while deploying the Agent to it. Ensure the Thremulate server instance IP in the commands is correct.
    - Transfer the Agent for the corresponding target platform using external storage media or FTP or any other viable means. The platform specific Agent lives in the **agents** folder found in the Thremulate root. Windows Agents are labelled win_agent.exe, Linux Agents are labelled lin_agent.exe. and MacOS Agents are labelled mac_agent.exe.
 
 ## 3. The Agent is on the target computer. What is next?
@@ -67,9 +67,13 @@ Depending on the Agent you have, run it with the following commands. Replace **[
 
 - If you wish to view output from the Agent, click on the name of the technique implementation. The accordion will expand to show  the raw output received from the Agent.
 
+![Agent Details](../screenshots/agent_details.png)
+
 > **Reload the Agent Details web page if you do not see a technique you assigned an Agent or the results of a technique that has been executed are missing.**
 
-![Agent Details](../screenshots/agent_details.png)
+> **Some techniques will totally fail to execute on the target device due to security controls like AV. This will be noticed when the Result of the technique remains as a 'Question Mark' (like in the image above) for more than 30 seconds.**
+
+> **Security controls like AV on the target device sometimes terminate the execution of the Agent process. This can also lead to failed execution of techniques. Kindly delete the technique assigned to an Agent (click on the icon with x in a red circle, as seen in the image above) that probably led to the termination of the Agent process. Run the Agent again.**
 
 ## 6. And that is your first adversary emulation with Thremulate. Congratulations!!
 
