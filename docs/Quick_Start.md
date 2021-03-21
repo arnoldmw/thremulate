@@ -63,8 +63,11 @@ Depending on the Agent you have, run it with the following commands. Replace **[
 
 - Navigate to https://localhost:8000/agents. In the row with your Agent's unique number or name, click on the 'Information' button with the 'More information' tooltip.
 
-- This will show you all the techniques associated with that Agent and their respective analysis.You can delete the output of a particular technique implementation in order for the Agent to re-run it or even remove the technique implementation from the Agent.
+- This will show you all the techniques associated with that Agent and their respective analysis. You can delete the output of a particular technique implementation in order for the Agent to re-run it or even remove the technique implementation from the Agent.
+
 - If you wish to view output from the Agent, click on the name of the technique implementation. The accordion will expand to show  the raw output received from the Agent.
+
+> **Reload the Agent Details web page if you do not see a technique you assigned an Agent or the results of a technique that has been executed are missing.**
 
 ![Agent Details](../screenshots/agent_details.png)
 
