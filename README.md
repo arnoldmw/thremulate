@@ -1,9 +1,9 @@
 # Thremulate
 
 Thremulate is a light weight adversary emulation application grounded on the MITRE [ATT&CK™](https://attack.mitre.org/) framework.
-Thremulate's server and agent are platform independent. Therefore, you can execute over 140 adversarial techniques on Windows, Linux and MacOS operating systems. 
+Thremulate's server and agent are platform independent. Therefore, you can execute over 140 adversarial techniques on Windows (soon Linux and MacOS) operating systems. 
 
-> Thremulate is currently in the quality assurance (QA) stage to identify and fix elusive bugs. This QA stage is still in progress and has so far been done on Windows and Linux systems only. MacOS will soon join the process. Therefore not all adversary techniques will work as expected. 
+> Thremulate is currently in the quality assurance (QA) stage to identify and fix elusive bugs. This QA stage is still in progress and has so far been done on Windows systems only. MacOS will soon join the process. Therefore not all adversary techniques will work as expected. 
 
 We promise, it will soon be production ready :ok_hand:. 
 
